@@ -14,12 +14,14 @@ public class Mod {
     public final String name;
     public final String title;
     public final String desc;
+    public String path;
 
     public Mod(ModType type, String name, String title, String desc) {
         this.type = type;
         this.name = name;
         this.title = title;
         this.desc = desc;
+        this.path = "";
     }
 
     @Override

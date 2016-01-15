@@ -13,27 +13,24 @@ import com.rubenwardy.minetestmodmanager.manager.Mod;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 
 /**
- * A fragment representing a single Mod detail screen.
- * This fragment is either contained in a {@link ModListActivity}
+ * A mFragment representing a single Mod detail screen.
+ * This mFragment is either contained in a {@link ModListActivity}
  * in two-pane mode (on tablets) or a {@link ModDetailActivity}
  * on handsets.
  */
 public class ModDetailFragment extends Fragment {
     /**
-     * The fragment argument representing the item ID that this fragment
+     * The mFragment argument representing the item ID that this mFragment
      * represents.
      */
     public static final String ARG_MOD_LIST = "mod_list";
     public static final String ARG_MOD_NAME = "mod_name";
 
-    /**
-     * The dummy content this fragment is presenting.
-     */
-    private Mod mItem;
+    public Mod mItem;
 
     /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
+     * Mandatory empty constructor for the mFragment manager to instantiate the
+     * mFragment (e.g. upon screen orientation changes).
      */
     public ModDetailFragment() {
     }
@@ -44,7 +41,7 @@ public class ModDetailFragment extends Fragment {
 
         if (getArguments().containsKey(ARG_MOD_NAME) &&
                 getArguments().containsKey(ARG_MOD_LIST)) {
-            // Load the dummy content specified by the fragment
+            // Load the dummy content specified by the mFragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
             String name = getArguments().getString(ARG_MOD_NAME);

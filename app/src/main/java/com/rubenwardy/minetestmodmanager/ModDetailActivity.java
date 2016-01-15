@@ -11,6 +11,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
+import com.rubenwardy.minetestmodmanager.manager.ModManager;
+
 /**
  * An activity representing a single Mod detail screen. This
  * activity is only used narrow width devices. On tablet-size devices,
@@ -18,6 +20,7 @@ import android.view.MenuItem;
  * in a {@link ModListActivity}.
  */
 public class ModDetailActivity extends AppCompatActivity {
+    ModDetailFragment mFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +33,14 @@ public class ModDetailActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                ModManager modman = new ModManager();
+                if (modman.uninstallMod(mFragment.mItem)) {
+                    Snackbar.make(view, "Uninstalled mod", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else {
+                    Snackbar.make(view, "Failed to uninstalled mod", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
         });
 
@@ -41,27 +50,27 @@ public class ModDetailActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        // savedInstanceState is non-null when there is fragment state
+        // savedInstanceState is non-null when there is mFragment state
         // saved from previous configurations of this activity
         // (e.g. when rotating the screen from portrait to landscape).
-        // In this case, the fragment will automatically be re-added
+        // In this case, the mFragment will automatically be re-added
         // to its container so we don't need to manually add it.
         // For more information, see the Fragments API guide at:
         //
         // http://developer.android.com/guide/components/fragments.html
         //
         if (savedInstanceState == null) {
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
+            // Create the detail mFragment and add it to the activity
+            // using a mFragment transaction.
             Bundle arguments = new Bundle();
             arguments.putString(ModDetailFragment.ARG_MOD_LIST,
                     getIntent().getStringExtra(ModDetailFragment.ARG_MOD_LIST));
             arguments.putString(ModDetailFragment.ARG_MOD_NAME,
                     getIntent().getStringExtra(ModDetailFragment.ARG_MOD_NAME));
-            ModDetailFragment fragment = new ModDetailFragment();
-            fragment.setArguments(arguments);
+            mFragment = new ModDetailFragment();
+            mFragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.mod_detail_container, fragment)
+                    .add(R.id.mod_detail_container, mFragment)
                     .commit();
         }
     }

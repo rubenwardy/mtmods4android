@@ -44,6 +44,27 @@ public class ModManager {
         }
     }
 
+    void deleteRecursive(File fileOrDir) {
+        if (fileOrDir.isDirectory()) {
+            for (File child : fileOrDir.listFiles()) {
+                deleteRecursive(child);
+            }
+        }
+        if (fileOrDir.delete())
+            Log.w("utils", "Deleted path: " + fileOrDir.getAbsolutePath());
+        else
+            Log.w("utils", "Failed to delete path: " + fileOrDir.getAbsolutePath());
+    }
+
+    public boolean uninstallMod(Mod mod) {
+        if (mod == null || mod.path.equals("")) {
+            return false;
+        } else {
+            deleteRecursive(new File(mod.path));
+            return true;
+        }
+    }
+
     public ModList getModsFromDir(String path) {
         if (lists_map.containsKey(path)) {
             Log.w("ModLib", "Returning existing ModList (type=dir).");
@@ -86,6 +107,7 @@ public class ModManager {
                     }
 
                     Mod mod = new Mod(type, file.getName(), title, desc);
+                    mod.path = file.getAbsolutePath();
                     list.add(mod);
                 }
             } else {
