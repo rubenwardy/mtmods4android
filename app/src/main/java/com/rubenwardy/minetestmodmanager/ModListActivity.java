@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -69,6 +70,13 @@ public class ModListActivity extends AppCompatActivity {
         if (findViewById(R.id.mod_detail_container) != null) {
             mTwoPane = true;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_mod_list, menu);
+        return true;
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
