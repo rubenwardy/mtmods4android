@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Minetest Mod Manager</string>
+    <string name="title_mod_detail">Mod Detail</string>
+</resources>
