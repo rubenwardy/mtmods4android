@@ -1,9 +1,41 @@
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mod_detail"
-    style="?android:attr/textAppearanceLarge"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    android:textIsSelectable="true"
-    tools:context="com.rubenwardy.minetestmodmanager.ModDetailFragment" />
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true">
+    <LinearLayout
+        android:id="@+id/mod_btnbar"
+        android:orientation="horizontal"
+        android:paddingLeft="4.0dip"
+        android:paddingTop="5.0dip"
+        android:paddingRight="4.0dip"
+        android:paddingBottom="1.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/disable"
+            android:layout_width="0.0dip" android:layout_height="fill_parent"
+            android:text="@string/disable"
+            android:layout_weight="1.0" />
+
+        <Button
+            android:id="@+id/uninstall"
+            android:theme="@style/ColoredButton"
+            android:layout_width="0.0dip" android:layout_height="fill_parent"
+            android:text="@string/uninstall"
+            android:layout_weight="1.0" />
+
+    </LinearLayout>
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/mod_desc"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mod_btnbar"
+        android:padding="16dp"
+        android:textIsSelectable="true"
+        tools:context="com.rubenwardy.minetestmodmanager.ModDetailFragment" />
+</RelativeLayout>

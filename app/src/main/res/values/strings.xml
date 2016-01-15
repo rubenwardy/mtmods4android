@@ -2,4 +2,8 @@
     <string name="app_name">Minetest Mod Manager</string>
     <string name="title_mod_detail">Mod Detail</string>
     <string name="action_settings">Settings</string>
+    <string name="install">Install</string>
+    <string name="enable">Enable</string>
+    <string name="uninstall">Uninstall</string>
+    <string name="disable">Disable</string>
 </resources>

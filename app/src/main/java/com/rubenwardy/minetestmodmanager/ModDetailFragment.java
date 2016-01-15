@@ -66,7 +66,7 @@ public class ModDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.mod_detail)).setText(mItem.desc);
+            ((TextView) rootView.findViewById(R.id.mod_desc)).setText(mItem.desc);
         }
 
         return rootView;
