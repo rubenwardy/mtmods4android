@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rubenwardy.minetestmodmanager.manager.Mod;
+import com.rubenwardy.minetestmodmanager.manager.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 
 /**
@@ -47,7 +48,7 @@ public class ModDetailFragment extends Fragment {
             String name = getArguments().getString(ARG_MOD_NAME);
             String listpath = getArguments().getString(ARG_MOD_LIST);
             ModManager modman = new ModManager();
-            ModManager.ModList list = modman.get(listpath);
+            ModList list = modman.get(listpath);
             mItem = list.mods_map.get(name);
 
             Activity activity = this.getActivity();

@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rubenwardy.minetestmodmanager.manager.Mod;
+import com.rubenwardy.minetestmodmanager.manager.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 
 import java.io.File;
@@ -41,6 +43,22 @@ public class ModListActivity extends AppCompatActivity {
     private String current_list;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        Log.w("MLAct", "Resuming!");
+        ModList list = mModMan.get(current_list);
+        if (list != null && !list.valid && mModMan.update(list)) {
+            Log.w("MLAct", " - list has changed!");
+            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
+            assert recyclerView != null;
+            ModListRecyclerViewAdapter adapter = (ModListRecyclerViewAdapter) recyclerView.getAdapter();
+            adapter.setMods(list.mods);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mod_list);
@@ -61,7 +79,7 @@ public class ModListActivity extends AppCompatActivity {
         File sdcard = Environment.getExternalStorageDirectory();
         current_list = sdcard.getAbsolutePath() + "/Minetest/mods/";
         mModMan = new ModManager();
-        ModManager.ModList list = mModMan.getModsFromDir(current_list);
+        ModList list = mModMan.getModsFromDir(current_list);
 
         View recyclerView = findViewById(R.id.mod_list);
         assert recyclerView != null;
@@ -80,17 +98,23 @@ public class ModListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        ModManager.ModList list = mModMan.get(current_list);
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(list.mods));
+        ModList list = mModMan.get(current_list);
+        ModListRecyclerViewAdapter adapter = new ModListRecyclerViewAdapter(list.mods);
+        //adapter.notifyDataSetChanged();
+        recyclerView.setAdapter(adapter);
     }
 
-    public class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
+    public class ModListRecyclerViewAdapter
+            extends RecyclerView.Adapter<ModListRecyclerViewAdapter.ViewHolder> {
 
-        private final List<Mod> mValues;
+        private List<Mod> mMods;
 
-        public SimpleItemRecyclerViewAdapter(List<Mod> items) {
-            mValues = items;
+        public ModListRecyclerViewAdapter(List<Mod> items) {
+            mMods = items;
+        }
+
+        public void setMods(List<Mod> mods) {
+            mMods = mods;
         }
 
         @Override
@@ -102,7 +126,7 @@ public class ModListActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mItem = mValues.get(position);
+            holder.mItem = mMods.get(position);
             holder.mIdView.setText(holder.mItem.name);
             int len = holder.mItem.desc.indexOf('.') + 1;
             int slen = holder.mItem.desc.length();
@@ -140,7 +164,7 @@ public class ModListActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return mValues.size();
+            return mMods.size();
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {

@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -16,19 +17,22 @@ import java.util.Map;
  * Provides a collection of mods.
  */
 public class ModManager {
-    public class ModList {
-        public List<Mod> mods = new ArrayList<Mod>();
-        public Map<String, Mod> mods_map = new HashMap<String, Mod>();
-        public void add(Mod mod) {
-            mods.add(mod);
-            mods_map.put(mod.name, mod);
-        }
-    }
-
     public static Map<String, ModList> lists_map = new HashMap<String, ModList>();
 
     public ModList get(String path) {
         return lists_map.get(path);
+    }
+
+    public ModList listFromMod(Mod mod) {
+        // TODO: optimise this.
+        for (ModList list : lists_map.values()) {
+            for (Mod b : list.mods) {
+                if (mod.path.equals(b.path)) {
+                    return list;
+                }
+            }
+        }
+        return null;
     }
 
     public Mod.ModType detectModType(File file) {
@@ -56,27 +60,31 @@ public class ModManager {
             Log.w("utils", "Failed to delete path: " + fileOrDir.getAbsolutePath());
     }
 
+    public boolean installMod(Mod mod, String zip, String path) {
+        return true;
+    }
+
     public boolean uninstallMod(Mod mod) {
         if (mod == null || mod.path.equals("")) {
             return false;
         } else {
             deleteRecursive(new File(mod.path));
+            ModList list = listFromMod(mod);
+            list.valid = false;
             return true;
         }
     }
 
-    public ModList getModsFromDir(String path) {
-        if (lists_map.containsKey(path)) {
-            Log.w("ModLib", "Returning existing ModList (type=dir).");
-            return lists_map.get(path);
-        }
+    public boolean updatePathList(ModList list) {
+        Log.w("ModLib", "Collecting/updating ModList (type=dir).");
 
-        Log.w("ModLib", "Creating new ModList (type=dir).");
-        File dirs = new File(path);
+        File dirs = new File(list.uri);
         if (!dirs.exists())
-            return null;
+            return false;
 
-        ModList list = new ModList();
+        list.mods.clear();
+        list.mods_map.clear();
+
         File[] files = dirs.listFiles();
         for (File file:files) {
             if (file.isDirectory()) {
@@ -114,7 +122,31 @@ public class ModManager {
                 Log.w("ModLib", "Found file at " + file.getName() + ", ignoring");
             }
         }
-        lists_map.put(path, list);
-        return list;
+        list.valid = true;
+        return true;
+    }
+
+    public boolean update(ModList list) {
+        if (list.type == ModList.ModListType.EMLT_PATH) {
+            return updatePathList(list);
+        } else {
+            Log.w("ModLib", "Failed to update invalid ModList.");
+            return false;
+        }
+    }
+
+    public ModList getModsFromDir(String path) {
+        if (lists_map.containsKey(path)) {
+            Log.w("ModLib", "Returning existing ModList (type=dir).");
+            return lists_map.get(path);
+        }
+
+        Log.w("ModLib", "Creating new ModList (type=dir).");
+        ModList list = new ModList(ModList.ModListType.EMLT_PATH, path);
+        if (update(list)) {
+            lists_map.put(path, list);
+            return list;
+        } else
+            return null;
     }
 }
