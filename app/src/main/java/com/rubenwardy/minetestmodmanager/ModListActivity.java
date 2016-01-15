@@ -15,8 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
-import com.rubenwardy.minetestmodmanager.dummy.DummyContent;
 import com.rubenwardy.minetestmodmanager.manager.Mod;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 
@@ -97,8 +95,16 @@ public class ModListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).name);
-            holder.mContentView.setText(mValues.get(position).desc);
+            holder.mIdView.setText(holder.mItem.name);
+            int len = holder.mItem.desc.indexOf('.') + 1;
+            int slen = holder.mItem.desc.length();
+            if (len > slen || len < 20) {
+                len = slen;
+            }
+            if (len > 100) {
+                len = 100;
+            }
+            holder.mContentView.setText(holder.mItem.desc.substring(0, len));
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
