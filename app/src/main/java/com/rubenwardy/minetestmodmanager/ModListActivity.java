@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rubenwardy.minetestmodmanager.manager.Mod;
-import com.rubenwardy.minetestmodmanager.manager.ModInstallService;
 import com.rubenwardy.minetestmodmanager.manager.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 
@@ -34,30 +33,13 @@ import java.util.List;
  * item details side-by-side using two vertical panes.
  */
 public class ModListActivity extends AppCompatActivity {
-
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
     private boolean mTwoPane;
     private ModManager mModMan;
-    private String current_list;
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        Log.w("MLAct", "Resuming!");
-        ModList list = mModMan.get(current_list);
-        if (list != null && !list.valid && mModMan.update(list)) {
-            Log.w("MLAct", " - list has changed!");
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
-            assert recyclerView != null;
-            ModListRecyclerViewAdapter adapter = (ModListRecyclerViewAdapter) recyclerView.getAdapter();
-            adapter.setMods(list.mods);
-            adapter.notifyDataSetChanged();
-        }
-    }
+    private String current_dir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,17 +56,17 @@ public class ModListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                Mod mod = new Mod(Mod.ModType.EMT_INVALID, "food", "Food", "");
+                mModMan.installModAsync(getApplicationContext(), mod,
+                        new File(current_dir, "food-master.zip"), current_dir);
             }
         });
 
         File sdcard = Environment.getExternalStorageDirectory();
-        current_list = sdcard.getAbsolutePath() + "/Minetest/mods/";
+        current_dir = new File(sdcard.getAbsolutePath(), "/Minetest/mods").getAbsolutePath();
         mModMan = new ModManager();
-        ModList list = mModMan.getModsFromDir(current_list);
-
-//        ModInstallService.startActionInstall(getApplicationContext(), "food",
-//                current_list + "food-master.zip",
-//                current_list);
+        ModList list = mModMan.getModsFromDir(current_dir);
 
         View recyclerView = findViewById(R.id.mod_list);
         assert recyclerView != null;
@@ -96,6 +78,22 @@ public class ModListActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        Log.w("MLAct", "Resuming!");
+        ModList list = mModMan.get(current_dir);
+        if (list != null && !list.valid && mModMan.update(list)) {
+            Log.w("MLAct", " - list has changed!");
+            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
+            assert recyclerView != null;
+            ModListRecyclerViewAdapter adapter = (ModListRecyclerViewAdapter) recyclerView.getAdapter();
+            adapter.setMods(list.mods);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_mod_list, menu);
@@ -103,7 +101,7 @@ public class ModListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        ModList list = mModMan.get(current_list);
+        ModList list = mModMan.get(current_dir);
         ModListRecyclerViewAdapter adapter = new ModListRecyclerViewAdapter(list.mods);
         //adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
@@ -148,7 +146,7 @@ public class ModListActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (mTwoPane) {
                         Bundle arguments = new Bundle();
-                        arguments.putString(ModDetailFragment.ARG_MOD_LIST, current_list);
+                        arguments.putString(ModDetailFragment.ARG_MOD_LIST, current_dir);
                         arguments.putString(ModDetailFragment.ARG_MOD_NAME, holder.mItem.name);
                         ModDetailFragment fragment = new ModDetailFragment();
                         fragment.setArguments(arguments);
@@ -158,7 +156,7 @@ public class ModListActivity extends AppCompatActivity {
                     } else {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, ModDetailActivity.class);
-                        intent.putExtra(ModDetailFragment.ARG_MOD_LIST, current_list);
+                        intent.putExtra(ModDetailFragment.ARG_MOD_LIST, current_dir);
                         intent.putExtra(ModDetailFragment.ARG_MOD_NAME, holder.mItem.name);
 
                         context.startActivity(intent);

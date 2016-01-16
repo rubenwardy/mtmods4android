@@ -3,10 +3,12 @@ package com.rubenwardy.minetestmodmanager;
 import android.app.Activity;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.rubenwardy.minetestmodmanager.manager.Mod;
@@ -68,6 +70,21 @@ public class ModDetailFragment extends Fragment {
         if (mItem != null) {
             ((TextView) rootView.findViewById(R.id.mod_desc)).setText(mItem.desc);
         }
+
+        Button fab = (Button) rootView.findViewById(R.id.uninstall);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ModManager modman = new ModManager();
+                if (modman.uninstallMod(mItem)) {
+                    Snackbar.make(view, "Uninstalled mod.", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else {
+                    Snackbar.make(view, "Failed to uninstall mod for some reason.", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            }
+        });
 
         return rootView;
     }

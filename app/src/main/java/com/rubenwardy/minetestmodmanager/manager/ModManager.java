@@ -1,5 +1,10 @@
 package com.rubenwardy.minetestmodmanager.manager;
 
+import android.app.Service;
+import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.os.ResultReceiver;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -14,6 +19,7 @@ import java.util.Map;
  */
 public class ModManager {
     public static Map<String, ModList> lists_map = new HashMap<String, ModList>();
+    public static ServiceResultReceiver srr = new ServiceResultReceiver(new Handler());
 
     public ModList get(String path) {
         return lists_map.get(path);
@@ -31,8 +37,8 @@ public class ModManager {
         return null;
     }
 
-    public boolean installMod(Mod mod, String zip, String path) {
-        return true;
+    public void installModAsync(Context context, Mod mod, File zip, String path) {
+        ModInstallService.startActionInstall(context, srr, mod.name, zip, path);
     }
 
     public boolean uninstallMod(Mod mod) {
