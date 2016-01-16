@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rubenwardy.minetestmodmanager.manager.Mod;
+import com.rubenwardy.minetestmodmanager.manager.ModInstallService;
 import com.rubenwardy.minetestmodmanager.manager.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 
@@ -80,6 +81,10 @@ public class ModListActivity extends AppCompatActivity {
         current_list = sdcard.getAbsolutePath() + "/Minetest/mods/";
         mModMan = new ModManager();
         ModList list = mModMan.getModsFromDir(current_list);
+
+//        ModInstallService.startActionInstall(getApplicationContext(), "food",
+//                current_list + "food-master.zip",
+//                current_list);
 
         View recyclerView = findViewById(R.id.mod_list);
         assert recyclerView != null;

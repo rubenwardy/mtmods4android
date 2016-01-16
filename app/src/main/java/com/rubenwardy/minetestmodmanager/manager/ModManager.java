@@ -4,13 +4,9 @@ import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,31 +31,6 @@ public class ModManager {
         return null;
     }
 
-    public Mod.ModType detectModType(File file) {
-        if (new File(file.getAbsolutePath(), "init.lua").exists()) {
-            Log.w("ModLib", "Found mod at " + file.getName());
-            return Mod.ModType.EMT_MOD;
-        } else if (new File(file.getAbsolutePath(), "modpack.lua").exists()) {
-            Log.w("ModLib", "Found modpack at " + file.getName());
-            return Mod.ModType.EMT_MODPACK;
-        } else {
-            Log.w("ModLib", "Found invalid directory at " + file.getName());
-            return Mod.ModType.EMT_INVALID;
-        }
-    }
-
-    void deleteRecursive(File fileOrDir) {
-        if (fileOrDir.isDirectory()) {
-            for (File child : fileOrDir.listFiles()) {
-                deleteRecursive(child);
-            }
-        }
-        if (fileOrDir.delete())
-            Log.w("utils", "Deleted path: " + fileOrDir.getAbsolutePath());
-        else
-            Log.w("utils", "Failed to delete path: " + fileOrDir.getAbsolutePath());
-    }
-
     public boolean installMod(Mod mod, String zip, String path) {
         return true;
     }
@@ -68,7 +39,7 @@ public class ModManager {
         if (mod == null || mod.path.equals("")) {
             return false;
         } else {
-            deleteRecursive(new File(mod.path));
+            Utils.deleteRecursive(new File(mod.path));
             ModList list = listFromMod(mod);
             list.valid = false;
             return true;
@@ -88,7 +59,7 @@ public class ModManager {
         File[] files = dirs.listFiles();
         for (File file:files) {
             if (file.isDirectory()) {
-                Mod.ModType type = detectModType(file);
+                Mod.ModType type = Utils.detectModType(file);
                 if (type != Mod.ModType.EMT_INVALID) {
                     Log.w("ModLib", " - adding dir to list");
 

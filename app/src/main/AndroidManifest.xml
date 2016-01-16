@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rubenwardy.minetestmodmanager">
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -28,6 +30,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.rubenwardy.minetestmodmanager.ModListActivity" />
         </activity>
+
+        <service
+            android:name=".manager.ModInstallService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

@@ -9,9 +9,7 @@
     </style>
 
     <style name="ColoredButton" parent="Widget.AppCompat.Button">
-        <item name="colorButtonNormal">
-            @color/colorAccent
-        </item>
+        <item name="colorButtonNormal">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
