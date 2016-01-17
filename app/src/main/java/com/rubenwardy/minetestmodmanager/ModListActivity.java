@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -163,6 +165,12 @@ public class ModListActivity
                 Snackbar.make(findViewById(android.R.id.content), "Installed mod " + modname, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
+        } else if (mTwoPane && action.equals(ACTION_UNINSTALL)) {
+            FragmentManager fragman = getSupportFragmentManager();
+            Fragment frag = fragman.findFragmentById(R.id.mod_detail_container);
+            getSupportFragmentManager().beginTransaction()
+                    .remove(frag)
+                    .commit();
         }
 
         // TODO: check event type.
