@@ -77,8 +77,10 @@ public class ModManager {
         Log.w("ModLib", "Collecting/updating ModList (type=dir).");
 
         File dirs = new File(list.uri);
-        if (!dirs.exists())
+        if (!dirs.exists()) {
+            Log.w("ModLib", list.uri + " does not exist");
             return false;
+        }
 
         list.mods.clear();
         list.mods_map.clear();

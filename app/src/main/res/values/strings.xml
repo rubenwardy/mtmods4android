@@ -6,4 +6,11 @@
     <string name="enable">Enable</string>
     <string name="uninstall">Uninstall</string>
     <string name="disable">Disable</string>
+    <string name="dialog_noext_title">No external storage available</string>
+    <string name="dialog_noext_msg">We were unable to find the Minetest folder as there is no external storage available.
+    External storage is a shared file location on your device, and doesn\'t necessarily mean an SD card.</string>
+    <string name="dialog_nomt_title">Failed to create Minetest mod folder</string>
+    <string name="dialog_nomt_msg">There wasn\'t a folder for mods on your device, so we attempted to create one.
+        However, the attempt failed. The system may be denying this app accessing to it.</string>
+    <string name="dialog_close">Close</string>
 </resources>

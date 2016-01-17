@@ -1,10 +1,12 @@
 package com.rubenwardy.minetestmodmanager;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -50,6 +52,8 @@ public class ModListActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mod_list);
 
+        mModMan = new ModManager();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
@@ -67,11 +71,39 @@ public class ModListActivity
             }
         });
 
-        File sdcard = Environment.getExternalStorageDirectory();
-        File cdir = new File(sdcard, "/Minetest/mods");
-        cdir.mkdirs();
+        File extern = Environment.getExternalStorageDirectory();
+        File cdir = new File(extern, "/Minetest/mods");
         current_dir = cdir.getAbsolutePath();
-        mModMan = new ModManager();
+        Log.w("MLAct", "Mod dir should be at: " + current_dir);
+        if (!extern.exists()) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle(R.string.dialog_noext_title);
+            alertDialogBuilder.setCancelable(false);
+            alertDialogBuilder.setMessage(R.string.dialog_noext_msg);
+            alertDialogBuilder.setNegativeButton(R.string.dialog_close, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    ModListActivity.this.finish();
+                }
+            });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+            return;
+        }
+        if (!cdir.exists() && !cdir.mkdirs()) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setCancelable(false);
+            alertDialogBuilder.setTitle(R.string.dialog_nomt_title);
+            alertDialogBuilder.setMessage(R.string.dialog_nomt_msg);
+            alertDialogBuilder.setNegativeButton(R.string.dialog_close, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    ModListActivity.this.finish();
+                }
+            });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+            return;
+        }
+
         mModMan.setEventReceiver(this);
         ModList list = mModMan.getModsFromDir(current_dir);
 
