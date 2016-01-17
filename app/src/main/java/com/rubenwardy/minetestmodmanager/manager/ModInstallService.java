@@ -121,6 +121,11 @@ public class ModInstallService extends IntentService {
 
             handleActionInstall(rec, modname, file.getAbsoluteFile(), dest);
         } catch (IOException e) {
+            Bundle b = new Bundle();
+            b.putString(RET_NAME, modname);
+            b.putString(RET_DEST, dest.getAbsolutePath());
+            b.putString(RET_ERROR, e.toString());
+            rec.send(0, b);
             e.printStackTrace();
         }
     }
@@ -148,13 +153,12 @@ public class ModInstallService extends IntentService {
             if (root == null) {
                 Log.w("ModService", "Unable to find root dir.");
             } else {
-                Log.w("ModService", "Copying to ");
+                Log.w("ModService", "Copying to " + dest.getAbsolutePath());
                 Utils.copyFolder(root, new File(dest, modname));
 
                 Bundle b = new Bundle();
                 b.putString(RET_NAME, modname);
                 b.putString(RET_DEST, dest.getAbsolutePath());
-                b.putInt(RET_PROGRESS, 100);
                 rec.send(0, b);
             }
         } catch (IOException e) {
@@ -162,7 +166,6 @@ public class ModInstallService extends IntentService {
             b.putString(RET_NAME, modname);
             b.putString(RET_DEST, dest.getAbsolutePath());
             b.putString(RET_ERROR, e.toString());
-            b.putInt(RET_PROGRESS, 100);
             rec.send(0, b);
             e.printStackTrace();
         }

@@ -17,12 +17,11 @@ public class ServiceResultReceiver extends ResultReceiver {
     protected void onReceiveResult(int resultCode, Bundle b) {
         String modname = b.getString(ModInstallService.RET_NAME);
         String dest = b.getString(ModInstallService.RET_DEST);
-        Integer progress = b.getInt(ModInstallService.RET_PROGRESS);
 
         if (b.containsKey(ModInstallService.RET_ERROR)) {
             Log.w("SRR", "Install failed for " + modname + ": " +
                     b.getString(ModInstallService.RET_ERROR));
-        } else if (progress >= 100) {
+        } else if (!b.containsKey(ModInstallService.RET_PROGRESS)) {
             Log.w("SRR", "Got result " + dest);
             ModManager modman = new ModManager();
             ModList list = modman.get(dest);
@@ -39,7 +38,8 @@ public class ServiceResultReceiver extends ResultReceiver {
                 modman.mev.onModEvent(b2);
             }
         } else {
-            Log.w("SRR", "Progress update, " + Integer.toString(progress) + "%");
+            Integer progress = b.getInt(ModInstallService.RET_PROGRESS);
+            Log.w("SRR", "Progress for " + modname + " at " + Integer.toString(progress) + "%");
         }
     }
 

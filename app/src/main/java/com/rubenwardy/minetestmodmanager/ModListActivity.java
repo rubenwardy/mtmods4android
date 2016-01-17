@@ -23,6 +23,7 @@ import com.rubenwardy.minetestmodmanager.manager.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,7 +68,9 @@ public class ModListActivity
         });
 
         File sdcard = Environment.getExternalStorageDirectory();
-        current_dir = new File(sdcard.getAbsolutePath(), "/Minetest/mods").getAbsolutePath();
+        File cdir = new File(sdcard, "/Minetest/mods");
+        cdir.mkdirs();
+        current_dir = cdir.getAbsolutePath();
         mModMan = new ModManager();
         mModMan.setEventReceiver(this);
         ModList list = mModMan.getModsFromDir(current_dir);
@@ -151,9 +154,14 @@ public class ModListActivity
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
+        List<Mod> mods = null;
         ModList list = mModMan.get(current_dir);
-        ModListRecyclerViewAdapter adapter = new ModListRecyclerViewAdapter(list.mods);
-        //adapter.notifyDataSetChanged();
+        if (list == null) {
+            mods = new ArrayList<Mod>();
+        } else {
+            mods = list.mods;
+        }
+        ModListRecyclerViewAdapter adapter = new ModListRecyclerViewAdapter(mods);
         recyclerView.setAdapter(adapter);
     }
 
