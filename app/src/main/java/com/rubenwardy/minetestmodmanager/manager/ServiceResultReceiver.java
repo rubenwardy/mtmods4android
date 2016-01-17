@@ -14,14 +14,29 @@ public class ServiceResultReceiver extends ResultReceiver {
     }
 
     @Override
-    protected void onReceiveResult(int resultCode, Bundle resultData) {
-        String dest = resultData.getString(ModInstallService.RET_DEST);
-        Log.w("SRR", "Got result " + dest);
-        ModManager modman = new ModManager();
-        ModList list = modman.get(dest);
-        if (list != null) {
-            Log.w("SRR", "Invalidating list");
-            list.valid = false;
+    protected void onReceiveResult(int resultCode, Bundle b) {
+        String modname = b.getString(ModInstallService.RET_NAME);
+        String dest = b.getString(ModInstallService.RET_DEST);
+
+        if (b.containsKey(ModInstallService.RET_ERROR)) {
+            Log.w("SRR", "Install failed for " + modname + ": " +
+                    b.getString(ModInstallService.RET_ERROR));
+        } else {
+            Log.w("SRR", "Got result " + dest);
+            ModManager modman = new ModManager();
+            ModList list = modman.get(dest);
+            if (list != null) {
+                Log.w("SRR", "Invalidating list");
+                list.valid = false;
+            }
+
+            if (modman.mev != null) {
+                Bundle b2 = new Bundle();
+                b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_INSTALL);
+                b2.putString(ModEventReceiver.PARAM_MODNAME, modname);
+                b2.putString(ModEventReceiver.PARAM_DEST, dest);
+                modman.mev.onModEvent(b2);
+            }
         }
     }
 

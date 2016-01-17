@@ -2,15 +2,14 @@ package com.rubenwardy.minetestmodmanager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.util.Log;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
+import com.rubenwardy.minetestmodmanager.manager.ModEventReceiver;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 
 /**
@@ -19,7 +18,9 @@ import com.rubenwardy.minetestmodmanager.manager.ModManager;
  * item details are presented side-by-side with a list of items
  * in a {@link ModListActivity}.
  */
-public class ModDetailActivity extends AppCompatActivity {
+public class ModDetailActivity
+        extends AppCompatActivity
+        implements ModEventReceiver {
     ModDetailFragment mFragment;
 
     @Override
@@ -28,6 +29,9 @@ public class ModDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mod_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
+
+        ModManager modman = new ModManager();
+        modman.setEventReceiver(this);
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
@@ -57,6 +61,31 @@ public class ModDetailActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.mod_detail_container, mFragment)
                     .commit();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ModManager modman = new ModManager();
+        modman.unsetEventReceiver(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ModManager modman = new ModManager();
+        modman.unsetEventReceiver(this);
+    }
+
+
+    @Override
+    public void onModEvent(Bundle bundle) {
+        String action = bundle.getString(PARAM_ACTION);
+        if (action == null) {
+            return;
+        } if (action.equals(ACTION_UNINSTALL)) {
+            finish();
         }
     }
 

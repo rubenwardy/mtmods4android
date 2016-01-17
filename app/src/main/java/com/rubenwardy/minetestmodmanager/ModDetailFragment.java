@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.rubenwardy.minetestmodmanager.manager.Mod;
+import com.rubenwardy.minetestmodmanager.manager.ModEventReceiver;
 import com.rubenwardy.minetestmodmanager.manager.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 
@@ -30,6 +31,7 @@ public class ModDetailFragment extends Fragment {
     public static final String ARG_MOD_NAME = "mod_name";
 
     public Mod mItem;
+    public String current_list;
 
     /**
      * Mandatory empty constructor for the mFragment manager to instantiate the
@@ -48,9 +50,9 @@ public class ModDetailFragment extends Fragment {
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
             String name = getArguments().getString(ARG_MOD_NAME);
-            String listpath = getArguments().getString(ARG_MOD_LIST);
+            current_list = getArguments().getString(ARG_MOD_LIST);
             ModManager modman = new ModManager();
-            ModList list = modman.get(listpath);
+            ModList list = modman.get(current_list);
             mItem = list.mods_map.get(name);
 
             Activity activity = this.getActivity();
@@ -71,14 +73,18 @@ public class ModDetailFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.mod_desc)).setText(mItem.desc);
         }
 
-        Button fab = (Button) rootView.findViewById(R.id.uninstall);
-        fab.setOnClickListener(new View.OnClickListener() {
+        Button btn = (Button) rootView.findViewById(R.id.uninstall);
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ModManager modman = new ModManager();
                 if (modman.uninstallMod(mItem)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_UNINSTALL);
+                    bundle.putString(ModEventReceiver.PARAM_MODNAME, mItem.name);
                     Snackbar.make(view, "Uninstalled mod.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+                    ((ModEventReceiver) getActivity()).onModEvent(bundle);
                 } else {
                     Snackbar.make(view, "Failed to uninstall mod for some reason.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();

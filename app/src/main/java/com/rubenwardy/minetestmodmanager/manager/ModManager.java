@@ -18,8 +18,23 @@ import java.util.Map;
  * Provides a collection of mods.
  */
 public class ModManager {
+    public static ModEventReceiver mev;
     public static Map<String, ModList> lists_map = new HashMap<String, ModList>();
     public static ServiceResultReceiver srr = new ServiceResultReceiver(new Handler());
+
+    public void setEventReceiver(ModEventReceiver mev) {
+        Log.w("ModMan", "Set event receiver!");
+        this.mev = mev;
+    }
+
+    public void unsetEventReceiver(ModEventReceiver mev) {
+        if (this.mev == mev) {
+            this.mev = null;
+            Log.w("ModMan", "Unset event receiver!");
+        } else {
+            Log.w("ModMan", "Ignored call to unset event receiver, already different.");
+        }
+    }
 
     public ModList get(String path) {
         return lists_map.get(path);

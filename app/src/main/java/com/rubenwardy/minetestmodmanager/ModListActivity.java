@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rubenwardy.minetestmodmanager.manager.Mod;
+import com.rubenwardy.minetestmodmanager.manager.ModEventReceiver;
 import com.rubenwardy.minetestmodmanager.manager.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 
@@ -32,7 +33,9 @@ import java.util.List;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class ModListActivity extends AppCompatActivity {
+public class ModListActivity
+        extends AppCompatActivity
+        implements ModEventReceiver {
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -54,7 +57,7 @@ public class ModListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Installing mod...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
                 Mod mod = new Mod(Mod.ModType.EMT_INVALID, "food", "Food", "");
@@ -66,6 +69,7 @@ public class ModListActivity extends AppCompatActivity {
         File sdcard = Environment.getExternalStorageDirectory();
         current_dir = new File(sdcard.getAbsolutePath(), "/Minetest/mods").getAbsolutePath();
         mModMan = new ModManager();
+        mModMan.setEventReceiver(this);
         ModList list = mModMan.getModsFromDir(current_dir);
 
         View recyclerView = findViewById(R.id.mod_list);
@@ -82,6 +86,52 @@ public class ModListActivity extends AppCompatActivity {
         super.onResume();
 
         Log.w("MLAct", "Resuming!");
+        mModMan.setEventReceiver(this);
+        ModList list = mModMan.get(current_dir);
+        if (list != null && !list.valid && mModMan.update(list)) {
+            Log.w("MLAct", " - list has changed!");
+            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
+            assert recyclerView != null;
+            ModListRecyclerViewAdapter adapter = (ModListRecyclerViewAdapter) recyclerView.getAdapter();
+            adapter.setMods(list.mods);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ModManager modman = new ModManager();
+        modman.unsetEventReceiver(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ModManager modman = new ModManager();
+        modman.unsetEventReceiver(this);
+    }
+
+    @Override
+    public void onModEvent(Bundle bundle) {
+        String action = bundle.getString(PARAM_ACTION);
+        if (action == null) {
+            return;
+        } else if (action.equals(ACTION_INSTALL)) {
+            String modname = bundle.getString(PARAM_MODNAME);
+            if (bundle.containsKey(PARAM_ERROR)) {
+                String error = bundle.getString(PARAM_ERROR);
+                Snackbar.make(findViewById(android.R.id.content), "Failed to install mod " + modname, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                return;
+            } else {
+                Snackbar.make(findViewById(android.R.id.content), "Installed mod " + modname, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        }
+
+        // TODO: check event type.
+        Log.w("MLAct", "Received frag event.");
         ModList list = mModMan.get(current_dir);
         if (list != null && !list.valid && mModMan.update(list)) {
             Log.w("MLAct", " - list has changed!");

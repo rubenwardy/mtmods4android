@@ -21,6 +21,7 @@ public class ModInstallService extends IntentService {
     private static final String EXTRA_DEST = "com.rubenwardy.minetestmodmanager.extra.DEST";
     public static final String RET_NAME = "name";
     public static final String RET_DEST = "dest";
+    public static final String RET_ERROR = "error";
 
     public ModInstallService() {
         super("ModInstallService");
@@ -85,6 +86,11 @@ public class ModInstallService extends IntentService {
                 rec.send(0, b);
             }
         } catch (IOException e) {
+            Bundle b = new Bundle();
+            b.putString(RET_NAME, modname);
+            b.putString(RET_DEST, dest.getAbsolutePath());
+            b.putString(RET_ERROR, e.toString());
+            rec.send(0, b);
             e.printStackTrace();
         }
         Log.w("ModService", "Finished installing mod.");
