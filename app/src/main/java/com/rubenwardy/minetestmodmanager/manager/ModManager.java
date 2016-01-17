@@ -58,6 +58,10 @@ public class ModManager {
         ModInstallService.startActionInstall(context, srr, mod.name, zip, path);
     }
 
+    public void installUrlModAsync(Context context, @NonNull Mod mod, @NonNull String url, String path) {
+        ModInstallService.startActionUrlInstall(context, srr, mod.name, url, path);
+    }
+
     public boolean uninstallMod(@NonNull Mod mod) {
         if (mod.path.equals("")) {
             return false;

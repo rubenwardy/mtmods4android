@@ -60,9 +60,9 @@ public class ModListActivity
                 Snackbar.make(view, "Installing mod...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                Mod mod = new Mod(Mod.ModType.EMT_INVALID, "food", "Food", "");
-                mModMan.installModAsync(getApplicationContext(), mod,
-                        new File(current_dir, "food-master.zip"), current_dir);
+                Mod mod = new Mod(Mod.ModType.EMT_INVALID, "awards", "Awards", "");
+                mModMan.installUrlModAsync(getApplicationContext(), mod,
+                        "https://github.com/rubenwardy/awards/archive/master.zip", current_dir);
             }
         });
 
