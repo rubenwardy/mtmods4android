@@ -4,6 +4,8 @@ import android.app.Service;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.os.ResultReceiver;
 import android.util.Log;
 
@@ -19,15 +21,15 @@ import java.util.Map;
  */
 public class ModManager {
     public static ModEventReceiver mev;
-    public static Map<String, ModList> lists_map = new HashMap<String, ModList>();
-    public static ServiceResultReceiver srr = new ServiceResultReceiver(new Handler());
+    private static Map<String, ModList> lists_map = new HashMap<String, ModList>();
+    private static ServiceResultReceiver srr = new ServiceResultReceiver(new Handler());
 
-    public void setEventReceiver(ModEventReceiver mev) {
+    public void setEventReceiver(@NonNull ModEventReceiver mev) {
         Log.w("ModMan", "Set event receiver!");
         this.mev = mev;
     }
 
-    public void unsetEventReceiver(ModEventReceiver mev) {
+    public void unsetEventReceiver(@Nullable ModEventReceiver mev) {
         if (this.mev == mev) {
             this.mev = null;
             Log.w("ModMan", "Unset event receiver!");
@@ -40,7 +42,7 @@ public class ModManager {
         return lists_map.get(path);
     }
 
-    public ModList listFromMod(Mod mod) {
+    public ModList listFromMod(@NonNull Mod mod) {
         // TODO: optimise this.
         for (ModList list : lists_map.values()) {
             for (Mod b : list.mods) {
@@ -52,12 +54,12 @@ public class ModManager {
         return null;
     }
 
-    public void installModAsync(Context context, Mod mod, File zip, String path) {
+    public void installModAsync(Context context, @NonNull Mod mod, @NonNull File zip, String path) {
         ModInstallService.startActionInstall(context, srr, mod.name, zip, path);
     }
 
-    public boolean uninstallMod(Mod mod) {
-        if (mod == null || mod.path.equals("")) {
+    public boolean uninstallMod(@NonNull Mod mod) {
+        if (mod.path.equals("")) {
             return false;
         } else {
             Utils.deleteRecursive(new File(mod.path));
@@ -67,7 +69,7 @@ public class ModManager {
         }
     }
 
-    public boolean updatePathList(ModList list) {
+    private boolean updatePathList(@NonNull ModList list) {
         Log.w("ModLib", "Collecting/updating ModList (type=dir).");
 
         File dirs = new File(list.uri);

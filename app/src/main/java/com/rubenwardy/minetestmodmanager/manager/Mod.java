@@ -1,5 +1,7 @@
 package com.rubenwardy.minetestmodmanager.manager;
 
+import android.support.annotation.NonNull;
+
 /**
  * Represents a mod, installed or not.
  */
@@ -16,7 +18,7 @@ public class Mod {
     public final String desc;
     public String path;
 
-    public Mod(ModType type, String name, String title, String desc) {
+    public Mod(@NonNull ModType type, String name, String title, String desc) {
         this.type = type;
         this.name = name;
         this.title = title;

@@ -21,7 +21,7 @@ import com.rubenwardy.minetestmodmanager.manager.ModManager;
 public class ModDetailActivity
         extends AppCompatActivity
         implements ModEventReceiver {
-    ModDetailFragment mFragment;
+    private ModDetailFragment mFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

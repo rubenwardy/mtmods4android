@@ -30,8 +30,8 @@ public class ModDetailFragment extends Fragment {
     public static final String ARG_MOD_LIST = "mod_list";
     public static final String ARG_MOD_NAME = "mod_name";
 
-    public Mod mItem;
-    public String current_list;
+    private Mod mItem;
+    private String current_list;
 
     /**
      * Mandatory empty constructor for the mFragment manager to instantiate the
