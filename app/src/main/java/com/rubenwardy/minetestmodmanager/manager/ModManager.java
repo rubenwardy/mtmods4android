@@ -131,14 +131,16 @@ public class ModManager {
         }
     }
 
-    public ModList getModsFromDir(String title, String path) {
+    public ModList getModsFromDir(String title, String root, String path) {
         if (lists_map.containsKey(path)) {
             Log.w("ModLib", "Returning existing ModList (type=dir).");
             return lists_map.get(path);
         }
 
         Log.w("ModLib", "Creating new ModList (type=dir).");
-        ModList list = new ModList(ModList.ModListType.EMLT_PATH, title, path);
+        Log.w("ModLib", " - root: " + root);
+        Log.w("ModLib", " - path: " + path);
+        ModList list = new ModList(ModList.ModListType.EMLT_PATH, title, root, path);
         if (update(list)) {
             lists_map.put(path, list);
             return list;

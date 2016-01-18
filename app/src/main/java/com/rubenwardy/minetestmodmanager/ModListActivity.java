@@ -125,8 +125,8 @@ public class ModListActivity
 
         // Add lists
         Resources res = getResources();
-        mModMan.getModsFromDir(res.getString(R.string.minetest_mods), mtdir.getAbsolutePath());
-        mModMan.getModsFromDir(res.getString(R.string.multicraft_mods), mcdir.getAbsolutePath());
+        mModMan.getModsFromDir(res.getString(R.string.minetest_mods), mtroot.getAbsolutePath(), mtdir.getAbsolutePath());
+        mModMan.getModsFromDir(res.getString(R.string.multicraft_mods), mcroot.getAbsolutePath(), mcdir.getAbsolutePath());
 
         View recyclerView = findViewById(R.id.mod_list);
         assert recyclerView != null;
