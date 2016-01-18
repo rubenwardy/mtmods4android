@@ -36,6 +36,7 @@ public class ServiceResultReceiver extends ResultReceiver {
                 b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_INSTALL);
                 b2.putString(ModEventReceiver.PARAM_MODNAME, modname);
                 b2.putString(ModEventReceiver.PARAM_DEST, dest);
+                //noinspection ConstantConditions
                 ModManager.mev.onModEvent(b2);
             }
         } else {

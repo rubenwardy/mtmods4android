@@ -4,8 +4,11 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
+import android.support.annotation.WorkerThread;
 import android.support.v4.os.ResultReceiver;
 import android.util.Log;
 
@@ -38,6 +41,7 @@ public class ModInstallService extends IntentService {
         super("ModInstallService");
     }
 
+    @MainThread
     public static void startActionInstall(@NonNull Context context, ServiceResultReceiver srr,
             String modname, @NonNull File zip, String dest) {
         Intent intent = new Intent(context, ModInstallService.class);
@@ -49,6 +53,7 @@ public class ModInstallService extends IntentService {
         context.startService(intent);
     }
 
+    @MainThread
     public static void startActionUrlInstall(@NonNull Context context, ServiceResultReceiver srr,
                                           String modname, String url, String dest) {
         Intent intent = new Intent(context, ModInstallService.class);
@@ -61,6 +66,7 @@ public class ModInstallService extends IntentService {
     }
 
     @Override
+    @WorkerThread
     protected void onHandleIntent(@Nullable Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
@@ -82,6 +88,7 @@ public class ModInstallService extends IntentService {
         }
     }
 
+    @WorkerThread
     private void handleActionUrlInstall(@NonNull ResultReceiver rec, @NonNull String modname, @NonNull String url_str, @NonNull File dest) {
         Log.w("ModService", "Downloading file..");
         try {
@@ -136,6 +143,7 @@ public class ModInstallService extends IntentService {
      * Handle action Install in the provided background thread with the provided
      * parameters.
      */
+    @WorkerThread
     private void handleActionInstall(@NonNull ResultReceiver rec, @NonNull String modname, @NonNull File zipfile, @NonNull File dest) {
         Log.w("ModService", "Installing mod...");
 

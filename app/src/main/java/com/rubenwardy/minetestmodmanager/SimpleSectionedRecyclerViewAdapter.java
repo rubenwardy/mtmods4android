@@ -1,6 +1,8 @@
 package com.rubenwardy.minetestmodmanager;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
@@ -34,8 +36,8 @@ class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
 
-    public SimpleSectionedRecyclerViewAdapter(@NonNull Context context, int sectionResourceId, int textResourceId,
-                                              RecyclerView.Adapter baseAdapter) {
+    public SimpleSectionedRecyclerViewAdapter(@NonNull Context context, @LayoutRes int sectionResourceId,
+            @IdRes int textResourceId, @NonNull RecyclerView.Adapter baseAdapter) {
 
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mSectionResourceId = sectionResourceId;
@@ -95,8 +97,9 @@ class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder sectionViewHolder, int position) {
         if (isSectionHeaderPosition(position)) {
             ((SectionViewHolder)sectionViewHolder).title.setText(mSections.get(position).title);
-        }else{
-            mBaseAdapter.onBindViewHolder(sectionViewHolder,sectionedPositionToPosition(position));
+        } else if (mBaseAdapter != null) {
+            //noinspection unchecked
+            mBaseAdapter.onBindViewHolder(sectionViewHolder, sectionedPositionToPosition(position));
         }
 
     }

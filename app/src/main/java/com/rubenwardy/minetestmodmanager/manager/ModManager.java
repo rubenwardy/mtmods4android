@@ -2,6 +2,7 @@ package com.rubenwardy.minetestmodmanager.manager;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -48,10 +49,12 @@ public class ModManager {
         return get(mod.listname);
     }
 
+    @MainThread
     public void installModAsync(Context context, @NonNull Mod mod, @NonNull File zip, String path) {
         ModInstallService.startActionInstall(context, srr, mod.name, zip, path);
     }
 
+    @MainThread
     public void installUrlModAsync(Context context, @NonNull Mod mod, @NonNull String url, String path) {
         ModInstallService.startActionUrlInstall(context, srr, mod.name, url, path);
     }
