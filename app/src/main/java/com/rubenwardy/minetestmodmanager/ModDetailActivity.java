@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.support.v7.app.AppCompatActivity;
@@ -69,6 +70,10 @@ public class ModDetailActivity
                             } else {
                                 ctoolbar.setBackground(d);
                             }
+
+                            NestedScrollView scroll =
+                                    (NestedScrollView) findViewById( R.id.mod_detail_container);
+                            scroll.requestFocus();
                         }
                     }
                 }

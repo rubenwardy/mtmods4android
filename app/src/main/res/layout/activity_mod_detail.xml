@@ -35,6 +35,8 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:id="@+id/mod_detail_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
