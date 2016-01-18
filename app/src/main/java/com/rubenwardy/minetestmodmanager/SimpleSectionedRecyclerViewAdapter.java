@@ -1,6 +1,7 @@
 package com.rubenwardy.minetestmodmanager;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import java.util.List;
 
 class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    @NonNull
     private final Context mContext;
     private static final int SECTION_TYPE = 0;
 
@@ -24,6 +26,7 @@ class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     private int mTextResourceId;
     private LayoutInflater mLayoutInflater;
     private RecyclerView.Adapter mBaseAdapter;
+    @NonNull
     private SparseArray<Section> mSections = new SparseArray<>();
 
     public void setMods(List<Mod> mods) {
@@ -31,7 +34,7 @@ class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
 
-    public SimpleSectionedRecyclerViewAdapter(Context context, int sectionResourceId, int textResourceId,
+    public SimpleSectionedRecyclerViewAdapter(@NonNull Context context, int sectionResourceId, int textResourceId,
                                               RecyclerView.Adapter baseAdapter) {
 
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -72,7 +75,7 @@ class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
 
         public TextView title;
 
-        public SectionViewHolder(View view,int mTextResourceid) {
+        public SectionViewHolder(@NonNull View view,int mTextResourceid) {
             super(view);
             title = (TextView) view.findViewById(mTextResourceid);
         }
@@ -89,7 +92,7 @@ class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder sectionViewHolder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder sectionViewHolder, int position) {
         if (isSectionHeaderPosition(position)) {
             ((SectionViewHolder)sectionViewHolder).title.setText(mSections.get(position).title);
         }else{
@@ -122,12 +125,12 @@ class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
 
-    public void setSections(Section[] sections) {
+    public void setSections(@NonNull Section[] sections) {
         mSections.clear();
 
         Arrays.sort(sections, new Comparator<Section>() {
             @Override
-            public int compare(Section o, Section o1) {
+            public int compare(@NonNull Section o, @NonNull Section o1) {
                 return (o.firstPosition == o1.firstPosition)
                         ? 0
                         : ((o.firstPosition < o1.firstPosition) ? -1 : 1);

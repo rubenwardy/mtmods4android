@@ -12,8 +12,10 @@ public class Mod {
         EMT_MODPACK
     }
 
+    @NonNull
     public final ModType type;
     public final String listname;
+    @NonNull
     public final String name;
     public final String title;
     public final String desc;

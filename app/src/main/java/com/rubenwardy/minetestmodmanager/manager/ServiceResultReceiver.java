@@ -2,6 +2,7 @@ package com.rubenwardy.minetestmodmanager.manager;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.os.ResultReceiver;
 import android.util.Log;
 
@@ -14,7 +15,7 @@ public class ServiceResultReceiver extends ResultReceiver {
     }
 
     @Override
-    protected void onReceiveResult(int resultCode, Bundle b) {
+    protected void onReceiveResult(int resultCode, @NonNull Bundle b) {
         String modname = b.getString(ModInstallService.RET_NAME);
         String dest = b.getString(ModInstallService.RET_DEST);
 

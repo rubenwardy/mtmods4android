@@ -1,5 +1,7 @@
 package com.rubenwardy.minetestmodmanager.manager;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +21,9 @@ public class ModList {
     public final String root;
     public final ModListType type;
     public boolean valid;
+    @NonNull
     public List<Mod> mods = new ArrayList<>();
+    @NonNull
     public Map<String, Mod> mods_map = new HashMap<>();
 
     public ModList(ModListType type, String title, String root, String uri) {
@@ -30,7 +34,7 @@ public class ModList {
         this.valid = true;
     }
 
-    public void add(Mod mod) {
+    public void add(@NonNull Mod mod) {
         mods.add(mod);
         mods_map.put(mod.name, mod);
     }

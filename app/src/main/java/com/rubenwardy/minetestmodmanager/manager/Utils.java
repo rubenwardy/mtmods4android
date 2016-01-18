@@ -25,7 +25,7 @@ class Utils {
     }
 
     // unzip(new File("/sdcard/pictures.zip"), new File("/sdcard"));
-    public static void UnzipFile(File zipFile, File targetDirectory, UnzipFile_Progress progress)
+    public static void UnzipFile(@NonNull File zipFile, File targetDirectory, @Nullable UnzipFile_Progress progress)
             throws IOException {
         long total_len = zipFile.length();
         long total_installed_len = 0;
@@ -63,7 +63,7 @@ class Utils {
         }
     }
 
-    public static void deleteRecursive(File fileOrDir) {
+    public static void deleteRecursive(@NonNull File fileOrDir) {
         if (fileOrDir.isDirectory()) {
             for (File child : fileOrDir.listFiles()) {
                 deleteRecursive(child);
@@ -75,7 +75,7 @@ class Utils {
             Log.w("utils", "Failed to delete path: " + fileOrDir.getAbsolutePath());
     }
 
-    public static boolean copyFolder(File src, File dest)
+    public static boolean copyFolder(@NonNull File src, @NonNull File dest)
             throws IOException{
 
         if (src.isDirectory()) {
@@ -114,7 +114,7 @@ class Utils {
     }
 
     @NonNull
-    public static Mod.ModType detectModType(File file) {
+    public static Mod.ModType detectModType(@NonNull File file) {
         if (new File(file.getAbsolutePath(), "init.lua").exists()) {
             Log.w("ModLib", "Found mod at " + file.getName());
             return Mod.ModType.EMT_MOD;
@@ -128,7 +128,7 @@ class Utils {
     }
 
     @Nullable
-    public static File findRootDir(File dir) {
+    public static File findRootDir(@NonNull File dir) {
         if (!dir.isDirectory())
             return null;
 

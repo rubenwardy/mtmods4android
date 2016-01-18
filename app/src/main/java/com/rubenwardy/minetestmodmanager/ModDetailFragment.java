@@ -1,6 +1,7 @@
 package com.rubenwardy.minetestmodmanager;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -73,7 +74,7 @@ public class ModDetailFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.mod_detail, container, false);
 
@@ -85,7 +86,7 @@ public class ModDetailFragment extends Fragment {
         Button btn = (Button) rootView.findViewById(R.id.uninstall);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(@NonNull View view) {
                 ModManager modman = new ModManager();
                 if (modman.uninstallMod(mItem)) {
                     Bundle bundle = new Bundle();

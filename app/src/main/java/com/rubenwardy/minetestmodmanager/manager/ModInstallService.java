@@ -4,6 +4,8 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.os.ResultReceiver;
 import android.util.Log;
 
@@ -36,8 +38,8 @@ public class ModInstallService extends IntentService {
         super("ModInstallService");
     }
 
-    public static void startActionInstall(Context context, ServiceResultReceiver srr,
-            String modname, File zip, String dest) {
+    public static void startActionInstall(@NonNull Context context, ServiceResultReceiver srr,
+            String modname, @NonNull File zip, String dest) {
         Intent intent = new Intent(context, ModInstallService.class);
         intent.setAction(ACTION_INSTALL);
         intent.putExtra(EXTRA_MOD_NAME, modname);
@@ -47,7 +49,7 @@ public class ModInstallService extends IntentService {
         context.startService(intent);
     }
 
-    public static void startActionUrlInstall(Context context, ServiceResultReceiver srr,
+    public static void startActionUrlInstall(@NonNull Context context, ServiceResultReceiver srr,
                                           String modname, String url, String dest) {
         Intent intent = new Intent(context, ModInstallService.class);
         intent.setAction(ACTION_URL_INSTALL);
@@ -59,7 +61,7 @@ public class ModInstallService extends IntentService {
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onHandleIntent(@Nullable Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
             ResultReceiver rec = intent.getParcelableExtra("receiverTag");
@@ -80,7 +82,7 @@ public class ModInstallService extends IntentService {
         }
     }
 
-    private void handleActionUrlInstall(ResultReceiver rec, String modname, String url_str, File dest) {
+    private void handleActionUrlInstall(@NonNull ResultReceiver rec, @NonNull String modname, @NonNull String url_str, @NonNull File dest) {
         Log.w("ModService", "Downloading file..");
         try {
             URL url = new URL(url_str);
@@ -89,7 +91,7 @@ public class ModInstallService extends IntentService {
             // this will be useful so that you can show a typical 0-100% progress bar
             int fileLength = connection.getContentLength();
 
-            File file = null;
+            File file;
             int i = 0;
             do {
                 Log.w("ModService", "Checking file tmp" + Integer.toString(i) + ".zip");
@@ -134,10 +136,10 @@ public class ModInstallService extends IntentService {
      * Handle action Install in the provided background thread with the provided
      * parameters.
      */
-    private void handleActionInstall(ResultReceiver rec, String modname, File zipfile, File dest) {
+    private void handleActionInstall(@NonNull ResultReceiver rec, @NonNull String modname, @NonNull File zipfile, @NonNull File dest) {
         Log.w("ModService", "Installing mod...");
 
-        File dir = null;
+        File dir;
         int i = 0;
         do {
             Log.w("ModService", "Checking tmp" + Integer.toString(i));

@@ -17,8 +17,11 @@ import java.util.Map;
  * Provides a collection of mods.
  */
 public class ModManager {
+    @Nullable
     public static ModEventReceiver mev;
+    @NonNull
     public static Map<String, ModList> lists_map = new HashMap<>();
+    @NonNull
     private static ServiceResultReceiver srr = new ServiceResultReceiver(new Handler());
 
     public void setEventReceiver(@NonNull ModEventReceiver mev) {
@@ -126,7 +129,7 @@ public class ModManager {
         return true;
     }
 
-    public boolean update(ModList list) {
+    public boolean update(@NonNull ModList list) {
         if (list.type == ModList.ModListType.EMLT_PATH) {
             return updatePathList(list);
         } else {

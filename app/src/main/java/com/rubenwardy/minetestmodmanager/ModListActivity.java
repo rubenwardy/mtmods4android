@@ -65,7 +65,7 @@ public class ModListActivity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(@NonNull View view) {
                 Snackbar.make(view, "Installing mod...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
@@ -266,15 +266,16 @@ public class ModListActivity
             mMods = mods;
         }
 
+        @NonNull
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.mod_list_content, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
             holder.mItem = mMods.get(position);
             holder.mIdView.setText(holder.mItem.name);
             int len = holder.mItem.desc.indexOf('.') + 1;
@@ -289,7 +290,7 @@ public class ModListActivity
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(@NonNull View v) {
                     if (mTwoPane) {
                         Bundle arguments = new Bundle();
                         arguments.putString(ModDetailFragment.ARG_MOD_LIST, holder.mItem.listname);
@@ -317,18 +318,22 @@ public class ModListActivity
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
+            @NonNull
             public final View mView;
+            @NonNull
             public final TextView mIdView;
+            @NonNull
             public final TextView mContentView;
             public Mod mItem;
 
-            public ViewHolder(View view) {
+            public ViewHolder(@NonNull View view) {
                 super(view);
                 mView = view;
                 mIdView = (TextView) view.findViewById(R.id.id);
                 mContentView = (TextView) view.findViewById(R.id.content);
             }
 
+            @NonNull
             @Override
             public String toString() {
                 return super.toString() + " '" + mContentView.getText() + "'";
