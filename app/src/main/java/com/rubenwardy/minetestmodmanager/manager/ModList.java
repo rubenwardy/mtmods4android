@@ -14,14 +14,16 @@ public class ModList {
         EMLT_PATH
     }
 
+    public final String title;
     public final String uri;
     public final ModListType type;
     public boolean valid;
     public List<Mod> mods = new ArrayList<Mod>();
     public Map<String, Mod> mods_map = new HashMap<String, Mod>();
 
-    public ModList(ModListType type, String uri) {
+    public ModList(ModListType type, String title, String uri) {
         this.type = type;
+        this.title = title;
         this.uri = uri;
         this.valid = true;
     }

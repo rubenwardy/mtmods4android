@@ -1,12 +1,9 @@
 package com.rubenwardy.minetestmodmanager.manager;
 
-import android.app.Service;
 import android.content.Context;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.os.ResultReceiver;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -21,7 +18,7 @@ import java.util.Map;
  */
 public class ModManager {
     public static ModEventReceiver mev;
-    private static Map<String, ModList> lists_map = new HashMap<String, ModList>();
+    public static Map<String, ModList> lists_map = new HashMap<String, ModList>();
     private static ServiceResultReceiver srr = new ServiceResultReceiver(new Handler());
 
     public void setEventReceiver(@NonNull ModEventReceiver mev) {
@@ -43,15 +40,7 @@ public class ModManager {
     }
 
     public ModList listFromMod(@NonNull Mod mod) {
-        // TODO: optimise this.
-        for (ModList list : lists_map.values()) {
-            for (Mod b : list.mods) {
-                if (mod.path.equals(b.path)) {
-                    return list;
-                }
-            }
-        }
-        return null;
+        return get(mod.listname);
     }
 
     public void installModAsync(Context context, @NonNull Mod mod, @NonNull File zip, String path) {
@@ -114,7 +103,7 @@ public class ModManager {
                         Log.w("ModLib", "No file at " + descF.getAbsolutePath());
                     }
 
-                    Mod mod = new Mod(type, file.getName(), title, desc);
+                    Mod mod = new Mod(type, list.uri, file.getName(), title, desc);
                     mod.path = file.getAbsolutePath();
                     list.add(mod);
                 }
@@ -135,14 +124,14 @@ public class ModManager {
         }
     }
 
-    public ModList getModsFromDir(String path) {
+    public ModList getModsFromDir(String title, String path) {
         if (lists_map.containsKey(path)) {
             Log.w("ModLib", "Returning existing ModList (type=dir).");
             return lists_map.get(path);
         }
 
         Log.w("ModLib", "Creating new ModList (type=dir).");
-        ModList list = new ModList(ModList.ModListType.EMLT_PATH, path);
+        ModList list = new ModList(ModList.ModListType.EMLT_PATH, title, path);
         if (update(list)) {
             lists_map.put(path, list);
             return list;

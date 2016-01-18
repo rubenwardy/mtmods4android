@@ -13,13 +13,15 @@ public class Mod {
     }
 
     public final ModType type;
+    public final String listname;
     public final String name;
     public final String title;
     public final String desc;
     public String path;
 
-    public Mod(@NonNull ModType type, String name, String title, String desc) {
+    public Mod(@NonNull ModType type, String listname, String name, String title, String desc) {
         this.type = type;
+        this.listname = listname;
         this.name = name;
         this.title = title;
         this.desc = desc;

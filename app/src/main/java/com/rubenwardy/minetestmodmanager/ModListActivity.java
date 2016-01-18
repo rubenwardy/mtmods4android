@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -16,7 +17,6 @@ import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -30,8 +30,6 @@ import com.rubenwardy.minetestmodmanager.manager.ModManager;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -51,7 +49,7 @@ public class ModListActivity
      */
     private boolean mTwoPane;
     private ModManager mModMan;
-    private String current_dir;
+    private String install_dir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,16 +69,13 @@ public class ModListActivity
                 Snackbar.make(view, "Installing mod...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                Mod mod = new Mod(Mod.ModType.EMT_INVALID, "awards", "Awards", "");
+                Mod mod = new Mod(Mod.ModType.EMT_INVALID, "", "awards", "Awards", "");
                 mModMan.installUrlModAsync(getApplicationContext(), mod,
-                        "https://github.com/rubenwardy/awards/archive/master.zip", current_dir);
+                        "https://github.com/rubenwardy/awards/archive/master.zip", install_dir);
             }
         });
 
         File extern = Environment.getExternalStorageDirectory();
-        File cdir = new File(extern, "/Minetest/mods");
-        current_dir = cdir.getAbsolutePath();
-        Log.w("MLAct", "Mod dir should be at: " + current_dir);
         if (!extern.exists()) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setTitle(R.string.dialog_noext_title);
@@ -95,7 +90,22 @@ public class ModListActivity
             alertDialog.show();
             return;
         }
-        if (!cdir.exists() && !cdir.mkdirs()) {
+
+        // Add Minetest mod location
+        File mtroot = new File(extern, "/Minetest");
+        File mtdir = new File(mtroot, "/mods");
+        File mcroot = new File(extern, "/MultiCraft");
+        File mcdir = new File(mcroot, "/mods");
+        install_dir = mtdir.getAbsolutePath();
+
+        // Check there is at least one mod dir
+        if (mtroot.exists() && !mtdir.exists() && mtdir.mkdirs()) {
+            mtdir = new File(mtroot, "/mods");
+        }
+        if (mcroot.exists() && !mcdir.exists() && mcdir.mkdirs()) {
+            mcdir = new File(mcroot, "/mods");
+        }
+        if (!mtdir.exists() && !mcdir.exists() && !mtdir.mkdirs()) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setCancelable(false);
             alertDialogBuilder.setTitle(R.string.dialog_nomt_title);
@@ -110,8 +120,13 @@ public class ModListActivity
             return;
         }
 
+        // Bind event receiver
         mModMan.setEventReceiver(this);
-        ModList list = mModMan.getModsFromDir(current_dir);
+
+        // Add lists
+        Resources res = getResources();
+        mModMan.getModsFromDir(res.getString(R.string.minetest_mods), mtdir.getAbsolutePath());
+        mModMan.getModsFromDir(res.getString(R.string.multicraft_mods), mcdir.getAbsolutePath());
 
         View recyclerView = findViewById(R.id.mod_list);
         assert recyclerView != null;
@@ -128,12 +143,9 @@ public class ModListActivity
 
         Log.w("MLAct", "Resuming!");
         mModMan.setEventReceiver(this);
-        ModList list = mModMan.get(current_dir);
-        if (list != null && !list.valid && mModMan.update(list)) {
-            Log.w("MLAct", " - list has changed!");
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
-            assert recyclerView != null;
-            fillRecyclerView(recyclerView);
+
+        for (ModList list : ModManager.lists_map.values()) {
+            checkChanges(list);
         }
     }
 
@@ -160,7 +172,8 @@ public class ModListActivity
             String modname = bundle.getString(PARAM_MODNAME);
             if (bundle.containsKey(PARAM_ERROR)) {
                 String error = bundle.getString(PARAM_ERROR);
-                Snackbar.make(findViewById(android.R.id.content), "Failed to install mod " + modname, Snackbar.LENGTH_LONG)
+                Snackbar.make(findViewById(android.R.id.content), "Failed to install mod " +
+                            modname + ". Error: " + error, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 return;
             } else {
@@ -175,9 +188,19 @@ public class ModListActivity
                     .commit();
         }
 
-        // TODO: check event type.
-        Log.w("MLAct", "Received frag event.");
-        ModList list = mModMan.get(current_dir);
+        checkChanges(bundle.getString(ModEventReceiver.PARAM_DEST));
+    }
+
+    public void checkChanges(@Nullable String listname) {
+        if (listname == null || listname.equals("")) {
+            return;
+        }
+
+        ModList list = mModMan.get(listname);
+        checkChanges(list);
+    }
+
+    public void checkChanges(@Nullable ModList list) {
         if (list != null && !list.valid && mModMan.update(list)) {
             Log.w("MLAct", " - list has changed!");
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
@@ -194,16 +217,8 @@ public class ModListActivity
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        List<Mod> mods = null;
-        ModList list = mModMan.get(current_dir);
-        if (list == null) {
-            mods = new ArrayList<Mod>();
-        } else {
-            mods = list.mods;
-        }
-
         //Add your adapter to the sectionAdapter
-        ModListRecyclerViewAdapter adapter = new ModListRecyclerViewAdapter(mods);
+        ModListRecyclerViewAdapter adapter = new ModListRecyclerViewAdapter();
         SimpleSectionedRecyclerViewAdapter sectionedAdapter =
                 new SimpleSectionedRecyclerViewAdapter(this, R.layout.section, R.id.section_text, adapter);
         recyclerView.setAdapter(sectionedAdapter);
@@ -217,29 +232,20 @@ public class ModListActivity
         SimpleSectionedRecyclerViewAdapter adapter =
                 (SimpleSectionedRecyclerViewAdapter)recyclerView.getAdapter();
 
-        // Set entries
-        ModList list = mModMan.get(current_dir);
-        List<Mod> mods = null;
-        int installed = 0;
-        if (list == null) {
-            mods = new ArrayList<Mod>();
-        } else {
-            installed = list.mods.size();
-            mods = new ArrayList<Mod>(list.mods);
-        }
-        adapter.setMods(mods);
-
-        // Build section list
+        // Add path lists
+        List<Mod> mods = new ArrayList<Mod>();
         List<SimpleSectionedRecyclerViewAdapter.Section> sections =
                 new ArrayList<SimpleSectionedRecyclerViewAdapter.Section>();
-        if (installed > 0) {
-            // TODO: instead of hiding section, show message
-            sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0,
-                    res.getString(R.string.installed_mods)));
+        for (ModList list : ModManager.lists_map.values()) {
+            if (list.type == ModList.ModListType.EMLT_PATH) {
+                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(mods.size(), list.title));
+                mods.addAll(list.mods);
+            }
         }
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(installed,
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(mods.size(),
                 res.getString(R.string.mod_store)));
 
+        adapter.setMods(mods);
         // Set sections and update.
         SimpleSectionedRecyclerViewAdapter.Section[] dummy =
                 new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
@@ -252,8 +258,8 @@ public class ModListActivity
 
         private List<Mod> mMods;
 
-        public ModListRecyclerViewAdapter(List<Mod> items) {
-            mMods = items;
+        public ModListRecyclerViewAdapter() {
+            mMods = new ArrayList<Mod>();
         }
 
         public void setMods(List<Mod> mods) {
@@ -286,7 +292,7 @@ public class ModListActivity
                 public void onClick(View v) {
                     if (mTwoPane) {
                         Bundle arguments = new Bundle();
-                        arguments.putString(ModDetailFragment.ARG_MOD_LIST, current_dir);
+                        arguments.putString(ModDetailFragment.ARG_MOD_LIST, holder.mItem.listname);
                         arguments.putString(ModDetailFragment.ARG_MOD_NAME, holder.mItem.name);
                         ModDetailFragment fragment = new ModDetailFragment();
                         fragment.setArguments(arguments);
@@ -296,7 +302,7 @@ public class ModListActivity
                     } else {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, ModDetailActivity.class);
-                        intent.putExtra(ModDetailFragment.ARG_MOD_LIST, current_dir);
+                        intent.putExtra(ModDetailFragment.ARG_MOD_LIST, holder.mItem.listname);
                         intent.putExtra(ModDetailFragment.ARG_MOD_NAME, holder.mItem.name);
 
                         context.startActivity(intent);

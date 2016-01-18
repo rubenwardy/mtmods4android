@@ -31,7 +31,6 @@ public class ModDetailFragment extends Fragment {
     public static final String ARG_MOD_NAME = "mod_name";
 
     private Mod mItem;
-    private String current_list;
 
     /**
      * Mandatory empty constructor for the mFragment manager to instantiate the
@@ -50,10 +49,15 @@ public class ModDetailFragment extends Fragment {
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
             String name = getArguments().getString(ARG_MOD_NAME);
-            current_list = getArguments().getString(ARG_MOD_LIST);
+            String listname = getArguments().getString(ARG_MOD_LIST);
             ModManager modman = new ModManager();
-            ModList list = modman.get(current_list);
+            ModList list = modman.get(listname);
             mItem = list.mods_map.get(name);
+            if (mItem == null) {
+                list.valid = false;
+                mItem = new Mod(Mod.ModType.EMT_INVALID,
+                        "", "invalid", "Invalid Mod", "There is no mod at this location!");
+            }
 
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
@@ -81,6 +85,7 @@ public class ModDetailFragment extends Fragment {
                 if (modman.uninstallMod(mItem)) {
                     Bundle bundle = new Bundle();
                     bundle.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_UNINSTALL);
+                    bundle.putString(ModEventReceiver.PARAM_DEST, mItem.listname);
                     bundle.putString(ModEventReceiver.PARAM_MODNAME, mItem.name);
                     Snackbar.make(view, "Uninstalled mod.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
