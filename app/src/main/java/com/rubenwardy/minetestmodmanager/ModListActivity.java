@@ -3,6 +3,7 @@ package com.rubenwardy.minetestmodmanager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -28,6 +30,8 @@ import com.rubenwardy.minetestmodmanager.manager.ModManager;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -129,9 +133,7 @@ public class ModListActivity
             Log.w("MLAct", " - list has changed!");
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
             assert recyclerView != null;
-            ModListRecyclerViewAdapter adapter = (ModListRecyclerViewAdapter) recyclerView.getAdapter();
-            adapter.setMods(list.mods);
-            adapter.notifyDataSetChanged();
+            fillRecyclerView(recyclerView);
         }
     }
 
@@ -180,9 +182,7 @@ public class ModListActivity
             Log.w("MLAct", " - list has changed!");
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
             assert recyclerView != null;
-            ModListRecyclerViewAdapter adapter = (ModListRecyclerViewAdapter) recyclerView.getAdapter();
-            adapter.setMods(list.mods);
-            adapter.notifyDataSetChanged();
+            fillRecyclerView(recyclerView);
         }
     }
 
@@ -201,8 +201,50 @@ public class ModListActivity
         } else {
             mods = list.mods;
         }
+
+        //Add your adapter to the sectionAdapter
         ModListRecyclerViewAdapter adapter = new ModListRecyclerViewAdapter(mods);
-        recyclerView.setAdapter(adapter);
+        SimpleSectionedRecyclerViewAdapter sectionedAdapter =
+                new SimpleSectionedRecyclerViewAdapter(this, R.layout.section, R.id.section_text, adapter);
+        recyclerView.setAdapter(sectionedAdapter);
+
+        // Fill view
+        fillRecyclerView(recyclerView);
+    }
+
+    private void fillRecyclerView(@NonNull RecyclerView recyclerView) {
+        Resources res = getResources();
+        SimpleSectionedRecyclerViewAdapter adapter =
+                (SimpleSectionedRecyclerViewAdapter)recyclerView.getAdapter();
+
+        // Set entries
+        ModList list = mModMan.get(current_dir);
+        List<Mod> mods = null;
+        int installed = 0;
+        if (list == null) {
+            mods = new ArrayList<Mod>();
+        } else {
+            installed = list.mods.size();
+            mods = new ArrayList<Mod>(list.mods);
+        }
+        adapter.setMods(mods);
+
+        // Build section list
+        List<SimpleSectionedRecyclerViewAdapter.Section> sections =
+                new ArrayList<SimpleSectionedRecyclerViewAdapter.Section>();
+        if (installed > 0) {
+            // TODO: instead of hiding section, show message
+            sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0,
+                    res.getString(R.string.installed_mods)));
+        }
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(installed,
+                res.getString(R.string.mod_store)));
+
+        // Set sections and update.
+        SimpleSectionedRecyclerViewAdapter.Section[] dummy =
+                new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
+        adapter.setSections(sections.toArray(dummy));
+        adapter.notifyDataSetChanged();
     }
 
     public class ModListRecyclerViewAdapter
