@@ -30,12 +30,12 @@ public class ServiceResultReceiver extends ResultReceiver {
                 list.valid = false;
             }
 
-            if (modman.mev != null) {
+            if (ModManager.mev != null) {
                 Bundle b2 = new Bundle();
                 b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_INSTALL);
                 b2.putString(ModEventReceiver.PARAM_MODNAME, modname);
                 b2.putString(ModEventReceiver.PARAM_DEST, dest);
-                modman.mev.onModEvent(b2);
+                ModManager.mev.onModEvent(b2);
             }
         } else {
             Integer progress = b.getInt(ModInstallService.RET_PROGRESS);

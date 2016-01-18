@@ -164,7 +164,7 @@ public class ModListActivity
     }
 
     @Override
-    public void onModEvent(Bundle bundle) {
+    public void onModEvent(@NonNull Bundle bundle) {
         String action = bundle.getString(PARAM_ACTION);
         if (action == null) {
             return;
@@ -191,7 +191,7 @@ public class ModListActivity
         checkChanges(bundle.getString(ModEventReceiver.PARAM_DEST));
     }
 
-    public void checkChanges(@Nullable String listname) {
+    private void checkChanges(@Nullable String listname) {
         if (listname == null || listname.equals("")) {
             return;
         }
@@ -200,7 +200,7 @@ public class ModListActivity
         checkChanges(list);
     }
 
-    public void checkChanges(@Nullable ModList list) {
+    private void checkChanges(@Nullable ModList list) {
         if (list != null && !list.valid && mModMan.update(list)) {
             Log.w("MLAct", " - list has changed!");
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
@@ -233,9 +233,9 @@ public class ModListActivity
                 (SimpleSectionedRecyclerViewAdapter)recyclerView.getAdapter();
 
         // Add path lists
-        List<Mod> mods = new ArrayList<Mod>();
+        List<Mod> mods = new ArrayList<>();
         List<SimpleSectionedRecyclerViewAdapter.Section> sections =
-                new ArrayList<SimpleSectionedRecyclerViewAdapter.Section>();
+                new ArrayList<>();
         for (ModList list : ModManager.lists_map.values()) {
             if (list.type == ModList.ModListType.EMLT_PATH) {
                 sections.add(new SimpleSectionedRecyclerViewAdapter.Section(mods.size(), list.title));
@@ -259,7 +259,7 @@ public class ModListActivity
         private List<Mod> mMods;
 
         public ModListRecyclerViewAdapter() {
-            mMods = new ArrayList<Mod>();
+            mMods = new ArrayList<>();
         }
 
         public void setMods(List<Mod> mods) {

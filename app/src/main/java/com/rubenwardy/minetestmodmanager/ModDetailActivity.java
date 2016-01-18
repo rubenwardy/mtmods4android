@@ -2,11 +2,12 @@ package com.rubenwardy.minetestmodmanager;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
@@ -26,8 +27,6 @@ import com.rubenwardy.minetestmodmanager.manager.ModManager;
 public class ModDetailActivity
         extends AppCompatActivity
         implements ModEventReceiver {
-    private ModDetailFragment mFragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,11 +63,10 @@ public class ModDetailActivity
                     if (!mod.screenshot_uri.equals("")) {
                         Drawable d = Drawable.createFromPath(mod.screenshot_uri);
                         if (d != null) {
-                            int sdk = android.os.Build.VERSION.SDK_INT;
-                            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                                ctoolbar.setBackgroundDrawable(d);
-                            } else {
+                            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                                 ctoolbar.setBackground(d);
+                            } else {
+                                ctoolbar.setBackgroundDrawable(d);
                             }
 
                             NestedScrollView scroll =
@@ -79,15 +77,15 @@ public class ModDetailActivity
                 }
             }
 
-            // Create the detail mFragment and add it to the activity
-            // using a mFragment transaction.
+            // Create the detail fragment and add it to the activity
+            // using a fragment transaction.
             Bundle arguments = new Bundle();
             arguments.putString(ModDetailFragment.ARG_MOD_LIST, listname);
             arguments.putString(ModDetailFragment.ARG_MOD_NAME, modname);
-            mFragment = new ModDetailFragment();
-            mFragment.setArguments(arguments);
+            ModDetailFragment fragment = new ModDetailFragment();
+            fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.mod_detail_container, mFragment)
+                    .add(R.id.mod_detail_container, fragment)
                     .commit();
         }
     }
@@ -108,7 +106,7 @@ public class ModDetailActivity
 
 
     @Override
-    public void onModEvent(Bundle bundle) {
+    public void onModEvent(@NonNull Bundle bundle) {
         String action = bundle.getString(PARAM_ACTION);
         if (action == null) {
             return;

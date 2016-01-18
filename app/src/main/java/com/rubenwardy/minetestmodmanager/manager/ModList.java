@@ -19,8 +19,8 @@ public class ModList {
     public final String root;
     public final ModListType type;
     public boolean valid;
-    public List<Mod> mods = new ArrayList<Mod>();
-    public Map<String, Mod> mods_map = new HashMap<String, Mod>();
+    public List<Mod> mods = new ArrayList<>();
+    public Map<String, Mod> mods_map = new HashMap<>();
 
     public ModList(ModListType type, String title, String root, String uri) {
         this.type = type;

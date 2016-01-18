@@ -20,7 +20,7 @@ public class Mod {
     public String screenshot_uri;
     public String path;
 
-    public Mod(@NonNull ModType type, String listname, String name, String title, String desc) {
+    public Mod(@NonNull ModType type, String listname, @NonNull String name, String title, String desc) {
         this.type = type;
         this.listname = listname;
         this.name = name;
@@ -31,6 +31,7 @@ public class Mod {
     }
 
     @Override
+    @NonNull
     public String toString() {
         return title;
     }

@@ -1,6 +1,7 @@
 package com.rubenwardy.minetestmodmanager.manager;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 public interface ModEventReceiver {
     public static final String ACTION_INSTALL = "install";
@@ -11,5 +12,5 @@ public interface ModEventReceiver {
     public static final String PARAM_ACTION = "action";
     public static final String PARAM_DEST = "dest";
     public static final String PARAM_MODNAME = "modname";
-    public void onModEvent(Bundle bundle);
+    public void onModEvent(@NonNull Bundle bundle);
 }

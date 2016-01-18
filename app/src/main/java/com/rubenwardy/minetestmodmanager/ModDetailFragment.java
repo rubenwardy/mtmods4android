@@ -52,11 +52,16 @@ public class ModDetailFragment extends Fragment {
             String listname = getArguments().getString(ARG_MOD_LIST);
             ModManager modman = new ModManager();
             ModList list = modman.get(listname);
-            mItem = list.mods_map.get(name);
-            if (mItem == null) {
-                list.valid = false;
+            if (list == null) {
                 mItem = new Mod(Mod.ModType.EMT_INVALID,
-                        "", "invalid", "Invalid Mod", "There is no mod at this location!");
+                        "", "invalid", "Invalid Path", "This mod location isn't loaded. Please try again.");
+            } else {
+                mItem = list.mods_map.get(name);
+                if (mItem == null) {
+                    list.valid = false;
+                    mItem = new Mod(Mod.ModType.EMT_INVALID,
+                            "", "invalid", "Invalid Mod", "There is no mod at this location!");
+                }
             }
 
             Activity activity = this.getActivity();

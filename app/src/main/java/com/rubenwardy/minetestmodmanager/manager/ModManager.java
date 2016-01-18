@@ -18,27 +18,29 @@ import java.util.Map;
  */
 public class ModManager {
     public static ModEventReceiver mev;
-    public static Map<String, ModList> lists_map = new HashMap<String, ModList>();
+    public static Map<String, ModList> lists_map = new HashMap<>();
     private static ServiceResultReceiver srr = new ServiceResultReceiver(new Handler());
 
     public void setEventReceiver(@NonNull ModEventReceiver mev) {
         Log.w("ModMan", "Set event receiver!");
-        this.mev = mev;
+        ModManager.mev = mev;
     }
 
     public void unsetEventReceiver(@Nullable ModEventReceiver mev) {
-        if (this.mev == mev) {
-            this.mev = null;
+        if (ModManager.mev == mev) {
+            ModManager.mev = null;
             Log.w("ModMan", "Unset event receiver!");
         } else {
             Log.w("ModMan", "Ignored call to unset event receiver, already different.");
         }
     }
 
+    @Nullable
     public ModList get(String path) {
         return lists_map.get(path);
     }
 
+    @Nullable
     public ModList listFromMod(@NonNull Mod mod) {
         return get(mod.listname);
     }
@@ -57,7 +59,9 @@ public class ModManager {
         } else {
             Utils.deleteRecursive(new File(mod.path));
             ModList list = listFromMod(mod);
-            list.valid = false;
+            if (list != null) {
+                list.valid = false;
+            }
             return true;
         }
     }
@@ -131,6 +135,7 @@ public class ModManager {
         }
     }
 
+    @Nullable
     public ModList getModsFromDir(String title, String root, String path) {
         if (lists_map.containsKey(path)) {
             Log.w("ModLib", "Returning existing ModList (type=dir).");

@@ -1,5 +1,7 @@
 package com.rubenwardy.minetestmodmanager.manager;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -16,7 +18,7 @@ import java.util.zip.ZipInputStream;
 /**
  * Mod utility library
  */
-public class Utils {
+class Utils {
     public interface UnzipFile_Progress
     {
         void Progress(long done, long total, String FileName);
@@ -24,7 +26,7 @@ public class Utils {
 
     // unzip(new File("/sdcard/pictures.zip"), new File("/sdcard"));
     public static void UnzipFile(File zipFile, File targetDirectory, UnzipFile_Progress progress)
-            throws IOException, FileNotFoundException {
+            throws IOException {
         long total_len = zipFile.length();
         long total_installed_len = 0;
 
@@ -111,6 +113,7 @@ public class Utils {
         return true;
     }
 
+    @NonNull
     public static Mod.ModType detectModType(File file) {
         if (new File(file.getAbsolutePath(), "init.lua").exists()) {
             Log.w("ModLib", "Found mod at " + file.getName());
@@ -124,6 +127,7 @@ public class Utils {
         }
     }
 
+    @Nullable
     public static File findRootDir(File dir) {
         if (!dir.isDirectory())
             return null;
