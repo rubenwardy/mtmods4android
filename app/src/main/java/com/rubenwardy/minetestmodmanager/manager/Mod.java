@@ -17,6 +17,7 @@ public class Mod {
     public final String name;
     public final String title;
     public final String desc;
+    public String screenshot_uri;
     public String path;
 
     public Mod(@NonNull ModType type, String listname, String name, String title, String desc) {
@@ -26,6 +27,7 @@ public class Mod {
         this.title = title;
         this.desc = desc;
         this.path = "";
+        this.screenshot_uri = "";
     }
 
     @Override

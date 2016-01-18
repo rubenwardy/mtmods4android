@@ -69,9 +69,9 @@ public class ModListActivity
                 Snackbar.make(view, "Installing mod...", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                Mod mod = new Mod(Mod.ModType.EMT_INVALID, "", "awards", "Awards", "");
+                Mod mod = new Mod(Mod.ModType.EMT_INVALID, "", "crops", "Crops", "");
                 mModMan.installUrlModAsync(getApplicationContext(), mod,
-                        "https://github.com/rubenwardy/awards/archive/master.zip", install_dir);
+                        "https://github.com/minetest-mods/crops/archive/master.zip", install_dir);
             }
         });
 

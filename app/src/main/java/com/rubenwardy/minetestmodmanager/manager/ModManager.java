@@ -105,6 +105,13 @@ public class ModManager {
 
                     Mod mod = new Mod(type, list.uri, file.getName(), title, desc);
                     mod.path = file.getAbsolutePath();
+
+                    File scsF = new File(file.getAbsolutePath(), "screenshot.png");
+                    if (scsF.exists()) {
+                        Log.w("ModLib", " - found screenshot.png");
+                        mod.screenshot_uri = scsF.getAbsolutePath();
+                    }
+
                     list.add(mod);
                 }
             } else {

@@ -1,7 +1,9 @@
 package com.rubenwardy.minetestmodmanager;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +11,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
+import com.rubenwardy.minetestmodmanager.manager.Mod;
 import com.rubenwardy.minetestmodmanager.manager.ModEventReceiver;
+import com.rubenwardy.minetestmodmanager.manager.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 
 /**
@@ -49,13 +53,32 @@ public class ModDetailActivity
         // http://developer.android.com/guide/components/fragments.html
         //
         if (savedInstanceState == null) {
+            String listname = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_LIST);
+            String modname = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_NAME);
+            CollapsingToolbarLayout ctoolbar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+            if (ctoolbar != null) {
+                ModList list = modman.get(listname);
+                if (list != null) {
+                    Mod mod = list.mods_map.get(modname);
+                    if (!mod.screenshot_uri.equals("")) {
+                        Drawable d = Drawable.createFromPath(mod.screenshot_uri);
+                        if (d != null) {
+                            int sdk = android.os.Build.VERSION.SDK_INT;
+                            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                                ctoolbar.setBackgroundDrawable(d);
+                            } else {
+                                ctoolbar.setBackground(d);
+                            }
+                        }
+                    }
+                }
+            }
+
             // Create the detail mFragment and add it to the activity
             // using a mFragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(ModDetailFragment.ARG_MOD_LIST,
-                    getIntent().getStringExtra(ModDetailFragment.ARG_MOD_LIST));
-            arguments.putString(ModDetailFragment.ARG_MOD_NAME,
-                    getIntent().getStringExtra(ModDetailFragment.ARG_MOD_NAME));
+            arguments.putString(ModDetailFragment.ARG_MOD_LIST, listname);
+            arguments.putString(ModDetailFragment.ARG_MOD_NAME, modname);
             mFragment = new ModDetailFragment();
             mFragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
