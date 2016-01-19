@@ -66,7 +66,8 @@ public class ModListActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(@NonNull View view) {
-                Snackbar.make(view, "Installing mod...", Snackbar.LENGTH_LONG)
+                Resources res = getResources();
+                Snackbar.make(view, res.getString(R.string.installing_mod), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
                 Mod mod = new Mod(Mod.ModType.EMT_INVALID, "", "crops", "Crops", "");
@@ -170,14 +171,16 @@ public class ModListActivity
             return;
         } else if (action.equals(ACTION_INSTALL)) {
             String modname = bundle.getString(PARAM_MODNAME);
+            Resources res = getResources();
             if (bundle.containsKey(PARAM_ERROR)) {
                 String error = bundle.getString(PARAM_ERROR);
-                Snackbar.make(findViewById(android.R.id.content), "Failed to install mod " +
-                            modname + ". Error: " + error, Snackbar.LENGTH_LONG)
+                String text = String.format(res.getString(R.string.failed_install), modname, error);
+                Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 return;
             } else {
-                Snackbar.make(findViewById(android.R.id.content), "Installed mod " + modname, Snackbar.LENGTH_LONG)
+                String text = String.format(res.getString(R.string.installed_mod), modname);
+                Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         } else if (mTwoPane && action.equals(ACTION_UNINSTALL)) {

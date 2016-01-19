@@ -1,6 +1,7 @@
 package com.rubenwardy.minetestmodmanager;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
@@ -54,14 +55,20 @@ public class ModDetailFragment extends Fragment {
             ModManager modman = new ModManager();
             ModList list = modman.get(listname);
             if (list == null) {
+                Resources res = getResources();
                 mItem = new Mod(Mod.ModType.EMT_INVALID,
-                        "", "invalid", "Invalid Path", "This mod location isn't loaded. Please try again.");
+                        "", "invalid",
+                        res.getString(R.string.invalid_modlist),
+                        res.getString(R.string.invalid_modlist_desc));
             } else {
                 mItem = list.mods_map.get(name);
                 if (mItem == null) {
+                    Resources res = getResources();
                     list.valid = false;
                     mItem = new Mod(Mod.ModType.EMT_INVALID,
-                            "", "invalid", "Invalid Mod", "There is no mod at this location!");
+                            "", "invalid",
+                            res.getString(R.string.invalid_mod),
+                            res.getString(R.string.invalid_mod_desc));
                 }
             }
 
@@ -88,16 +95,19 @@ public class ModDetailFragment extends Fragment {
             @Override
             public void onClick(@NonNull View view) {
                 ModManager modman = new ModManager();
+                Resources res = getResources();
                 if (modman.uninstallMod(mItem)) {
                     Bundle bundle = new Bundle();
                     bundle.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_UNINSTALL);
                     bundle.putString(ModEventReceiver.PARAM_DEST, mItem.listname);
                     bundle.putString(ModEventReceiver.PARAM_MODNAME, mItem.name);
-                    Snackbar.make(view, "Uninstalled mod.", Snackbar.LENGTH_LONG)
+                    String text = String.format(res.getString(R.string.uninstalled_mod), mItem.name);
+                    Snackbar.make(view, text, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     ((ModEventReceiver) getActivity()).onModEvent(bundle);
                 } else {
-                    Snackbar.make(view, "Failed to uninstall mod for some reason.", Snackbar.LENGTH_LONG)
+                    String text = String.format(res.getString(R.string.failed_uninstall), mItem.name);
+                    Snackbar.make(view, text, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
             }
