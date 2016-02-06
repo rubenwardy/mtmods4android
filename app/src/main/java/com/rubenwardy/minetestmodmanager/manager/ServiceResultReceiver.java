@@ -44,7 +44,7 @@ public class ServiceResultReceiver extends ResultReceiver {
             }
         } else {
             Integer progress = b.getInt(ModInstallService.RET_PROGRESS);
-            Log.w("SRR", "Progress for " + modname + " at " + Integer.toString(progress) + "%");
+            //Log.w("SRR", "Progress for " + modname + " at " + Integer.toString(progress) + "%");
         }
     }
 
@@ -88,13 +88,13 @@ public class ServiceResultReceiver extends ResultReceiver {
                             Mod mod = new Mod(Mod.ModType.EMT_MOD, url, modname, title, "");
                             mod.link = link;
                             list.add(mod);
-                            Log.w("SRR", "Added mod: " + modname);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                         return;
                     }
                 }
+                Log.w("SRR", "Added " + list.mods.size() + " mods to list.");
             } catch (JSONException e) {
                 e.printStackTrace();
                 return;
@@ -111,7 +111,7 @@ public class ServiceResultReceiver extends ResultReceiver {
             }
         } else {
             Integer progress = b.getInt(ModInstallService.RET_PROGRESS);
-            Log.w("SRR", "Progress for " + url + " at " + Integer.toString(progress) + "%");
+            //Log.w("SRR", "Progress for " + url + " at " + Integer.toString(progress) + "%");
         }
     }
 

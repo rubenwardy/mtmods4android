@@ -224,11 +224,11 @@ public class ModInstallService extends IntentService {
                 return;
             }
 
-            // Find engine_root
-            Log.w("ModService", "Finding engine_root dir:");
-            File root = Utils.findRootDir(dir);
-            if (root == null) {
-                Log.w("ModService", "Unable to find engine_root dir.");
+            // Find mod_root
+            Log.w("ModService", "Finding mod_root dir:");
+            File mod_root = Utils.findRootDir(dir);
+            if (mod_root == null) {
+                Log.w("ModService", "Unable to find mod_root dir.");
                 Bundle b = new Bundle();
                 b.putString(RET_ACTION, ACTION_INSTALL);
                 b.putString(RET_NAME, modname);
@@ -240,7 +240,7 @@ public class ModInstallService extends IntentService {
 
             // Copy
             Log.w("ModService", "Copying to " + dest.getAbsolutePath());
-            Utils.copyFolder(root, new File(dest, modname));
+            Utils.copyFolder(mod_root, new File(dest, modname));
 
             Bundle b = new Bundle();
             b.putString(RET_NAME, modname);

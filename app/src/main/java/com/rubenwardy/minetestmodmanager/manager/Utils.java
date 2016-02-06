@@ -1,5 +1,6 @@
 package com.rubenwardy.minetestmodmanager.manager;
 
+import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -27,6 +28,7 @@ class Utils {
     }
 
     // unzip(new File("/sdcard/pictures.zip"), new File("/sdcard"));
+    @CheckResult
     public static boolean UnzipFile(@NonNull File zipFile, File targetDirectory, @Nullable UnzipFile_Progress progress)
             throws IOException {
         long total_len = zipFile.length();
@@ -68,7 +70,11 @@ class Utils {
     }
 
     @Nullable
-    public static String readTextFile(File file) {
+    public static String readTextFile(@Nullable File file) {
+        if (file == null) {
+            return null;
+        }
+
         try {
             StringBuilder text = new StringBuilder();
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -154,7 +160,7 @@ class Utils {
         if (!dir.isDirectory())
             return null;
 
-        Log.w("Utils", "- Finding engine_root dir");
+        Log.w("Utils", "- Finding root dir");
 
         Mod.ModType type = detectModType(dir);
         if (type == Mod.ModType.EMT_INVALID) {
@@ -172,13 +178,13 @@ class Utils {
                 }
             }
             if (subdir == null) {
-                Log.w("Utils", "- Find engine_root failed: no valid subdir.");
+                Log.w("Utils", "- Find root failed: no valid subdir.");
                 return null;
             } else {
                 return findRootDir(subdir);
             }
         } else {
-            Log.w("Utils", "- Found valid engine_root: " + dir.getAbsoluteFile());
+            Log.w("Utils", "- Found valid root: " + dir.getAbsoluteFile());
             return dir;
         }
     }

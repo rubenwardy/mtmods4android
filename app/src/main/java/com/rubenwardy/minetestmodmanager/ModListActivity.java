@@ -208,8 +208,6 @@ public class ModListActivity
 
     private void checkChanges(@Nullable ModList list) {
         Log.w("MLAct", " - Checking for changes...");
-        if (list != null)
-            Log.w("ss", "aa");
         if (list != null && !list.valid &&
                 (list.type == ModList.ModListType.EMLT_STORE || mModMan.update(list))) {
             Log.w("MLAct", " - list has changed!");
