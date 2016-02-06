@@ -27,7 +27,7 @@ class Utils {
     }
 
     // unzip(new File("/sdcard/pictures.zip"), new File("/sdcard"));
-    public static void UnzipFile(@NonNull File zipFile, File targetDirectory, @Nullable UnzipFile_Progress progress)
+    public static boolean UnzipFile(@NonNull File zipFile, File targetDirectory, @Nullable UnzipFile_Progress progress)
             throws IOException {
         long total_len = zipFile.length();
         long total_installed_len = 0;
@@ -52,20 +52,23 @@ class Utils {
                     continue;
                 Log.w("Utils", "Extracting " + file.getAbsolutePath());
                 FileOutputStream fout = new FileOutputStream(file);
-                try
-                {
+                try {
                     while ((count = zis.read(buffer)) != -1)
                         fout.write(buffer, 0, count);
                 } finally {
                     fout.close();
                 }
             }
+        } catch (Exception e) {
+            return false;
         } finally {
             zis.close();
         }
+        return true;
     }
 
-    public static @Nullable String readTextFile(File file) {
+    @Nullable
+    public static String readTextFile(File file) {
         try {
             StringBuilder text = new StringBuilder();
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -151,6 +154,8 @@ class Utils {
         if (!dir.isDirectory())
             return null;
 
+        Log.w("Utils", "- Finding engine_root dir");
+
         Mod.ModType type = detectModType(dir);
         if (type == Mod.ModType.EMT_INVALID) {
             Log.w("Utils", "- Invalid dir for mod location.");
@@ -167,13 +172,13 @@ class Utils {
                 }
             }
             if (subdir == null) {
-                Log.w("Utils", "- Find root failed: no valid subdir.");
+                Log.w("Utils", "- Find engine_root failed: no valid subdir.");
                 return null;
             } else {
                 return findRootDir(subdir);
             }
         } else {
-            Log.w("Utils", "- Found valid root: " + dir.getAbsoluteFile());
+            Log.w("Utils", "- Found valid engine_root: " + dir.getAbsoluteFile());
             return dir;
         }
     }

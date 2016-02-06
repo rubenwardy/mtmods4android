@@ -42,6 +42,26 @@ public class ModManager {
     }
 
     @Nullable
+    public ModList getModStore() {
+        for (ModList list : lists_map.values()) {
+            if (list.type == ModList.ModListType.EMLT_STORE) {
+                return list;
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    public String getInstallDir() {
+        for (ModList list : lists_map.values()) {
+            if (list.type == ModList.ModListType.EMLT_PATH) {
+                return list.listname;
+            }
+        }
+        return null;
+    }
+
+    @Nullable
     public ModList listFromMod(@NonNull Mod mod) {
         return get(mod.listname);
     }
@@ -53,6 +73,10 @@ public class ModManager {
 
     @MainThread
     public void installUrlModAsync(Context context, @NonNull Mod mod, @NonNull String url, String path) {
+        if (url.equals("")) {
+            Log.w("ModMan", "Failed to install blank url");
+            return;
+        }
         ModInstallService.startActionUrlInstall(context, srr, mod.name, url, path);
     }
 

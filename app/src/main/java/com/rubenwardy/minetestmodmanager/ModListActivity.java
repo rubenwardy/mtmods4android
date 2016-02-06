@@ -255,6 +255,11 @@ public class ModListActivity
         sections.add(new SimpleSectionedRecyclerViewAdapter.Section(mods.size(),
                 res.getString(R.string.mod_store)));
 
+        ModList list = mModMan.getModStore();
+        if (list != null) {
+            mods.addAll(list.mods);
+        }
+
         adapter.setMods(mods);
         // Set sections and update.
         SimpleSectionedRecyclerViewAdapter.Section[] dummy =

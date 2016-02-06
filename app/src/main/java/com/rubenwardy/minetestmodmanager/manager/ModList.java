@@ -19,7 +19,7 @@ public class ModList {
 
     @Nullable public final String title;
     @NonNull  public final String listname;
-    @NonNull public final String root;
+    @NonNull public final String engine_root;
     @NonNull public final ModListType type;
     public boolean valid;
     @NonNull
@@ -27,11 +27,11 @@ public class ModList {
     @NonNull
     public Map<String, Mod> mods_map = new HashMap<>();
 
-    public ModList(@NonNull ModListType type, @Nullable String title, @NonNull String root,
+    public ModList(@NonNull ModListType type, @Nullable String title, @NonNull String engine_root,
             @NonNull String listname) {
         this.type = type;
         this.title = title;
-        this.root = root;
+        this.engine_root = engine_root;
         this.listname = listname;
         this.valid = true;
     }

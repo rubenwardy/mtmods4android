@@ -32,6 +32,6 @@
     <string name="disable">Disable</string>
     <string name="invalid_mod">Invalid Mod</string>
     <string name="invalid_mod_desc">We couldn\'t find that mod. Has it been deleted?</string>
-    <string name="invalid_modlist">Invalid Mod Path</string>
-    <string name="invalid_modlist_desc">We couldn\'t find that mod folder. Has it been deleted?</string>
+    <string name="invalid_modlist">Invalid Mod Location or Path</string>
+    <string name="invalid_modlist_desc">We couldn\'t find that mod location. Has the folder been deleted, or is the mod store offline?</string>
 </resources>

@@ -88,30 +88,54 @@ public class ModDetailFragment extends Fragment {
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
             ((TextView) rootView.findViewById(R.id.mod_desc)).setText(mItem.desc);
-        }
 
-        Button btn = (Button) rootView.findViewById(R.id.uninstall);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(@NonNull View view) {
-                ModManager modman = new ModManager();
+            Button btn_side = (Button) rootView.findViewById(R.id.disable);
+            Button btn_main = (Button) rootView.findViewById(R.id.uninstall);
+            if (mItem.isLocalMod()) {
+                btn_main.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(@NonNull View view) {
+                        ModManager modman = new ModManager();
+                        Resources res = getResources();
+                        if (modman.uninstallMod(mItem)) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_UNINSTALL);
+                            bundle.putString(ModEventReceiver.PARAM_DEST_LIST, mItem.listname);
+                            bundle.putString(ModEventReceiver.PARAM_MODNAME, mItem.name);
+                            String text = String.format(res.getString(R.string.uninstalled_mod), mItem.name);
+                            Snackbar.make(view, text, Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                            ((ModEventReceiver) getActivity()).onModEvent(bundle);
+                        } else {
+                            String text = String.format(res.getString(R.string.failed_uninstall), mItem.name);
+                            Snackbar.make(view, text, Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        }
+                    }
+                });
+            } else {
                 Resources res = getResources();
-                if (modman.uninstallMod(mItem)) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_UNINSTALL);
-                    bundle.putString(ModEventReceiver.PARAM_DEST_LIST, mItem.listname);
-                    bundle.putString(ModEventReceiver.PARAM_MODNAME, mItem.name);
-                    String text = String.format(res.getString(R.string.uninstalled_mod), mItem.name);
-                    Snackbar.make(view, text, Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                    ((ModEventReceiver) getActivity()).onModEvent(bundle);
-                } else {
-                    String text = String.format(res.getString(R.string.failed_uninstall), mItem.name);
-                    Snackbar.make(view, text, Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
+                btn_main.setText(res.getString(R.string.install));
+                btn_side.setVisibility(View.INVISIBLE);
+
+                // TODO: list installed instances
+
+
+                btn_main.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(@NonNull View view) {
+                        ModManager modman = new ModManager();
+                        Resources res = getResources();
+                        Snackbar.make(view, res.getString(R.string.installing_mod), Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+
+                        modman.installUrlModAsync(getActivity().getApplicationContext(), mItem,
+                                mItem.link,
+                                modman.getInstallDir());
+                    }
+                });
             }
-        });
+        }
 
         return rootView;
     }

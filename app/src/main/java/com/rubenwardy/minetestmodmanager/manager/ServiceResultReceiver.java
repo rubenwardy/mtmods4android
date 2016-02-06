@@ -86,6 +86,7 @@ public class ServiceResultReceiver extends ResultReceiver {
                         String link = item.getString("link");
                         if (modname != null && title != null && link != null) {
                             Mod mod = new Mod(Mod.ModType.EMT_MOD, url, modname, title, "");
+                            mod.link = link;
                             list.add(mod);
                             Log.w("SRR", "Added mod: " + modname);
                         }

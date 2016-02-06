@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -105,9 +106,44 @@ public class ModInstallService extends IntentService {
 
     @WorkerThread
     private void handleActionUrlInstall(@NonNull ResultReceiver rec, @NonNull String modname, @NonNull String url_str, @NonNull File dest) {
-        Log.w("ModService", "Downloading file..");
+        Log.w("ModService", "Downloading " + url_str);
         try {
             URL url = new URL(url_str);
+
+            // Let's check the URL
+            HttpURLConnection testcon = (HttpURLConnection)  url.openConnection();
+            testcon.setRequestMethod("HEAD");
+            testcon.connect();
+            HttpURLConnection httpConnection = (HttpURLConnection) testcon;
+            int code = httpConnection.getResponseCode();
+            if (code != HttpURLConnection.HTTP_OK){
+                Bundle b = new Bundle();
+                b.putString(RET_NAME, modname);
+                b.putString(RET_ACTION, ACTION_INSTALL);
+                b.putString(RET_DEST, dest.getAbsolutePath());
+                if (code == HttpURLConnection.HTTP_NOT_FOUND) {
+                    b.putString(RET_ERROR, "Failed to download: 404 File not found.");
+                } else {
+                    b.putString(RET_ERROR, "Failed to download: " + code + " Error");
+                }
+                rec.send(0, b);
+                return;
+            }
+            String contentType = testcon.getContentType();
+            if (!contentType.equals("application/octet-stream") &&
+                    !contentType.equals("application/zip") &&
+                    !contentType.startsWith("application/x-zip")) {
+                Bundle b = new Bundle();
+                b.putString(RET_NAME, modname);
+                b.putString(RET_ACTION, ACTION_INSTALL);
+                b.putString(RET_DEST, dest.getAbsolutePath());
+                b.putString(RET_ERROR, "Failed to download: File is not a zip file");
+                rec.send(0, b);
+                return;
+
+            }
+
+            // Start download
             URLConnection connection = url.openConnection();
             connection.connect();
             // this will be useful so that you can show a typical 0-100% progress bar
@@ -145,12 +181,14 @@ public class ModInstallService extends IntentService {
             input.close();
 
             handleActionInstall(rec, modname, file.getAbsoluteFile(), dest);
+            if (!file.delete())
+                Log.w("ModService", "Failed to delete tmp zip file");
         } catch (IOException e) {
             Bundle b = new Bundle();
             b.putString(RET_NAME, modname);
             b.putString(RET_ACTION, ACTION_INSTALL);
             b.putString(RET_DEST, dest.getAbsolutePath());
-            b.putString(RET_ERROR, e.toString());
+            b.putString(RET_ERROR, "Failed to download: " + e.toString());
             rec.send(0, b);
             e.printStackTrace();
         }
@@ -174,22 +212,41 @@ public class ModInstallService extends IntentService {
         } while (dir.exists());
 
         try {
-            Utils.UnzipFile(zipfile, dir, null);
+            // UNZIP
+            if (!Utils.UnzipFile(zipfile, dir, null)) {
+                Log.w("ModService", "Unable to extract zip.");
+                Bundle b = new Bundle();
+                b.putString(RET_ACTION, ACTION_INSTALL);
+                b.putString(RET_NAME, modname);
+                b.putString(RET_DEST, dest.getAbsolutePath());
+                b.putString(RET_ERROR, "Unable to extract zip. The file may be corrupted.");
+                rec.send(0, b);
+                return;
+            }
 
-            Log.w("ModService", "Finding root dir:");
+            // Find engine_root
+            Log.w("ModService", "Finding engine_root dir:");
             File root = Utils.findRootDir(dir);
             if (root == null) {
-                Log.w("ModService", "Unable to find root dir.");
-            } else {
-                Log.w("ModService", "Copying to " + dest.getAbsolutePath());
-                Utils.copyFolder(root, new File(dest, modname));
-
+                Log.w("ModService", "Unable to find engine_root dir.");
                 Bundle b = new Bundle();
-                b.putString(RET_NAME, modname);
                 b.putString(RET_ACTION, ACTION_INSTALL);
+                b.putString(RET_NAME, modname);
                 b.putString(RET_DEST, dest.getAbsolutePath());
+                b.putString(RET_ERROR, "Unable to find the mod in the download.");
                 rec.send(0, b);
+                return;
             }
+
+            // Copy
+            Log.w("ModService", "Copying to " + dest.getAbsolutePath());
+            Utils.copyFolder(root, new File(dest, modname));
+
+            Bundle b = new Bundle();
+            b.putString(RET_NAME, modname);
+            b.putString(RET_ACTION, ACTION_INSTALL);
+            b.putString(RET_DEST, dest.getAbsolutePath());
+            rec.send(0, b);
         } catch (IOException e) {
             Bundle b = new Bundle();
             b.putString(RET_ACTION, ACTION_INSTALL);
