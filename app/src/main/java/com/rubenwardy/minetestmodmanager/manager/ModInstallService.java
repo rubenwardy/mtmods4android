@@ -257,6 +257,10 @@ public class ModInstallService extends IntentService {
             e.printStackTrace();
         }
         Log.w("ModService", "Finished installing mod.");
+
+        if (dir.exists()) {
+            Utils.deleteRecursive(dir);
+        }
     }
 
     @WorkerThread
@@ -299,7 +303,6 @@ public class ModInstallService extends IntentService {
             output.flush();
             output.close();
             input.close();
-
 
             Bundle b = new Bundle();
             b.putString(RET_ACTION, ACTION_FETCH_MODLIST);
