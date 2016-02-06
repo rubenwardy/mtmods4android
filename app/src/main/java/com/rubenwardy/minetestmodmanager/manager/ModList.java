@@ -17,7 +17,7 @@ public class ModList {
     }
 
     public final String title;
-    public final String uri;
+    public final String listname;
     public final String root;
     public final ModListType type;
     public boolean valid;
@@ -26,11 +26,11 @@ public class ModList {
     @NonNull
     public Map<String, Mod> mods_map = new HashMap<>();
 
-    public ModList(ModListType type, String title, String root, String uri) {
+    public ModList(ModListType type, String title, String root, String listname) {
         this.type = type;
         this.title = title;
         this.root = root;
-        this.uri = uri;
+        this.listname = listname;
         this.valid = true;
     }
 

@@ -7,10 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -80,9 +77,9 @@ public class ModManager {
     private boolean updatePathList(@NonNull ModList list) {
         Log.w("ModLib", "Collecting/updating ModList (type=dir).");
 
-        File dirs = new File(list.uri);
+        File dirs = new File(list.listname);
         if (!dirs.exists()) {
-            Log.w("ModLib", list.uri + " does not exist");
+            Log.w("ModLib", list.listname + " does not exist");
             return false;
         }
 
@@ -113,7 +110,7 @@ public class ModManager {
                     }
 
                     // Create mod
-                    Mod mod = new Mod(type, list.uri, file.getName(), title, desc);
+                    Mod mod = new Mod(type, list.listname, file.getName(), title, desc);
                     mod.path = file.getAbsolutePath();
 
                     // Get Screenshot
@@ -143,20 +140,20 @@ public class ModManager {
     }
 
     public void addList(ModList list) {
-        lists_map.put(list.uri, list);
+        lists_map.put(list.listname, list);
     }
 
     @Nullable
-    public ModList getModsFromDir(String title, String root, String path) {
+    public ModList getModsFromDir(String title, String engine_root, String path) {
         if (lists_map.containsKey(path)) {
             Log.w("ModLib", "Returning existing ModList (type=dir).");
             return lists_map.get(path);
         }
 
         Log.w("ModLib", "Creating new ModList (type=dir).");
-        Log.w("ModLib", " - root: " + root);
+        Log.w("ModLib", " - engine_root: " + engine_root);
         Log.w("ModLib", " - path: " + path);
-        ModList list = new ModList(ModList.ModListType.EMLT_PATH, title, root, path);
+        ModList list = new ModList(ModList.ModListType.EMLT_PATH, title, engine_root, path);
         if (update(list)) {
             lists_map.put(path, list);
             return list;
