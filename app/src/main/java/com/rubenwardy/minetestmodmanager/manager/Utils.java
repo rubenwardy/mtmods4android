@@ -5,10 +5,12 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -60,6 +62,23 @@ class Utils {
             }
         } finally {
             zis.close();
+        }
+    }
+
+    public static @Nullable String readTextFile(File file) {
+        try {
+            StringBuilder text = new StringBuilder();
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = br.readLine()) != null) {
+                text.append(line);
+                text.append('\n');
+            }
+            br.close();
+            return text.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

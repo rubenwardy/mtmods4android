@@ -99,7 +99,7 @@ public class ModDetailFragment extends Fragment {
                 if (modman.uninstallMod(mItem)) {
                     Bundle bundle = new Bundle();
                     bundle.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_UNINSTALL);
-                    bundle.putString(ModEventReceiver.PARAM_DEST, mItem.listname);
+                    bundle.putString(ModEventReceiver.PARAM_DEST_LIST, mItem.listname);
                     bundle.putString(ModEventReceiver.PARAM_MODNAME, mItem.name);
                     String text = String.format(res.getString(R.string.uninstalled_mod), mItem.name);
                     Snackbar.make(view, text, Snackbar.LENGTH_LONG)

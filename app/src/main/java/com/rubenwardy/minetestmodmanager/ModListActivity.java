@@ -133,6 +133,8 @@ public class ModListActivity
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
 
+        mModMan.fetchModListAsync(getApplicationContext(), "http://app-mtmm.rubenwardy.com/v1/list/");
+
         if (findViewById(R.id.mod_detail_container) != null) {
             mTwoPane = true;
         }
@@ -191,7 +193,7 @@ public class ModListActivity
                     .commit();
         }
 
-        checkChanges(bundle.getString(ModEventReceiver.PARAM_DEST));
+        checkChanges(bundle.getString(ModEventReceiver.PARAM_DEST_LIST));
     }
 
     private void checkChanges(@Nullable String listname) {
@@ -199,12 +201,17 @@ public class ModListActivity
             return;
         }
 
+        Log.w("MLAct", " - Checking for changes..." + listname);
         ModList list = mModMan.get(listname);
         checkChanges(list);
     }
 
     private void checkChanges(@Nullable ModList list) {
-        if (list != null && !list.valid && mModMan.update(list)) {
+        Log.w("MLAct", " - Checking for changes...");
+        if (list != null)
+            Log.w("ss", "aa");
+        if (list != null && !list.valid &&
+                (list.type == ModList.ModListType.EMLT_STORE || mModMan.update(list))) {
             Log.w("MLAct", " - list has changed!");
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
             assert recyclerView != null;

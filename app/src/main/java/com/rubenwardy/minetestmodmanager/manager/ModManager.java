@@ -59,6 +59,11 @@ public class ModManager {
         ModInstallService.startActionUrlInstall(context, srr, mod.name, url, path);
     }
 
+    @MainThread
+    public void fetchModListAsync(Context context, String url) {
+        ModInstallService.startActionFetchModList(context, srr, url);
+    }
+
     public boolean uninstallMod(@NonNull Mod mod) {
         if (mod.path.equals("")) {
             return false;
@@ -91,31 +96,27 @@ public class ModManager {
                 if (type != Mod.ModType.EMT_INVALID) {
                     Log.w("ModLib", " - adding dir to list");
 
+                    // Get Title
                     String title = file.getName();
-                    String desc = "Desc " + file.getAbsolutePath();
+
+                    // Get Description
+                    String desc = null;
                     File descF = new File(file.getAbsolutePath(), "description.txt");
                     if (descF.exists()) {
                         Log.w("ModLib", " - found description.txt, reading...");
-                        try {
-                            StringBuilder text = new StringBuilder();
-                            BufferedReader br = new BufferedReader(new FileReader(descF));
-                            String line;
-                            while ((line = br.readLine()) != null) {
-                                text.append(line);
-                                text.append('\n');
-                            }
-                            br.close();
-                            desc = text.toString();
-                        }catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        desc = Utils.readTextFile(descF);
                     } else {
                         Log.w("ModLib", "No file at " + descF.getAbsolutePath());
                     }
+                    if (desc == null) {
+                        desc = "Desc " + file.getAbsolutePath();
+                    }
 
+                    // Create mod
                     Mod mod = new Mod(type, list.uri, file.getName(), title, desc);
                     mod.path = file.getAbsolutePath();
 
+                    // Get Screenshot
                     File scsF = new File(file.getAbsolutePath(), "screenshot.png");
                     if (scsF.exists()) {
                         Log.w("ModLib", " - found screenshot.png");
@@ -139,6 +140,10 @@ public class ModManager {
             Log.w("ModLib", "Failed to update invalid ModList.");
             return false;
         }
+    }
+
+    public void addList(ModList list) {
+        lists_map.put(list.uri, list);
     }
 
     @Nullable
