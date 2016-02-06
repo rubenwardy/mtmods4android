@@ -1,6 +1,7 @@
 package com.rubenwardy.minetestmodmanager.manager;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 /**
  * Represents a mod, installed or not.
@@ -12,17 +13,17 @@ public class Mod {
         EMT_MODPACK
     }
 
-    @NonNull
-    public final ModType type;
-    public final String listname;
-    @NonNull
-    public final String name;
-    public final String title;
-    public final String desc;
-    public String screenshot_uri;
-    public String path;
+    @NonNull  public final ModType type;
+    @Nullable public final String listname;
 
-    public Mod(@NonNull ModType type, String listname, @NonNull String name, String title, String desc) {
+    @NonNull  public final String name;
+    @Nullable public final String title;
+    @NonNull public final String desc;
+    @Nullable public String path;
+    @Nullable public String screenshot_uri;
+
+    public Mod(@NonNull ModType type, @Nullable String listname, @NonNull String name,
+               @Nullable String title, @NonNull String desc) {
         this.type = type;
         this.listname = listname;
         this.name = name;
@@ -35,6 +36,6 @@ public class Mod {
     @Override
     @NonNull
     public String toString() {
-        return title;
+        return name;
     }
 }

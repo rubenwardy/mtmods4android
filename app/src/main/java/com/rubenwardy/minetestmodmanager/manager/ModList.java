@@ -1,6 +1,7 @@
 package com.rubenwardy.minetestmodmanager.manager;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,17 +17,18 @@ public class ModList {
         EMLT_PATH
     }
 
-    public final String title;
-    public final String listname;
-    public final String root;
-    public final ModListType type;
+    @Nullable public final String title;
+    @NonNull  public final String listname;
+    @NonNull public final String root;
+    @NonNull public final ModListType type;
     public boolean valid;
     @NonNull
     public List<Mod> mods = new ArrayList<>();
     @NonNull
     public Map<String, Mod> mods_map = new HashMap<>();
 
-    public ModList(ModListType type, String title, String root, String listname) {
+    public ModList(@NonNull ModListType type, @Nullable String title, @NonNull String root,
+            @NonNull String listname) {
         this.type = type;
         this.title = title;
         this.root = root;

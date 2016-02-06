@@ -61,7 +61,7 @@ public class ModDetailActivity
                 ModList list = modman.get(listname);
                 if (list != null) {
                     Mod mod = list.mods_map.get(modname);
-                    if (!mod.screenshot_uri.equals("")) {
+                    if (mod.screenshot_uri != null) {
                         Drawable d = Drawable.createFromPath(mod.screenshot_uri);
                         if (d != null) {
                             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {

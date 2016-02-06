@@ -124,12 +124,16 @@ public class ServiceResultReceiver extends ResultReceiver {
             return;
         }
 
-        if (action.equals(ModInstallService.ACTION_INSTALL)) {
+        switch (action) {
+        case ModInstallService.ACTION_INSTALL:
             handleInstall(b, modname, dest);
-        } else if (action.equals(ModInstallService.ACTION_FETCH_MODLIST)) {
+            break;
+        case ModInstallService.ACTION_FETCH_MODLIST:
             handleFetchModList(b, modname, dest);
-        } else {
+            break;
+        default:
             Log.w("SRR", "Unknown service action");
+            break;
         }
     }
 

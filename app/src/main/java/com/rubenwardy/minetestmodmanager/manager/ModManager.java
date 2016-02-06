@@ -62,7 +62,7 @@ public class ModManager {
     }
 
     public boolean uninstallMod(@NonNull Mod mod) {
-        if (mod.path.equals("")) {
+        if (mod.path == null || mod.path.equals("")) {
             return false;
         } else {
             Utils.deleteRecursive(new File(mod.path));
