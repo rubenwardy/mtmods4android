@@ -75,18 +75,22 @@ public class ServiceResultReceiver extends ResultReceiver {
                     return;
                 }
 
-                for (int i = 0; i < j.length(); i++)
-                {
+                for (int i = 0; i < j.length(); i++) {
                     try {
                         JSONObject item = j.getJSONObject(i);
-                        // Pulling items from the array
                         String author = item.getString("author");
                         String modname = item.getString("name");
                         String title = item.getString("title");
                         String link = item.getString("link");
+                        String desc = "";
+                        if (item.has("description")) {
+                            desc = item.getString("description");
+                        }
+
                         if (modname != null && title != null && link != null) {
-                            Mod mod = new Mod(Mod.ModType.EMT_MOD, url, modname, title, "");
+                            Mod mod = new Mod(Mod.ModType.EMT_MOD, url, modname, title, desc);
                             mod.link = link;
+                            mod.author = author;
                             list.add(mod);
                         }
                     } catch (JSONException e) {

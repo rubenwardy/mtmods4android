@@ -19,6 +19,8 @@ public class Mod {
     @NonNull  public final String name;
     @Nullable public final String title;
     @NonNull public final String desc;
+
+    @NonNull public String author;
     @Nullable public String link;
     @Nullable public String path;
     @Nullable public String screenshot_uri;
@@ -30,6 +32,7 @@ public class Mod {
         this.name = name;
         this.title = title;
         this.desc = desc;
+        this.author = "";
         this.link = "";
         this.path = "";
         this.screenshot_uri = "";
