@@ -115,6 +115,14 @@ public class ModDetailActivity
             return;
         } if (action.equals(ACTION_UNINSTALL)) {
             finish();
+        } else if (action.equals(ACTION_SEARCH)) {
+            Intent k = new Intent(this, ModListActivity.class);
+            Bundle extras = new Bundle();
+            extras.putString(ModListActivity.PARAM_ACTION, ModListActivity.ACTION_SEARCH);
+            extras.putString(ModListActivity.PARAM_ADDITIONAL, bundle.getString(PARAM_ADDITIONAL));
+            k.putExtras(extras);
+            startActivity(k);
+            return;
         }
 
         if (bundle.containsKey(PARAM_ERROR)) {

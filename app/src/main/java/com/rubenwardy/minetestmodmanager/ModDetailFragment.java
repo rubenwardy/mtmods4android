@@ -103,8 +103,21 @@ public class ModDetailFragment extends Fragment {
             }
             ((TextView) rootView.findViewById(R.id.mod_detail_ver)).setText(ver);
 
-            Button btn_side = (Button) rootView.findViewById(R.id.find);
+            Button btn_find = (Button) rootView.findViewById(R.id.find);
             Button btn_main = (Button) rootView.findViewById(R.id.uninstall);
+
+
+            btn_find.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(@NonNull View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_SEARCH);
+                    bundle.putString(ModEventReceiver.PARAM_MODNAME, mItem.name);
+                    bundle.putString(ModEventReceiver.PARAM_ADDITIONAL, "name:" + mItem.name);
+                    ((ModEventReceiver) getActivity()).onModEvent(bundle);
+                }
+            });
+
             if (mItem.isLocalMod()) {
                 ((TextView) rootView.findViewById(R.id.mod_detail_location)).setText(mItem.path);
                 btn_main.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +144,7 @@ public class ModDetailFragment extends Fragment {
             } else {
                 ((TableRow) rootView.findViewById(R.id.mod_detail_loc_row)).setVisibility(View.GONE);
                 btn_main.setText(res.getString(R.string.action_install));
-                btn_side.setText(res.getString(R.string.action_find_phone));
+                btn_find.setText(res.getString(R.string.action_find_phone));
 
                 // TODO: list installed instances
 

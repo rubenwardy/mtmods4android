@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -53,7 +54,7 @@ public class ModListActivity
     private boolean mTwoPane;
     private ModManager mModMan;
     private String install_dir;
-    private String search_filter = "";
+    private String search_filter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,15 @@ public class ModListActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.containsKey(PARAM_ACTION)) {
+            String action = extras.getString(PARAM_ACTION);
+            if (action != null && action.equals(ACTION_SEARCH)) {
+                search_filter = extras.getString(PARAM_ADDITIONAL);
+                Log.w("MLAct", "Opened with search=" + search_filter);
+            }
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -229,6 +239,13 @@ public class ModListActivity
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
         searchView.setOnQueryTextListener(this);
 
+        if (search_filter != null) {
+            Log.w("MLAct", "Setting query!");
+            searchView.setIconified(false);
+            searchView.setQuery(search_filter, true);
+            searchView.clearFocus();
+        }
+
         return true;
     }
 
@@ -259,13 +276,48 @@ public class ModListActivity
 
     private void fillRecyclerView(@NonNull RecyclerView recyclerView, @Nullable String query) {
         if (query != null) {
-            query = query.trim();
+            query = query.trim().toLowerCase();
             if (query.isEmpty()) {
                 query = null;
                 search_filter = null;
             } else {
                 search_filter = query;
             }
+        }
+
+        query = search_filter;
+        String match_name = null;
+        String match_author = null;
+        if (query != null) {
+            boolean changed;
+            do {
+                changed = false;
+                if (query.startsWith("name:")) {
+                    query = query.substring(5, query.length()).trim();
+                    int idx = query.indexOf(' ');
+                    if (idx >= 0) {
+                        match_name = query.substring(0, idx);
+                        query = query.substring(idx + 1, query.length()).trim();
+                    } else {
+                        match_name = query;
+                        query = "";
+                    }
+                    Log.w("MLAct", "Filter name = '" + match_name + "', query: '" + query + "'");
+                    changed = true;
+                } else if (query.startsWith("author:")) {
+                    query = query.substring(7, query.length()).trim();
+                    int idx = query.indexOf(' ');
+                    if (idx >= 0) {
+                        match_author = query.substring(0, idx);
+                        query = query.substring(idx + 1, query.length()).trim();
+                    } else {
+                        match_author = query;
+                        query = "";
+                    }
+                    Log.w("MLAct", "Filter author = '" + match_author + "', query: '" + query + "'");
+                    changed = true;
+                }
+            } while(changed);
         }
 
         Resources res = getResources();
@@ -279,9 +331,14 @@ public class ModListActivity
         for (ModList list : ModManager.lists_map.values()) {
             if (list.type == ModList.ModListType.EMLT_PATH) {
                 sections.add(new SectionedRecyclerViewAdapter.Section(mods.size(), list.title));
-                if (search_filter != null) {
+                if (query != null) {
                     for (Mod mod : list.mods) {
-                        if (mod.name.contains(search_filter) || mod.desc.contains(search_filter)) {
+                        if (
+                                (match_name == null || mod.name.toLowerCase().equals(match_name)) &&
+                                (match_author == null || mod.author.toLowerCase().equals(match_author)) &&
+                                (query.equals("") || mod.name.toLowerCase().contains(query)
+                                        || mod.desc.toLowerCase().contains(query))
+                        ) {
                             mods.add(mod);
                         }
                     }
@@ -296,9 +353,14 @@ public class ModListActivity
 
         ModList list = mModMan.getModStore();
         if (list != null) {
-            if (search_filter != null) {
+            if (query != null) {
                 for (Mod mod : list.mods) {
-                    if (mod.name.contains(search_filter) || mod.desc.contains(search_filter)) {
+                    if (
+                            (match_name == null || mod.name.toLowerCase().equals(match_name)) &&
+                            (match_author == null || mod.author.toLowerCase().equals(match_author)) &&
+                            (query.equals("") || mod.name.toLowerCase().contains(query)
+                                    || mod.desc.toLowerCase().contains(query))
+                    ) {
                         mods.add(mod);
                     }
                 }
