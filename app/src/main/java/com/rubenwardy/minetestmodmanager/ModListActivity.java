@@ -318,14 +318,14 @@ public class ModListActivity
     public class ModListRecyclerViewAdapter
             extends RecyclerView.Adapter<ModListRecyclerViewAdapter.ViewHolder> {
 
-        private List<Mod> mMods;
+        private List<Mod> mods;
 
         public ModListRecyclerViewAdapter() {
-            mMods = new ArrayList<>();
+            mods = new ArrayList<>();
         }
 
         public void setMods(List<Mod> mods) {
-            mMods = mods;
+            this.mods = mods;
         }
 
         @NonNull
@@ -338,25 +338,28 @@ public class ModListActivity
 
         @Override
         public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-            holder.mItem = mMods.get(position);
-            holder.mIdView.setText(holder.mItem.name);
-            int len = holder.mItem.desc.indexOf('.') + 1;
-            int slen = holder.mItem.desc.length();
-            if (len > slen || len < 20) {
-                len = slen;
-            }
-            if (len > 100) {
-                len = 100;
-            }
-            holder.mContentView.setText(holder.mItem.desc.substring(0, len));
+            // Get Mod
+            holder.mod = mods.get(position);
 
-            holder.mView.setOnClickListener(new View.OnClickListener() {
+            //
+            // Fill out TextViews
+            //
+
+            holder.view_modname.setText(holder.mod.name);
+            holder.view_author.setText(holder.mod.author);
+            holder.view_description.setText(holder.mod.getShortDesc());
+
+            //
+            // Register callback
+            //
+
+            holder.view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(@NonNull View v) {
                     if (mTwoPane) {
                         Bundle arguments = new Bundle();
-                        arguments.putString(ModDetailFragment.ARG_MOD_LIST, holder.mItem.listname);
-                        arguments.putString(ModDetailFragment.ARG_MOD_NAME, holder.mItem.name);
+                        arguments.putString(ModDetailFragment.ARG_MOD_LIST, holder.mod.listname);
+                        arguments.putString(ModDetailFragment.ARG_MOD_NAME, holder.mod.name);
                         ModDetailFragment fragment = new ModDetailFragment();
                         fragment.setArguments(arguments);
                         getSupportFragmentManager().beginTransaction()
@@ -365,8 +368,8 @@ public class ModListActivity
                     } else {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, ModDetailActivity.class);
-                        intent.putExtra(ModDetailFragment.ARG_MOD_LIST, holder.mItem.listname);
-                        intent.putExtra(ModDetailFragment.ARG_MOD_NAME, holder.mItem.name);
+                        intent.putExtra(ModDetailFragment.ARG_MOD_LIST, holder.mod.listname);
+                        intent.putExtra(ModDetailFragment.ARG_MOD_NAME, holder.mod.name);
 
                         context.startActivity(intent);
                     }
@@ -376,29 +379,28 @@ public class ModListActivity
 
         @Override
         public int getItemCount() {
-            return mMods.size();
+            return mods.size();
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
-            @NonNull
-            public final View mView;
-            @NonNull
-            public final TextView mIdView;
-            @NonNull
-            public final TextView mContentView;
-            public Mod mItem;
+            @NonNull public final View view;
+            @NonNull public final TextView view_modname;
+            @NonNull public final TextView view_author;
+            @NonNull public final TextView view_description;
+            @Nullable public Mod mod;
 
             public ViewHolder(@NonNull View view) {
                 super(view);
-                mView = view;
-                mIdView = (TextView) view.findViewById(R.id.id);
-                mContentView = (TextView) view.findViewById(R.id.content);
+                this.view = view;
+                view_modname = (TextView) view.findViewById(R.id.modname);
+                view_author = (TextView) view.findViewById(R.id.author);
+                view_description = (TextView) view.findViewById(R.id.description);
             }
 
             @NonNull
             @Override
             public String toString() {
-                return super.toString() + " '" + mContentView.getText() + "'";
+                return super.toString() + " '" + view_description.getText() + "'";
             }
         }
     }

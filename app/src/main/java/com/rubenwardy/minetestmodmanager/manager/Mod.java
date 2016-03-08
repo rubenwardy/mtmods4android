@@ -42,6 +42,28 @@ public class Mod {
         return path != null && !path.equals("");
     }
 
+    public String getShortDesc() {
+        String cleaned_desc = desc.trim().replace("\n", " ");
+        int len = cleaned_desc.indexOf(".", 20) + 1;
+        int slen = cleaned_desc.length();
+        len = Math.min(len, slen);
+        if (len < 20) {
+            len = slen;
+        }
+
+        if (len > 100) {
+            String short_desc = cleaned_desc.substring(0, 99);
+            char c = short_desc.charAt(short_desc.length() - 1);
+            while (!(Character.isDigit(c) || Character.isLetter(c))) {
+                short_desc = short_desc.substring(0, short_desc.length() - 1);
+                c = short_desc.charAt(short_desc.length() - 1);
+            }
+            return short_desc + "…";
+        } else {
+            return cleaned_desc.substring(0, len);
+        }
+    }
+
     @Override
     @NonNull
     public String toString() {
