@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @NonNull
     private final Context mContext;
@@ -36,8 +36,8 @@ class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
 
-    public SimpleSectionedRecyclerViewAdapter(@NonNull Context context, @LayoutRes int sectionResourceId,
-            @IdRes int textResourceId, @NonNull RecyclerView.Adapter baseAdapter) {
+    public SectionedRecyclerViewAdapter(@NonNull Context context, @LayoutRes int sectionResourceId,
+                                        @IdRes int textResourceId, @NonNull RecyclerView.Adapter baseAdapter) {
 
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mSectionResourceId = sectionResourceId;

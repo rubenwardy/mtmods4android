@@ -10,15 +10,18 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -42,7 +45,7 @@ import java.util.List;
  */
 public class ModListActivity
         extends AppCompatActivity
-        implements ModEventReceiver {
+        implements ModEventReceiver, SearchView.OnQueryTextListener {
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -50,6 +53,7 @@ public class ModListActivity
     private boolean mTwoPane;
     private ModManager mModMan;
     private String install_dir;
+    private String search_filter = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -213,55 +217,100 @@ public class ModListActivity
             Log.w("MLAct", " - list has changed!");
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
             assert recyclerView != null;
-            fillRecyclerView(recyclerView);
+            fillRecyclerView(recyclerView, null);
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_mod_list, menu);
+
+        final MenuItem item = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        searchView.setOnQueryTextListener(this);
+
         return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
+        assert recyclerView != null;
+        fillRecyclerView(recyclerView, query);
+
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return onQueryTextChange(query);
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         //Add your adapter to the sectionAdapter
         ModListRecyclerViewAdapter adapter = new ModListRecyclerViewAdapter();
-        SimpleSectionedRecyclerViewAdapter sectionedAdapter =
-                new SimpleSectionedRecyclerViewAdapter(this, R.layout.section, R.id.section_text, adapter);
+        SectionedRecyclerViewAdapter sectionedAdapter =
+                new SectionedRecyclerViewAdapter(this, R.layout.section, R.id.section_text, adapter);
         recyclerView.setAdapter(sectionedAdapter);
 
         // Fill view
-        fillRecyclerView(recyclerView);
+        fillRecyclerView(recyclerView, null);
     }
 
-    private void fillRecyclerView(@NonNull RecyclerView recyclerView) {
+    private void fillRecyclerView(@NonNull RecyclerView recyclerView, @Nullable String query) {
+        if (query != null) {
+            query = query.trim();
+            if (query.isEmpty()) {
+                query = null;
+                search_filter = null;
+            } else {
+                search_filter = query;
+            }
+        }
+
         Resources res = getResources();
-        SimpleSectionedRecyclerViewAdapter adapter =
-                (SimpleSectionedRecyclerViewAdapter)recyclerView.getAdapter();
+        SectionedRecyclerViewAdapter adapter =
+                (SectionedRecyclerViewAdapter)recyclerView.getAdapter();
 
         // Add path lists
         List<Mod> mods = new ArrayList<>();
-        List<SimpleSectionedRecyclerViewAdapter.Section> sections =
+        List<SectionedRecyclerViewAdapter.Section> sections =
                 new ArrayList<>();
         for (ModList list : ModManager.lists_map.values()) {
             if (list.type == ModList.ModListType.EMLT_PATH) {
-                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(mods.size(), list.title));
-                mods.addAll(list.mods);
+                sections.add(new SectionedRecyclerViewAdapter.Section(mods.size(), list.title));
+                if (search_filter != null) {
+                    for (Mod mod : list.mods) {
+                        if (mod.name.contains(search_filter) || mod.desc.contains(search_filter)) {
+                            mods.add(mod);
+                        }
+                    }
+                } else {
+                    mods.addAll(list.mods);
+                }
+
             }
         }
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(mods.size(),
+        sections.add(new SectionedRecyclerViewAdapter.Section(mods.size(),
                 res.getString(R.string.mod_store)));
 
         ModList list = mModMan.getModStore();
         if (list != null) {
-            mods.addAll(list.mods);
+            if (search_filter != null) {
+                for (Mod mod : list.mods) {
+                    if (mod.name.contains(search_filter) || mod.desc.contains(search_filter)) {
+                        mods.add(mod);
+                    }
+                }
+            } else {
+                mods.addAll(list.mods);
+            }
         }
 
         adapter.setMods(mods);
         // Set sections and update.
-        SimpleSectionedRecyclerViewAdapter.Section[] dummy =
-                new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
+        SectionedRecyclerViewAdapter.Section[] dummy =
+                new SectionedRecyclerViewAdapter.Section[sections.size()];
         adapter.setSections(sections.toArray(dummy));
         adapter.notifyDataSetChanged();
     }
