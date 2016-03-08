@@ -55,6 +55,7 @@ public class ModListActivity
     private ModManager mModMan;
     private String install_dir;
     private String search_filter = null;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,6 +206,20 @@ public class ModListActivity
             getSupportFragmentManager().beginTransaction()
                     .remove(frag)
                     .commit();
+        } else if (mTwoPane && action.equals(ACTION_SEARCH)) {
+            String query = bundle.getString(PARAM_ADDITIONAL);
+
+            // Update SearchView
+            final MenuItem item = menu.findItem(R.id.action_search);
+            final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+            searchView.setIconified(false);
+            searchView.setQuery(query, true);
+            searchView.clearFocus();
+
+            // Update RecyclerView
+            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
+            assert recyclerView != null;
+            fillRecyclerView(recyclerView, query);
         }
 
         checkChanges(bundle.getString(ModEventReceiver.PARAM_DEST_LIST));
@@ -233,6 +248,7 @@ public class ModListActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_mod_list, menu);
 
         final MenuItem item = menu.findItem(R.id.action_search);
