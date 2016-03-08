@@ -24,6 +24,7 @@ public class Mod {
     @Nullable public String link;
     @Nullable public String path;
     @Nullable public String screenshot_uri;
+    public int verified;
 
     public Mod(@NonNull ModType type, @Nullable String listname, @NonNull String name,
                @Nullable String title, @NonNull String desc) {
@@ -36,6 +37,7 @@ public class Mod {
         this.link = "";
         this.path = "";
         this.screenshot_uri = "";
+        this.verified = 0;
     }
 
     public boolean isLocalMod() {
@@ -62,6 +64,14 @@ public class Mod {
         } else {
             return cleaned_desc.substring(0, len);
         }
+    }
+
+    public String getShortLink() {
+        String res = (link == null) ? "" : link.replace("https://", "").replace("http://", "");
+        if (res.length() > 100) {
+            res = res.substring(0, 99) + "…";
+        }
+        return res;
     }
 
     @Override

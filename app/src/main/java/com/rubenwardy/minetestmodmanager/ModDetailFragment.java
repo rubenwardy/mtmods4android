@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.rubenwardy.minetestmodmanager.manager.Mod;
@@ -88,10 +89,24 @@ public class ModDetailFragment extends Fragment {
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
             ((TextView) rootView.findViewById(R.id.mod_desc)).setText(mItem.desc);
+            ((TextView) rootView.findViewById(R.id.mod_detail_name)).setText(mItem.name);
+            ((TextView) rootView.findViewById(R.id.mod_detail_author)).setText(mItem.author);
+            ((TextView) rootView.findViewById(R.id.mod_detail_link)).setText(mItem.getShortLink());
+            String ver;
+            Resources res = getResources();
+            if (mItem.verified == 1) {
+                ver = res.getString(R.string.mod_verified_yes);
+            } else if (mItem.isLocalMod()) {
+                ver = res.getString(R.string.mod_verified_uk);
+            } else {
+                ver = res.getString(R.string.mod_verified_no);
+            }
+            ((TextView) rootView.findViewById(R.id.mod_detail_ver)).setText(ver);
 
-            Button btn_side = (Button) rootView.findViewById(R.id.disable);
+            Button btn_side = (Button) rootView.findViewById(R.id.find);
             Button btn_main = (Button) rootView.findViewById(R.id.uninstall);
             if (mItem.isLocalMod()) {
+                ((TextView) rootView.findViewById(R.id.mod_detail_location)).setText(mItem.path);
                 btn_main.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(@NonNull View view) {
@@ -114,9 +129,9 @@ public class ModDetailFragment extends Fragment {
                     }
                 });
             } else {
-                Resources res = getResources();
-                btn_main.setText(res.getString(R.string.install));
-                btn_side.setVisibility(View.INVISIBLE);
+                ((TableRow) rootView.findViewById(R.id.mod_detail_loc_row)).setVisibility(View.GONE);
+                btn_main.setText(res.getString(R.string.action_install));
+                btn_side.setText(res.getString(R.string.action_find_phone));
 
                 // TODO: list installed instances
 

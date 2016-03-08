@@ -14,9 +14,9 @@
 
     <!-- Mod List -->
     <string name="app_name">Minetest Mod Manager</string>
-    <string name="minetest_mods">Installed Minetest Mods</string>
-    <string name="multicraft_mods">Installed MultiCraft Mods</string>
-    <string name="mod_store">Mod Store</string>
+    <string name="modlist_minetest">Installed Minetest Mods</string>
+    <string name="modlist_multicraft">Installed MultiCraft Mods</string>
+    <string name="modlist_store">Mod Store</string>
 
     <!-- Mod Events -->
     <string name="installing_mod">Installing mod…</string>
@@ -27,10 +27,20 @@
 
     <!-- Mod Details -->
     <string name="title_mod_detail">Mod Detail</string>
-    <string name="install">Install</string>
-    <string name="enable">Enable</string>
-    <string name="uninstall">Uninstall</string>
-    <string name="disable">Disable</string>
+    <string name="action_install">Install</string>
+    <string name="action_uninstall">Uninstall</string>
+    <string name="action_find_online">Find Online</string>
+    <string name="action_find_phone">Find on Phone</string>
+    <string name="details_name">Mod Name</string>
+    <string name="details_author">Author</string>
+    <string name="details_location">Folder</string>
+    <string name="details_link">Download URL</string>
+    <string name="details_verified">Trust</string>
+    <string name="mod_verified_yes">This mod is from a trusted author.</string>
+    <string name="mod_verified_no">This mod hasn\'t been checked by us. It\'s probably fine, though.</string>
+    <string name="mod_verified_uk">Unable to determine the source of this mod.</string>
+
+
     <string name="invalid_mod">Invalid Mod</string>
     <string name="invalid_mod_desc">We couldn\'t find that mod. Has it been deleted?</string>
     <string name="invalid_modlist">Invalid Mod Location or Path</string>

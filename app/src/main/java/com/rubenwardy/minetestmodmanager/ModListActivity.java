@@ -130,8 +130,8 @@ public class ModListActivity
 
         // Add lists
         Resources res = getResources();
-        mModMan.getModsFromDir(res.getString(R.string.minetest_mods), mtroot.getAbsolutePath(), mtdir.getAbsolutePath());
-        mModMan.getModsFromDir(res.getString(R.string.multicraft_mods), mcroot.getAbsolutePath(), mcdir.getAbsolutePath());
+        mModMan.getModsFromDir(res.getString(R.string.modlist_minetest), mtroot.getAbsolutePath(), mtdir.getAbsolutePath());
+        mModMan.getModsFromDir(res.getString(R.string.modlist_multicraft), mcroot.getAbsolutePath(), mcdir.getAbsolutePath());
 
         View recyclerView = findViewById(R.id.mod_list);
         assert recyclerView != null;
@@ -292,7 +292,7 @@ public class ModListActivity
             }
         }
         sections.add(new SectionedRecyclerViewAdapter.Section(mods.size(),
-                res.getString(R.string.mod_store)));
+                res.getString(R.string.modlist_store)));
 
         ModList list = mModMan.getModStore();
         if (list != null) {

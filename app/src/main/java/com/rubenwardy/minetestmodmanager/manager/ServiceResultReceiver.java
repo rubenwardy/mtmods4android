@@ -82,15 +82,20 @@ public class ServiceResultReceiver extends ResultReceiver {
                         String modname = item.getString("name");
                         String title = item.getString("title");
                         String link = item.getString("link");
+                        int verified = 0;
                         String desc = "";
                         if (item.has("description")) {
                             desc = item.getString("description");
+                        }
+                        if (item.has("verified")) {
+                            verified = item.getInt("verified");
                         }
 
                         if (modname != null && title != null && link != null) {
                             Mod mod = new Mod(Mod.ModType.EMT_MOD, url, modname, title, desc);
                             mod.link = link;
                             mod.author = author;
+                            mod.verified = verified;
                             list.add(mod);
                         }
                     } catch (JSONException e) {

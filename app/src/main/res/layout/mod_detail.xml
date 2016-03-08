@@ -4,6 +4,78 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true">
+    <TableLayout
+        android:id="@+id/mod_table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="0dp"
+        android:shrinkColumns="2">
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text="@string/details_name"
+                android:padding="3dip" />
+            <TextView
+                android:text="modname"
+                android:layout_width="wrap_content"
+                android:padding="3dip"
+                android:id="@+id/mod_detail_name" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text="@string/details_author"
+                android:padding="3dip" />
+            <TextView
+                android:text="rubenwardy"
+                android:layout_width="wrap_content"
+                android:padding="3dip"
+                android:id="@+id/mod_detail_author" />
+        </TableRow>
+
+        <TableRow android:id="@+id/mod_detail_loc_row">
+            <TextView
+                android:layout_column="1"
+                android:text="@string/details_location"
+                android:padding="3dip" />
+            <TextView
+                android:text="/storage/emulated/0/Minetest/mods/modname/"
+                android:layout_width="wrap_content"
+                android:padding="3dip"
+                android:id="@+id/mod_detail_location" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text="@string/details_link"
+                android:padding="3dip" />
+            <TextView
+                android:text="github.com/rubenwardy/privilegeareas/archive/master.zip"
+                android:layout_width="wrap_content"
+                android:padding="3dip"
+                android:id="@+id/mod_detail_link" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text="@string/details_verified"
+                android:padding="3dip" />
+            <TextView
+                android:text="@string/mod_verified_no"
+                android:layout_width="wrap_content"
+                android:padding="3dip"
+                android:id="@+id/mod_detail_ver" />
+        </TableRow>
+    </TableLayout>
+
     <LinearLayout
         android:id="@+id/mod_btnbar"
         android:orientation="horizontal"
@@ -11,20 +83,21 @@
         android:paddingTop="5.0dip"
         android:paddingRight="4.0dip"
         android:paddingBottom="1.0dip"
+        android:layout_below="@+id/mod_table"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/disable"
+            android:id="@+id/find"
             android:layout_width="0.0dip" android:layout_height="fill_parent"
-            android:text="@string/disable"
+            android:text="@string/action_find_online"
             android:layout_weight="1.0" />
 
         <Button
             android:id="@+id/uninstall"
             android:theme="@style/ColoredButton"
             android:layout_width="0.0dip" android:layout_height="fill_parent"
-            android:text="@string/uninstall"
+            android:text="@string/action_uninstall"
             android:layout_weight="1.0" />
 
     </LinearLayout>
@@ -38,5 +111,6 @@
         android:layout_below="@+id/mod_btnbar"
         android:padding="16dp"
         android:textIsSelectable="true"
-        tools:context="com.rubenwardy.minetestmodmanager.ModDetailFragment" />
+        tools:context="com.rubenwardy.minetestmodmanager.ModDetailFragment"
+        android:text="Adds foo and bar to the game, along with x and ys. Adds foo and bar to the game, along with x and ys." />
 </RelativeLayout>
