@@ -1,5 +1,6 @@
 package com.rubenwardy.minetestmodmanager.manager;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -16,6 +17,7 @@ import java.io.File;
 /**
  * Receive a result from the service
  */
+@SuppressLint("ParcelCreator")
 public class ServiceResultReceiver extends ResultReceiver {
     public ServiceResultReceiver(Handler handler) {
         super(handler);
