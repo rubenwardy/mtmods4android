@@ -63,7 +63,9 @@
                 android:text="rubenwardy"
                 android:layout_width="wrap_content"
                 android:padding="3dip"
-                android:id="@+id/mod_detail_author" />
+                android:id="@+id/mod_detail_author"
+                android:clickable="true"
+                android:textColor="#0000ff" />
         </TableRow>
 
         <TableRow android:id="@+id/mod_detail_loc_row">

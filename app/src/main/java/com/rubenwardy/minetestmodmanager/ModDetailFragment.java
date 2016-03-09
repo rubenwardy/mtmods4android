@@ -33,7 +33,7 @@ public class ModDetailFragment extends Fragment {
     public static final String ARG_MOD_LIST = "mod_list";
     public static final String ARG_MOD_NAME = "mod_name";
 
-    private Mod mItem;
+    private Mod mod;
 
     /**
      * Mandatory empty constructor for the mFragment manager to instantiate the
@@ -57,16 +57,16 @@ public class ModDetailFragment extends Fragment {
             ModList list = modman.get(listname);
             if (list == null) {
                 Resources res = getResources();
-                mItem = new Mod(Mod.ModType.EMT_INVALID,
+                mod = new Mod(Mod.ModType.EMT_INVALID,
                         "", "invalid",
                         res.getString(R.string.invalid_modlist),
                         res.getString(R.string.invalid_modlist_desc));
             } else {
-                mItem = list.mods_map.get(name);
-                if (mItem == null) {
+                mod = list.mods_map.get(name);
+                if (mod == null) {
                     Resources res = getResources();
                     list.valid = false;
-                    mItem = new Mod(Mod.ModType.EMT_INVALID,
+                    mod = new Mod(Mod.ModType.EMT_INVALID,
                             "", "invalid",
                             res.getString(R.string.invalid_mod),
                             res.getString(R.string.invalid_mod_desc));
@@ -76,7 +76,7 @@ public class ModDetailFragment extends Fragment {
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.title);
+                appBarLayout.setTitle(mod.title);
             }
         }
     }
@@ -87,19 +87,20 @@ public class ModDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.mod_detail, container, false);
 
         // Show the dummy content as text in a TextView.
-        if (mItem != null) {
+        if (mod != null) {
             Resources res = getResources();
 
             // Set text
-            ((TextView) rootView.findViewById(R.id.mod_desc)).setText(mItem.desc);
-            ((TextView) rootView.findViewById(R.id.mod_detail_name)).setText(mItem.name);
-            ((TextView) rootView.findViewById(R.id.mod_detail_author)).setText(mItem.author);
-            ((TextView) rootView.findViewById(R.id.mod_detail_link)).setText(mItem.getShortLink());
+            ((TextView) rootView.findViewById(R.id.mod_desc)).setText(mod.desc);
+            ((TextView) rootView.findViewById(R.id.mod_detail_name)).setText(mod.name);
+            TextView txt_author = (TextView) rootView.findViewById(R.id.mod_detail_author);
+            txt_author.setText(mod.author);
+            ((TextView) rootView.findViewById(R.id.mod_detail_link)).setText(mod.getShortLink());
 
             String ver;
-            if (mItem.verified == 1) {
+            if (mod.verified == 1) {
                 ver = res.getString(R.string.mod_verified_yes);
-            } else if (mItem.isLocalMod()) {
+            } else if (mod.isLocalMod()) {
                 ver = res.getString(R.string.mod_verified_uk);
             } else {
                 ver = res.getString(R.string.mod_verified_no);
@@ -113,31 +114,45 @@ public class ModDetailFragment extends Fragment {
                 public void onClick(@NonNull View view) {
                     Bundle bundle = new Bundle();
                     bundle.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_SEARCH);
-                    bundle.putString(ModEventReceiver.PARAM_MODNAME, mItem.name);
-                    bundle.putString(ModEventReceiver.PARAM_ADDITIONAL, "name:" + mItem.name);
+                    bundle.putString(ModEventReceiver.PARAM_MODNAME, mod.name);
+                    bundle.putString(ModEventReceiver.PARAM_ADDITIONAL, "name:" + mod.name);
                     ((ModEventReceiver) getActivity()).onModEvent(bundle);
                 }
             });
 
+            // Author
+            txt_author.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(@NonNull View view) {
+                    if (!mod.author.equals("")) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_SEARCH);
+                        bundle.putString(ModEventReceiver.PARAM_MODNAME, mod.name);
+                        bundle.putString(ModEventReceiver.PARAM_ADDITIONAL, "author:" + mod.author);
+                        ((ModEventReceiver) getActivity()).onModEvent(bundle);
+                    }
+                }
+            });
+
             Button btn_main = (Button) rootView.findViewById(R.id.uninstall);
-            if (mItem.isLocalMod()) {
-                ((TextView) rootView.findViewById(R.id.mod_detail_location)).setText(mItem.path);
+            if (mod.isLocalMod()) {
+                ((TextView) rootView.findViewById(R.id.mod_detail_location)).setText(mod.path);
                 btn_main.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(@NonNull View view) {
                         ModManager modman = new ModManager();
                         Resources res = getResources();
-                        if (modman.uninstallMod(mItem)) {
+                        if (modman.uninstallMod(mod)) {
                             Bundle bundle = new Bundle();
                             bundle.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_UNINSTALL);
-                            bundle.putString(ModEventReceiver.PARAM_DEST_LIST, mItem.listname);
-                            bundle.putString(ModEventReceiver.PARAM_MODNAME, mItem.name);
-                            String text = String.format(res.getString(R.string.uninstalled_mod), mItem.name);
+                            bundle.putString(ModEventReceiver.PARAM_DEST_LIST, mod.listname);
+                            bundle.putString(ModEventReceiver.PARAM_MODNAME, mod.name);
+                            String text = String.format(res.getString(R.string.uninstalled_mod), mod.name);
                             Snackbar.make(view, text, Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
                             ((ModEventReceiver) getActivity()).onModEvent(bundle);
                         } else {
-                            String text = String.format(res.getString(R.string.failed_uninstall), mItem.name);
+                            String text = String.format(res.getString(R.string.failed_uninstall), mod.name);
                             Snackbar.make(view, text, Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
                         }
@@ -158,8 +173,8 @@ public class ModDetailFragment extends Fragment {
                         Snackbar.make(view, res.getString(R.string.installing_mod), Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
 
-                        modman.installUrlModAsync(getActivity().getApplicationContext(), mItem,
-                                mItem.link,
+                        modman.installUrlModAsync(getActivity().getApplicationContext(), mod,
+                                mod.link,
                                 modman.getInstallDir());
                     }
                 });
