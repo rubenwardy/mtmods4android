@@ -111,7 +111,7 @@ public class ModManager {
         list.mods_map.clear();
 
         File[] files = dirs.listFiles();
-        for (File file:files) {
+        for (File file : files) {
             if (file.isDirectory()) {
                 Mod.ModType type = Utils.detectModType(file);
                 if (type != Mod.ModType.EMT_INVALID) {

@@ -49,14 +49,23 @@ public class ServiceResultReceiver extends ResultReceiver {
     }
 
     private void handleFetchModList(@NonNull Bundle b, @Nullable String url, @Nullable String dest) {
-        if (dest == null || url == null) {
+        if (url == null) {
             Log.w("SRR", "Invalid modlist");
             return;
         }
 
-        if (b.containsKey(ModInstallService.RET_ERROR)) {
+        if (dest == null || b.containsKey(ModInstallService.RET_ERROR)) {
             Log.w("SRR", "Fetch failed for " + url + ": " +
                     b.getString(ModInstallService.RET_ERROR));
+
+            if (ModManager.mev != null) {
+                Bundle b2 = new Bundle();
+                b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_FETCH_MODLIST);
+                b2.putString(ModEventReceiver.PARAM_DEST_LIST, url);
+                b2.putString(ModEventReceiver.PARAM_ERROR, b.getString(ModInstallService.RET_ERROR));
+                //noinspection ConstantConditions
+                ModManager.mev.onModEvent(b2);
+            }
         } else if (!b.containsKey(ModInstallService.RET_PROGRESS)) {
             Log.w("SRR", "Got result " + dest + " from " + url);
             ModManager modman = new ModManager();

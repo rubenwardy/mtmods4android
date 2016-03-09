@@ -11,7 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -47,27 +47,28 @@ import java.util.List;
 public class ModListActivity
         extends AppCompatActivity
         implements ModEventReceiver, SearchView.OnQueryTextListener {
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private boolean mTwoPane;
-    private ModManager mModMan;
-    private String install_dir;
-    private String search_filter = null;
+
+    // Layout related
+    private boolean isTwoPane;
     private Menu menu;
+
+    // Modman
+    private ModManager modman;
+    private String install_dir;
+    private final String mod_list_url = "http://app-mtmm.rubenwardy.com/v1/list/";
+
+    // Other
+    private String search_filter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mod_list);
 
-        mModMan = new ModManager();
+        modman = new ModManager();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
-
+        //
+        // Read opening intent
+        //
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.containsKey(PARAM_ACTION)) {
             String action = extras.getString(PARAM_ACTION);
@@ -77,6 +78,19 @@ public class ModListActivity
             }
         }
 
+        setupLayout();
+        scanFileSystem();
+    }
+
+    protected void setupLayout() {
+        setContentView(R.layout.activity_mod_list);
+
+        // Setup toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(getTitle());
+
+        // Floating action button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,11 +100,32 @@ public class ModListActivity
                         .setAction("Action", null).show();
 
                 Mod mod = new Mod(Mod.ModType.EMT_INVALID, "", "crops", "Crops", "");
-                mModMan.installUrlModAsync(getApplicationContext(), mod,
+                modman.installUrlModAsync(getApplicationContext(), mod,
                         "https://github.com/minetest-mods/crops/archive/master.zip", install_dir);
             }
         });
 
+        // Pull down to refresh
+        SwipeRefreshLayout srl = (SwipeRefreshLayout) findViewById(R.id.refresh);
+        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.w("MLAct", "Refreshing!");
+                for (ModList list : ModManager.lists_map.values()) {
+                    if (list.type == ModList.ModListType.EMLT_PATH) {
+                        modman.update(list);
+                    }
+                }
+                modman.fetchModListAsync(getApplicationContext(), mod_list_url);
+            }
+        });
+
+        if (findViewById(R.id.mod_detail_container) != null) {
+            isTwoPane = true;
+        }
+    }
+
+    protected void scanFileSystem() {
         File extern = Environment.getExternalStorageDirectory();
         if (!extern.exists()) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -108,20 +143,20 @@ public class ModListActivity
         }
 
         // Add Minetest mod location
-        File mtroot = new File(extern, "/Minetest");
-        File mtdir = new File(mtroot, "/mods");
-        File mcroot = new File(extern, "/MultiCraft");
-        File mcdir = new File(mcroot, "/mods");
-        install_dir = mtdir.getAbsolutePath();
+        File mt_root = new File(extern, "/Minetest");
+        File mt_dir = new File(mt_root, "/mods");
+        File mul_root = new File(extern, "/MultiCraft");
+        File mul_dir = new File(mul_root, "/mods");
+        install_dir = mt_dir.getAbsolutePath();
 
         // Check there is at least one mod dir
-        if (mtroot.exists() && !mtdir.exists() && mtdir.mkdirs()) {
-            mtdir = new File(mtroot, "/mods");
+        if (mt_root.exists() && !mt_dir.exists() && mt_dir.mkdirs()) {
+            mt_dir = new File(mt_root, "/mods");
         }
-        if (mcroot.exists() && !mcdir.exists() && mcdir.mkdirs()) {
-            mcdir = new File(mcroot, "/mods");
+        if (mul_root.exists() && !mul_dir.exists() && mul_dir.mkdirs()) {
+            mul_dir = new File(mul_root, "/mods");
         }
-        if (!mtdir.exists() && !mcdir.exists() && !mtdir.mkdirs()) {
+        if (!mt_dir.exists() && !mul_dir.exists() && !mt_dir.mkdirs()) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setCancelable(false);
             alertDialogBuilder.setTitle(R.string.dialog_nomt_title);
@@ -137,22 +172,18 @@ public class ModListActivity
         }
 
         // Bind event receiver
-        mModMan.setEventReceiver(this);
+        modman.setEventReceiver(this);
 
         // Add lists
         Resources res = getResources();
-        mModMan.getModsFromDir(res.getString(R.string.modlist_minetest), mtroot.getAbsolutePath(), mtdir.getAbsolutePath());
-        mModMan.getModsFromDir(res.getString(R.string.modlist_multicraft), mcroot.getAbsolutePath(), mcdir.getAbsolutePath());
+        modman.getModsFromDir(res.getString(R.string.modlist_minetest), mt_root.getAbsolutePath(), mt_dir.getAbsolutePath());
+        modman.getModsFromDir(res.getString(R.string.modlist_multicraft), mul_root.getAbsolutePath(), mul_dir.getAbsolutePath());
 
         View recyclerView = findViewById(R.id.mod_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
 
-        mModMan.fetchModListAsync(getApplicationContext(), "http://app-mtmm.rubenwardy.com/v1/list/");
-
-        if (findViewById(R.id.mod_detail_container) != null) {
-            mTwoPane = true;
-        }
+        modman.fetchModListAsync(getApplicationContext(), "http://app-mtmm.rubenwardy.com/v1/list/");
     }
 
     @Override
@@ -160,7 +191,7 @@ public class ModListActivity
         super.onResume();
 
         Log.w("MLAct", "Resuming!");
-        mModMan.setEventReceiver(this);
+        modman.setEventReceiver(this);
 
         for (ModList list : ModManager.lists_map.values()) {
             checkChanges(list);
@@ -200,13 +231,13 @@ public class ModListActivity
                 Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        } else if (mTwoPane && action.equals(ACTION_UNINSTALL)) {
+        } else if (isTwoPane && action.equals(ACTION_UNINSTALL)) {
             FragmentManager fragman = getSupportFragmentManager();
             Fragment frag = fragman.findFragmentById(R.id.mod_detail_container);
             getSupportFragmentManager().beginTransaction()
                     .remove(frag)
                     .commit();
-        } else if (mTwoPane && action.equals(ACTION_SEARCH)) {
+        } else if (isTwoPane && action.equals(ACTION_SEARCH)) {
             String query = bundle.getString(PARAM_ADDITIONAL);
 
             // Update SearchView
@@ -220,6 +251,9 @@ public class ModListActivity
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
             assert recyclerView != null;
             fillRecyclerView(recyclerView, query);
+        } else if (action.equals(ACTION_FETCH_MODLIST)) {
+            SwipeRefreshLayout srl = (SwipeRefreshLayout) findViewById(R.id.refresh);
+            srl.setRefreshing(false);
         }
 
         checkChanges(bundle.getString(ModEventReceiver.PARAM_DEST_LIST));
@@ -231,14 +265,14 @@ public class ModListActivity
         }
 
         Log.w("MLAct", " - Checking for changes..." + listname);
-        ModList list = mModMan.get(listname);
+        ModList list = modman.get(listname);
         checkChanges(list);
     }
 
     private void checkChanges(@Nullable ModList list) {
         Log.w("MLAct", " - Checking for changes...");
         if (list != null && !list.valid &&
-                (list.type == ModList.ModListType.EMLT_STORE || mModMan.update(list))) {
+                (list.type == ModList.ModListType.EMLT_STORE || modman.update(list))) {
             Log.w("MLAct", " - list has changed!");
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
             assert recyclerView != null;
@@ -367,7 +401,7 @@ public class ModListActivity
         sections.add(new SectionedRecyclerViewAdapter.Section(mods.size(),
                 res.getString(R.string.modlist_store)));
 
-        ModList list = mModMan.getModStore();
+        ModList list = modman.getModStore();
         if (list != null) {
             if (query != null) {
                 for (Mod mod : list.mods) {
@@ -434,7 +468,7 @@ public class ModListActivity
             holder.view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(@NonNull View v) {
-                    if (mTwoPane) {
+                    if (isTwoPane) {
                         Bundle arguments = new Bundle();
                         arguments.putString(ModDetailFragment.ARG_MOD_LIST, holder.mod.listname);
                         arguments.putString(ModDetailFragment.ARG_MOD_NAME, holder.mod.name);
