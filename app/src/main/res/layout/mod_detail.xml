@@ -4,6 +4,32 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true">
+    <LinearLayout
+        android:id="@+id/mod_btnbar"
+        android:orientation="horizontal"
+        android:paddingLeft="4.0dip"
+        android:paddingTop="5.0dip"
+        android:paddingRight="4.0dip"
+        android:paddingBottom="1.0dip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/find"
+            android:layout_width="0.0dip" android:layout_height="fill_parent"
+            android:text="@string/action_find"
+            android:layout_weight="1.0" />
+
+        <Button
+            android:id="@+id/uninstall"
+            android:theme="@style/ColoredButton"
+            android:layout_width="0.0dip" android:layout_height="fill_parent"
+            android:text="@string/action_uninstall"
+            android:layout_weight="1.0" />
+
+    </LinearLayout>
+
+
     <TableLayout
         android:id="@+id/mod_table"
         android:layout_width="match_parent"
@@ -13,7 +39,8 @@
         android:paddingRight="5dp"
         android:paddingTop="5dp"
         android:paddingBottom="0dp"
-        android:shrinkColumns="2">
+        android:shrinkColumns="2"
+        android:layout_below="@+id/mod_btnbar">
 
         <TableRow>
             <TextView
@@ -76,41 +103,16 @@
         </TableRow>
     </TableLayout>
 
-    <LinearLayout
-        android:id="@+id/mod_btnbar"
-        android:orientation="horizontal"
-        android:paddingLeft="4.0dip"
-        android:paddingTop="5.0dip"
-        android:paddingRight="4.0dip"
-        android:paddingBottom="1.0dip"
-        android:layout_below="@+id/mod_table"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/find"
-            android:layout_width="0.0dip" android:layout_height="fill_parent"
-            android:text="@string/action_find"
-            android:layout_weight="1.0" />
-
-        <Button
-            android:id="@+id/uninstall"
-            android:theme="@style/ColoredButton"
-            android:layout_width="0.0dip" android:layout_height="fill_parent"
-            android:text="@string/action_uninstall"
-            android:layout_weight="1.0" />
-
-    </LinearLayout>
-
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/mod_desc"
         style="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mod_btnbar"
+        android:layout_below="@+id/mod_table"
         android:padding="16dp"
         android:textIsSelectable="true"
         tools:context="com.rubenwardy.minetestmodmanager.ModDetailFragment"
         android:text="Adds foo and bar to the game, along with x and ys. Adds foo and bar to the game, along with x and ys." />
+
 </RelativeLayout>
