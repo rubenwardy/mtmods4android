@@ -29,8 +29,7 @@
     <string name="title_mod_detail">Mod Detail</string>
     <string name="action_install">Install</string>
     <string name="action_uninstall">Uninstall</string>
-    <string name="action_find_online">Find Online</string>
-    <string name="action_find_phone">Find on Phone</string>
+    <string name="action_find">Find Elsewhere</string>
     <string name="details_name">Mod Name</string>
     <string name="details_author">Author</string>
     <string name="details_location">Folder</string>

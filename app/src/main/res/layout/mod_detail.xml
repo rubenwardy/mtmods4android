@@ -90,7 +90,7 @@
         <Button
             android:id="@+id/find"
             android:layout_width="0.0dip" android:layout_height="fill_parent"
-            android:text="@string/action_find_online"
+            android:text="@string/action_find"
             android:layout_weight="1.0" />
 
         <Button

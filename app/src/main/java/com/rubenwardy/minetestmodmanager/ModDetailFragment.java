@@ -88,12 +88,15 @@ public class ModDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
+            Resources res = getResources();
+
+            // Set text
             ((TextView) rootView.findViewById(R.id.mod_desc)).setText(mItem.desc);
             ((TextView) rootView.findViewById(R.id.mod_detail_name)).setText(mItem.name);
             ((TextView) rootView.findViewById(R.id.mod_detail_author)).setText(mItem.author);
             ((TextView) rootView.findViewById(R.id.mod_detail_link)).setText(mItem.getShortLink());
+
             String ver;
-            Resources res = getResources();
             if (mItem.verified == 1) {
                 ver = res.getString(R.string.mod_verified_yes);
             } else if (mItem.isLocalMod()) {
@@ -103,10 +106,8 @@ public class ModDetailFragment extends Fragment {
             }
             ((TextView) rootView.findViewById(R.id.mod_detail_ver)).setText(ver);
 
+            // Find Elsewhere
             Button btn_find = (Button) rootView.findViewById(R.id.find);
-            Button btn_main = (Button) rootView.findViewById(R.id.uninstall);
-
-
             btn_find.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(@NonNull View view) {
@@ -118,6 +119,7 @@ public class ModDetailFragment extends Fragment {
                 }
             });
 
+            Button btn_main = (Button) rootView.findViewById(R.id.uninstall);
             if (mItem.isLocalMod()) {
                 ((TextView) rootView.findViewById(R.id.mod_detail_location)).setText(mItem.path);
                 btn_main.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +146,6 @@ public class ModDetailFragment extends Fragment {
             } else {
                 ((TableRow) rootView.findViewById(R.id.mod_detail_loc_row)).setVisibility(View.GONE);
                 btn_main.setText(res.getString(R.string.action_install));
-                btn_find.setText(res.getString(R.string.action_find_phone));
 
                 // TODO: list installed instances
 
