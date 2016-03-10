@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.rubenwardy.minetestmodmanager.manager.MinetestConf;
 import com.rubenwardy.minetestmodmanager.manager.Mod;
 import com.rubenwardy.minetestmodmanager.manager.ModEventReceiver;
 import com.rubenwardy.minetestmodmanager.manager.ModList;
@@ -183,7 +184,13 @@ public class ModListActivity
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
 
-        modman.fetchModListAsync(getApplicationContext(), "http://app-mtmm.rubenwardy.com/v1/list/");
+        MinetestConf conf = new MinetestConf();
+        File conf_file = new File(mt_root, "worlds/singleplayerworld/world.mt");
+        conf.read(conf_file);
+        conf.set("load_mod_crops", "true");
+        conf.save(conf_file);
+
+        modman.fetchModListAsync(getApplicationContext(), mod_list_url);
     }
 
     @Override

@@ -48,9 +48,6 @@ public class ModDetailFragment extends Fragment {
 
         if (getArguments().containsKey(ARG_MOD_NAME) &&
                 getArguments().containsKey(ARG_MOD_LIST)) {
-            // Load the dummy content specified by the mFragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
             String name = getArguments().getString(ARG_MOD_NAME);
             String listname = getArguments().getString(ARG_MOD_LIST);
             ModManager modman = new ModManager();
