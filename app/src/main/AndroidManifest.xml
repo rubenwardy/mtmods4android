@@ -17,13 +17,21 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ModDetailActivity"
             android:label="@string/title_mod_detail"
+            android:parentActivityName=".ModListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.rubenwardy.minetestmodmanager.ModListActivity" />
+        </activity>
+        <activity
+            android:name=".WorldConfigActivity"
+            android:label="@string/world_config"
             android:parentActivityName=".ModListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

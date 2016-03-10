@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:padding="@dimen/modlist_checkitem_padding"
+    android:orientation="horizontal" >
+
+    <CheckBox
+        android:id="@+id/modname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/modlist_item_text_margin"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:text="Modname"
+        android:textStyle="bold" />
+
+</LinearLayout>

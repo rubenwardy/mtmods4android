@@ -307,6 +307,18 @@ public class ModListActivity
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.action_world:
+            Intent k = new Intent(this, WorldConfigActivity.class);
+            startActivity(k);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
     public boolean onQueryTextChange(String query) {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
         assert recyclerView != null;
