@@ -121,16 +121,16 @@ public class ModManager {
                     String title = file.getName();
 
                     // Get Description
-                    String desc = null;
+                    String desc = "";
                     File descF = new File(file.getAbsolutePath(), "description.txt");
                     if (descF.exists()) {
                         Log.w("ModLib", " - found description.txt, reading...");
                         desc = Utils.readTextFile(descF);
+                        if (desc == null) {
+                            desc = "";
+                        }
                     } else {
                         Log.w("ModLib", "No file at " + descF.getAbsolutePath());
-                    }
-                    if (desc == null) {
-                        desc = "Desc " + file.getAbsolutePath();
                     }
 
                     // Create mod
