@@ -20,7 +20,7 @@
     <string name="app_name">Minetest Mod Manager</string>
     <string name="modlist_minetest">Installed Minetest Mods</string>
     <string name="modlist_multicraft">Installed MultiCraft Mods</string>
-    <string name="modlist_store">Mod Store</string>
+    <string name="modlist_store">Available Mods</string>
 
     <!-- Mod Events -->
     <string name="installing_mod">Installing mod…</string>
@@ -46,12 +46,13 @@
     <string name="type_modpack">Mod Pack</string>
     <string name="type_subgame">Subgame</string>
 
-    <string name="mod_verified_yes">This mod is from a trusted author.</string>
-    <string name="mod_verified_no">This mod hasn\'t been checked by us. It\'s probably fine, though.</string>
+    <string name="mod_verified_yes">This mod is from a well known author.</string>
+    <string name="mod_verified_no">This mod wasn\'t made by a well known author.</string>
     <string name="mod_verified_uk">Unable to determine the source of this mod.</string>
 
     <!-- World config -->
     <string name="world_config">World Configuration</string>
     <string name="accept">Accept</string>
+    <string name="world_config_saved">Saved configuration</string>
 
 </resources>
