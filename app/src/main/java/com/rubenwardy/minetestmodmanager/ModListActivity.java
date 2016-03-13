@@ -184,12 +184,6 @@ public class ModListActivity
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
 
-        MinetestConf conf = new MinetestConf();
-        File conf_file = new File(mt_root, "worlds/singleplayerworld/world.mt");
-        conf.read(conf_file);
-        conf.set("load_mod_crops", "true");
-        conf.save(conf_file);
-
         modman.fetchModListAsync(getApplicationContext(), mod_list_url);
     }
 
@@ -347,7 +341,6 @@ public class ModListActivity
         if (query != null) {
             query = query.trim().toLowerCase();
             if (query.isEmpty()) {
-                query = null;
                 search_filter = null;
             } else {
                 search_filter = query;

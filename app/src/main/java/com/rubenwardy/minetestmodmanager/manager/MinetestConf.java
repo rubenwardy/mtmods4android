@@ -27,7 +27,7 @@ public class MinetestConf {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
             String line;
 
-            Log.w("Conf", "Reading: " + file.getAbsolutePath());
+            Log.w("Conf", "Reading from " + file.getAbsolutePath());
             while ((line = bufferedReader.readLine()) != null) {
                 int idx = line.indexOf("=");
                 if (idx >= 0) {
@@ -48,9 +48,11 @@ public class MinetestConf {
 
     public boolean save(File file) {
         try {
+            Log.w("Conf", "Saving to " + file.getAbsolutePath());
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for (Map.Entry<String, String> pair : settings.entrySet()) {
                 writer.write(pair.getKey() + " = " + pair.getValue() + "\n");
+                Log.w("Conf", pair.getKey() + " = " + pair.getValue());
             }
             writer.close();
 
@@ -76,5 +78,9 @@ public class MinetestConf {
 
     public void set(String key, String value) {
         settings.put(key, value);
+    }
+
+    public void setBool(String key, boolean value) {
+        set(key, value?"true":"false");
     }
 }
