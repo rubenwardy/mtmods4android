@@ -10,7 +10,8 @@ public class Mod {
     public enum ModType {
         EMT_INVALID,
         EMT_MOD,
-        EMT_MODPACK
+        EMT_MODPACK,
+        EMT_SUBGAME
     }
 
     @NonNull  public final ModType type;

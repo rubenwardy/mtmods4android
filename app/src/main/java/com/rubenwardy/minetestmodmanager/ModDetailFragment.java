@@ -134,6 +134,19 @@ public class ModDetailFragment extends Fragment {
                 }
             });
 
+            // Type
+            String type;
+            if (mod.type == Mod.ModType.EMT_MOD) {
+                type = res.getString(R.string.type_mod);
+            } else if (mod.type == Mod.ModType.EMT_MODPACK) {
+                type = res.getString(R.string.type_modpack);
+            } else if (mod.type == Mod.ModType.EMT_SUBGAME) {
+                type = res.getString(R.string.type_subgame);
+            } else {
+                type = "Invalid";
+            }
+            ((TextView) rootView.findViewById(R.id.mod_detail_type)).setText(type);
+
             Button btn_main = (Button) rootView.findViewById(R.id.uninstall);
             if (mod.isLocalMod()) {
                 ((TextView) rootView.findViewById(R.id.mod_detail_location)).setText(mod.path);

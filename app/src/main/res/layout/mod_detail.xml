@@ -68,6 +68,18 @@
                 android:textColor="#0000ff" />
         </TableRow>
 
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:text="@string/details_type"
+                android:padding="3dip" />
+            <TextView
+                android:text="@string/type_mod"
+                android:layout_width="wrap_content"
+                android:padding="3dip"
+                android:id="@+id/mod_detail_type" />
+        </TableRow>
+
         <TableRow android:id="@+id/mod_detail_loc_row">
             <TextView
                 android:layout_column="1"

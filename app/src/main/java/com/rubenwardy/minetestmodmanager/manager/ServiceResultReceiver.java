@@ -89,25 +89,39 @@ public class ServiceResultReceiver extends ResultReceiver {
                 for (int i = 0; i < j.length(); i++) {
                     try {
                         JSONObject item = j.getJSONObject(i);
-                        String author = item.getString("author");
                         String modname = item.getString("name");
                         String title = item.getString("title");
                         String link = item.getString("link");
-                        int verified = 0;
-                        String desc = "";
-                        if (item.has("description")) {
-                            desc = item.getString("description");
-                        }
-                        if (item.has("verified")) {
-                            verified = item.getInt("verified");
-                        }
 
                         if (modname != null && title != null && link != null) {
-                            Mod mod = new Mod(Mod.ModType.EMT_MOD, url, modname, title, desc);
+                            String author = item.getString("author");
+                            String type_s = item.getString("type");
+
+                            int verified = 0;
+                            String desc = "";
+                            if (item.has("description")) {
+                                desc = item.getString("description");
+                            }
+                            if (item.has("verified")) {
+                                verified = item.getInt("verified");
+                            }
+
+                            Mod.ModType type = Mod.ModType.EMT_MOD;
+                            if (type_s != null) {
+                                if (type_s.equals("1")) {
+                                    type = Mod.ModType.EMT_MOD;
+                                } else if (type_s.equals("2")) {
+                                    type = Mod.ModType.EMT_MODPACK;
+                                }
+                            }
+
+                            Mod mod = new Mod(type, url, modname, title, desc);
                             mod.link = link;
                             mod.author = author;
                             mod.verified = verified;
                             list.add(mod);
+                        } else {
+                            Log.e("SRR", "Invalid object in JSON list. " + j.toString());
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

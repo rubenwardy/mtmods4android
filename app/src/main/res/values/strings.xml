@@ -34,11 +34,18 @@
     <string name="action_install">Install</string>
     <string name="action_uninstall">Uninstall</string>
     <string name="action_find">Find Elsewhere</string>
+
     <string name="details_name">Mod Name</string>
     <string name="details_author">Author</string>
+    <string name="details_type">Type</string>
     <string name="details_location">Folder</string>
     <string name="details_link">Download URL</string>
     <string name="details_verified">Trust</string>
+
+    <string name="type_mod">Mod</string>
+    <string name="type_modpack">Mod Pack</string>
+    <string name="type_subgame">Subgame</string>
+
     <string name="mod_verified_yes">This mod is from a trusted author.</string>
     <string name="mod_verified_no">This mod hasn\'t been checked by us. It\'s probably fine, though.</string>
     <string name="mod_verified_uk">Unable to determine the source of this mod.</string>
