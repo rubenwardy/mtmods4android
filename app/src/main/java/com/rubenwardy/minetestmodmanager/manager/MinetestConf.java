@@ -73,7 +73,8 @@ public class MinetestConf {
     }
 
     public boolean getBool(String key) {
-        return isYes(get(key));
+        String value = get(key);
+        return (value != null) && isYes(value);
     }
 
     public void set(String key, String value) {
