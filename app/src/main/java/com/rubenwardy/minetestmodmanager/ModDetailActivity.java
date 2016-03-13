@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.rubenwardy.minetestmodmanager.manager.Mod;
@@ -30,6 +31,7 @@ import com.rubenwardy.minetestmodmanager.manager.ModManager;
 public class ModDetailActivity
         extends AppCompatActivity
         implements ModEventReceiver {
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +98,13 @@ public class ModDetailActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        ModManager modman = new ModManager();
+        modman.setEventReceiver(this);
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         ModManager modman = new ModManager();
@@ -125,14 +134,19 @@ public class ModDetailActivity
             k.putExtras(extras);
             startActivity(k);
             return;
-        }
-
-        if (bundle.containsKey(PARAM_ERROR)) {
+        } else if (action.equals(ACTION_INSTALL)) {
             Resources res = getResources();
-            String text = String.format(res.getString(R.string.failed_install),
-                    bundle.getString(PARAM_MODNAME), bundle.getString(PARAM_ERROR));
-            Snackbar.make(findViewById(R.id.mod_detail_container), text, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            if (bundle.containsKey(PARAM_ERROR)) {
+                String text = String.format(res.getString(R.string.failed_install),
+                        bundle.getString(PARAM_MODNAME), bundle.getString(PARAM_ERROR));
+                Snackbar.make(findViewById(R.id.mod_detail_container), text, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            } else {
+                String text = String.format(res.getString(R.string.installed_mod),
+                        bundle.getString(PARAM_MODNAME));
+                Snackbar.make(findViewById(R.id.mod_detail_container), text, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
         }
     }
 
