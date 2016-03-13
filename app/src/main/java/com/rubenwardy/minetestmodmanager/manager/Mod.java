@@ -25,6 +25,7 @@ public class Mod {
     @Nullable public String link;
     @Nullable public String path;
     @Nullable public String screenshot_uri;
+    @Nullable public String forum_url;
     public int verified;
 
     public Mod(@NonNull ModType type, @Nullable String listname, @NonNull String name,
@@ -69,6 +70,14 @@ public class Mod {
 
     public String getShortLink() {
         String res = (link == null) ? "" : link.replace("https://", "").replace("http://", "");
+        if (res.length() > 100) {
+            res = res.substring(0, 99) + "…";
+        }
+        return res;
+    }
+
+    public String getShortForumLink() {
+        String res = (forum_url == null) ? "" : forum_url.replace("https://", "").replace("http://", "");
         if (res.length() > 100) {
             res = res.substring(0, 99) + "…";
         }

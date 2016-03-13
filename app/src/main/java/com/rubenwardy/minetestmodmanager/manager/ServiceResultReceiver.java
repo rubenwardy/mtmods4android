@@ -97,11 +97,18 @@ public class ServiceResultReceiver extends ResultReceiver {
                             String author = item.getString("author");
                             String type_s = item.getString("type");
 
-                            int verified = 0;
                             String desc = "";
                             if (item.has("description")) {
                                 desc = item.getString("description");
                             }
+
+                            String forum = null;
+                            if (item.has("topicId")) {
+                                forum = "https://forum.minetest.net/viewtopic.php?t=" +
+                                        item.getString("topicId");
+                            }
+
+                            int verified = 0;
                             if (item.has("verified")) {
                                 verified = item.getInt("verified");
                             }
@@ -119,6 +126,7 @@ public class ServiceResultReceiver extends ResultReceiver {
                             mod.link = link;
                             mod.author = author;
                             mod.verified = verified;
+                            mod.forum_url = forum;
                             list.add(mod);
                         } else {
                             Log.e("SRR", "Invalid object in JSON list. " + j.toString());

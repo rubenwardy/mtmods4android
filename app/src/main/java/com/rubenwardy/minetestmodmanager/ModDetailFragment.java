@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
@@ -99,6 +100,8 @@ public class ModDetailFragment extends Fragment {
             TextView txt_author = (TextView) rootView.findViewById(R.id.mod_detail_author);
             txt_author.setText(mod.author);
             ((TextView) rootView.findViewById(R.id.mod_detail_link)).setText(mod.getShortLink());
+            TextView txt_forum = (TextView) rootView.findViewById(R.id.mod_detail_forum);
+            txt_forum.setText(mod.getShortForumLink());
 
             String ver;
             if (mod.verified == 1) {
@@ -133,6 +136,16 @@ public class ModDetailFragment extends Fragment {
                         bundle.putString(ModEventReceiver.PARAM_MODNAME, mod.name);
                         bundle.putString(ModEventReceiver.PARAM_ADDITIONAL, "author:" + mod.author);
                         ((ModEventReceiver) getActivity()).onModEvent(bundle);
+                    }
+                }
+            });
+
+            txt_forum.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(@NonNull View view) {
+                    if (mod.forum_url != null) {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mod.forum_url));
+                        startActivity(browserIntent);
                     }
                 }
             });

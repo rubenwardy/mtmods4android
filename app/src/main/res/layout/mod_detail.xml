@@ -107,6 +107,20 @@
         <TableRow>
             <TextView
                 android:layout_column="1"
+                android:text="@string/details_forum"
+                android:padding="3dip" />
+            <TextView
+                android:text="forum.minetest.net/viewtopic.php?t=4870"
+                android:layout_width="wrap_content"
+                android:padding="3dip"
+                android:id="@+id/mod_detail_forum"
+                android:clickable="true"
+                android:textColor="#0000ff" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
                 android:text="@string/details_verified"
                 android:padding="3dip" />
             <TextView
