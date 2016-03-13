@@ -493,6 +493,7 @@ public class ModListActivity
                         Context context = v.getContext();
                         Intent intent = new Intent(context, ModDetailActivity.class);
                         intent.putExtra(ModDetailFragment.ARG_MOD_LIST, holder.mod.listname);
+                        intent.putExtra(ModDetailFragment.ARG_MOD_AUTHOR, holder.mod.author);
                         intent.putExtra(ModDetailFragment.ARG_MOD_NAME, holder.mod.name);
 
                         context.startActivity(intent);

@@ -2,6 +2,7 @@ package com.rubenwardy.minetestmodmanager.manager;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class ModList {
     @NonNull
     public List<Mod> mods = new ArrayList<>();
     @NonNull
-    public Map<String, Mod> mods_map = new HashMap<>();
+    public Map<String, List<Mod>> mods_map = new HashMap<>();
 
     public ModList(@NonNull ModListType type, @Nullable String title, @NonNull String engine_root,
             @NonNull String listname) {
@@ -38,6 +39,39 @@ public class ModList {
 
     public void add(@NonNull Mod mod) {
         mods.add(mod);
-        mods_map.put(mod.name, mod);
+        if (mods_map.containsKey(mod.name)) {
+            List<Mod> tmp = mods_map.get(mod.name);
+            tmp.add(mod);
+        } else {
+            List<Mod> tmp = new ArrayList<>();
+            tmp.add(mod);
+            mods_map.put(mod.name, tmp);
+        }
+    }
+
+    public Mod get(@NonNull String name, @Nullable String author) {
+        if (author != null) {
+            author = author.trim();
+            if (author.equals("")) {
+                author = null;
+            }
+        }
+
+        List<Mod> res = mods_map.get(name);
+        if (res != null && res.size() > 0) {
+            if (author == null) {
+                if (res.size() > 1) {
+                    Log.w("ModList",
+                            "get() called without author, yet there are multiple mods of that name.");
+                }
+                return res.get(0);
+            }
+            for (Mod mod : res) {
+                if (mod.author.equals(author)) {
+                    return mod;
+                }
+            }
+        }
+        return null;
     }
 }

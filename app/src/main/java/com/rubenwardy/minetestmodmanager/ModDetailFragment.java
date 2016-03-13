@@ -32,6 +32,8 @@ public class ModDetailFragment extends Fragment {
      */
     public static final String ARG_MOD_LIST = "mod_list";
     public static final String ARG_MOD_NAME = "mod_name";
+    public static final String ARG_MOD_AUTHOR = "mod_author";
+
 
     private Mod mod;
 
@@ -49,6 +51,7 @@ public class ModDetailFragment extends Fragment {
         if (getArguments().containsKey(ARG_MOD_NAME) &&
                 getArguments().containsKey(ARG_MOD_LIST)) {
             String name = getArguments().getString(ARG_MOD_NAME);
+            String author = getArguments().getString(ARG_MOD_AUTHOR);
             String listname = getArguments().getString(ARG_MOD_LIST);
             ModManager modman = new ModManager();
             ModList list = modman.get(listname);
@@ -59,7 +62,7 @@ public class ModDetailFragment extends Fragment {
                         res.getString(R.string.invalid_modlist),
                         res.getString(R.string.invalid_modlist_desc));
             } else {
-                mod = list.mods_map.get(name);
+                mod = list.get(name, author);
                 if (mod == null) {
                     Resources res = getResources();
                     list.valid = false;

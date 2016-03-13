@@ -58,11 +58,12 @@ public class ModDetailActivity
         if (savedInstanceState == null) {
             String listname = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_LIST);
             String modname = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_NAME);
+            String author = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_AUTHOR);
             CollapsingToolbarLayout ctoolbar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
             if (ctoolbar != null) {
                 ModList list = modman.get(listname);
                 if (list != null) {
-                    Mod mod = list.mods_map.get(modname);
+                    Mod mod = list.get(modname, author);
                     if (mod.screenshot_uri != null) {
                         Drawable d = Drawable.createFromPath(mod.screenshot_uri);
                         if (d != null) {
@@ -85,6 +86,7 @@ public class ModDetailActivity
             Bundle arguments = new Bundle();
             arguments.putString(ModDetailFragment.ARG_MOD_LIST, listname);
             arguments.putString(ModDetailFragment.ARG_MOD_NAME, modname);
+            arguments.putString(ModDetailFragment.ARG_MOD_AUTHOR, author);
             ModDetailFragment fragment = new ModDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
