@@ -98,7 +98,7 @@ public class ModManager {
         }
     }
 
-    private boolean updatePathList(@NonNull ModList list) {
+    public boolean updatePathModList(@NonNull ModList list) {
         Log.w("ModLib", "Collecting/updating ModList (type=dir).");
 
         File dirs = new File(list.listname);
@@ -156,7 +156,7 @@ public class ModManager {
 
     public boolean update(@NonNull ModList list) {
         if (list.type == ModList.ModListType.EMLT_PATH) {
-            return updatePathList(list);
+            return updatePathModList(list);
         } else {
             Log.w("ModLib", "Failed to update invalid ModList.");
             return false;
@@ -181,7 +181,8 @@ public class ModManager {
         if (update(list)) {
             lists_map.put(path, list);
             return list;
-        } else
+        } else {
             return null;
+        }
     }
 }

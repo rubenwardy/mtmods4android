@@ -80,4 +80,37 @@ public class Mod {
     public String toString() {
         return name;
     }
+
+    public boolean isEnabled(MinetestConf conf) {
+        if (type == ModType.EMT_MOD) {
+            return conf.getBool("load_mod_" + name);
+        } else if (type == ModType.EMT_MODPACK) {
+            assert (path != null);
+            ModList sublist = new ModList(ModList.ModListType.EMLT_PATH, "", "", path);
+            ModManager modman = new ModManager();
+            modman.updatePathModList(sublist);
+            for (Mod submod : sublist.mods) {
+                if (!submod.isEnabled(conf)) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setEnabled(MinetestConf conf, boolean enable) {
+        if (type == ModType.EMT_MOD) {
+            conf.setBool("load_mod_" + name, enable);
+        } else if (type == ModType.EMT_MODPACK) {
+            assert (path != null);
+            ModList sublist = new ModList(ModList.ModListType.EMLT_PATH, "", "", path);
+            ModManager modman = new ModManager();
+            modman.updatePathModList(sublist);
+            for (Mod submod : sublist.mods) {
+                submod.setEnabled(conf, enable);
+            }
+        }
+    }
 }

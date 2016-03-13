@@ -77,6 +77,7 @@ public class MinetestConf {
     }
 
     public void set(String key, String value) {
+        Log.w("Conf", "Setting " + key + " = " + value);
         settings.put(key, value);
     }
 

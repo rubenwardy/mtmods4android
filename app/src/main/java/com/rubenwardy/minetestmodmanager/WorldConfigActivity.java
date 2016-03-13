@@ -143,13 +143,8 @@ public class WorldConfigActivity extends AppCompatActivity {
             //
             // Register callback
             //
-            boolean enabled = false;
-            if (holder.mod.type == Mod.ModType.EMT_MOD) {
-                enabled = conf.getBool("load_mod_" + holder.mod.name);
-            } else {
-                // TODO: modpack support
-                Log.w("WCMLA", "Modpack found but unable to enable modpacks yet!");
-                holder.view_modname.setTextColor(Color.RED);
+            boolean enabled =  holder.mod.isEnabled(conf);
+            if (holder.mod.type == Mod.ModType.EMT_MODPACK) {
                 holder.view_modname.setText(holder.mod.name + " (Modpack)");
             }
             holder.view_modname.setChecked(enabled);
@@ -157,16 +152,7 @@ public class WorldConfigActivity extends AppCompatActivity {
             holder.view_modname.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton comp_btn, boolean checked) {
-                    if (holder.mod.type == Mod.ModType.EMT_MOD) {
-                        if (checked) {
-                            Log.w("WCMLA", "Enabling mod " + holder.mod.name);
-                        } else {
-                            Log.w("WCMLA", "Disabling mod " + holder.mod.name);
-                        }
-                        conf.setBool("load_mod_" + holder.mod.name, checked);
-                    } else {
-                        // TODO: modpack support
-                    }
+                    holder.mod.setEnabled(conf, checked);
                 }
             });
         }

@@ -51,7 +51,7 @@
     <string name="mod_verified_uk">Unable to determine the source of this mod.</string>
 
     <!-- World config -->
-    <string name="world_config">World Config</string>
+    <string name="world_config">World Configuration</string>
     <string name="accept">Accept</string>
 
 </resources>
