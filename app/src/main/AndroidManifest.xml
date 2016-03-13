@@ -39,6 +39,15 @@
                 android:value="com.rubenwardy.minetestmodmanager.ModListActivity" />
         </activity>
 
+        <activity
+            android:name=".DisclaimerActivity"
+            android:label="@string/disclaimer_title"
+            android:parentActivityName=".ModListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.rubenwardy.minetestmodmanager.ModListActivity" />
+        </activity>
+
         <service
             android:name=".manager.ModInstallService"
             android:exported="false" />

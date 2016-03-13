@@ -55,4 +55,36 @@
     <string name="accept">Accept</string>
     <string name="world_config_saved">Saved configuration</string>
 
+    <!-- Disclaimer -->
+    <string name="disclaimer_title">Disclaimer</string>
+    <string name="disclaimer_agree">By using this service, you agree to the following
+        terms and conditions.</string>
+    <string name="disclaimer_1_t">No Warranty</string>
+    <string name="disclaimer_1_m">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+        INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+        IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+        DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+        ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+        DEALINGS IN THE SOFTWARE.</string>
+
+    <string name="disclaimer_2_t">Not a Mod Store, but a Mod Finder</string>
+    <string name="disclaimer_2_m">The mods listed as available are a subset of the mods found
+        on the Minetest forums. When you download a mod, you do not download it from our servers
+        but rather from the original link that the author posted. Because of this,
+        we cannot guarantee mods are safe. No one in particular checks these mods.</string>
+
+    <string name="disclaimer_3_t">What can you do?</string>
+    <string name="disclaimer_3_m">If you\'re unsure about the safety of a mod, check its
+        forum topic. Look at how old the thread is, and what the comments say.</string>
+
+    <string name="disclaimer_4_t">Well Known Authors</string>
+    <string name="disclaimer_4_m">One of the features of this app is to label well known,
+        popular mod makers as such. The aim of this is for recommendation, rather
+        than for security reasons. Whilst these authors are more trustworthy than most,
+        there is still a possibility of their accounts being
+        hacked and bad downloads being placed there instead.</string>
+
+
+
 </resources>

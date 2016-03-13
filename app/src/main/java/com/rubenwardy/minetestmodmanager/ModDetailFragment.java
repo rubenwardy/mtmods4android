@@ -1,6 +1,9 @@
 package com.rubenwardy.minetestmodmanager;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -181,14 +184,25 @@ public class ModDetailFragment extends Fragment {
                 btn_main.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(@NonNull View view) {
-                        ModManager modman = new ModManager();
-                        Resources res = getResources();
-                        Snackbar.make(view, res.getString(R.string.installing_mod), Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
+                        SharedPreferences settings = getActivity().getSharedPreferences(DisclaimerActivity.PREFS_NAME, 0);
+                        boolean agreed = settings.getBoolean("agreed_to_disclamer", false);
+                        if (!agreed) {
+                            Context context = view.getContext();
+                            Intent intent = new Intent(context, DisclaimerActivity.class);
+                            intent.putExtra(ModDetailFragment.ARG_MOD_LIST, mod.listname);
+                            intent.putExtra(ModDetailFragment.ARG_MOD_AUTHOR, mod.author);
+                            intent.putExtra(ModDetailFragment.ARG_MOD_NAME, mod.name);
+                            context.startActivity(intent);
+                        } else {
+                            ModManager modman = new ModManager();
+                            Resources res = getResources();
+                            Snackbar.make(view, res.getString(R.string.installing_mod), Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
 
-                        modman.installUrlModAsync(getActivity().getApplicationContext(), mod,
-                                mod.link,
-                                modman.getInstallDir());
+                            modman.installUrlModAsync(getActivity().getApplicationContext(), mod,
+                                    mod.link,
+                                    modman.getInstallDir());
+                        }
                     }
                 });
             }
