@@ -1,8 +1,10 @@
 package com.rubenwardy.minetestmodmanager.manager;
 
 import android.app.IntentService;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
@@ -10,7 +12,10 @@ import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
 import android.support.v4.os.ResultReceiver;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+
+import com.rubenwardy.minetestmodmanager.R;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -108,6 +113,31 @@ public class ModInstallService extends IntentService {
     private void handleActionUrlInstall(@NonNull ResultReceiver rec, @NonNull String modname, @NonNull String url_str, @NonNull File dest) {
         Log.w("ModService", "Downloading " + url_str);
         try {
+            // Resource
+            String str_installing = "ERR! Installing $1...";
+            String str_connecting = "ERR! Connecting...";
+            String str_downloading = "ERR! Downloading...";
+            String str_extracting = "ERR! Extracting...";
+            Resources res = getApplicationContext().getResources();
+            if (res != null) {
+                str_installing = String.format(res.getString(R.string.installing), modname);
+                str_connecting = res.getString(R.string.connecting);
+                str_downloading = res.getString(R.string.downloading);
+                str_extracting = res.getString(R.string.extracting);
+
+            }
+
+            // Notifcation
+            NotificationManager notiman =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+            mBuilder.setContentTitle(str_installing)
+                    .setContentText(str_connecting)
+                    .setSmallIcon(R.drawable.notification_icon);
+            mBuilder.setProgress(0, 0, true);
+            notiman.notify(1337, mBuilder.build());
+
+
             URL url = new URL(url_str);
             {
                 // Open HEAD http connection
@@ -151,6 +181,9 @@ public class ModInstallService extends IntentService {
                 testcon.disconnect();*/
             }
             {
+                mBuilder.setContentText(str_downloading);
+                notiman.notify(1337, mBuilder.build());
+
                 // Start download
                 URLConnection connection = url.openConnection();
                 connection.connect();
@@ -173,16 +206,27 @@ public class ModInstallService extends IntentService {
                 long total = 0;
                 int count;
                 while ((count = input.read(data)) != -1) {
+                    output.write(data, 0, count);
+
+                    int prog = (int) (total * 100 / fileLength);
                     total += count;
-                    // publishing the progress....
+
+                    // Report to ServiceResultReceiver
                     Bundle b = new Bundle();
                     b.putString(RET_NAME, modname);
                     b.putString(RET_ACTION, ACTION_INSTALL);
                     b.putString(RET_DEST, dest.getAbsolutePath());
-                    b.putInt(RET_PROGRESS, (int) (total * 100 / fileLength));
+                    b.putInt(RET_PROGRESS, prog);
                     rec.send(UPDATE_PROGRESS, b);
-                    output.write(data, 0, count);
+
+                    // Update Notification
+                    mBuilder.setProgress(100, prog, false);
+                    notiman.notify(1337, mBuilder.build());
                 }
+
+                mBuilder.setProgress(0, 0, true);
+                mBuilder.setContentText(str_extracting);
+                notiman.notify(1337, mBuilder.build());
 
                 output.flush();
                 output.close();
@@ -196,6 +240,7 @@ public class ModInstallService extends IntentService {
                     e.printStackTrace();
                 }
             }
+            notiman.cancel(1337);
         } catch (IOException e) {
             Bundle b = new Bundle();
             b.putString(RET_NAME, modname);
