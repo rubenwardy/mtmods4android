@@ -51,7 +51,7 @@ public class DisclaimerActivity extends AppCompatActivity {
                 SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putBoolean("agreed_to_disclamer", true);
-                editor.commit();
+                editor.apply();
 
                 if (listname != null && modname != null) {
                     ModManager modman = new ModManager();
