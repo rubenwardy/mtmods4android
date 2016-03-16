@@ -48,53 +48,66 @@ public class ModDetailActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        // savedInstanceState is non-null when there is mFragment state
-        // saved from previous configurations of this activity
-        // (e.g. when rotating the screen from portrait to landscape).
-        // In this case, the mFragment will automatically be re-added
-        // to its container so we don't need to manually add it.
-        // For more information, see the Fragments API guide at:
-        //
-        // http://developer.android.com/guide/components/fragments.html
-        //
+        // Setup CollapsingToolbar
+        String listname = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_LIST);
+        String modname = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_NAME);
+        String author = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_AUTHOR);
+        setupToolBar(modman, listname, modname, author);
+
+        // Only setup frament if there is no saved state
         if (savedInstanceState == null) {
-            String listname = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_LIST);
-            String modname = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_NAME);
-            String author = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_AUTHOR);
-            CollapsingToolbarLayout ctoolbar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-            if (ctoolbar != null) {
-                ModList list = modman.get(listname);
-                if (list != null) {
-                    Mod mod = list.get(modname, author);
-                    if (mod.screenshot_uri != null) {
-                        Drawable d = Drawable.createFromPath(mod.screenshot_uri);
-                        if (d != null) {
-                            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                ctoolbar.setBackground(d);
-                            } else {
-                                ctoolbar.setBackgroundDrawable(d);
-                            }
-
-                            NestedScrollView scroll =
-                                    (NestedScrollView) findViewById( R.id.mod_detail_container);
-                            scroll.requestFocus();
-                        }
-                    }
-                }
-            }
-
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putString(ModDetailFragment.ARG_MOD_LIST, listname);
-            arguments.putString(ModDetailFragment.ARG_MOD_NAME, modname);
-            arguments.putString(ModDetailFragment.ARG_MOD_AUTHOR, author);
-            ModDetailFragment fragment = new ModDetailFragment();
-            fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.mod_detail_container, fragment)
-                    .commit();
+            setupFragment(listname, modname, author);
         }
+    }
+
+    private void setupToolBar(ModManager modman, String listname, String modname, String author) {
+        CollapsingToolbarLayout ctoolbar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        if (ctoolbar == null) {
+            return;
+        }
+
+        ModList list = modman.get(listname);
+        if (list == null) {
+            return;
+        }
+
+        Mod mod = list.get(modname, author);
+        if (mod == null) {
+            return;
+        }
+
+        // Set title
+        ctoolbar.setTitle(mod.title);
+
+        if (mod.screenshot_uri != null) {
+            Drawable d = Drawable.createFromPath(mod.screenshot_uri);
+            if (d != null) {
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    ctoolbar.setBackground(d);
+                } else {
+                    ctoolbar.setBackgroundDrawable(d);
+                }
+
+                NestedScrollView scroll =
+                        (NestedScrollView) findViewById(R.id.mod_detail_container);
+                scroll.requestFocus();
+            }
+        }
+
+    }
+
+    private void setupFragment(String listname, String modname, String author) {
+        // Create the detail fragment and add it to the activity
+        // using a fragment transaction.
+        Bundle arguments = new Bundle();
+        arguments.putString(ModDetailFragment.ARG_MOD_LIST, listname);
+        arguments.putString(ModDetailFragment.ARG_MOD_NAME, modname);
+        arguments.putString(ModDetailFragment.ARG_MOD_AUTHOR, author);
+        ModDetailFragment fragment = new ModDetailFragment();
+        fragment.setArguments(arguments);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.mod_detail_container, fragment)
+                .commit();
     }
 
     @Override

@@ -76,12 +76,6 @@ public class ModDetailFragment extends Fragment {
                             res.getString(R.string.invalid_mod_desc));
                 }
             }
-
-            Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
-            if (appBarLayout != null) {
-                appBarLayout.setTitle(mod.title);
-            }
         }
     }
 
