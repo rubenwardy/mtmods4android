@@ -50,7 +50,10 @@ public class ModList {
     }
 
     @Nullable
-    public Mod get(@NonNull String name, @Nullable String author) {
+    public Mod get(@Nullable String name, @Nullable String author) {
+        if (name == null) {
+            return null;
+        }
         if (author != null) {
             author = author.trim();
             if (author.equals("")) {

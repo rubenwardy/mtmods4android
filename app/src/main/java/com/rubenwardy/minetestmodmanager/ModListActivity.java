@@ -27,7 +27,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.rubenwardy.minetestmodmanager.manager.MinetestConf;
 import com.rubenwardy.minetestmodmanager.manager.Mod;
 import com.rubenwardy.minetestmodmanager.manager.ModEventReceiver;
 import com.rubenwardy.minetestmodmanager.manager.ModList;
@@ -83,7 +82,7 @@ public class ModListActivity
         scanFileSystem();
     }
 
-    protected void setupLayout() {
+    private void setupLayout() {
         setContentView(R.layout.activity_mod_list);
 
         // Setup toolbar
@@ -126,7 +125,7 @@ public class ModListActivity
         }
     }
 
-    protected void scanFileSystem() {
+    private void scanFileSystem() {
         File extern = Environment.getExternalStorageDirectory();
         if (!extern.exists()) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);

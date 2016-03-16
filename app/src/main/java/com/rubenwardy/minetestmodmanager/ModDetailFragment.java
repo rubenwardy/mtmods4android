@@ -1,13 +1,11 @@
 package com.rubenwardy.minetestmodmanager;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -15,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.rubenwardy.minetestmodmanager.manager.Mod;
@@ -182,7 +179,7 @@ public class ModDetailFragment extends Fragment {
                     }
                 });
             } else {
-                ((TableRow) rootView.findViewById(R.id.mod_detail_loc_row)).setVisibility(View.GONE);
+                rootView.findViewById(R.id.mod_detail_loc_row).setVisibility(View.GONE);
                 btn_main.setText(res.getString(R.string.action_install));
 
                 // TODO: list installed instances
@@ -206,9 +203,11 @@ public class ModDetailFragment extends Fragment {
                             Snackbar.make(view, res.getString(R.string.installing_mod), Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
 
-                            modman.installUrlModAsync(getActivity().getApplicationContext(), mod,
-                                    mod.link,
-                                    modman.getInstallDir());
+                            if (mod.link != null) {
+                                modman.installUrlModAsync(getActivity().getApplicationContext(), mod,
+                                        mod.link,
+                                        modman.getInstallDir());
+                            }
                         }
                     }
                 });

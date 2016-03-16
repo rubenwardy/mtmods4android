@@ -24,10 +24,10 @@ class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private static final int SECTION_TYPE = 0;
 
     private boolean mValid = true;
-    private int mSectionResourceId;
+    private final int mSectionResourceId;
     private int mTextResourceId;
-    private LayoutInflater mLayoutInflater;
-    private RecyclerView.Adapter mBaseAdapter;
+
+    private final RecyclerView.Adapter mBaseAdapter;
     @NonNull
     private SparseArray<Section> mSections = new SparseArray<>();
 
@@ -39,7 +39,6 @@ class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public SectionedRecyclerViewAdapter(@NonNull Context context, @LayoutRes int sectionResourceId,
                                         @IdRes int textResourceId, @NonNull RecyclerView.Adapter baseAdapter) {
 
-        mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mSectionResourceId = sectionResourceId;
         mTextResourceId = textResourceId;
         mBaseAdapter = baseAdapter;
@@ -75,7 +74,7 @@ class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public static class SectionViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView title;
+        public final TextView title;
 
         public SectionViewHolder(@NonNull View view,int mTextResourceid) {
             super(view);
@@ -113,9 +112,9 @@ class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
 
     public static class Section {
-        int firstPosition;
+        final int firstPosition;
         int sectionedPosition;
-        CharSequence title;
+        final CharSequence title;
 
         public Section(int firstPosition, CharSequence title) {
             this.firstPosition = firstPosition;

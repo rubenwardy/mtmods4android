@@ -11,14 +11,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
  * Reads and writes Minetest style configurations
  **/
 public class MinetestConf {
-    private Map<String, String> settings = new HashMap<>();
+    private final Map<String, String> settings = new HashMap<>();
 
     public boolean read(File file) {
         if (!file.isFile()) {
@@ -65,7 +64,7 @@ public class MinetestConf {
         }
     }
 
-    public boolean isYes(String v) {
+    public static boolean isYes(String v) {
         v = v.trim();
         return (v.equals("true") || v.equals("1") || v.equals("yes"));
     }

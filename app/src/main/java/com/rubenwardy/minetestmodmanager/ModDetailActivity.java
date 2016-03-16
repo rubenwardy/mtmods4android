@@ -14,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.rubenwardy.minetestmodmanager.manager.Mod;
@@ -85,6 +84,7 @@ public class ModDetailActivity
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     ctoolbar.setBackground(d);
                 } else {
+                    //noinspection deprecation
                     ctoolbar.setBackgroundDrawable(d);
                 }
 
@@ -137,17 +137,21 @@ public class ModDetailActivity
         String action = bundle.getString(PARAM_ACTION);
         if (action == null) {
             return;
-        } if (action.equals(ACTION_UNINSTALL)) {
+        }
+
+        switch (action) {
+        case ACTION_UNINSTALL:
             finish();
-        } else if (action.equals(ACTION_SEARCH)) {
+            break;
+        case ACTION_SEARCH:
             Intent k = new Intent(this, ModListActivity.class);
             Bundle extras = new Bundle();
             extras.putString(ModListActivity.PARAM_ACTION, ModListActivity.ACTION_SEARCH);
             extras.putString(ModListActivity.PARAM_ADDITIONAL, bundle.getString(PARAM_ADDITIONAL));
             k.putExtras(extras);
             startActivity(k);
-            return;
-        } else if (action.equals(ACTION_INSTALL)) {
+            break;
+        case ACTION_INSTALL:
             Resources res = getResources();
             if (bundle.containsKey(PARAM_ERROR)) {
                 String text = String.format(res.getString(R.string.failed_install),
@@ -160,6 +164,7 @@ public class ModDetailActivity
                 Snackbar.make(findViewById(R.id.mod_detail_container), text, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
+            break;
         }
     }
 

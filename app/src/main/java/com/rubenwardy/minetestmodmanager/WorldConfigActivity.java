@@ -1,11 +1,13 @@
 package com.rubenwardy.minetestmodmanager;
 
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -29,10 +31,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorldConfigActivity extends AppCompatActivity {
-    @Nullable String modpath = null;
-    @Nullable ModListRecyclerViewAdapter adapter = null;
-    @Nullable MinetestConf conf = null;
-    @Nullable File conf_file = null;
+    @Nullable
+    private String modpath = null;
+    @Nullable
+    private MinetestConf conf = null;
+    @Nullable
+    private File conf_file = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,24 @@ public class WorldConfigActivity extends AppCompatActivity {
         Log.w("WCAct", modpath);
 
         conf = new MinetestConf();
-        conf_file = new File(mt_root, "/worlds/singleplayerworld/world.mt");
+        File world_dir = new File(mt_root, "/worlds/singleplayerworld");
+        conf_file = new File(world_dir, "/world.mt");
+        if (!world_dir.isDirectory()) {
+            if (!world_dir.mkdirs()) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle(R.string.dialog_nowld_title);
+                alertDialogBuilder.setCancelable(false);
+                alertDialogBuilder.setMessage(R.string.dialog_nowld_msg);
+                alertDialogBuilder.setNegativeButton(R.string.dialog_close, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        WorldConfigActivity.this.finish();
+                    }
+                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                return;
+            }
+        }
         conf.read(conf_file);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -75,6 +96,10 @@ public class WorldConfigActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (conf == null) {
+            return false;
+        }
+
         switch (item.getItemId()) {
         case R.id.accept:
             conf.save(conf_file);
@@ -90,7 +115,7 @@ public class WorldConfigActivity extends AppCompatActivity {
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         //Add your adapter to the sectionAdapter
-        adapter = new ModListRecyclerViewAdapter();
+        ModListRecyclerViewAdapter adapter = new ModListRecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
 
         ModManager modman = new ModManager();
@@ -139,6 +164,7 @@ public class WorldConfigActivity extends AppCompatActivity {
             //
             // Register callback
             //
+            assert conf != null;
             boolean enabled = holder.mod.isEnabled(conf);
             if (holder.mod.type == Mod.ModType.EMT_MODPACK) {
                 holder.view_modname.setText(holder.mod.name + " (Modpack)");
@@ -151,10 +177,6 @@ public class WorldConfigActivity extends AppCompatActivity {
                     holder.mod.setEnabled(conf, checked);
                 }
             });
-        }
-
-        protected void enDisMod(Mod mod, boolean enable) {
-
         }
 
         @Override
