@@ -1,20 +1,14 @@
 package com.rubenwardy.minetestmodmanager;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,10 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rubenwardy.minetestmodmanager.manager.MinetestConf;
 import com.rubenwardy.minetestmodmanager.manager.Mod;
@@ -38,10 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorldConfigActivity extends AppCompatActivity {
-    String modpath = null;
-    ModListRecyclerViewAdapter adapter = null;
-    MinetestConf conf = null;
-    File conf_file = null;
+    @Nullable String modpath = null;
+    @Nullable ModListRecyclerViewAdapter adapter = null;
+    @Nullable MinetestConf conf = null;
+    @Nullable File conf_file = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +139,7 @@ public class WorldConfigActivity extends AppCompatActivity {
             //
             // Register callback
             //
-            boolean enabled =  holder.mod.isEnabled(conf);
+            boolean enabled = holder.mod.isEnabled(conf);
             if (holder.mod.type == Mod.ModType.EMT_MODPACK) {
                 holder.view_modname.setText(holder.mod.name + " (Modpack)");
             }

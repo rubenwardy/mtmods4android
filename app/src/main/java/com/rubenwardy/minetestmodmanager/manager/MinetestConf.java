@@ -1,5 +1,7 @@
 package com.rubenwardy.minetestmodmanager.manager;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -68,21 +70,24 @@ public class MinetestConf {
         return (v.equals("true") || v.equals("1") || v.equals("yes"));
     }
 
-    public String get(String key) {
+    public String get(@NonNull String key) {
         return settings.get(key);
     }
 
-    public boolean getBool(String key) {
+    public boolean getBool(@NonNull String key) {
         String value = get(key);
         return (value != null) && isYes(value);
     }
 
-    public void set(String key, String value) {
+    public void set(@NonNull String key, @Nullable String value) {
+        if (value == null) {
+            value = "";
+        }
         Log.w("Conf", "Setting " + key + " = " + value);
         settings.put(key, value);
     }
 
-    public void setBool(String key, boolean value) {
+    public void setBool(@NonNull String key, boolean value) {
         set(key, value?"true":"false");
     }
 }

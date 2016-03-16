@@ -46,6 +46,7 @@ public class Mod {
         return path != null && !path.equals("");
     }
 
+    @NonNull
     public String getShortDesc() {
         String cleaned_desc = desc.trim().replace("\n", " ");
         int len = cleaned_desc.indexOf(".", 20) + 1;
@@ -68,6 +69,7 @@ public class Mod {
         }
     }
 
+    @NonNull
     public String getShortLink() {
         String res = (link == null) ? "" : link.replace("https://", "").replace("http://", "");
         if (res.length() > 100) {
@@ -76,6 +78,7 @@ public class Mod {
         return res;
     }
 
+    @NonNull
     public String getShortForumLink() {
         String res = (forum_url == null) ? "" : forum_url.replace("https://", "").replace("http://", "");
         if (res.length() > 100) {
@@ -90,7 +93,7 @@ public class Mod {
         return name;
     }
 
-    public boolean isEnabled(MinetestConf conf) {
+    public boolean isEnabled(@NonNull MinetestConf conf) {
         if (type == ModType.EMT_MOD) {
             return conf.getBool("load_mod_" + name);
         } else if (type == ModType.EMT_MODPACK) {
@@ -109,7 +112,7 @@ public class Mod {
         }
     }
 
-    public void setEnabled(MinetestConf conf, boolean enable) {
+    public void setEnabled(@NonNull MinetestConf conf, boolean enable) {
         if (type == ModType.EMT_MOD) {
             conf.setBool("load_mod_" + name, enable);
         } else if (type == ModType.EMT_MODPACK) {

@@ -27,7 +27,6 @@ class Utils {
         void Progress(long done, long total, String FileName);
     }
 
-    // unzip(new File("/sdcard/pictures.zip"), new File("/sdcard"));
     @CheckResult
     public static boolean UnzipFile(@NonNull File zipFile, File targetDirectory, @Nullable UnzipFile_Progress progress)
             throws IOException {

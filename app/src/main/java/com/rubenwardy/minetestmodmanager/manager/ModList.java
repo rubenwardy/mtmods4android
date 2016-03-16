@@ -49,6 +49,7 @@ public class ModList {
         }
     }
 
+    @Nullable
     public Mod get(@NonNull String name, @Nullable String author) {
         if (author != null) {
             author = author.trim();
