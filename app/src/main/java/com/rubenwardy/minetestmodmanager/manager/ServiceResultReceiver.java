@@ -50,6 +50,33 @@ public class ServiceResultReceiver extends ResultReceiver {
         }
     }
 
+    private void handleUninstall(@NonNull Bundle b, @Nullable String modname, @Nullable String dest) {
+        if (b.containsKey(ModInstallService.RET_ERROR)) {
+            Log.w("SRR", "Uninstall failed for " + modname + ": " +
+                    b.getString(ModInstallService.RET_ERROR));
+        } else if (b.containsKey(ModInstallService.RET_PROGRESS)) {
+            Integer progress = b.getInt(ModInstallService.RET_PROGRESS);
+            //Log.w("SRR", "Progress for " + modname + " at " + Integer.toString(progress) + "%");
+        } else {
+            Log.w("SRR", "Got result " + dest);
+            ModManager modman = new ModManager();
+            ModList list = modman.get(dest);
+            if (list != null) {
+                Log.w("SRR", "Invalidating list");
+                list.valid = false;
+            }
+
+            if (ModManager.mev != null) {
+                Bundle b2 = new Bundle();
+                b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_UNINSTALL);
+                b2.putString(ModEventReceiver.PARAM_MODNAME, modname);
+                b2.putString(ModEventReceiver.PARAM_DEST_LIST, dest);
+                //noinspection ConstantConditions
+                ModManager.mev.onModEvent(b2);
+            }
+        }
+    }
+
     private void handleFetchModList(@NonNull Bundle b, @Nullable String url, @Nullable String dest) {
         if (url == null) {
             Log.w("SRR", "Invalid modlist");
@@ -170,6 +197,9 @@ public class ServiceResultReceiver extends ResultReceiver {
         switch (action) {
         case ModInstallService.ACTION_INSTALL:
             handleInstall(b, modname, dest);
+            break;
+        case ModInstallService.ACTION_UNINSTALL:
+            handleUninstall(b, modname, dest);
             break;
         case ModInstallService.ACTION_FETCH_MODLIST:
             handleFetchModList(b, modname, dest);

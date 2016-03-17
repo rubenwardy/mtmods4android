@@ -85,16 +85,10 @@ public class ModManager {
         ModInstallService.startActionFetchModList(context, srr, url);
     }
 
-    public boolean uninstallMod(@NonNull Mod mod) {
-        if (mod.path == null || mod.path.equals("")) {
-            return false;
-        } else {
-            Utils.deleteRecursive(new File(mod.path));
-            ModList list = listFromMod(mod);
-            if (list != null) {
-                list.valid = false;
-            }
-            return true;
+    @MainThread
+    public void uninstallModAsync(Context context, @NonNull Mod mod) {
+        if (mod.path != null && !mod.path.equals("")) {
+            ModInstallService.startActionUninstall(context, srr, mod.name, mod.listname);
         }
     }
 

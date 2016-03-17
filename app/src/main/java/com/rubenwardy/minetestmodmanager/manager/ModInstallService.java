@@ -33,6 +33,7 @@ public class ModInstallService extends IntentService {
     public static final int UPDATE_PROGRESS = 8344;
     private static final String ACTION_URL_INSTALL = "com.rubenwardy.minetestmodmanager.action.URL_INSTALL";
     public static final String ACTION_INSTALL = "com.rubenwardy.minetestmodmanager.action.INSTALL";
+    public static final String ACTION_UNINSTALL = "com.rubenwardy.minetestmodmanager.action.UNINSTALL";
     public static final String ACTION_FETCH_MODLIST = "com.rubenwardy.minetestmodmanager.action.FETCH_MODLIST";
 
     private static final String EXTRA_MOD_NAME = "com.rubenwardy.minetestmodmanager.extra.MOD_NAME";
@@ -46,6 +47,17 @@ public class ModInstallService extends IntentService {
 
     public ModInstallService() {
         super("ModInstallService");
+    }
+
+    private boolean isAlphaNum(String str) {
+        for (int i = 0; i < str.length(); ++i) {
+            char c = str.charAt(i);
+            if (!Character.isDigit(c) && !Character.isLetter(c)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @MainThread
@@ -73,6 +85,17 @@ public class ModInstallService extends IntentService {
     }
 
     @MainThread
+    public static void startActionUninstall(@NonNull Context context, ServiceResultReceiver srr,
+                                            String modname, String path) {
+        Intent intent = new Intent(context, ModInstallService.class);
+        intent.setAction(ACTION_UNINSTALL);
+        intent.putExtra(EXTRA_MOD_NAME, modname);
+        intent.putExtra(EXTRA_DEST, path);
+        intent.putExtra("receiverTag", srr);
+        context.startService(intent);
+    }
+
+    @MainThread
     public static void startActionFetchModList(@NonNull Context context, ServiceResultReceiver srr,
                                                String url) {
         Intent intent = new Intent(context, ModInstallService.class);
@@ -89,21 +112,62 @@ public class ModInstallService extends IntentService {
             final String action = intent.getAction();
             ResultReceiver rec = intent.getParcelableExtra("receiverTag");
 
-            if (ACTION_INSTALL.equals(action)) {
+            switch (action) {
+            case ACTION_INSTALL: {
                 final String modname = intent.getStringExtra(EXTRA_MOD_NAME);
                 final String zippath = intent.getStringExtra(EXTRA_URL);
                 final String dest = intent.getStringExtra(EXTRA_DEST);
                 handleActionInstall(rec, modname, new File(zippath), new File(dest));
-            } else if (ACTION_FETCH_MODLIST.equals(action)) {
+                break;
+            }
+            case ACTION_FETCH_MODLIST: {
                 final String url = intent.getStringExtra(EXTRA_URL);
                 handleActionFetchModList(rec, url);
-            } else if (ACTION_URL_INSTALL.equals(action)) {
+                break;
+            }
+            case ACTION_URL_INSTALL: {
                 final String modname = intent.getStringExtra(EXTRA_MOD_NAME);
                 final String url = intent.getStringExtra(EXTRA_URL);
                 final String dest = intent.getStringExtra(EXTRA_DEST);
                 handleActionUrlInstall(rec, modname, url, new File(dest));
-            } else {
+                break;
+            }
+            case ACTION_UNINSTALL:
+                // TODO: FIXME: This is a potential security problem!
+
+                final String modname = intent.getStringExtra(EXTRA_MOD_NAME);
+                final String path = intent.getStringExtra(EXTRA_DEST);
+
+                if (isAlphaNum(modname)) {
+                    Utils.deleteRecursive(new File(path, modname));
+
+                    if ((new File(path, modname)).exists()) {
+                        Bundle b = new Bundle();
+                        b.putString(RET_ACTION, ACTION_UNINSTALL);
+                        b.putString(RET_NAME, modname);
+                        b.putString(RET_DEST, path);
+                        b.putString(RET_ERROR, "Folder still exists after attempting to delete.");
+                        rec.send(0, b);
+                    } else {
+                        Bundle b = new Bundle();
+                        b.putString(RET_ACTION, ACTION_UNINSTALL);
+                        b.putString(RET_NAME, modname);
+                        b.putString(RET_DEST, path);
+                        rec.send(0, b);
+                    }
+                } else {
+                    Bundle b = new Bundle();
+                    b.putString(RET_ACTION, ACTION_UNINSTALL);
+                    b.putString(RET_NAME, modname);
+                    b.putString(RET_DEST, path);
+                    b.putString(RET_ERROR, "Invalid request to Service: invalid modname");
+                    rec.send(0, b);
+                }
+
+                break;
+            default:
                 Log.w("ModService", "Invalid action request.");
+                break;
             }
         }
     }

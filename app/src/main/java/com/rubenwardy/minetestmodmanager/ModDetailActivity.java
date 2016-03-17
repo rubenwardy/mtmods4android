@@ -141,7 +141,15 @@ public class ModDetailActivity
 
         switch (action) {
         case ACTION_UNINSTALL:
-            finish();
+            if (bundle.containsKey(PARAM_ERROR)) {
+                Resources res = getResources();
+                String text = String.format(res.getString(R.string.failed_uninstall),
+                        bundle.getString(PARAM_MODNAME), bundle.getString(PARAM_ERROR));
+                Snackbar.make(findViewById(R.id.mod_detail_container), text, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            } else {
+                finish();
+            }
             break;
         case ACTION_SEARCH:
             Intent k = new Intent(this, ModListActivity.class);

@@ -161,29 +161,12 @@ public class ModDetailFragment extends Fragment {
                     @Override
                     public void onClick(@NonNull View view) {
                         ModManager modman = new ModManager();
-                        Resources res = getResources();
-                        if (modman.uninstallMod(mod)) {
-                            Bundle bundle = new Bundle();
-                            bundle.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_UNINSTALL);
-                            bundle.putString(ModEventReceiver.PARAM_DEST_LIST, mod.listname);
-                            bundle.putString(ModEventReceiver.PARAM_MODNAME, mod.name);
-                            String text = String.format(res.getString(R.string.uninstalled_mod), mod.name);
-                            Snackbar.make(view, text, Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
-                            ((ModEventReceiver) getActivity()).onModEvent(bundle);
-                        } else {
-                            String text = String.format(res.getString(R.string.failed_uninstall), mod.name);
-                            Snackbar.make(view, text, Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
-                        }
+                        modman.uninstallModAsync(getContext(), mod);
                     }
                 });
             } else {
                 rootView.findViewById(R.id.mod_detail_loc_row).setVisibility(View.GONE);
                 btn_main.setText(res.getString(R.string.action_install));
-
-                // TODO: list installed instances
-
 
                 btn_main.setOnClickListener(new View.OnClickListener() {
                     @Override
