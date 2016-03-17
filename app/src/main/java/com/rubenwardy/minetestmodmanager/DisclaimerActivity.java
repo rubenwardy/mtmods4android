@@ -44,7 +44,7 @@ public class DisclaimerActivity extends AppCompatActivity {
             public void onClick(@NonNull View v) {
                 SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
                 SharedPreferences.Editor editor = settings.edit();
-                editor.putBoolean("agreed_to_disclamer", true);
+                editor.putBoolean("agreed_to_disclaimer", true);
                 editor.apply();
 
                 if (listname != null && modname != null) {

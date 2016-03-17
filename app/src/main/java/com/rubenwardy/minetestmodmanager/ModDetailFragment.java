@@ -172,7 +172,7 @@ public class ModDetailFragment extends Fragment {
                     @Override
                     public void onClick(@NonNull View view) {
                         SharedPreferences settings = getActivity().getSharedPreferences(DisclaimerActivity.PREFS_NAME, 0);
-                        boolean agreed = settings.getBoolean("agreed_to_disclamer", false);
+                        boolean agreed = settings.getBoolean("agreed_to_disclaimer", false);
                         if (!agreed) {
                             Context context = view.getContext();
                             Intent intent = new Intent(context, DisclaimerActivity.class);
