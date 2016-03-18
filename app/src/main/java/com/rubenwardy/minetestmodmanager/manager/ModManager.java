@@ -68,7 +68,7 @@ public class ModManager {
 
     @MainThread
     public void installModAsync(Context context, @NonNull Mod mod, @NonNull File zip, String path) {
-        ModInstallService.startActionInstall(context, srr, mod.name, zip, path);
+        ModInstallService.startActionInstall(context, srr, mod.name, mod.author, zip, path);
     }
 
     @MainThread
@@ -77,7 +77,7 @@ public class ModManager {
             Log.w("ModMan", "Failed to install blank url");
             return;
         }
-        ModInstallService.startActionUrlInstall(context, srr, mod.name, url, path);
+        ModInstallService.startActionUrlInstall(context, srr, mod.name, mod.author, url, path);
     }
 
     @MainThread

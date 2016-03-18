@@ -17,6 +17,7 @@ import android.util.Log;
 import com.rubenwardy.minetestmodmanager.R;
 
 import java.io.BufferedInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,6 +26,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
 
 /**
  * Mod manager service.
@@ -37,6 +40,7 @@ public class ModInstallService extends IntentService {
     public static final String ACTION_FETCH_MODLIST = "com.rubenwardy.minetestmodmanager.action.FETCH_MODLIST";
 
     private static final String EXTRA_MOD_NAME = "com.rubenwardy.minetestmodmanager.extra.MOD_NAME";
+    private static final String EXTRA_AUTHOR = "com.rubenwardy.minetestmodmanager.extra.AUTHOR";
     private static final String EXTRA_URL = "com.rubenwardy.minetestmodmanager.extra.URL";
     private static final String EXTRA_DEST = "com.rubenwardy.minetestmodmanager.extra.DEST";
     public static final String RET_ACTION = "action";
@@ -62,10 +66,11 @@ public class ModInstallService extends IntentService {
 
     @MainThread
     public static void startActionInstall(@NonNull Context context, ServiceResultReceiver srr,
-            String modname, @NonNull File zip, String dest) {
+            @NonNull String modname, @Nullable String author, @NonNull File zip, String dest) {
         Intent intent = new Intent(context, ModInstallService.class);
         intent.setAction(ACTION_INSTALL);
         intent.putExtra(EXTRA_MOD_NAME, modname);
+        intent.putExtra(EXTRA_AUTHOR, author);
         intent.putExtra(EXTRA_URL, zip.getAbsolutePath());
         intent.putExtra(EXTRA_DEST, dest);
         intent.putExtra("receiverTag", srr);
@@ -74,10 +79,11 @@ public class ModInstallService extends IntentService {
 
     @MainThread
     public static void startActionUrlInstall(@NonNull Context context, ServiceResultReceiver srr,
-                                          String modname, String url, String dest) {
+                                             @NonNull String modname, @Nullable String author, String url, String dest) {
         Intent intent = new Intent(context, ModInstallService.class);
         intent.setAction(ACTION_URL_INSTALL);
         intent.putExtra(EXTRA_MOD_NAME, modname);
+        intent.putExtra(EXTRA_AUTHOR, author);
         intent.putExtra(EXTRA_URL, url);
         intent.putExtra(EXTRA_DEST, dest);
         intent.putExtra("receiverTag", srr);
@@ -115,9 +121,10 @@ public class ModInstallService extends IntentService {
             switch (action) {
             case ACTION_INSTALL: {
                 final String modname = intent.getStringExtra(EXTRA_MOD_NAME);
+                final String author = intent.getStringExtra(EXTRA_AUTHOR);
                 final String zippath = intent.getStringExtra(EXTRA_URL);
                 final String dest = intent.getStringExtra(EXTRA_DEST);
-                handleActionInstall(rec, modname, new File(zippath), new File(dest));
+                handleActionInstall(rec, modname, author, new File(zippath), new File(dest));
                 break;
             }
             case ACTION_FETCH_MODLIST: {
@@ -127,9 +134,10 @@ public class ModInstallService extends IntentService {
             }
             case ACTION_URL_INSTALL: {
                 final String modname = intent.getStringExtra(EXTRA_MOD_NAME);
+                final String author = intent.getStringExtra(EXTRA_AUTHOR);
                 final String url = intent.getStringExtra(EXTRA_URL);
                 final String dest = intent.getStringExtra(EXTRA_DEST);
-                handleActionUrlInstall(rec, modname, url, new File(dest));
+                handleActionUrlInstall(rec, modname, author, url, new File(dest));
                 break;
             }
             case ACTION_UNINSTALL:
@@ -173,7 +181,49 @@ public class ModInstallService extends IntentService {
     }
 
     @WorkerThread
-    private void handleActionUrlInstall(@NonNull ResultReceiver rec, @NonNull String modname, @NonNull String url_str, @NonNull File dest) {
+    private void reportDownloadToServer(@NonNull String modname, @Nullable String author,
+                                        @NonNull String url_str, int size, int statusCode,
+                                        @Nullable String error) {
+        try {
+            String urlParameters  = "modname=" + URLEncoder.encode(modname, "UTF-8");
+            urlParameters += "&link=" + URLEncoder.encode(url_str, "UTF-8");
+            urlParameters += "&size=" + size;
+            urlParameters += "&status=" + statusCode;
+            if (author != null) {
+                urlParameters += "&author=" + URLEncoder.encode(author, "UTF-8");
+            }
+            if (error != null) {
+                urlParameters += "&error=" + URLEncoder.encode(error, "UTF-8");
+            }
+            byte[] postData       = urlParameters.getBytes(Charset.forName("UTF-8"));
+            int    postDataLength = postData.length;
+
+            URL url = new URL("http://app-mtmm.rubenwardy.com/v1/on-download/");
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            conn.setRequestProperty("charset", "utf-8");
+            conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
+            conn.setDoOutput(true);
+            conn.setInstanceFollowRedirects(false);
+            conn.setUseCaches(false);
+
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            wr.write(postData);
+            wr.flush();
+            wr.close();
+
+            int responseCode = conn.getResponseCode();
+            Log.w("ModService", urlParameters + " | Response: " + responseCode);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @WorkerThread
+    private void handleActionUrlInstall(@NonNull ResultReceiver rec, @NonNull String modname,
+                                        @Nullable String author, @NonNull String url_str,
+                                        @NonNull File dest) {
         Log.w("ModService", "Downloading " + url_str);
         try {
             // Resource
@@ -221,6 +271,8 @@ public class ModInstallService extends IntentService {
                         b.putString(RET_ERROR, "Failed to download: " + code + " Error");
                     }
                     rec.send(0, b);
+
+                    reportDownloadToServer(modname, author, url_str, 0, code, "wrong-status");
                     return;
                 }
 
@@ -235,6 +287,9 @@ public class ModInstallService extends IntentService {
                     b.putString(RET_DEST, dest.getAbsolutePath());
                     b.putString(RET_ERROR, "Failed to download: File is not a zip file");
                     rec.send(0, b);
+
+                    reportDownloadToServer(modname, author, url_str, 0, code,
+                            "wrong-content-" + testcon.getContentType());
                     return;
                 }
 
@@ -295,7 +350,9 @@ public class ModInstallService extends IntentService {
                 output.close();
                 input.close();
 
-                handleActionInstall(rec, modname, file.getAbsoluteFile(), dest);
+                handleActionInstall(rec, modname, author, file.getAbsoluteFile(), dest);
+
+                reportDownloadToServer(modname, author, url_str, connection.getContentLength(), 200, null);
                 try {
                     if (!file.delete())
                         Log.w("ModService", "Failed to delete tmp zip file");
@@ -321,7 +378,9 @@ public class ModInstallService extends IntentService {
      * parameters.
      */
     @WorkerThread
-    private void handleActionInstall(@NonNull ResultReceiver rec, @NonNull String modname, @NonNull File zipfile, @NonNull File dest) {
+    private void handleActionInstall(@NonNull ResultReceiver rec, @NonNull String modname,
+                                     @Nullable String author, @NonNull File zipfile,
+                                     @NonNull File dest) {
         Log.w("ModService", "Installing mod...");
 
         File dir;
