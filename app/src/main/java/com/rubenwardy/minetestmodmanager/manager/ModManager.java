@@ -42,9 +42,9 @@ public class ModManager {
     }
 
     @Nullable
-    public ModList getModStore() {
+    public ModList getAvailableMods() {
         for (ModList list : lists_map.values()) {
-            if (list.type == ModList.ModListType.EMLT_STORE) {
+            if (list.type == ModList.ModListType.EMLT_ONLINE) {
                 return list;
             }
         }

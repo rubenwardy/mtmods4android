@@ -272,7 +272,7 @@ public class ModListActivity
     private void checkChanges(@Nullable ModList list) {
         Log.w("MLAct", " - Checking for changes...");
         if (list != null && !list.valid &&
-                (list.type == ModList.ModListType.EMLT_STORE || modman.update(list))) {
+                (list.type == ModList.ModListType.EMLT_ONLINE || modman.update(list))) {
             Log.w("MLAct", " - list has changed!");
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
             assert recyclerView != null;
@@ -410,9 +410,9 @@ public class ModListActivity
             }
         }
         sections.add(new SectionedRecyclerViewAdapter.Section(mods.size(),
-                res.getString(R.string.modlist_store)));
+                res.getString(R.string.modlist_available_mods)));
 
-        ModList list = modman.getModStore();
+        ModList list = modman.getAvailableMods();
         if (list != null) {
             if (query != null) {
                 for (Mod mod : list.mods) {

@@ -10,7 +10,7 @@
     <string name="invalid_mod">Invalid Mod</string>
     <string name="invalid_mod_desc">We couldn\'t find that mod. Has it been deleted?</string>
     <string name="invalid_modlist">Invalid Mod Location or Path</string>
-    <string name="invalid_modlist_desc">We couldn\'t find that mod location. Has the folder been deleted, or is the mod store offline?</string>
+    <string name="invalid_modlist_desc">We couldn\'t find that mod location. Has the folder been deleted, or is the available mod list offline?</string>
     <string name="dialog_nowld_title">Unable to create world</string>
     <string name="dialog_nowld_msg">We tried to create a world for you to configure, but the operation failed.</string>
 
@@ -22,7 +22,7 @@
     <string name="app_name">Minetest Mod Manager</string>
     <string name="modlist_minetest">Installed Minetest Mods</string>
     <string name="modlist_multicraft">Installed MultiCraft Mods</string>
-    <string name="modlist_store">Available Mods</string>
+    <string name="modlist_available_mods">Available Mods</string>
 
     <!-- Mod Events -->
     <string name="installing_mod">Installing mod…</string>

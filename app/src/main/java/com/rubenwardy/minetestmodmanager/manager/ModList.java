@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class ModList {
     public enum ModListType {
-        EMLT_STORE,
+        EMLT_ONLINE,
         EMLT_PATH
     }
 
