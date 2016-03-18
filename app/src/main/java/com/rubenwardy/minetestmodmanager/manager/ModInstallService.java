@@ -19,10 +19,12 @@ import com.rubenwardy.minetestmodmanager.R;
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -420,7 +422,25 @@ public class ModInstallService extends IntentService {
 
             // Copy
             Log.w("ModService", "Copying to " + dest.getAbsolutePath());
-            Utils.copyFolder(mod_root, new File(dest, modname));
+            File mod_dest = new File(dest, modname);
+            Utils.copyFolder(mod_root, mod_dest);
+
+            if (author != null) {
+                File file = new File(mod_dest, "author.txt");
+                Log.w("ModService", "Writing to " + file.getAbsolutePath());
+                try {
+                    FileOutputStream f = new FileOutputStream(file);
+                    PrintWriter pw = new PrintWriter(f);
+                    pw.println(author);
+                    pw.flush();
+                    pw.close();
+                    f.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
             Bundle b = new Bundle();
             b.putString(RET_NAME, modname);

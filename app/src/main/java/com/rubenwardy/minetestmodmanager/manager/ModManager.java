@@ -131,6 +131,18 @@ public class ModManager {
                     Mod mod = new Mod(type, list.listname, file.getName(), title, desc);
                     mod.path = file.getAbsolutePath();
 
+                    // Get author
+                    File authF = new File(file.getAbsolutePath(), "author.txt");
+                    if (authF.exists()) {
+                        String author = Utils.readTextFile(authF);
+                        if (author != null) {
+                            author = author.trim();
+                            if (!author.isEmpty()) {
+                                mod.author = author;
+                            }
+                        }
+                    }
+
                     // Get Screenshot
                     File scsF = new File(file.getAbsolutePath(), "screenshot.png");
                     if (scsF.exists()) {
