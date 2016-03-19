@@ -17,6 +17,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -38,7 +39,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.rubenwardy.minetestmodmanager.ModListActivity" />
         </activity>
-
         <activity
             android:name=".DisclaimerActivity"
             android:label="@string/disclaimer_title"
@@ -51,6 +51,11 @@
         <service
             android:name=".manager.ModInstallService"
             android:exported="false" />
+
+        <receiver
+            android:name=".manager.BCastReceiver"
+            android:enabled="true"
+            android:exported="false"></receiver>
     </application>
 
 </manifest>

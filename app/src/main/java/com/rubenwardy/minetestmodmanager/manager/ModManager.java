@@ -92,6 +92,11 @@ public class ModManager {
         }
     }
 
+    @MainThread
+    public void cancelAsyncTask() {
+        ModInstallService.cancelCurrentTask();
+    }
+
     public boolean updatePathModList(@NonNull ModList list) {
         Log.w("ModLib", "Collecting/updating ModList (type=dir).");
 

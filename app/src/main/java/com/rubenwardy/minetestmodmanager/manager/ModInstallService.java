@@ -2,6 +2,7 @@ package com.rubenwardy.minetestmodmanager.manager;
 
 import android.app.IntentService;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.Context;
 import android.content.res.Resources;
@@ -30,6 +31,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Mod manager service.
@@ -113,10 +115,16 @@ public class ModInstallService extends IntentService {
         context.startService(intent);
     }
 
+    private static AtomicBoolean requestStop = new AtomicBoolean();
+    public static void cancelCurrentTask() {
+        requestStop.set(true);
+    }
+
     @Override
     @WorkerThread
     protected void onHandleIntent(@Nullable Intent intent) {
         if (intent != null) {
+            requestStop.set(false);
             final String action = intent.getAction();
             ResultReceiver rec = intent.getParcelableExtra("receiverTag");
 
@@ -242,7 +250,7 @@ public class ModInstallService extends IntentService {
 
             }
 
-            // Notifcation
+            // Notification
             NotificationManager notiman =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
@@ -250,8 +258,11 @@ public class ModInstallService extends IntentService {
                     .setContentText(str_connecting)
                     .setSmallIcon(R.drawable.notification_icon);
             mBuilder.setProgress(0, 0, true);
+            Intent intent = new Intent(this, BCastReceiver.class);
+            intent.setAction(BCastReceiver.ACTION_STOP_SERVICE);
+            PendingIntent contentIntent = PendingIntent.getBroadcast(getBaseContext(), 0, intent, 0);
+            mBuilder.setContentIntent(contentIntent);
             notiman.notify(1337, mBuilder.build());
-
 
             URL url = new URL(url_str);
             {
@@ -316,6 +327,18 @@ public class ModInstallService extends IntentService {
                     Log.w("ModService", "Checking file tmp" + Integer.toString(i) + ".zip");
                     file = new File(getCacheDir(), "tmp" + Integer.toString(i) + ".zip");
                     i++;
+
+                    if (requestStop.get()) {
+                        Log.w("ModService", "Cancel detected (in get tmp file)!");
+                        notiman.cancel(1337);
+                        Bundle b = new Bundle();
+                        b.putString(RET_NAME, modname);
+                        b.putString(RET_ACTION, ACTION_INSTALL);
+                        b.putString(RET_DEST, dest.getAbsolutePath());
+                        b.putString(RET_ERROR, "Cancelled download.");
+                        rec.send(0, b);
+                        return;
+                    }
                 } while (file.exists());
 
                 // download the file
@@ -332,16 +355,32 @@ public class ModInstallService extends IntentService {
                     total += count;
 
                     // Report to ServiceResultReceiver
-                    Bundle b = new Bundle();
-                    b.putString(RET_NAME, modname);
-                    b.putString(RET_ACTION, ACTION_INSTALL);
-                    b.putString(RET_DEST, dest.getAbsolutePath());
-                    b.putInt(RET_PROGRESS, prog);
-                    rec.send(UPDATE_PROGRESS, b);
+                    {
+                        Bundle b = new Bundle();
+                        b.putString(RET_NAME, modname);
+                        b.putString(RET_ACTION, ACTION_INSTALL);
+                        b.putString(RET_DEST, dest.getAbsolutePath());
+                        b.putInt(RET_PROGRESS, prog);
+                        rec.send(UPDATE_PROGRESS, b);
+                    }
 
                     // Update Notification
                     mBuilder.setProgress(100, prog, false);
                     notiman.notify(1337, mBuilder.build());
+
+                    // Detect cancel
+                    if (requestStop.get()) {
+                        Log.w("ModService", "Cancel detected!");
+                        input.close();
+                        notiman.cancel(1337);
+                        Bundle b = new Bundle();
+                        b.putString(RET_NAME, modname);
+                        b.putString(RET_ACTION, ACTION_INSTALL);
+                        b.putString(RET_DEST, dest.getAbsolutePath());
+                        b.putString(RET_ERROR, "Cancelled download.");
+                        rec.send(0, b);
+                        return;
+                    }
                 }
 
                 mBuilder.setProgress(0, 0, true);
