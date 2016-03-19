@@ -46,9 +46,11 @@
     <string name="details_type">Type</string>
     <string name="details_location">Folder</string>
     <string name="details_link">Download URL</string>
+    <string name="details_size">Download Size</string>
     <string name="details_forum">Forum Topic</string>
     <string name="details_verified">Trust</string>
 
+    <string name="size_unknown">Unknown</string>
     <string name="type_mod">Mod</string>
     <string name="type_modpack">Mod Pack</string>
     <string name="type_subgame">Subgame</string>

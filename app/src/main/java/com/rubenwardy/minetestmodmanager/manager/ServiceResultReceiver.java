@@ -140,6 +140,11 @@ public class ServiceResultReceiver extends ResultReceiver {
                                 verified = item.getInt("verified");
                             }
 
+                            int size = -1;
+                            if (item.has("size")) {
+                                size = item.getInt("size");
+                            }
+
                             Mod.ModType type = Mod.ModType.EMT_MOD;
                             if (type_s != null) {
                                 if (type_s.equals("1")) {
@@ -154,6 +159,7 @@ public class ServiceResultReceiver extends ResultReceiver {
                             mod.author = author;
                             mod.verified = verified;
                             mod.forum_url = forum;
+                            mod.size = size;
                             list.add(mod);
                         } else {
                             Log.e("SRR", "Invalid object in JSON list. " + j.toString());

@@ -104,6 +104,12 @@ public class ModDetailFragment extends Fragment {
             }
             ((TextView) rootView.findViewById(R.id.mod_detail_ver)).setText(ver);
 
+            String dlsize = mod.getDownloadSize();
+            if (dlsize == null) {
+                dlsize = res.getString(R.string.size_unknown);
+            }
+            ((TextView) rootView.findViewById(R.id.mod_detail_size)).setText(dlsize);
+
             // Find Elsewhere
             Button btn_find = (Button) rootView.findViewById(R.id.find);
             btn_find.setOnClickListener(new View.OnClickListener() {

@@ -1,5 +1,6 @@
 package com.rubenwardy.minetestmodmanager.manager;
 
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -27,6 +28,7 @@ public class Mod {
     @Nullable public String screenshot_uri;
     @Nullable public String forum_url;
     public int verified;
+    public int size;
 
     public Mod(@NonNull ModType type, @Nullable String listname, @NonNull String name,
                @Nullable String title, @NonNull String desc) {
@@ -40,6 +42,7 @@ public class Mod {
         this.path = "";
         this.screenshot_uri = "";
         this.verified = 0;
+        this.size = -1;
     }
 
     public boolean isLocalMod() {
@@ -85,6 +88,21 @@ public class Mod {
             res = res.substring(0, 99) + "…";
         }
         return res;
+    }
+
+    @Nullable
+    public String getDownloadSize() {
+        if (size > 1000000) {
+            double size2 = Math.round(size / 100000.0) / 10.0;
+            return size2 + " MB";
+        } else if (size > 500) {
+            double size2 = Math.round(size / 100.0) / 10.0;
+            return size2 + " KB";
+        } else if (size > 0) {
+            return size + " B";
+        } else {
+            return null;
+        }
     }
 
     @Override

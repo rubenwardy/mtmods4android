@@ -107,6 +107,18 @@
         <TableRow>
             <TextView
                 android:layout_column="1"
+                android:text="@string/details_size"
+                android:padding="3dip" />
+            <TextView
+                android:text="3 MB"
+                android:layout_width="wrap_content"
+                android:padding="3dip"
+                android:id="@+id/mod_detail_size" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
                 android:text="@string/details_forum"
                 android:padding="3dip" />
             <TextView
