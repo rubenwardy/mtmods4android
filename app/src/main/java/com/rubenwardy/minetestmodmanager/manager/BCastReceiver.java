@@ -15,7 +15,6 @@ public class BCastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         switch (intent.getAction()) {
         case ACTION_STOP_SERVICE:
-            Log.w("BCR", "Received request to cancel work");
             ModManager modman = new ModManager();
             modman.cancelAsyncTask();
             break;

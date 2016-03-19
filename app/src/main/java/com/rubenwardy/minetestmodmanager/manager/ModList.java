@@ -75,7 +75,7 @@ public class ModList {
         if (res != null && res.size() > 0) {
             if (author == null) {
                 if (res.size() > 1) {
-                    Log.w("ModList",
+                    Log.e("ModList",
                             "get() called without author, yet there are multiple mods of that name.");
                 }
                 return res.get(0);

@@ -25,11 +25,10 @@ public class ServiceResultReceiver extends ResultReceiver {
 
     private void handleInstall(@NonNull Bundle b, @Nullable String modname, @Nullable String dest) {
         if (b.containsKey(ModInstallService.RET_ERROR)) {
-            final String error = b.getString(ModInstallService.RET_ERROR);
-            Log.w("SRR", "Install failed for " + modname + ": " + error);
-
 
             if (ModManager.mev != null) {
+                final String error = b.getString(ModInstallService.RET_ERROR);
+
                 Bundle b2 = new Bundle();
                 b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_INSTALL);
                 b2.putString(ModEventReceiver.PARAM_MODNAME, modname);
@@ -42,11 +41,9 @@ public class ServiceResultReceiver extends ResultReceiver {
             Integer progress = b.getInt(ModInstallService.RET_PROGRESS);
             //Log.w("SRR", "Progress for " + modname + " at " + Integer.toString(progress) + "%");
         } else {
-            Log.w("SRR", "Got result " + dest);
             ModManager modman = new ModManager();
             ModList list = modman.get(dest);
             if (list != null) {
-                Log.w("SRR", "Invalidating list");
                 list.valid = false;
             }
 
@@ -63,11 +60,9 @@ public class ServiceResultReceiver extends ResultReceiver {
 
     private void handleUninstall(@NonNull Bundle b, @Nullable String modname, @Nullable String dest) {
         if (b.containsKey(ModInstallService.RET_ERROR)) {
-            final String error = b.getString(ModInstallService.RET_ERROR);
-            Log.w("SRR", "Uninstall failed for " + modname + ": " +
-                    error);
-
             if (ModManager.mev != null) {
+                final String error = b.getString(ModInstallService.RET_ERROR);
+
                 Bundle b2 = new Bundle();
                 b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_UNINSTALL);
                 b2.putString(ModEventReceiver.PARAM_MODNAME, modname);
@@ -80,11 +75,9 @@ public class ServiceResultReceiver extends ResultReceiver {
             Integer progress = b.getInt(ModInstallService.RET_PROGRESS);
             //Log.w("SRR", "Progress for " + modname + " at " + Integer.toString(progress) + "%");
         } else {
-            Log.w("SRR", "Got result " + dest);
             ModManager modman = new ModManager();
             ModList list = modman.get(dest);
             if (list != null) {
-                Log.w("SRR", "Invalidating list");
                 list.valid = false;
             }
 
@@ -101,14 +94,10 @@ public class ServiceResultReceiver extends ResultReceiver {
 
     private void handleFetchModList(@NonNull Bundle b, @Nullable String url, @Nullable String dest) {
         if (url == null) {
-            Log.w("SRR", "Invalid modlist");
             return;
         }
 
         if (dest == null || b.containsKey(ModInstallService.RET_ERROR)) {
-            Log.w("SRR", "Fetch failed for " + url + ": " +
-                    b.getString(ModInstallService.RET_ERROR));
-
             if (ModManager.mev != null) {
                 Bundle b2 = new Bundle();
                 b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_FETCH_MODLIST);
@@ -121,7 +110,6 @@ public class ServiceResultReceiver extends ResultReceiver {
             Integer progress = b.getInt(ModInstallService.RET_PROGRESS);
             //Log.w("SRR", "Progress for " + url + " at " + Integer.toString(progress) + "%");
         } else {
-            Log.w("SRR", "Got result " + dest + " from " + url);
             ModManager modman = new ModManager();
             ModList list = new ModList(ModList.ModListType.EMLT_ONLINE, "Available Mods", null, url);
             list.valid = false;
@@ -129,12 +117,11 @@ public class ServiceResultReceiver extends ResultReceiver {
             try {
                 File file = new File(dest);
                 if (!file.isFile()) {
-                    Log.w("SRR", "No such json file!");
                     return;
                 }
                 JSONArray j = new JSONArray(Utils.readTextFile(file));
                 if (!file.delete()) {
-                    Log.w("SRR", "Failed to delete file!");
+                    Log.e("SRR", "Failed to delete file!");
                     return;
                 }
 
@@ -194,7 +181,6 @@ public class ServiceResultReceiver extends ResultReceiver {
                         return;
                     }
                 }
-                Log.w("SRR", "Added " + list.mods.size() + " mods to list.");
             } catch (JSONException e) {
                 e.printStackTrace();
                 return;
@@ -218,7 +204,7 @@ public class ServiceResultReceiver extends ResultReceiver {
         String dest = b.getString(ModInstallService.RET_DEST);
         String action = b.getString(ModInstallService.RET_ACTION);
         if (action == null) {
-            Log.w("SRR", "Invalid null action");
+            Log.e("SRR", "Invalid null action");
             return;
         }
 
@@ -233,7 +219,7 @@ public class ServiceResultReceiver extends ResultReceiver {
             handleFetchModList(b, modname, dest);
             break;
         default:
-            Log.w("SRR", "Unknown service action");
+            Log.e("SRR", "Unknown service action");
             break;
         }
     }

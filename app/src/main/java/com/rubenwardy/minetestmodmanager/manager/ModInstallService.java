@@ -212,7 +212,7 @@ public class ModInstallService extends IntentService {
 
                 break;
             default:
-                Log.w("ModService", "Invalid action request.");
+                Log.e("ModService", "Invalid action request.");
                 break;
             }
         }
@@ -234,7 +234,7 @@ public class ModInstallService extends IntentService {
             if (link  != null) {
                 urlParameters += "&link=" + URLEncoder.encode(link, "UTF-8");
             }
-            Log.e("ModService", "Report " + urlParameters);
+
             byte[] postData       = urlParameters.getBytes(Charset.forName("UTF-8"));
             int    postDataLength = postData.length;
 
@@ -253,8 +253,7 @@ public class ModInstallService extends IntentService {
             wr.flush();
             wr.close();
 
-            int responseCode = conn.getResponseCode();
-            Log.w("ModService", urlParameters + " | Response: " + responseCode);
+            // int responseCode = conn.getResponseCode();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -293,8 +292,7 @@ public class ModInstallService extends IntentService {
             wr.flush();
             wr.close();
 
-            int responseCode = conn.getResponseCode();
-            Log.w("ModService", urlParameters + " | Response: " + responseCode);
+            // int responseCode = conn.getResponseCode();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -307,7 +305,6 @@ public class ModInstallService extends IntentService {
         NotificationManager notiman =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Log.w("ModService", "Downloading " + url_str);
         try {
             // Resource
             String str_installing = "ERR! Installing $1...";
@@ -395,12 +392,10 @@ public class ModInstallService extends IntentService {
                 File file;
                 int i = 0;
                 do {
-                    Log.w("ModService", "Checking file tmp" + Integer.toString(i) + ".zip");
                     file = new File(getCacheDir(), "tmp" + Integer.toString(i) + ".zip");
                     i++;
 
                     if (requestStop.get()) {
-                        Log.w("ModService", "Cancel detected (in get tmp file)!");
                         notiman.cancel(1337);
                         Bundle b = new Bundle();
                         b.putString(RET_NAME, modname);
@@ -441,7 +436,6 @@ public class ModInstallService extends IntentService {
 
                     // Detect cancel
                     if (requestStop.get()) {
-                        Log.w("ModService", "Cancel detected!");
                         input.close();
                         notiman.cancel(1337);
                         Bundle b = new Bundle();
@@ -467,7 +461,7 @@ public class ModInstallService extends IntentService {
                 reportDownloadToServer(modname, author, url_str, connection.getContentLength(), 200, null);
                 try {
                     if (!file.delete())
-                        Log.w("ModService", "Failed to delete tmp zip file");
+                        Log.e("ModService", "Failed to delete tmp zip file");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -494,12 +488,9 @@ public class ModInstallService extends IntentService {
     private void handleActionInstall(@NonNull ResultReceiver rec, @NonNull String modname,
                                      @Nullable String author, @NonNull File zipfile,
                                      @NonNull File dest) {
-        Log.w("ModService", "Installing mod...");
-
         File dir;
         int i = 0;
         do {
-            Log.w("ModService", "Checking tmp" + Integer.toString(i));
             dir = new File(getCacheDir(), "tmp" + Integer.toString(i));
             i++;
         } while (dir.exists());
@@ -507,7 +498,7 @@ public class ModInstallService extends IntentService {
         try {
             // UNZIP
             if (!Utils.UnzipFile(zipfile, dir, null)) {
-                Log.w("ModService", "Unable to extract zip.");
+                Log.e("ModService", "Unable to extract zip.");
                 Bundle b = new Bundle();
                 b.putString(RET_ACTION, ACTION_INSTALL);
                 b.putString(RET_NAME, modname);
@@ -518,10 +509,9 @@ public class ModInstallService extends IntentService {
             }
 
             // Find mod_root
-            Log.w("ModService", "Finding mod_root dir:");
             File mod_root = Utils.findRootDir(dir);
             if (mod_root == null) {
-                Log.w("ModService", "Unable to find mod_root dir.");
+                Log.e("ModService", "Unable to find mod_root dir.");
                 Bundle b = new Bundle();
                 b.putString(RET_ACTION, ACTION_INSTALL);
                 b.putString(RET_NAME, modname);
@@ -532,13 +522,11 @@ public class ModInstallService extends IntentService {
             }
 
             // Copy
-            Log.w("ModService", "Copying to " + dest.getAbsolutePath());
             File mod_dest = new File(dest, modname);
             Utils.copyFolder(mod_root, mod_dest);
 
             if (author != null) {
                 File file = new File(mod_dest, "author.txt");
-                Log.w("ModService", "Writing to " + file.getAbsolutePath());
                 try {
                     FileOutputStream f = new FileOutputStream(file);
                     PrintWriter pw = new PrintWriter(f);
@@ -565,7 +553,6 @@ public class ModInstallService extends IntentService {
             rec.send(0, b);
             e.printStackTrace();
         }
-        Log.w("ModService", "Finished installing mod.");
 
         if (dir.exists()) {
             Utils.deleteRecursive(dir);
@@ -574,7 +561,6 @@ public class ModInstallService extends IntentService {
 
     @WorkerThread
     private void handleActionFetchModList(@NonNull ResultReceiver rec, @NonNull String url_str) {
-        Log.w("ModService", "Downloading modlist...");
         try {
             URL url = new URL(url_str);
             URLConnection connection = url.openConnection();
@@ -585,7 +571,6 @@ public class ModInstallService extends IntentService {
             File file;
             int i = 0;
             do {
-                Log.w("ModService", "Checking file list" + Integer.toString(i) + ".json");
                 file = new File(getCacheDir(), "list" + Integer.toString(i) + ".json");
                 i++;
             } while (file.exists());

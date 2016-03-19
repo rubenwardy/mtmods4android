@@ -74,7 +74,6 @@ public class ModListActivity
             String action = extras.getString(PARAM_ACTION);
             if (action != null && action.equals(ACTION_SEARCH)) {
                 search_filter = extras.getString(PARAM_ADDITIONAL);
-                Log.w("MLAct", "Opened with search=" + search_filter);
             }
         }
 
@@ -95,7 +94,6 @@ public class ModListActivity
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.w("MLAct", "Refreshing!");
                 for (ModList list : ModManager.lists_map.values()) {
                     if (list.type == ModList.ModListType.EMLT_PATH) {
                         modman.update(list);
@@ -175,7 +173,6 @@ public class ModListActivity
     protected void onResume() {
         super.onResume();
 
-        Log.w("MLAct", "Resuming!");
         modman.setEventReceiver(this);
 
         for (ModList list : ModManager.lists_map.values()) {
@@ -258,16 +255,13 @@ public class ModListActivity
             return;
         }
 
-        Log.w("MLAct", " - Checking for changes..." + listname);
         ModList list = modman.get(listname);
         checkChanges(list);
     }
 
     private void checkChanges(@Nullable ModList list) {
-        Log.w("MLAct", " - Checking for changes...");
         if (list != null && !list.valid &&
                 (list.type == ModList.ModListType.EMLT_ONLINE || modman.update(list))) {
-            Log.w("MLAct", " - list has changed!");
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
             assert recyclerView != null;
             fillRecyclerView(recyclerView, null);
@@ -284,7 +278,6 @@ public class ModListActivity
         searchView.setOnQueryTextListener(this);
 
         if (search_filter != null) {
-            Log.w("MLAct", "Setting query!");
             searchView.setIconified(false);
             searchView.setQuery(search_filter, true);
             searchView.clearFocus();
@@ -362,7 +355,6 @@ public class ModListActivity
                         match_name = query;
                         query = "";
                     }
-                    Log.w("MLAct", "Filter name = '" + match_name + "', query: '" + query + "'");
                     changed = true;
                 } else if (query.startsWith("author:")) {
                     query = query.substring(7, query.length()).trim();
@@ -374,7 +366,6 @@ public class ModListActivity
                         match_author = query;
                         query = "";
                     }
-                    Log.w("MLAct", "Filter author = '" + match_author + "', query: '" + query + "'");
                     changed = true;
                 }
             } while(changed);

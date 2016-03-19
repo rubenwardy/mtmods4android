@@ -28,13 +28,11 @@ public class MinetestConf {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
             String line;
 
-            Log.w("Conf", "Reading from " + file.getAbsolutePath());
             while ((line = bufferedReader.readLine()) != null) {
                 int idx = line.indexOf("=");
                 if (idx >= 0) {
                     String key = line.substring(0, idx).trim();
                     String value = line.substring(idx + 1, line.length()).trim();
-                    Log.w("Conf", key + " = " + value);
                     settings.put(key, value);
                 }
 
@@ -49,11 +47,9 @@ public class MinetestConf {
 
     public boolean save(File file) {
         try {
-            Log.w("Conf", "Saving to " + file.getAbsolutePath());
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             for (Map.Entry<String, String> pair : settings.entrySet()) {
                 writer.write(pair.getKey() + " = " + pair.getValue() + "\n");
-                Log.w("Conf", pair.getKey() + " = " + pair.getValue());
             }
             writer.close();
 
@@ -82,7 +78,6 @@ public class MinetestConf {
         if (value == null) {
             value = "";
         }
-        Log.w("Conf", "Setting " + key + " = " + value);
         settings.put(key, value);
     }
 

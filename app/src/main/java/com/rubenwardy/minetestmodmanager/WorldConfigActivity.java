@@ -47,7 +47,6 @@ public class WorldConfigActivity extends AppCompatActivity {
         File mt_root = new File(extern, "/Minetest");
         File mt_dir = new File(mt_root, "/mods");
         modpath = mt_dir.getAbsolutePath();
-        Log.w("WCAct", modpath);
 
         conf = new MinetestConf();
         File world_dir = new File(mt_root, "/worlds/singleplayerworld");

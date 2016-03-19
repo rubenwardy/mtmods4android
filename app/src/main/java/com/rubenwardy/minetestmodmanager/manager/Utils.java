@@ -51,7 +51,6 @@ class Utils {
                     throw new FileNotFoundException("Failed to ensure directory: " + dir.getAbsolutePath());
                 if (ze.isDirectory())
                     continue;
-                Log.w("Utils", "Extracting " + file.getAbsolutePath());
                 FileOutputStream fout = new FileOutputStream(file);
                 try {
                     while ((count = zis.read(buffer)) != -1)
@@ -96,10 +95,9 @@ class Utils {
                 deleteRecursive(child);
             }
         }
-        if (fileOrDir.delete())
-            Log.w("utils", "Deleted path: " + fileOrDir.getAbsolutePath());
-        else
-            Log.w("utils", "Failed to delete path: " + fileOrDir.getAbsolutePath());
+        if (!fileOrDir.delete()) {
+            Log.e("utils", "Failed to delete path: " + fileOrDir.getAbsolutePath());
+        }
     }
 
     public static boolean copyFolder(@NonNull File src, @NonNull File dest)
@@ -107,10 +105,7 @@ class Utils {
 
         if (src.isDirectory()) {
             if (!dest.exists()) {
-                if (dest.mkdir()) {
-                    System.out.println("Directory copied from "
-                            + src + "  to " + dest);
-                } else {
+                if (!dest.mkdir()) {
                     return false;
                 }
             }
@@ -134,7 +129,6 @@ class Utils {
 
             in.close();
             out.close();
-            System.out.println("File copied from " + src + " to " + dest);
         }
 
         return true;
@@ -143,47 +137,38 @@ class Utils {
     @NonNull
     public static Mod.ModType detectModType(@NonNull File file) {
         if (new File(file.getAbsolutePath(), "init.lua").exists()) {
-            Log.w("ModLib", "Found mod at " + file.getName());
             return Mod.ModType.EMT_MOD;
         } else if (new File(file.getAbsolutePath(), "modpack.txt").exists()) {
-            Log.w("ModLib", "Found modpack at " + file.getName());
             return Mod.ModType.EMT_MODPACK;
         } else {
-            Log.w("ModLib", "Found invalid directory at " + file.getName());
             return Mod.ModType.EMT_INVALID;
         }
     }
 
     @Nullable
     public static File findRootDir(@NonNull File dir) {
-        if (!dir.isDirectory())
+        if (!dir.isDirectory()) {
             return null;
-
-        Log.w("Utils", "- Finding root dir");
+        }
 
         Mod.ModType type = detectModType(dir);
         if (type == Mod.ModType.EMT_INVALID) {
-            Log.w("Utils", "- Invalid dir for mod location.");
             File subdir = null;
             for (File child : dir.listFiles()) {
                 if (child.isDirectory()) {
-                    Log.w("Utils", "- Found subdir.");
                     if (subdir == null) {
                         subdir = child;
                     } else {
-                        Log.w("Utils", "- Two or more subdirs, cannot descend logically.");
                         return null;
                     }
                 }
             }
             if (subdir == null) {
-                Log.w("Utils", "- Find root failed: no valid subdir.");
                 return null;
             } else {
                 return findRootDir(subdir);
             }
         } else {
-            Log.w("Utils", "- Found valid root: " + dir.getAbsoluteFile());
             return dir;
         }
     }
