@@ -20,7 +20,6 @@ import com.rubenwardy.minetestmodmanager.R;
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -134,7 +133,7 @@ public class ModInstallService extends IntentService {
         context.startService(intent);
     }
 
-    private static AtomicBoolean requestStop = new AtomicBoolean();
+    private static final AtomicBoolean requestStop = new AtomicBoolean();
     public static void cancelCurrentTask() {
         requestStop.set(true);
     }

@@ -98,7 +98,7 @@ public class ServiceResultReceiver extends ResultReceiver {
         } else if (!b.containsKey(ModInstallService.RET_PROGRESS)) {
             Log.w("SRR", "Got result " + dest + " from " + url);
             ModManager modman = new ModManager();
-            ModList list = new ModList(ModList.ModListType.EMLT_ONLINE, "Available Mods", "", url);
+            ModList list = new ModList(ModList.ModListType.EMLT_ONLINE, "Available Mods", null, url);
             list.valid = false;
 
             try {

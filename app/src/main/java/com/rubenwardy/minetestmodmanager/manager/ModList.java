@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +21,7 @@ public class ModList {
 
     @Nullable public final String title;
     @NonNull  public final String listname;
-    @NonNull public final String engine_root;
+    @Nullable public final String engine_root;
     @NonNull public final ModListType type;
     public boolean valid;
     @NonNull
@@ -28,7 +29,7 @@ public class ModList {
     @NonNull
     public Map<String, List<Mod>> mods_map = new HashMap<>();
 
-    public ModList(@NonNull ModListType type, @Nullable String title, @NonNull String engine_root,
+    public ModList(@NonNull ModListType type, @Nullable String title, @Nullable String engine_root,
             @NonNull String listname) {
         this.type = type;
         this.title = title;
@@ -46,6 +47,15 @@ public class ModList {
             List<Mod> tmp = new ArrayList<>();
             tmp.add(mod);
             mods_map.put(mod.name, tmp);
+        }
+    }
+
+    @Nullable
+    public String getWorldsDir() {
+        if (engine_root == null) {
+            return null;
+        } else {
+            return (new File(engine_root, "worlds")).getAbsolutePath();
         }
     }
 

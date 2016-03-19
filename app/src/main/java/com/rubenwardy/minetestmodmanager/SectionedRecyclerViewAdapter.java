@@ -1,6 +1,7 @@
 package com.rubenwardy.minetestmodmanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.rubenwardy.minetestmodmanager.manager.Mod;
@@ -25,7 +27,7 @@ class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private boolean mValid = true;
     private final int mSectionResourceId;
-    private int mTextResourceId;
+    private final int mTextResourceId;
 
     private final RecyclerView.Adapter mBaseAdapter;
     @NonNull
@@ -75,10 +77,12 @@ class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public static class SectionViewHolder extends RecyclerView.ViewHolder {
 
         public final TextView title;
+        public final ImageButton world;
 
-        public SectionViewHolder(@NonNull View view,int mTextResourceid) {
+        public SectionViewHolder(@NonNull View view, int mTextResourceid) {
             super(view);
             title = (TextView) view.findViewById(mTextResourceid);
+            world = (ImageButton) view.findViewById(R.id.world);
         }
     }
 
@@ -86,7 +90,7 @@ class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int typeView) {
         if (typeView == SECTION_TYPE) {
             final View view = LayoutInflater.from(mContext).inflate(mSectionResourceId, parent, false);
-            return new SectionViewHolder(view,mTextResourceId);
+            return new SectionViewHolder(view, mTextResourceId);
         }else{
             return mBaseAdapter.onCreateViewHolder(parent, typeView -1);
         }
@@ -95,7 +99,21 @@ class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder sectionViewHolder, int position) {
         if (isSectionHeaderPosition(position)) {
-            ((SectionViewHolder)sectionViewHolder).title.setText(mSections.get(position).title);
+            Section sec = mSections.get(position);
+            SectionViewHolder holder = ((SectionViewHolder) sectionViewHolder);
+            holder.title.setText(sec.title);
+            final CharSequence worlds = sec.worlds;
+            if (worlds == null || worlds.equals("")) {
+                holder.world.setVisibility(View.GONE);
+            } else {
+                holder.world.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(@NonNull View v) {
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, WorldConfigActivity.class);
+                        context.startActivity(intent);                    }
+                });
+            }
         } else if (mBaseAdapter != null) {
             //noinspection unchecked
             mBaseAdapter.onBindViewHolder(sectionViewHolder, sectionedPositionToPosition(position));
@@ -115,10 +133,12 @@ class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         final int firstPosition;
         int sectionedPosition;
         final CharSequence title;
+        final CharSequence worlds;
 
-        public Section(int firstPosition, CharSequence title) {
+        public Section(int firstPosition, CharSequence title, CharSequence worlds) {
             this.firstPosition = firstPosition;
             this.title = title;
+            this.worlds = worlds;
         }
 
         public CharSequence getTitle() {

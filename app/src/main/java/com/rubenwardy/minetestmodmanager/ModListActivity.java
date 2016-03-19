@@ -391,7 +391,7 @@ public class ModListActivity
                 new ArrayList<>();
         for (ModList list : ModManager.lists_map.values()) {
             if (list.type == ModList.ModListType.EMLT_PATH) {
-                sections.add(new SectionedRecyclerViewAdapter.Section(mods.size(), list.title));
+                sections.add(new SectionedRecyclerViewAdapter.Section(mods.size(), list.title, list.getWorldsDir()));
                 if (query != null) {
                     for (Mod mod : list.mods) {
                         if (
@@ -410,7 +410,7 @@ public class ModListActivity
             }
         }
         sections.add(new SectionedRecyclerViewAdapter.Section(mods.size(),
-                res.getString(R.string.modlist_available_mods)));
+                res.getString(R.string.modlist_available_mods), null));
 
         ModList list = modman.getAvailableMods();
         if (list != null) {
