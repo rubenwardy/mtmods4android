@@ -55,8 +55,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/mod_details"
-                android:text="badmod by baduser" />
+                android:id="@+id/mod_details" />
 
             <TextView
                 android:layout_width="match_parent"

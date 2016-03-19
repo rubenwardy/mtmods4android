@@ -4,8 +4,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -16,17 +14,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.rubenwardy.minetestmodmanager.manager.ModEventReceiver;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
-
-import org.w3c.dom.Text;
 
 public class ReportActivity extends AppCompatActivity {
     public static final String EXTRA_LIST = "list";
     public static final String EXTRA_MOD_NAME = "modname";
     public static final String EXTRA_AUTHOR = "author";
     public static final String EXTRA_LINK = "link";
-    protected String selected = "";
+    private String selected = "";
 
     private @NonNull String str_make_nonnull(@Nullable String str) {
         if (str == null) {

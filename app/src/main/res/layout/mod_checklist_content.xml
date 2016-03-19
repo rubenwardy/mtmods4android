@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/modlist_item_text_margin"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:text="Modname"
         android:textStyle="bold" />
 
 </LinearLayout>

@@ -37,7 +37,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Mod manager service.
  */
 public class ModInstallService extends IntentService {
-    public static final int UPDATE_PROGRESS = 8344;
+    private static final int UPDATE_PROGRESS = 8344;
     private static final String ACTION_URL_INSTALL = "com.rubenwardy.minetestmodmanager.action.URL_INSTALL";
     public static final String ACTION_INSTALL = "com.rubenwardy.minetestmodmanager.action.INSTALL";
     public static final String ACTION_UNINSTALL = "com.rubenwardy.minetestmodmanager.action.UNINSTALL";
@@ -545,8 +545,6 @@ public class ModInstallService extends IntentService {
                     pw.flush();
                     pw.close();
                     f.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
