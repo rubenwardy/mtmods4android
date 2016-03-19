@@ -42,11 +42,15 @@ public class ModInstallService extends IntentService {
     public static final String ACTION_INSTALL = "com.rubenwardy.minetestmodmanager.action.INSTALL";
     public static final String ACTION_UNINSTALL = "com.rubenwardy.minetestmodmanager.action.UNINSTALL";
     public static final String ACTION_FETCH_MODLIST = "com.rubenwardy.minetestmodmanager.action.FETCH_MODLIST";
+    private static final String ACTION_REPORT = "com.rubenwardy.minetestmodmanager.action.REPORT";
 
     private static final String EXTRA_MOD_NAME = "com.rubenwardy.minetestmodmanager.extra.MOD_NAME";
     private static final String EXTRA_AUTHOR = "com.rubenwardy.minetestmodmanager.extra.AUTHOR";
     private static final String EXTRA_URL = "com.rubenwardy.minetestmodmanager.extra.URL";
     private static final String EXTRA_DEST = "com.rubenwardy.minetestmodmanager.extra.DEST";
+    private static final String EXTRA_LIST = "com.rubenwardy.minetestmodmanager.extra.LIST";
+    private static final String EXTRA_LINK = "com.rubenwardy.minetestmodmanager.extra.LINK";
+    private static final String EXTRA_INFO = "com.rubenwardy.minetestmodmanager.extra.INFO";
     public static final String RET_ACTION = "action";
     public static final String RET_NAME = "name";
     public static final String RET_DEST = "dest";
@@ -115,6 +119,21 @@ public class ModInstallService extends IntentService {
         context.startService(intent);
     }
 
+    @MainThread
+    public static void startActionReport(@NonNull Context context, ServiceResultReceiver srr,
+                                         @NonNull String modname, @Nullable String author,
+                                         @Nullable String list, @Nullable String link, @NonNull String info) {
+        Intent intent = new Intent(context, ModInstallService.class);
+        intent.setAction(ACTION_REPORT);
+        intent.putExtra(EXTRA_MOD_NAME, modname);
+        intent.putExtra(EXTRA_AUTHOR, author);
+        intent.putExtra(EXTRA_LIST, list);
+        intent.putExtra(EXTRA_LINK, link);
+        intent.putExtra(EXTRA_INFO, info);
+        intent.putExtra("receiverTag", srr);
+        context.startService(intent);
+    }
+
     private static AtomicBoolean requestStop = new AtomicBoolean();
     public static void cancelCurrentTask() {
         requestStop.set(true);
@@ -148,6 +167,16 @@ public class ModInstallService extends IntentService {
                 final String url = intent.getStringExtra(EXTRA_URL);
                 final String dest = intent.getStringExtra(EXTRA_DEST);
                 handleActionUrlInstall(rec, modname, author, url, new File(dest));
+                break;
+            }
+            case ACTION_REPORT: {
+                final String modname = intent.getStringExtra(EXTRA_MOD_NAME);
+                final String author = intent.getStringExtra(EXTRA_AUTHOR);
+                final String list = intent.getStringExtra(EXTRA_LIST);
+                final String link = intent.getStringExtra(EXTRA_LINK);
+                final String info = intent.getStringExtra(EXTRA_INFO);
+
+                handleActionReport(rec, modname, author, list, link, info);
                 break;
             }
             case ACTION_UNINSTALL:
@@ -187,6 +216,48 @@ public class ModInstallService extends IntentService {
                 Log.w("ModService", "Invalid action request.");
                 break;
             }
+        }
+    }
+
+    @WorkerThread
+    private void handleActionReport(@NonNull ResultReceiver rec, @NonNull String modname,
+                                        @Nullable String author, @Nullable String list,
+                                        @Nullable String link, @NonNull String info) {
+        try {
+            String urlParameters  = "modname=" + URLEncoder.encode(modname, "UTF-8");
+            urlParameters += "&msg=" + URLEncoder.encode(info, "UTF-8");
+            if (author != null) {
+                urlParameters += "&author=" + URLEncoder.encode(author, "UTF-8");
+            }
+            if (list  != null) {
+                urlParameters += "&list=" + URLEncoder.encode(list, "UTF-8");
+            }
+            if (link  != null) {
+                urlParameters += "&link=" + URLEncoder.encode(link, "UTF-8");
+            }
+            Log.e("ModService", "Report " + urlParameters);
+            byte[] postData       = urlParameters.getBytes(Charset.forName("UTF-8"));
+            int    postDataLength = postData.length;
+
+            URL url = new URL("http://app-mtmm.rubenwardy.com/v1/report/");
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            conn.setRequestProperty("charset", "utf-8");
+            conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
+            conn.setDoOutput(true);
+            conn.setInstanceFollowRedirects(false);
+            conn.setUseCaches(false);
+
+            DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+            wr.write(postData);
+            wr.flush();
+            wr.close();
+
+            int responseCode = conn.getResponseCode();
+            Log.w("ModService", urlParameters + " | Response: " + responseCode);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

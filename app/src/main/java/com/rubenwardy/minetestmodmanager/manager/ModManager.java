@@ -93,6 +93,12 @@ public class ModManager {
     }
 
     @MainThread
+    public void reportModAsync(Context context, @NonNull String modname, @Nullable String author,
+                               @Nullable String list, @Nullable String link, @NonNull String info) {
+        ModInstallService.startActionReport(context, srr, modname, author, list, link, info);
+    }
+
+    @MainThread
     public void cancelAsyncTask() {
         ModInstallService.cancelCurrentTask();
     }

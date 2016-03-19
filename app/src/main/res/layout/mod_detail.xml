@@ -14,6 +14,16 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:id="@+id/action_report"
+            android:src="@drawable/ic_report_problem_24dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/action_report" />
+
         <Button
             android:id="@+id/find"
             android:layout_width="0.0dip" android:layout_height="fill_parent"

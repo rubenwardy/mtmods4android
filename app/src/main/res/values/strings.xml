@@ -40,6 +40,7 @@
     <string name="action_install">Install</string>
     <string name="action_uninstall">Uninstall</string>
     <string name="action_find">Find Elsewhere</string>
+    <string name="action_report">Report</string>
 
     <string name="details_name">Mod Name</string>
     <string name="details_author">Author</string>
@@ -58,6 +59,20 @@
     <string name="mod_verified_yes">This mod is from a well known author.</string>
     <string name="mod_verified_no">This mod wasn\'t made by a well known author.</string>
     <string name="mod_verified_uk">Unable to determine the source of this mod.</string>
+
+    <!-- Report -->
+    <string name="x_by_y">%1$s by %2$s</string>
+    <string name="title_activity_report">Report Mod</string>
+    <string name="report_instructions">Please select the reason why you are reporting this mod.
+        If you have any other information, please enter it in the text box.</string>
+    <string name="report_reason">Reason</string>
+    <string name="report_msg">Optional Message</string>
+    <string name="report_details">Details</string>
+    <string-array name="report_reasons">
+        <item>Malicious / Virus</item>
+        <item>Install doesn\'t work</item>
+        <item>Other (please enter below)</item>
+    </string-array>
 
     <!-- World config -->
     <string name="world_config">World Configuration</string>
@@ -93,7 +108,4 @@
         than for security reasons. Whilst these authors are more trustworthy than most,
         there is still a possibility of their accounts being
         hacked and bad downloads being placed there instead.</string>
-
-
-
 </resources>

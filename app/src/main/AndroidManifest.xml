@@ -47,6 +47,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.rubenwardy.minetestmodmanager.ModListActivity" />
         </activity>
+        <activity
+            android:name=".ReportActivity"
+            android:label="@string/title_activity_report"
+            android:parentActivityName=".ModListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.rubenwardy.minetestmodmanager.ModListActivity" />
+        </activity>
 
         <service
             android:name=".manager.ModInstallService"
@@ -55,7 +64,7 @@
         <receiver
             android:name=".manager.BCastReceiver"
             android:enabled="true"
-            android:exported="false"></receiver>
+            android:exported="false" />
     </application>
 
 </manifest>

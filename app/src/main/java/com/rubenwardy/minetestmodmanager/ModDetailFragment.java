@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.rubenwardy.minetestmodmanager.manager.Mod;
@@ -120,6 +121,21 @@ public class ModDetailFragment extends Fragment {
                     bundle.putString(ModEventReceiver.PARAM_MODNAME, mod.name);
                     bundle.putString(ModEventReceiver.PARAM_ADDITIONAL, "name:" + mod.name);
                     ((ModEventReceiver) getActivity()).onModEvent(bundle);
+                }
+            });
+
+            // Report
+            ImageButton btn_report = (ImageButton) rootView.findViewById(R.id.action_report);
+            btn_report.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(@NonNull View view) {
+                    Context context = getContext();
+                    Intent intent = new Intent(context, ReportActivity.class);
+                    intent.putExtra(ReportActivity.EXTRA_LIST, mod.listname);
+                    intent.putExtra(ReportActivity.EXTRA_AUTHOR, mod.author);
+                    intent.putExtra(ReportActivity.EXTRA_MOD_NAME, mod.name);
+                    intent.putExtra(ReportActivity.EXTRA_LINK, mod.link);
+                    context.startActivity(intent);
                 }
             });
 
