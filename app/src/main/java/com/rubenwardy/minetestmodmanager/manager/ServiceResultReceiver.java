@@ -25,9 +25,23 @@ public class ServiceResultReceiver extends ResultReceiver {
 
     private void handleInstall(@NonNull Bundle b, @Nullable String modname, @Nullable String dest) {
         if (b.containsKey(ModInstallService.RET_ERROR)) {
-            Log.w("SRR", "Install failed for " + modname + ": " +
-                    b.getString(ModInstallService.RET_ERROR));
-        } else if (!b.containsKey(ModInstallService.RET_PROGRESS)) {
+            final String error = b.getString(ModInstallService.RET_ERROR);
+            Log.w("SRR", "Install failed for " + modname + ": " + error);
+
+
+            if (ModManager.mev != null) {
+                Bundle b2 = new Bundle();
+                b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_INSTALL);
+                b2.putString(ModEventReceiver.PARAM_MODNAME, modname);
+                b2.putString(ModEventReceiver.PARAM_DEST_LIST, dest);
+                b2.putString(ModEventReceiver.PARAM_ERROR, error);
+                //noinspection ConstantConditions
+                ModManager.mev.onModEvent(b2);
+            }
+        } else if (b.containsKey(ModInstallService.RET_PROGRESS)) {
+            Integer progress = b.getInt(ModInstallService.RET_PROGRESS);
+            //Log.w("SRR", "Progress for " + modname + " at " + Integer.toString(progress) + "%");
+        } else {
             Log.w("SRR", "Got result " + dest);
             ModManager modman = new ModManager();
             ModList list = modman.get(dest);
@@ -44,16 +58,24 @@ public class ServiceResultReceiver extends ResultReceiver {
                 //noinspection ConstantConditions
                 ModManager.mev.onModEvent(b2);
             }
-        } else {
-            Integer progress = b.getInt(ModInstallService.RET_PROGRESS);
-            //Log.w("SRR", "Progress for " + modname + " at " + Integer.toString(progress) + "%");
         }
     }
 
     private void handleUninstall(@NonNull Bundle b, @Nullable String modname, @Nullable String dest) {
         if (b.containsKey(ModInstallService.RET_ERROR)) {
+            final String error = b.getString(ModInstallService.RET_ERROR);
             Log.w("SRR", "Uninstall failed for " + modname + ": " +
-                    b.getString(ModInstallService.RET_ERROR));
+                    error);
+
+            if (ModManager.mev != null) {
+                Bundle b2 = new Bundle();
+                b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_UNINSTALL);
+                b2.putString(ModEventReceiver.PARAM_MODNAME, modname);
+                b2.putString(ModEventReceiver.PARAM_DEST_LIST, dest);
+                b2.putString(ModEventReceiver.PARAM_ERROR, error);
+                //noinspection ConstantConditions
+                ModManager.mev.onModEvent(b2);
+            }
         } else if (b.containsKey(ModInstallService.RET_PROGRESS)) {
             Integer progress = b.getInt(ModInstallService.RET_PROGRESS);
             //Log.w("SRR", "Progress for " + modname + " at " + Integer.toString(progress) + "%");
@@ -95,7 +117,10 @@ public class ServiceResultReceiver extends ResultReceiver {
                 //noinspection ConstantConditions
                 ModManager.mev.onModEvent(b2);
             }
-        } else if (!b.containsKey(ModInstallService.RET_PROGRESS)) {
+        } else if (b.containsKey(ModInstallService.RET_PROGRESS)) {
+            Integer progress = b.getInt(ModInstallService.RET_PROGRESS);
+            //Log.w("SRR", "Progress for " + url + " at " + Integer.toString(progress) + "%");
+        } else {
             Log.w("SRR", "Got result " + dest + " from " + url);
             ModManager modman = new ModManager();
             ModList list = new ModList(ModList.ModListType.EMLT_ONLINE, "Available Mods", null, url);
@@ -184,9 +209,6 @@ public class ServiceResultReceiver extends ResultReceiver {
                 //noinspection ConstantConditions
                 ModManager.mev.onModEvent(b2);
             }
-        } else {
-            Integer progress = b.getInt(ModInstallService.RET_PROGRESS);
-            //Log.w("SRR", "Progress for " + url + " at " + Integer.toString(progress) + "%");
         }
     }
 

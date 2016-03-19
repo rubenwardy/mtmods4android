@@ -60,10 +60,10 @@ public class ModInstallService extends IntentService {
         super("ModInstallService");
     }
 
-    private boolean isAlphaNum(String str) {
+    private boolean isValidModname(String str) {
         for (int i = 0; i < str.length(); ++i) {
             char c = str.charAt(i);
-            if (!Character.isDigit(c) && !Character.isLetter(c)) {
+            if (!Character.isDigit(c) && !Character.isLetter(c) && c != '_') {
                 return false;
             }
         }
@@ -184,7 +184,7 @@ public class ModInstallService extends IntentService {
                 final String modname = intent.getStringExtra(EXTRA_MOD_NAME);
                 final String path = intent.getStringExtra(EXTRA_DEST);
 
-                if (isAlphaNum(modname)) {
+                if (isValidModname(modname)) {
                     Utils.deleteRecursive(new File(path, modname));
 
                     if ((new File(path, modname)).exists()) {

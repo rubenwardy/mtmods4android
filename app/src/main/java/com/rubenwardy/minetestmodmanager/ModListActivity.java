@@ -214,12 +214,12 @@ public class ModListActivity
 
     @Override
     public void onModEvent(@NonNull Bundle bundle) {
+        Resources res = getResources();
         String action = bundle.getString(PARAM_ACTION);
         if (action == null) {
             return;
         } else if (action.equals(ACTION_INSTALL)) {
-            String modname = bundle.getString(PARAM_MODNAME);
-            Resources res = getResources();
+            final String modname = bundle.getString(PARAM_MODNAME);
             if (bundle.containsKey(PARAM_ERROR)) {
                 String error = bundle.getString(PARAM_ERROR);
                 String text = String.format(res.getString(R.string.failed_install), modname, error);
@@ -232,11 +232,20 @@ public class ModListActivity
                         .setAction("Action", null).show();
             }
         } else if (isTwoPane && action.equals(ACTION_UNINSTALL)) {
-            FragmentManager fragman = getSupportFragmentManager();
-            Fragment frag = fragman.findFragmentById(R.id.mod_detail_container);
-            getSupportFragmentManager().beginTransaction()
-                    .remove(frag)
-                    .commit();
+            final String modname = bundle.getString(PARAM_MODNAME);
+            if (bundle.containsKey(PARAM_ERROR)) {
+                final String error = bundle.getString(PARAM_ERROR);
+                final String text = String.format(res.getString(R.string.failed_uninstall), modname, error);
+                Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                return;
+            } else {
+                FragmentManager fragman = getSupportFragmentManager();
+                Fragment frag = fragman.findFragmentById(R.id.mod_detail_container);
+                getSupportFragmentManager().beginTransaction()
+                        .remove(frag)
+                        .commit();
+            }
         } else if (isTwoPane && action.equals(ACTION_SEARCH)) {
             String query = bundle.getString(PARAM_ADDITIONAL);
 
