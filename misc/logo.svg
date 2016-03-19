@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 744.09448819 1052.3622047"
+   width="576"
+   height="576"
+   viewBox="0 0 576.00002 576.00002"
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
@@ -19,7 +19,7 @@
   <defs
      id="defs4">
     <filter
-       style="color-interpolation-filters:sRGB;"
+       style="color-interpolation-filters:sRGB"
        inkscape:label="Color Shift"
        id="filter9931">
       <feColorMatrix
@@ -34,7 +34,7 @@
          id="feColorMatrix9935" />
     </filter>
     <filter
-       style="color-interpolation-filters:sRGB;"
+       style="color-interpolation-filters:sRGB"
        inkscape:label="Color Shift"
        id="filter9937">
       <feColorMatrix
@@ -49,7 +49,7 @@
          id="feColorMatrix9941" />
     </filter>
     <filter
-       style="color-interpolation-filters:sRGB;"
+       style="color-interpolation-filters:sRGB"
        inkscape:label="Color Shift"
        id="filter9943">
       <feColorMatrix
@@ -64,7 +64,7 @@
          id="feColorMatrix9947" />
     </filter>
     <filter
-       style="color-interpolation-filters:sRGB;"
+       style="color-interpolation-filters:sRGB"
        inkscape:label="Color Shift"
        id="filter9949">
       <feColorMatrix
@@ -79,7 +79,7 @@
          id="feColorMatrix9953" />
     </filter>
     <filter
-       style="color-interpolation-filters:sRGB;"
+       style="color-interpolation-filters:sRGB"
        inkscape:label="Color Shift"
        id="filter9955">
       <feColorMatrix
@@ -94,7 +94,7 @@
          id="feColorMatrix9959" />
     </filter>
     <filter
-       style="color-interpolation-filters:sRGB;"
+       style="color-interpolation-filters:sRGB"
        inkscape:label="Color Shift"
        id="filter9961">
       <feColorMatrix
@@ -109,7 +109,7 @@
          id="feColorMatrix9965" />
     </filter>
     <filter
-       style="color-interpolation-filters:sRGB;"
+       style="color-interpolation-filters:sRGB"
        inkscape:label="Color Shift"
        id="filter9967">
       <feColorMatrix
@@ -124,7 +124,7 @@
          id="feColorMatrix9971" />
     </filter>
     <filter
-       style="color-interpolation-filters:sRGB;"
+       style="color-interpolation-filters:sRGB"
        inkscape:label="Color Shift"
        id="filter9973">
       <feColorMatrix
@@ -139,7 +139,7 @@
          id="feColorMatrix9977" />
     </filter>
     <filter
-       style="color-interpolation-filters:sRGB;"
+       style="color-interpolation-filters:sRGB"
        inkscape:label="Drop Shadow"
        id="filter10800">
       <feFlood
@@ -179,16 +179,44 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.70710678"
-     inkscape:cx="30.09946"
-     inkscape:cy="639.95458"
+     inkscape:cx="276.98915"
+     inkscape:cy="177.62426"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1-5"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1001"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     units="px"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       position="0,528.00002"
+       orientation="0,1"
+       id="guide4201"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="48.000002,0"
+       orientation="1,0"
+       id="guide4203"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="528.00002,0"
+       orientation="1,0"
+       id="guide4205"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="0,48.000002"
+       orientation="0,1"
+       id="guide4207"
+       inkscape:label=""
+       inkscape:color="rgb(0,0,255)" />
+  </sodipodi:namedview>
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -204,19 +232,20 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(0,-476.36217)">
     <g
        inkscape:label="Layer 1"
        id="layer1-5"
-       transform="matrix(12.687502,0,0,12.687502,72.376941,104.85666)">
+       transform="matrix(10.577038,0,0,10.577038,108.26147,214.56393)">
       <rect
          style="opacity:1;fill:#31adff;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
          id="rect10002"
-         width="11.980293"
-         height="11.980293"
-         x="15.027925"
-         y="-3.0087378"
-         ry="1.3098853"
+         width="45.399006"
+         height="45.399006"
+         x="-5.6963553"
+         y="29.283033"
+         ry="4.9637756"
          inkscape:export-filename="C:\Users\ruben\Pictures\logo.png"
          inkscape:export-xdpi="378.94736"
          inkscape:export-ydpi="378.94736" />
@@ -226,7 +255,7 @@
          inkscape:export-filename="C:\Users\ruben\Pictures\logo.png"
          style="filter:url(#filter10800)"
          id="g10585"
-         transform="translate(9.2516025,-37.898131)">
+         transform="matrix(3.7894738,0,0,3.7894738,-27.585576,-102.92941)">
         <path
            sodipodi:nodetypes="ccccccc"
            id="path3047"
@@ -420,20 +449,20 @@
       </g>
       <path
          inkscape:connector-curvature="0"
-         style="fill:#2e3436;fill-opacity:1;stroke:#2e3436;stroke-width:0.23077679;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-         d="m 17.269748,4.2628453 -0.461554,-0.266478 0,1.384661 2.497122,1.441713 0,-0.461553 -0.399717,-0.230777 0,-0.461554 -0.481967,-0.278263 0,-0.923108 -1.153884,-0.666194 0,0.461553 z"
+         style="fill:#2e3436;fill-opacity:1;stroke:#2e3436;stroke-width:0.87452257;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 2.798976,56.838506 -1.7490468,-1.009811 0,5.247137 9.4627778,5.463334 0,-1.749043 -1.5147169,-0.874524 0,-1.749047 -1.826401,-1.05447 0,-3.498094 -4.3726131,-2.524525 0,1.749043 z"
          id="path3831-3-6"
          sodipodi:nodetypes="ccccccccccc" />
       <path
          inkscape:connector-curvature="0"
-         style="opacity:1;fill:#555753;fill-opacity:1;stroke:#2e3436;stroke-width:0.23077679;stroke-linejoin:miter"
-         d="m 16.907014,5.4380813 0.799434,-0.461554 0.799434,0.461554 0.379303,0.218991 0,0.461553 0.461554,0.266478 0,0.461554 -2.439725,-1.408576 z"
+         style="opacity:1;fill:#555753;fill-opacity:1;stroke:#2e3436;stroke-width:0.87452257;stroke-linejoin:miter"
+         d="m 1.424405,61.292033 3.0294341,-1.749047 3.029434,1.749047 1.437359,0.82986 0,1.749043 1.7490469,1.009812 0,1.749047 -9.245274,-5.337762 z"
          id="path3870-0"
          sodipodi:nodetypes="cccccccc" />
       <path
          inkscape:connector-curvature="0"
-         style="fill:none;fill-opacity:1;stroke:#ef2929;stroke-width:0.11538839;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.1153884, 0.1153884;stroke-dashoffset:0.25;stroke-opacity:1"
-         d="M 18.106165,4.7457503 17.906307,4.6303623"
+         style="fill:none;fill-opacity:1;stroke:#ef2929;stroke-width:0.43726128;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.43726132, 0.43726132;stroke-dashoffset:0.25;stroke-opacity:1"
+         d="m 5.9685561,58.668462 -0.757356,-0.43726"
          id="path3872-3"
          sodipodi:nodetypes="cc" />
     </g>
