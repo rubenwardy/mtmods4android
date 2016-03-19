@@ -5,7 +5,7 @@
     External storage is a shared file location on your device, and doesn\'t necessarily mean an SD card.</string>
     <string name="dialog_nomt_title">Failed to create Minetest mod folder</string>
     <string name="dialog_nomt_msg">There wasn\'t a folder for mods on your device, so we attempted to create one.
-        However, the attempt failed. The system may be denying this app accessing to it.</string>
+        However, the attempt failed. The system may be denying this app access to it. Try running Minetest.</string>
     <string name="dialog_close">Close</string>
     <string name="invalid_mod">Invalid Mod</string>
     <string name="invalid_mod_desc">We couldn\'t find that mod. Has it been deleted?</string>
