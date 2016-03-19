@@ -15,7 +15,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="logo.svg">
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="C:\Users\ruben\AndroidStudioProjects\MinetestModManager\misc\logo.png"
+   inkscape:export-xdpi="30"
+   inkscape:export-ydpi="30">
   <defs
      id="defs4">
     <filter
@@ -178,11 +181,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70710678"
-     inkscape:cx="276.98915"
-     inkscape:cy="177.62426"
+     inkscape:zoom="1"
+     inkscape:cx="389.74413"
+     inkscape:cy="176.80303"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer1-5"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1001"
@@ -238,24 +241,13 @@
        inkscape:label="Layer 1"
        id="layer1-5"
        transform="matrix(10.577038,0,0,10.577038,108.26147,214.56393)">
-      <rect
-         style="opacity:1;fill:#31adff;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
-         id="rect10002"
-         width="45.399006"
-         height="45.399006"
-         x="-5.6963553"
-         y="29.283033"
-         ry="4.9637756"
-         inkscape:export-filename="C:\Users\ruben\Pictures\logo.png"
-         inkscape:export-xdpi="378.94736"
-         inkscape:export-ydpi="378.94736" />
       <g
          inkscape:export-ydpi="378.94736"
          inkscape:export-xdpi="378.94736"
          inkscape:export-filename="C:\Users\ruben\Pictures\logo.png"
          style="filter:url(#filter10800)"
          id="g10585"
-         transform="matrix(3.7894738,0,0,3.7894738,-27.585576,-102.92941)">
+         transform="matrix(4.3096617,0,0,4.3096617,-33.706351,-124.19435)">
         <path
            sodipodi:nodetypes="ccccccc"
            id="path3047"
@@ -449,20 +441,20 @@
       </g>
       <path
          inkscape:connector-curvature="0"
-         style="fill:#2e3436;fill-opacity:1;stroke:#2e3436;stroke-width:0.87452257;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-         d="m 2.798976,56.838506 -1.7490468,-1.009811 0,5.247137 9.4627778,5.463334 0,-1.749043 -1.5147169,-0.874524 0,-1.749047 -1.826401,-1.05447 0,-3.498094 -4.3726131,-2.524525 0,1.749043 z"
+         style="fill:#2e3436;fill-opacity:1;stroke:#2e3436;stroke-width:0.99456984;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 0.84914321,57.505197 -1.98914161,-1.148429 0,5.967421 10.7617503,6.213295 0,-1.989137 -1.7226448,-0.994572 0,-1.989141 -2.0771143,-1.199219 0,-3.978284 -4.97284959,-2.871071 0,1.989137 z"
          id="path3831-3-6"
          sodipodi:nodetypes="ccccccccccc" />
       <path
          inkscape:connector-curvature="0"
-         style="opacity:1;fill:#555753;fill-opacity:1;stroke:#2e3436;stroke-width:0.87452257;stroke-linejoin:miter"
-         d="m 1.424405,61.292033 3.0294341,-1.749047 3.029434,1.749047 1.437359,0.82986 0,1.749043 1.7490469,1.009812 0,1.749047 -9.245274,-5.337762 z"
+         style="opacity:1;fill:#555753;fill-opacity:1;stroke:#2e3436;stroke-width:0.99456984;stroke-linejoin:miter"
+         d="m -0.71411762,62.570068 3.44528992,-1.989142 3.4452899,1.989142 1.6346679,0.943776 0,1.989137 1.9891417,1.148431 0,1.989142 -10.51438942,-6.070486 z"
          id="path3870-0"
          sodipodi:nodetypes="cccccccc" />
       <path
          inkscape:connector-curvature="0"
-         style="fill:none;fill-opacity:1;stroke:#ef2929;stroke-width:0.43726128;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.43726132, 0.43726132;stroke-dashoffset:0.25;stroke-opacity:1"
-         d="m 5.9685561,58.668462 -0.757356,-0.43726"
+         style="fill:none;fill-opacity:1;stroke:#ef2929;stroke-width:0.49728492;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.49728497, 0.49728497;stroke-dashoffset:0.25;stroke-opacity:1"
+         d="M 4.4538173,59.586355 3.5924977,59.089071"
          id="path3872-3"
          sodipodi:nodetypes="cc" />
     </g>
