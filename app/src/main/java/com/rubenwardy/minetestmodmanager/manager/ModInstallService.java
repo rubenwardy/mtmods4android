@@ -304,6 +304,9 @@ public class ModInstallService extends IntentService {
     private void handleActionUrlInstall(@NonNull ResultReceiver rec, @NonNull String modname,
                                         @Nullable String author, @NonNull String url_str,
                                         @NonNull File dest) {
+        NotificationManager notiman =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
         Log.w("ModService", "Downloading " + url_str);
         try {
             // Resource
@@ -321,8 +324,6 @@ public class ModInstallService extends IntentService {
             }
 
             // Notification
-            NotificationManager notiman =
-                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
             mBuilder.setContentTitle(str_installing)
                     .setContentText(str_connecting)
@@ -473,6 +474,7 @@ public class ModInstallService extends IntentService {
             }
             notiman.cancel(1337);
         } catch (IOException e) {
+            notiman.cancel(1337);
             Bundle b = new Bundle();
             b.putString(RET_NAME, modname);
             b.putString(RET_ACTION, ACTION_INSTALL);
