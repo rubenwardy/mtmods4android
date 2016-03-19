@@ -90,21 +90,6 @@ public class ModListActivity
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        // Floating action button
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(@NonNull View view) {
-                Resources res = getResources();
-                Snackbar.make(view, res.getString(R.string.installing_mod), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-                Mod mod = new Mod(Mod.ModType.EMT_INVALID, "", "crops", "Crops", "");
-                modman.installUrlModAsync(getApplicationContext(), mod,
-                        "https://github.com/minetest-mods/crops/archive/master.zip", install_dir);
-            }
-        });
-
         // Pull down to refresh
         SwipeRefreshLayout srl = (SwipeRefreshLayout) findViewById(R.id.refresh);
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
