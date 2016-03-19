@@ -17,9 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,7 +52,6 @@ public class ModListActivity
 
     // Modman
     private ModManager modman;
-    private String install_dir;
     private final String mod_list_url = "http://app-mtmm.rubenwardy.com/v1/list/";
 
     // Other
@@ -130,7 +127,6 @@ public class ModListActivity
         File mt_dir = new File(mt_root, "/mods");
         File mul_root = new File(extern, "/MultiCraft");
         File mul_dir = new File(mul_root, "/mods");
-        install_dir = mt_dir.getAbsolutePath();
 
         // Check there is at least one mod dir
         if (mt_root.exists() && !mt_dir.exists() && mt_dir.mkdirs()) {

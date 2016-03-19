@@ -140,10 +140,6 @@ class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             this.title = title;
             this.worlds = worlds;
         }
-
-        public CharSequence getTitle() {
-            return title;
-        }
     }
 
 

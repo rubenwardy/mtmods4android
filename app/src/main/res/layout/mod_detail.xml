@@ -58,7 +58,6 @@
                 android:text="@string/details_name"
                 android:padding="3dip" />
             <TextView
-                android:text="modname"
                 android:layout_width="wrap_content"
                 android:padding="3dip"
                 android:id="@+id/mod_detail_name" />
@@ -70,7 +69,6 @@
                 android:text="@string/details_author"
                 android:padding="3dip" />
             <TextView
-                android:text="rubenwardy"
                 android:layout_width="wrap_content"
                 android:padding="3dip"
                 android:id="@+id/mod_detail_author"
@@ -84,7 +82,6 @@
                 android:text="@string/details_type"
                 android:padding="3dip" />
             <TextView
-                android:text="@string/type_mod"
                 android:layout_width="wrap_content"
                 android:padding="3dip"
                 android:id="@+id/mod_detail_type" />
@@ -96,7 +93,6 @@
                 android:text="@string/details_location"
                 android:padding="3dip" />
             <TextView
-                android:text="/storage/emulated/0/Minetest/mods/modname/"
                 android:layout_width="wrap_content"
                 android:padding="3dip"
                 android:id="@+id/mod_detail_location" />
@@ -108,7 +104,6 @@
                 android:text="@string/details_link"
                 android:padding="3dip" />
             <TextView
-                android:text="github.com/rubenwardy/privilegeareas/archive/master.zip"
                 android:layout_width="wrap_content"
                 android:padding="3dip"
                 android:id="@+id/mod_detail_link" />
@@ -120,7 +115,6 @@
                 android:text="@string/details_size"
                 android:padding="3dip" />
             <TextView
-                android:text="3 MB"
                 android:layout_width="wrap_content"
                 android:padding="3dip"
                 android:id="@+id/mod_detail_size" />
@@ -132,7 +126,6 @@
                 android:text="@string/details_forum"
                 android:padding="3dip" />
             <TextView
-                android:text="forum.minetest.net/viewtopic.php?t=4870"
                 android:layout_width="wrap_content"
                 android:padding="3dip"
                 android:id="@+id/mod_detail_forum"
@@ -146,7 +139,6 @@
                 android:text="@string/details_verified"
                 android:padding="3dip" />
             <TextView
-                android:text="@string/mod_verified_no"
                 android:layout_width="wrap_content"
                 android:padding="3dip"
                 android:id="@+id/mod_detail_ver" />
@@ -162,7 +154,6 @@
         android:layout_below="@+id/mod_table"
         android:padding="16dp"
         android:textIsSelectable="true"
-        tools:context="com.rubenwardy.minetestmodmanager.ModDetailFragment"
-        android:text="Adds foo and bar to the game, along with x and ys. Adds foo and bar to the game, along with x and ys." />
+        tools:context="com.rubenwardy.minetestmodmanager.ModDetailFragment" />
 
 </RelativeLayout>

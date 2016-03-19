@@ -57,11 +57,6 @@ public class ModManager {
         return null;
     }
 
-    @Nullable
-    public ModList listFromMod(@NonNull Mod mod) {
-        return get(mod.listname);
-    }
-
     @MainThread
     public void installModAsync(Context context, @NonNull Mod mod, @NonNull File zip, String path) {
         ModInstallService.startActionInstall(context, srr, mod.name, mod.author, zip, path);
