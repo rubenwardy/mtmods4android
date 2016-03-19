@@ -302,11 +302,16 @@ public class ModListActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case R.id.action_world:
+        case R.id.action_world: {
             Intent k = new Intent(this, WorldConfigActivity.class);
             startActivity(k);
             return true;
         }
+        case R.id.action_about: {
+            Intent k = new Intent(this, AboutActivity.class);
+            startActivity(k);
+            return true;
+        } }
 
         return false;
     }

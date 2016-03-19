@@ -16,7 +16,6 @@
 
     <!-- Menu -->
     <string name="action_search">Search</string>
-    <string name="action_settings">Settings</string>
 
     <!-- Mod List -->
     <string name="app_name">Minetest Mod Manager</string>
@@ -107,4 +106,15 @@
         than for security reasons. Whilst these authors are more trustworthy than most,
         there is still a possibility of their accounts being
         hacked and bad downloads being placed there instead.</string>
+
+    <!-- About -->
+    <string name="title_activity_about">About this App</string>
+    <string name="about_credits">Credits</string>
+    <string name="about_credits_dev">Developed by rubenwardy (rubenwardy.com)</string>
+    <string name="about_credits_krock">Thank you to Krock (aka SmallJoker) for creating Krock\'s Mod Search,
+        the crawler which the available mods list is based on.</string>
+    <string name="about_credits_feedback">Thank you to DonBatman for feedback during development</string>
+    <string name="about_credits_logo">The app logo is based on the Minetest logo which is CC-BY-NC-SA,
+        and created by erlehmann</string>
+    <string name="about_credits_images">This app also uses several standard Android icons, which are CC-BY 4.0</string>
 </resources>

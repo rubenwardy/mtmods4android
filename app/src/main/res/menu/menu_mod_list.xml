@@ -15,9 +15,9 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_about"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/title_activity_about"
         app:showAsAction="never" />
 
 </menu>
