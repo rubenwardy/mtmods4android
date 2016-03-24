@@ -18,7 +18,7 @@
     <string name="action_search">Search</string>
 
     <!-- Mod List -->
-    <string name="app_name">Minetest Mod Manager</string>
+    <string name="app_name">Minetest Mods</string>
     <string name="modlist_minetest">Installed Minetest Mods</string>
     <string name="modlist_multicraft">Installed MultiCraft Mods</string>
     <string name="modlist_available_mods">Available Mods</string>
