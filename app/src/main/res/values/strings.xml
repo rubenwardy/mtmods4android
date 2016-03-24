@@ -75,6 +75,7 @@
     <!-- World config -->
     <string name="world_config">World Configuration</string>
     <string name="accept">Accept</string>
+    <string name="accept_and_install">Accept and Install</string>
     <string name="world_config_saved">Saved configuration</string>
 
     <!-- Disclaimer -->
