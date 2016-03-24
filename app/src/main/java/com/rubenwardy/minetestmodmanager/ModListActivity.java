@@ -384,7 +384,8 @@ public class ModListActivity
                                 (match_name == null || mod.name.toLowerCase().equals(match_name)) &&
                                 (match_author == null || mod.author.toLowerCase().equals(match_author)) &&
                                 (query.equals("") || mod.name.toLowerCase().contains(query)
-                                        || mod.desc.toLowerCase().contains(query))
+                                        || mod.desc.toLowerCase().contains(query)
+                                        || mod.author.toLowerCase().contains(query))
                         ) {
                             mods.add(mod);
                         }
@@ -406,7 +407,8 @@ public class ModListActivity
                             (match_name == null || mod.name.toLowerCase().equals(match_name)) &&
                             (match_author == null || mod.author.toLowerCase().equals(match_author)) &&
                             (query.equals("") || mod.name.toLowerCase().contains(query)
-                                    || mod.desc.toLowerCase().contains(query))
+                                    || mod.desc.toLowerCase().contains(query)
+                                    || mod.author.toLowerCase().contains(query))
                     ) {
                         mods.add(mod);
                     }
