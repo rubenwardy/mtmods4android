@@ -49,6 +49,7 @@ public class ModInstallService extends IntentService {
     private static final String EXTRA_DEST = "com.rubenwardy.minetestmodmanager.extra.DEST";
     private static final String EXTRA_LIST = "com.rubenwardy.minetestmodmanager.extra.LIST";
     private static final String EXTRA_LINK = "com.rubenwardy.minetestmodmanager.extra.LINK";
+    private static final String EXTRA_REASON = "com.rubenwardy.minetestmodmanager.extra.REASON";
     private static final String EXTRA_INFO = "com.rubenwardy.minetestmodmanager.extra.INFO";
     public static final String RET_ACTION = "action";
     public static final String RET_NAME = "name";
@@ -121,13 +122,15 @@ public class ModInstallService extends IntentService {
     @MainThread
     public static void startActionReport(@NonNull Context context, ServiceResultReceiver srr,
                                          @NonNull String modname, @Nullable String author,
-                                         @Nullable String list, @Nullable String link, @NonNull String info) {
+                                         @Nullable String list, @Nullable String link,
+                                         @NonNull String reason, @NonNull String info) {
         Intent intent = new Intent(context, ModInstallService.class);
         intent.setAction(ACTION_REPORT);
         intent.putExtra(EXTRA_MOD_NAME, modname);
         intent.putExtra(EXTRA_AUTHOR, author);
         intent.putExtra(EXTRA_LIST, list);
         intent.putExtra(EXTRA_LINK, link);
+        intent.putExtra(EXTRA_REASON, reason);
         intent.putExtra(EXTRA_INFO, info);
         intent.putExtra("receiverTag", srr);
         context.startService(intent);
@@ -173,9 +176,10 @@ public class ModInstallService extends IntentService {
                 final String author = intent.getStringExtra(EXTRA_AUTHOR);
                 final String list = intent.getStringExtra(EXTRA_LIST);
                 final String link = intent.getStringExtra(EXTRA_LINK);
+                final String reason = intent.getStringExtra(EXTRA_REASON);
                 final String info = intent.getStringExtra(EXTRA_INFO);
 
-                handleActionReport(rec, modname, author, list, link, info);
+                handleActionReport(rec, modname, author, list, link, reason, info);
                 break;
             }
             case ACTION_UNINSTALL:
@@ -221,10 +225,12 @@ public class ModInstallService extends IntentService {
     @WorkerThread
     private void handleActionReport(@NonNull ResultReceiver rec, @NonNull String modname,
                                         @Nullable String author, @Nullable String list,
-                                        @Nullable String link, @NonNull String info) {
+                                        @Nullable String link, @NonNull String reason,
+                                        @NonNull String info) {
         try {
             String urlParameters  = "modname=" + URLEncoder.encode(modname, "UTF-8");
             urlParameters += "&msg=" + URLEncoder.encode(info, "UTF-8");
+            urlParameters += "&reason=" + URLEncoder.encode(reason, "UTF-8");
             if (author != null) {
                 urlParameters += "&author=" + URLEncoder.encode(author, "UTF-8");
             }
@@ -253,7 +259,8 @@ public class ModInstallService extends IntentService {
             wr.flush();
             wr.close();
 
-            // int responseCode = conn.getResponseCode();
+            int responseCode = conn.getResponseCode();
+            Log.w("ModService", urlParameters + "\t" + responseCode);
         } catch (IOException e) {
             e.printStackTrace();
         }

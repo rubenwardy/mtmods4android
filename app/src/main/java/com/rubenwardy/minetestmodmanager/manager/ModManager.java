@@ -85,8 +85,9 @@ public class ModManager {
 
     @MainThread
     public void reportModAsync(Context context, @NonNull String modname, @Nullable String author,
-                               @Nullable String list, @Nullable String link, @NonNull String info) {
-        ModInstallService.startActionReport(context, srr, modname, author, list, link, info);
+                               @Nullable String list, @Nullable String link, @NonNull String reason,
+                               @NonNull String info) {
+        ModInstallService.startActionReport(context, srr, modname, author, list, link, reason, info);
     }
 
     @MainThread

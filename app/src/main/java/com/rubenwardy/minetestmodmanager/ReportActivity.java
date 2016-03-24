@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,7 +22,7 @@ public class ReportActivity extends AppCompatActivity {
     public static final String EXTRA_MOD_NAME = "modname";
     public static final String EXTRA_AUTHOR = "author";
     public static final String EXTRA_LINK = "link";
-    private String selected = "";
+    private String selected = "mal";
 
     private @NonNull String str_make_nonnull(@Nullable String str) {
         if (str == null) {
@@ -64,7 +65,20 @@ public class ReportActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selected = parent.getItemAtPosition(position).toString();
+                switch (position) {
+                case 0:
+                    selected = "mal";
+                    break;
+                case 1:
+                    selected = "dw";
+                    break;
+                case 2:
+                default:
+                    selected = "other";
+                    break;
+                }
+
+                Log.w("RAct", selected);
             }
 
             @Override
@@ -77,12 +91,11 @@ public class ReportActivity extends AppCompatActivity {
         btn_report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(@NonNull View view) {
-                EditText textbox = (EditText)findViewById(R.id.editText);
-                String info = "Reason: " + str_make_nonnull(selected) + "\n";
-                info += "Msg: " + str_make_nonnull(textbox.getText().toString());
+                EditText textbox = (EditText) findViewById(R.id.editText);
+                String info = str_make_nonnull(textbox.getText().toString());
 
                 ModManager modman = new ModManager();
-                modman.reportModAsync(view.getContext(), modname, author, listname, link, info);
+                modman.reportModAsync(view.getContext(), modname, author, listname, link, selected, info);
                 finish();
             }
         });
