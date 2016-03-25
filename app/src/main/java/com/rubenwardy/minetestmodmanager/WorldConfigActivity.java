@@ -66,7 +66,11 @@ public class WorldConfigActivity extends AppCompatActivity {
                 return;
             }
         }
-        conf.read(conf_file);
+        if (!conf.read(conf_file)) {
+            // Create configuration file
+            conf.set("gameid", "minetest");
+            conf.set("backend", "sqlite3");
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
