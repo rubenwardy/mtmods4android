@@ -7,7 +7,7 @@ Created by [rubenwardy](http://rubenwardy.com). [Backend](http://app-mtmm.rubenw
 # License
 
 Minetest Mods for Android
-Copyright (C) 2010-2013 rubenwardy
+Copyright (C) 2016 rubenwardy
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
