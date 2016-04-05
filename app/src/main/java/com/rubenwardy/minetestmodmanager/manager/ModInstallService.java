@@ -260,7 +260,6 @@ public class ModInstallService extends IntentService {
             wr.close();
 
             int responseCode = conn.getResponseCode();
-            Log.w("ModService", urlParameters + "\t" + responseCode);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -299,7 +298,7 @@ public class ModInstallService extends IntentService {
             wr.flush();
             wr.close();
 
-            // int responseCode = conn.getResponseCode();
+            int responseCode = conn.getResponseCode();
         } catch (IOException e) {
             e.printStackTrace();
         }
