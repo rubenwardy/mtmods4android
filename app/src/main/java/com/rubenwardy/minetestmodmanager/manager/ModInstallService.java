@@ -55,7 +55,6 @@ public class ModInstallService extends IntentService {
     public static final String RET_NAME = "name";
     public static final String RET_DEST = "dest";
     public static final String RET_ERROR = "error";
-    public static final String RET_PROGRESS = "progress";
 
     public ModInstallService() {
         super("ModInstallService");
@@ -323,7 +322,6 @@ public class ModInstallService extends IntentService {
                 str_connecting = res.getString(R.string.connecting);
                 str_downloading = res.getString(R.string.downloading);
                 str_extracting = res.getString(R.string.extracting);
-
             }
 
             // Notification
@@ -338,6 +336,9 @@ public class ModInstallService extends IntentService {
             mBuilder.setContentIntent(contentIntent);
             notiman.notify(1337, mBuilder.build());
 
+            //
+            // PROBE
+            //
             URL url = new URL(url_str);
             {
                 // Open HEAD http connection
@@ -347,7 +348,26 @@ public class ModInstallService extends IntentService {
 
                 // Check for existence
                 int code = testcon.getResponseCode();
-                if (code != HttpURLConnection.HTTP_OK){
+                if (code == HttpURLConnection.HTTP_OK) {
+                    String contentType = testcon.getContentType();
+                    if (!contentType.equals("application/octet-stream") &&
+                            !contentType.equals("application/zip") &&
+                            !contentType.startsWith("application/x-zip")) {
+                        Bundle b = new Bundle();
+                        b.putString(RET_NAME, modname);
+                        b.putString(RET_ACTION, ACTION_INSTALL);
+                        b.putString(RET_DEST, dest.getAbsolutePath());
+                        b.putString(RET_ERROR, "Failed to download: File is not a zip file");
+                        rec.send(0, b);
+
+                        notiman.cancel(1337);
+                        reportDownloadToServer(modname, author, url_str, 0, code,
+                                "wrong-content-" + testcon.getContentType());
+                        return;
+                    }
+                } else if (code == HttpURLConnection.HTTP_BAD_METHOD) {
+                    Log.w("ModService", "UrlInstall: Server does not accept HEAD.");
+                } else {
                     Bundle b = new Bundle();
                     b.putString(RET_NAME, modname);
                     b.putString(RET_ACTION, ACTION_INSTALL);
@@ -359,24 +379,8 @@ public class ModInstallService extends IntentService {
                     }
                     rec.send(0, b);
 
+                    notiman.cancel(1337);
                     reportDownloadToServer(modname, author, url_str, 0, code, "wrong-status");
-                    return;
-                }
-
-                // Check type
-                String contentType = testcon.getContentType();
-                if (!contentType.equals("application/octet-stream") &&
-                        !contentType.equals("application/zip") &&
-                        !contentType.startsWith("application/x-zip")) {
-                    Bundle b = new Bundle();
-                    b.putString(RET_NAME, modname);
-                    b.putString(RET_ACTION, ACTION_INSTALL);
-                    b.putString(RET_DEST, dest.getAbsolutePath());
-                    b.putString(RET_ERROR, "Failed to download: File is not a zip file");
-                    rec.send(0, b);
-
-                    reportDownloadToServer(modname, author, url_str, 0, code,
-                            "wrong-content-" + testcon.getContentType());
                     return;
                 }
 
@@ -385,38 +389,64 @@ public class ModInstallService extends IntentService {
                 int size = testcon.getContentLength();
                 testcon.disconnect();*/
             }
+
+            //
+            // DOWNLOAD
+            //
             {
+
+                // Start download
+                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+                connection.connect();
+
+                // Check Response Code
+                int code = connection.getResponseCode();
+                if (code != HttpURLConnection.HTTP_OK) {
+                    Bundle b = new Bundle();
+                    b.putString(RET_NAME, modname);
+                    b.putString(RET_ACTION, ACTION_INSTALL);
+                    b.putString(RET_DEST, dest.getAbsolutePath());
+                    if (code == HttpURLConnection.HTTP_NOT_FOUND) {
+                        b.putString(RET_ERROR, "Failed to download: 404 File not found.");
+                    } else {
+                        b.putString(RET_ERROR, "Failed to download: " + code + " Error");
+                    }
+                    rec.send(0, b);
+
+                    notiman.cancel(1337);
+                    reportDownloadToServer(modname, author, url_str, 0, code, "wrong-status");
+                    return;
+                }
+
+                // Check content type
+                String contentType = connection.getContentType();
+                if (!contentType.equals("application/octet-stream") &&
+                        !contentType.equals("application/zip") &&
+                        !contentType.startsWith("application/x-zip")) {
+                    connection.disconnect();
+
+                    Bundle b = new Bundle();
+                    b.putString(RET_NAME, modname);
+                    b.putString(RET_ACTION, ACTION_INSTALL);
+                    b.putString(RET_DEST, dest.getAbsolutePath());
+                    b.putString(RET_ERROR, "Failed to download: File is not a zip file");
+                    rec.send(0, b);
+
+                    notiman.cancel(1337);
+                    reportDownloadToServer(modname, author, url_str, 0, code,
+                            "wrong-content-" + connection.getContentType());
+                    return;
+                }
+
+                // Update notification
                 mBuilder.setContentText(str_downloading);
                 notiman.notify(1337, mBuilder.build());
 
-                // Start download
-                URLConnection connection = url.openConnection();
-                connection.connect();
-                // this will be useful so that you can show a typical 0-100% progress bar
-                int fileLength = connection.getContentLength();
-
-                File file;
-                int i = 0;
-                do {
-                    file = new File(getCacheDir(), "tmp" + Integer.toString(i) + ".zip");
-                    i++;
-
-                    if (requestStop.get()) {
-                        notiman.cancel(1337);
-                        Bundle b = new Bundle();
-                        b.putString(RET_NAME, modname);
-                        b.putString(RET_ACTION, ACTION_INSTALL);
-                        b.putString(RET_DEST, dest.getAbsolutePath());
-                        b.putString(RET_ERROR, "Cancelled download.");
-                        rec.send(0, b);
-                        return;
-                    }
-                } while (file.exists());
-
                 // download the file
+                File file = Utils.getTmpPath(getCacheDir(), ".zip");
                 InputStream input = new BufferedInputStream(connection.getInputStream());
                 OutputStream output = new FileOutputStream(file);
-
+                int fileLength = connection.getContentLength();
                 byte data[] = new byte[1024];
                 long total = 0;
                 int count;
@@ -426,16 +456,6 @@ public class ModInstallService extends IntentService {
                     int prog = (int) (total * 100 / fileLength);
                     total += count;
 
-                    // Report to ServiceResultReceiver
-                    {
-                        Bundle b = new Bundle();
-                        b.putString(RET_NAME, modname);
-                        b.putString(RET_ACTION, ACTION_INSTALL);
-                        b.putString(RET_DEST, dest.getAbsolutePath());
-                        b.putInt(RET_PROGRESS, prog);
-                        rec.send(UPDATE_PROGRESS, b);
-                    }
-
                     // Update Notification
                     mBuilder.setProgress(100, prog, false);
                     notiman.notify(1337, mBuilder.build());
@@ -443,6 +463,7 @@ public class ModInstallService extends IntentService {
                     // Detect cancel
                     if (requestStop.get()) {
                         input.close();
+                        output.close();
                         notiman.cancel(1337);
                         Bundle b = new Bundle();
                         b.putString(RET_NAME, modname);
@@ -453,21 +474,22 @@ public class ModInstallService extends IntentService {
                         return;
                     }
                 }
-
-                mBuilder.setProgress(0, 0, true);
-                mBuilder.setContentText(str_extracting);
-                notiman.notify(1337, mBuilder.build());
-
                 output.flush();
                 output.close();
                 input.close();
+
+                // Update Notification
+                mBuilder.setProgress(0, 0, true);
+                mBuilder.setContentText(str_extracting);
+                notiman.notify(1337, mBuilder.build());
 
                 handleActionInstall(rec, modname, author, file.getAbsoluteFile(), dest);
 
                 reportDownloadToServer(modname, author, url_str, connection.getContentLength(), 200, null);
                 try {
-                    if (!file.delete())
+                    if (!file.delete()) {
                         Log.e("ModService", "Failed to delete tmp zip file");
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -586,17 +608,8 @@ public class ModInstallService extends IntentService {
             OutputStream output = new FileOutputStream(file);
 
             byte data[] = new byte[1024];
-            long total = 0;
             int count;
             while ((count = input.read(data)) != -1) {
-                total += count;
-                // publishing the progress....
-                Bundle b = new Bundle();
-                b.putString(RET_ACTION, ACTION_FETCH_MODLIST);
-                b.putString(RET_NAME, url_str);
-                b.putString(RET_DEST, file.getAbsolutePath());
-                b.putInt(RET_PROGRESS, (int) (total * 100 / fileLength));
-                rec.send(UPDATE_PROGRESS, b);
                 output.write(data, 0, count);
             }
 

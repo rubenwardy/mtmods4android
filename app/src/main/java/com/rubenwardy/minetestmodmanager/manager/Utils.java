@@ -89,6 +89,32 @@ class Utils {
         }
     }
 
+    @Nullable
+    public static String checkReadTextFile(@Nullable File file) {
+        if (file != null && file.isFile()) {
+            String text = Utils.readTextFile(file);
+            if (text == null) {
+                return null;
+            } else {
+                text = text.trim();
+                return text;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    @NonNull
+    public static File getTmpPath(File cachedir, String fileext) {
+        File file;
+        int i = 0;
+        do {
+            file = new File(cachedir, "tmp" + Integer.toString(i) + fileext);
+            i++;
+        } while (file.exists());
+        return file;
+    }
+
     public static void deleteRecursive(@NonNull File fileOrDir) {
         if (fileOrDir.isDirectory()) {
             for (File child : fileOrDir.listFiles()) {

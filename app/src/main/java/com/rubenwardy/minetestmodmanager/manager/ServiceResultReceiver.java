@@ -37,9 +37,6 @@ public class ServiceResultReceiver extends ResultReceiver {
                 //noinspection ConstantConditions
                 ModManager.mev.onModEvent(b2);
             }
-        } else if (b.containsKey(ModInstallService.RET_PROGRESS)) {
-            Integer progress = b.getInt(ModInstallService.RET_PROGRESS);
-            //Log.w("SRR", "Progress for " + modname + " at " + Integer.toString(progress) + "%");
         } else {
             ModManager modman = new ModManager();
             ModList list = modman.get(dest);
@@ -71,9 +68,6 @@ public class ServiceResultReceiver extends ResultReceiver {
                 //noinspection ConstantConditions
                 ModManager.mev.onModEvent(b2);
             }
-        } else if (b.containsKey(ModInstallService.RET_PROGRESS)) {
-            Integer progress = b.getInt(ModInstallService.RET_PROGRESS);
-            //Log.w("SRR", "Progress for " + modname + " at " + Integer.toString(progress) + "%");
         } else {
             ModManager modman = new ModManager();
             ModList list = modman.get(dest);
@@ -106,9 +100,6 @@ public class ServiceResultReceiver extends ResultReceiver {
                 //noinspection ConstantConditions
                 ModManager.mev.onModEvent(b2);
             }
-        } else if (b.containsKey(ModInstallService.RET_PROGRESS)) {
-            Integer progress = b.getInt(ModInstallService.RET_PROGRESS);
-            //Log.w("SRR", "Progress for " + url + " at " + Integer.toString(progress) + "%");
         } else {
             ModManager modman = new ModManager();
             ModList list = new ModList(ModList.ModListType.EMLT_ONLINE, "Available Mods", null, url);
