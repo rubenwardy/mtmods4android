@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -106,6 +107,7 @@ public class ModManager {
         list.mods_map.clear();
 
         File[] files = dirs.listFiles();
+        Arrays.sort(files);
         for (File file : files) {
             if (file.isDirectory()) {
                 Mod.ModType type = Utils.detectModType(file);
