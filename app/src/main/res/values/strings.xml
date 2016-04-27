@@ -23,6 +23,11 @@
     <string name="modlist_multicraft">Installed MultiCraft Mods</string>
     <string name="modlist_available_mods">Available Mods</string>
 
+    <!-- Rating -->
+    <string name="rate_txt">Hey! Fancy giving us some stars?</string>
+    <string name="rate_yes">Rate</string>
+    <string name="rate_no">No</string>
+
     <!-- Mod Events -->
     <string name="installing_mod">Installing mod…</string>
     <string name="installed_mod">Installed %1$s.</string>

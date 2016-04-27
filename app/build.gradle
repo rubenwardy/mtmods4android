@@ -10,7 +10,9 @@ android {
         targetSdkVersion 21
         versionCode 6
         versionName "1.2.2"
+        buildConfigField "boolean", "ENABLE_RATE_ME", "false"
     }
+
     buildTypes {
         release {
             minifyEnabled true

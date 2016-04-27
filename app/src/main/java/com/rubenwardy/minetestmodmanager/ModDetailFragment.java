@@ -213,6 +213,11 @@ public class ModDetailFragment extends Fragment {
                                         mod.link,
                                         modman.getInstallDir());
                             }
+
+                            int installs = settings.getInt("installs_so_far", 0);
+                            SharedPreferences.Editor editor = settings.edit();
+                            editor.putInt("installs_so_far", installs + 1);
+                            editor.apply();
                         }
                     }
                 });

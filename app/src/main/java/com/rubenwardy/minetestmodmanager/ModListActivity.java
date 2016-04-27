@@ -1,11 +1,17 @@
 package com.rubenwardy.minetestmodmanager;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.BoolRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,11 +24,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rubenwardy.minetestmodmanager.manager.Mod;
@@ -83,11 +91,13 @@ public class ModListActivity
 
         // Setup toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        assert toolbar != null;
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
         // Pull down to refresh
         SwipeRefreshLayout srl = (SwipeRefreshLayout) findViewById(R.id.refresh);
+        assert srl != null;
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -97,6 +107,49 @@ public class ModListActivity
                     }
                 }
                 modman.fetchModListAsync(getApplicationContext(), mod_list_url);
+            }
+        });
+
+        // Set rate callback
+        TextView rate_yes = (TextView) findViewById(R.id.rate_yes);
+        assert rate_yes != null;
+        rate_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(@NonNull View v) {
+                SharedPreferences settings = getSharedPreferences(DisclaimerActivity.PREFS_NAME, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean("shown_rate_me", true);
+                editor.apply();
+                findViewById(R.id.rate_me).setVisibility(View.GONE);
+
+                Context context = getApplicationContext();
+                Uri uri = Uri.parse("market://details?id=" + context.getPackageName());
+                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                // To count with Play market backstack, After pressing back button,
+                // to taken back to our application, we need to add following flags to intent.
+                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                        Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET |
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                try {
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://play.google.com/store/apps/details?id=" + context.getPackageName())));
+                }
+            }
+        });
+
+        // Set no callback
+        TextView rate_no = (TextView) findViewById(R.id.rate_no);
+        assert rate_no != null;
+        rate_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(@NonNull View v) {
+                SharedPreferences settings = getSharedPreferences(DisclaimerActivity.PREFS_NAME, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean("shown_rate_me", true);
+                editor.apply();
+                findViewById(R.id.rate_me).setVisibility(View.GONE);
             }
         });
 
@@ -173,6 +226,23 @@ public class ModListActivity
 
         for (ModList list : ModManager.lists_map.values()) {
             checkChanges(list);
+        }
+
+        // Check whether to show rate me
+        boolean enabled = BuildConfig.ENABLE_RATE_ME;
+        if (enabled) {
+            Log.e("ListV", "Rateme enabled!");
+            SharedPreferences settings = getSharedPreferences(DisclaimerActivity.PREFS_NAME, 0);
+            assert settings != null;
+            boolean dismissed = settings.getBoolean("shown_rate_me", false);
+            int installs = settings.getInt("installs_so_far", 0);
+            final View rate_me = findViewById(R.id.rate_me);
+            assert rate_me != null;
+            if (!dismissed && installs > 5) {
+                rate_me.setVisibility(View.VISIBLE);
+            }
+        } else {
+            Log.e("ListV", "Rateme disabled!");
         }
     }
 
