@@ -28,6 +28,9 @@
     <string name="rate_yes">Rate</string>
     <string name="rate_no">No</string>
 
+    <!-- Help -->
+    <string name="help_config">Enable a mod by clicking the world icon.</string>
+
     <!-- Mod Events -->
     <string name="installing_mod">Installing mod…</string>
     <string name="installed_mod">Installed %1$s.</string>

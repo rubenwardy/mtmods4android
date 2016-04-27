@@ -153,6 +153,20 @@ public class ModListActivity
             }
         });
 
+        // Set no callback
+        TextView help_query_close = (TextView) findViewById(R.id.help_config_close);
+        assert help_query_close != null;
+        help_query_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(@NonNull View v) {
+                SharedPreferences settings = getSharedPreferences(DisclaimerActivity.PREFS_NAME, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean("shown_help_config", true);
+                editor.apply();
+                findViewById(R.id.help_config).setVisibility(View.GONE);
+            }
+        });
+
         if (findViewById(R.id.mod_detail_container) != null) {
             isTwoPane = true;
         }
@@ -228,21 +242,23 @@ public class ModListActivity
             checkChanges(list);
         }
 
+        SharedPreferences settings = getSharedPreferences(DisclaimerActivity.PREFS_NAME, 0);
+        assert settings != null;
+
         // Check whether to show rate me
         boolean enabled = BuildConfig.ENABLE_RATE_ME;
         if (enabled) {
-            Log.e("ListV", "Rateme enabled!");
-            SharedPreferences settings = getSharedPreferences(DisclaimerActivity.PREFS_NAME, 0);
-            assert settings != null;
             boolean dismissed = settings.getBoolean("shown_rate_me", false);
             int installs = settings.getInt("installs_so_far", 0);
-            final View rate_me = findViewById(R.id.rate_me);
-            assert rate_me != null;
             if (!dismissed && installs > 5) {
-                rate_me.setVisibility(View.VISIBLE);
+                findViewById(R.id.rate_me).setVisibility(View.VISIBLE);
             }
-        } else {
-            Log.e("ListV", "Rateme disabled!");
+        }
+
+        // Check whether to show hint
+        boolean shown_help_config = settings.getBoolean("shown_help_config", false);
+        if (!shown_help_config && modman.getNumberOfInstalledMods() > 0) {
+            findViewById(R.id.help_config).setVisibility(View.VISIBLE);
         }
     }
 

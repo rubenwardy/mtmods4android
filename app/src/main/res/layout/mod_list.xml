@@ -60,6 +60,39 @@
                 android:text="@string/rate_txt" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/help_config"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#ccc"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/help_config_close"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@string/dialog_close"
+                android:singleLine="true"
+                android:padding="10dp"
+                android:textAllCaps="true"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/help_config_close"
+                android:text="@string/help_config" />
+        </RelativeLayout>
+
         <android.support.v7.widget.RecyclerView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"

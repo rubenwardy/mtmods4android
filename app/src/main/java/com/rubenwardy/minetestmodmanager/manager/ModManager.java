@@ -58,6 +58,16 @@ public class ModManager {
         return null;
     }
 
+    public int getNumberOfInstalledMods() {
+        int count = 0;
+        for (ModList list : lists_map.values()) {
+            if (list.type == ModList.ModListType.EMLT_PATH) {
+                count += list.mods.size();
+            }
+        }
+        return count;
+    }
+
     @MainThread
     public void installModAsync(Context context, @NonNull Mod mod, @NonNull File zip, String path) {
         ModInstallService.startActionInstall(context, srr, mod.name, mod.author, zip, path);
