@@ -123,6 +123,6 @@
         el rastreador en el que se basan las listas de mods disponibles.</string>
     <string name="about_credits_feedback">Agradecimientos a DonBatman por los comentarios y sugerencias durante el desarollo</string>
     <string name="about_credits_logo">El logo de la aplicación esta basado en el logo de Minetest
-        licenciado en CC-BY-NC-SA, y creado por erlehmann</string>
+        licenciado en CC-BY-SA 3.0, y creado por erlehmann</string>
     <string name="about_credits_images">Esta aplicación también usa varios iconos genericos de Android, licenciados en CC-BY 4.0</string>
 </resources>

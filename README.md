@@ -26,9 +26,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 ## Exceptions
 
 All resources which feature the Minetest logo, such as the notification icon and the launcher icon,
-are licensed under CC-BY-SA-NC. The original author is erlehmann.
+are licensed under CC-BY-SA 3.0. The original author is erlehmann.
 
-The following are from the Android material design asset studio:
+The following are from the Android material design asset studio, and are CC-BY 4.0:
 
 * app/src/main/res/drawable/ic_public_24dp.xml
 * app/src/main/res/drawable/ic_report_problem_24dp.xml

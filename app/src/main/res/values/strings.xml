@@ -123,7 +123,7 @@
     <string name="about_credits_krock">Thank you to Krock (aka SmallJoker) for creating Krock\'s Mod Search,
         the crawler which the available mods list is based on.</string>
     <string name="about_credits_feedback">Thank you to DonBatman for feedback during development</string>
-    <string name="about_credits_logo">The app logo is based on the Minetest logo which is CC-BY-NC-SA,
+    <string name="about_credits_logo">The app logo is based on the Minetest logo which is CC-BY-SA 3.0,
         and created by erlehmann</string>
     <string name="about_credits_images">This app also uses several standard Android icons, which are CC-BY 4.0</string>
 </resources>
