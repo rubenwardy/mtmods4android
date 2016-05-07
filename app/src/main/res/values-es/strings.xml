@@ -23,6 +23,14 @@
     <string name="modlist_multicraft">Mods instalados para MultiCraft</string>
     <string name="modlist_available_mods">Mods disponibles</string>
 
+    <!-- Rating -->
+    <string name="rate_txt">Hey! Fancy giving us some stars?</string>
+    <string name="rate_yes">Rate</string>
+    <string name="rate_no">No</string>
+
+    <!-- Help -->
+    <string name="help_config">Enable a mod by clicking the world icon.</string>
+
     <!-- Mod Events -->
     <string name="installing_mod">Instalando mod…</string>
     <string name="installed_mod">Instalando %1$s.</string>

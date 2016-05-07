@@ -30,17 +30,107 @@
         android:layout_width="@dimen/modlist_width"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/mod_list"
-            android:name="com.rubenwardy.minetestmodmanager.ModListFragment"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp"
-            android:scrollbars="vertical"
-            app:layoutManager="LinearLayoutManager"
-            tools:context="com.rubenwardy.minetestmodmanager.ModListActivity"
-            tools:listitem="@layout/mod_list_content" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rate_me"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#ccc"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/rate_no"
+                    android:layout_width="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/rate_no"
+                    android:singleLine="true"
+                    android:padding="10dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <TextView
+                    android:id="@+id/rate_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rate_yes"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:gravity="center_vertical"
+                    android:layout_toLeftOf="@id/rate_no"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <TextView
+                    android:id="@+id/rate_txt"
+                    android:padding="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@id/rate_yes"
+                    android:text="@string/rate_txt" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/help_config"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#ccc"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/help_config_close"
+                    android:layout_width="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/dialog_close"
+                    android:singleLine="true"
+                    android:padding="10dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <TextView
+                    android:padding="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@id/help_config_close"
+                    android:text="@string/help_config" />
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/mod_list"
+                android:name="com.rubenwardy.minetestmodmanager.ModListFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:scrollbars="vertical"
+                app:layoutManager="LinearLayoutManager"
+                tools:context="com.rubenwardy.minetestmodmanager.ModListActivity"
+                tools:listitem="@layout/mod_list_content" />
+
+        </LinearLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
