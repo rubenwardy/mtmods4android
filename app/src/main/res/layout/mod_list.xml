@@ -15,7 +15,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="#ccc"
+            android:background="@color/hintBackground"
             android:visibility="gone">
 
             <TextView
@@ -28,7 +28,7 @@
                 android:singleLine="true"
                 android:padding="10dp"
                 android:textAllCaps="true"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/hintAccent"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:clickable="true"
@@ -44,7 +44,7 @@
                 android:gravity="center_vertical"
                 android:layout_toLeftOf="@id/rate_no"
                 android:textAllCaps="true"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/hintAccent"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:clickable="true"
@@ -53,6 +53,7 @@
             <TextView
                 android:id="@+id/rate_txt"
                 android:padding="10dp"
+                android:textColor="@color/hintText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -65,7 +66,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="#ccc"
+            android:background="@color/hintBackground"
             android:visibility="gone">
 
             <TextView
@@ -78,7 +79,7 @@
                 android:singleLine="true"
                 android:padding="10dp"
                 android:textAllCaps="true"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/hintAccent"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:clickable="true"
@@ -88,6 +89,7 @@
                 android:padding="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/hintText"
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@id/help_config_close"
                 android:text="@string/help_config" />
