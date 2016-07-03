@@ -6,5 +6,5 @@
     <dimen name="modlist_item_padding">16dp</dimen>
     <dimen name="modlist_checkitem_padding">8dp</dimen>
     <dimen name="modlist_item_margin_x">8dp</dimen>
-    <dimen name="modlist_item_margin_y">2dp</dimen>
+    <dimen name="modlist_item_margin_y">4dp</dimen>
 </resources>
