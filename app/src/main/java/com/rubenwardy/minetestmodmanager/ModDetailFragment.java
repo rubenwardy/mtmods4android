@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,9 @@ import com.rubenwardy.minetestmodmanager.manager.Mod;
 import com.rubenwardy.minetestmodmanager.manager.ModEventReceiver;
 import com.rubenwardy.minetestmodmanager.manager.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
+import com.rubenwardy.minetestmodmanager.manager.Utils;
+
+import java.io.File;
 
 /**
  * A mFragment representing a single Mod detail screen.
@@ -44,37 +48,50 @@ public class ModDetailFragment extends Fragment {
      * mFragment (e.g. upon screen orientation changes).
      */
     public ModDetailFragment() {
+        Log.e("mdf", "new");
+
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {Log.e("mdf", "create");
+
         super.onCreate(savedInstanceState);
 
-        if (getArguments().containsKey(ARG_MOD_NAME) &&
-                getArguments().containsKey(ARG_MOD_LIST)) {
-            String name = getArguments().getString(ARG_MOD_NAME);
-            String author = getArguments().getString(ARG_MOD_AUTHOR);
-            String listname = getArguments().getString(ARG_MOD_LIST);
-            ModManager modman = new ModManager();
-            ModList list = modman.get(listname);
-            if (list == null) {
-                Resources res = getResources();
-                mod = new Mod(Mod.ModType.EMT_INVALID,
-                        "", "invalid",
-                        res.getString(R.string.invalid_modlist),
-                        res.getString(R.string.invalid_modlist_desc));
-            } else {
-                mod = list.get(name, author);
-                if (mod == null) {
+        if (savedInstanceState == null) {
+            if (getArguments().containsKey(ARG_MOD_NAME) &&
+                    getArguments().containsKey(ARG_MOD_LIST)) {
+                String name = getArguments().getString(ARG_MOD_NAME);
+                String author = getArguments().getString(ARG_MOD_AUTHOR);
+                String listname = getArguments().getString(ARG_MOD_LIST);
+                ModManager modman = new ModManager();
+                ModList list = modman.get(listname);
+                if (list == null) {
                     Resources res = getResources();
-                    list.valid = false;
                     mod = new Mod(Mod.ModType.EMT_INVALID,
                             "", "invalid",
-                            res.getString(R.string.invalid_mod),
-                            res.getString(R.string.invalid_mod_desc));
+                            res.getString(R.string.invalid_modlist),
+                            listname + ": " + res.getString(R.string.invalid_modlist_desc));
+                } else {
+                    mod = list.get(name, author);
+                    if (mod == null) {
+                        Resources res = getResources();
+                        list.valid = false;
+                        mod = new Mod(Mod.ModType.EMT_INVALID,
+                                "", "invalid",
+                                res.getString(R.string.invalid_mod),
+                                author + "/" + name  + ": " + res.getString(R.string.invalid_mod_desc));
+                    }
                 }
             }
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle state) {
+        Log.e("mdf", "save");
+        state.putString(ModDetailFragment.ARG_MOD_LIST, mod.listname);
+        state.putString(ModDetailFragment.ARG_MOD_NAME, mod.name);
+        state.putString(ModDetailFragment.ARG_MOD_AUTHOR, mod.author);
     }
 
     @Override
@@ -175,6 +192,21 @@ public class ModDetailFragment extends Fragment {
                 type = "Invalid";
             }
             ((TextView) rootView.findViewById(R.id.mod_detail_type)).setText(type);
+
+            Button btn_readme = (Button) rootView.findViewById(R.id.readme);
+            if (mod.isLocalMod() && Utils.getReadmePath(new File(mod.path)) != null) {
+                btn_readme.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(@NonNull View view) {
+                        Context context = view.getContext();
+                        Intent intent = new Intent(context, ReadmeActivity.class);
+                        intent.putExtra(ReadmeActivity.ARG_MOD_PATH, mod.path);
+                        context.startActivity(intent);
+                    }
+                });
+            } else {
+                btn_readme.setVisibility(View.GONE);
+            }
 
             Button btn_main = (Button) rootView.findViewById(R.id.uninstall);
             if (mod.isLocalMod()) {

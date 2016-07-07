@@ -145,13 +145,20 @@
         </TableRow>
     </TableLayout>
 
+    <Button
+        android:id="@+id/readme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mod_table"
+        android:text="@string/view_readme" />
+
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/mod_desc"
         style="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mod_table"
+        android:layout_below="@+id/readme"
         android:padding="16dp"
         android:textIsSelectable="true"
         tools:context="com.rubenwardy.minetestmodmanager.ModDetailFragment" />

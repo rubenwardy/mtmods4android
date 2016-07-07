@@ -32,6 +32,8 @@ public class ModDetailActivity
         extends AppCompatActivity
         implements ModEventReceiver {
 
+    String listname, modname, author;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,16 +50,33 @@ public class ModDetailActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        // Setup CollapsingToolbar
-        String listname = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_LIST);
-        String modname = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_NAME);
-        String author = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_AUTHOR);
-        setupToolBar(modman, listname, modname, author);
-
-        // Only setup frament if there is no saved state
+        // Only setup fragment if there is no saved state
         if (savedInstanceState == null) {
+            listname = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_LIST);
+            modname = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_NAME);
+            author = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_AUTHOR);
             setupFragment(listname, modname, author);
+            setupToolBar(modman, listname, modname, author);
+        } else {
+//            onRestoreInstanceState(savedInstanceState);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle state) {
+        Log.e("mda", "save");
+        state.putString(ModDetailFragment.ARG_MOD_LIST, listname);
+        state.putString(ModDetailFragment.ARG_MOD_NAME, modname);
+        state.putString(ModDetailFragment.ARG_MOD_AUTHOR, author);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle state) {
+        Log.e("mda", "restore");
+        listname = state.getString(ModDetailFragment.ARG_MOD_LIST);
+        modname = state.getString(ModDetailFragment.ARG_MOD_NAME);
+        author = state.getString(ModDetailFragment.ARG_MOD_AUTHOR);
+        setupFragment(listname, modname, author);
     }
 
     private void setupToolBar(ModManager modman, String listname, String modname, String author) {

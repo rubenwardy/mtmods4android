@@ -48,6 +48,9 @@
     <string name="action_find">Encontrar en otra parte</string>
     <string name="action_report">Reportar</string>
 
+    <string name="title_activity_readme">Read Me</string>
+    <string name="view_readme">View Read Me File</string>
+
     <string name="details_name">Nombre del mod</string>
     <string name="details_author">Autor</string>
     <string name="details_type">Tipo</string>

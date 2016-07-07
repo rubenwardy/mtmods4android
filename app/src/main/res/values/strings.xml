@@ -62,6 +62,9 @@
     <string name="type_modpack">Mod Pack</string>
     <string name="type_subgame">Subgame</string>
 
+    <string name="title_activity_readme">Read Me</string>
+    <string name="view_readme">View Read Me File</string>
+
     <string name="mod_verified_yes">This mod is from a well known author.</string>
     <string name="mod_verified_no">This mod wasn\'t made by a well known author.</string>
     <string name="mod_verified_uk">Unable to determine the source of this mod.</string>

@@ -15,13 +15,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 /**
  * Mod utility library
  */
-class Utils {
+public class Utils {
     public interface UnzipFile_Progress
     {
         void Progress(long done, long total, String FileName);
@@ -197,5 +199,20 @@ class Utils {
         } else {
             return dir;
         }
+    }
+
+    @Nullable
+    public static File getReadmePath(@NonNull File folder) {
+        List<File> files = new ArrayList<>();
+        files.add(new File(folder, "readme.md"));
+        files.add(new File(folder, "readme.txt"));
+        files.add(new File(folder, "README.md"));
+        files.add(new File(folder, "README.txt"));
+        for (File file : files) {
+            if (file.exists() && file.isFile()) {
+                return file;
+            }
+        }
+        return null;
     }
 }
