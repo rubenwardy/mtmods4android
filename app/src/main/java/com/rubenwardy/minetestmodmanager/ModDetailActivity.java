@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.rubenwardy.minetestmodmanager.manager.Mod;
@@ -78,7 +79,7 @@ public class ModDetailActivity
         // Set title
         ctoolbar.setTitle(mod.title);
 
-        if (mod.screenshot_uri != null) {
+        if (mod.screenshot_uri != null && !mod.screenshot_uri.equals("")) {
             Drawable d = Drawable.createFromPath(mod.screenshot_uri);
             if (d != null) {
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -92,6 +93,8 @@ public class ModDetailActivity
                         (NestedScrollView) findViewById(R.id.mod_detail_container);
                 scroll.requestFocus();
             }
+        } else if (list.type == ModList.ModListType.EMLT_ONLINE) {
+            modman.fetchScreenshot(getApplicationContext(), mod.name, mod.author);
         }
 
     }
@@ -171,6 +174,23 @@ public class ModDetailActivity
                         bundle.getString(PARAM_MODNAME));
                 Snackbar.make(findViewById(R.id.mod_detail_container), text, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+            break;
+        case ACTION_FETCH_SCREENSHOT:
+            if (bundle.containsKey(PARAM_ERROR)) {
+                Log.e("MDAct", bundle.getString(PARAM_ERROR));
+            } else {
+                String dest = bundle.getString(PARAM_DEST);
+                Drawable d = Drawable.createFromPath(dest);
+                if (d != null) {
+                    CollapsingToolbarLayout ctoolbar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        ctoolbar.setBackground(d);
+                    } else {
+                        //noinspection deprecation
+                        ctoolbar.setBackgroundDrawable(d);
+                    }
+                }
             }
             break;
         }

@@ -40,6 +40,7 @@ public class ModInstallService extends IntentService {
     private static final String ACTION_URL_INSTALL = "com.rubenwardy.minetestmodmanager.action.URL_INSTALL";
     public static final String ACTION_INSTALL = "com.rubenwardy.minetestmodmanager.action.INSTALL";
     public static final String ACTION_UNINSTALL = "com.rubenwardy.minetestmodmanager.action.UNINSTALL";
+    public static final String ACTION_FETCH_SCREENSHOT = "com.rubenwardy.minetestmodmanager.action.FETCH_SCREENSHOT";
     public static final String ACTION_FETCH_MODLIST = "com.rubenwardy.minetestmodmanager.action.FETCH_MODLIST";
     private static final String ACTION_REPORT = "com.rubenwardy.minetestmodmanager.action.REPORT";
 
@@ -52,6 +53,7 @@ public class ModInstallService extends IntentService {
     private static final String EXTRA_REASON = "com.rubenwardy.minetestmodmanager.extra.REASON";
     private static final String EXTRA_INFO = "com.rubenwardy.minetestmodmanager.extra.INFO";
     public static final String RET_ACTION = "action";
+    public static final String RET_AUTHOR = "author";
     public static final String RET_NAME = "name";
     public static final String RET_DEST = "dest";
     public static final String RET_ERROR = "error";
@@ -97,6 +99,17 @@ public class ModInstallService extends IntentService {
         context.startService(intent);
     }
 
+
+    @MainThread
+    public static void startActionFetchScreenshot(@NonNull Context context, ServiceResultReceiver srr,
+                                             @NonNull String modname, @Nullable String author) {
+        Intent intent = new Intent(context, ModInstallService.class);
+        intent.setAction(ACTION_FETCH_SCREENSHOT);
+        intent.putExtra(EXTRA_MOD_NAME, modname);
+        intent.putExtra(EXTRA_AUTHOR, author);
+        intent.putExtra("receiverTag", srr);
+        context.startService(intent);
+    }
     @MainThread
     public static void startActionUninstall(@NonNull Context context, ServiceResultReceiver srr,
                                             String modname, String path) {
@@ -168,6 +181,12 @@ public class ModInstallService extends IntentService {
                 final String url = intent.getStringExtra(EXTRA_URL);
                 final String dest = intent.getStringExtra(EXTRA_DEST);
                 handleActionUrlInstall(rec, modname, author, url, new File(dest));
+                break;
+            }
+            case ACTION_FETCH_SCREENSHOT: {
+                final String modname = intent.getStringExtra(EXTRA_MOD_NAME);
+                final String author = intent.getStringExtra(EXTRA_AUTHOR);
+                handleActionFetchScreenshot(rec, modname, author);
                 break;
             }
             case ACTION_REPORT: {
@@ -505,6 +524,95 @@ public class ModInstallService extends IntentService {
             rec.send(0, b);
             e.printStackTrace();
         }
+    }
+
+    private void doFetchScreenshotUrl(@NonNull ResultReceiver rec, @NonNull String modname,
+                                      @Nullable String author, @NonNull String url_str, int try_i) {
+        if (try_i > 10) {
+            Bundle b = new Bundle();
+            b.putString(RET_NAME, modname);
+            b.putString(RET_ACTION, ACTION_FETCH_SCREENSHOT);
+            b.putString(RET_ERROR, "Failed to download: too many redirects");
+            rec.send(0, b);
+            return;
+        }
+
+        try {
+            URL url = new URL(url_str);
+
+            // Start download
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setInstanceFollowRedirects(true);
+            connection.connect();
+
+            // Check Response Code
+            int code = connection.getResponseCode();
+            if (code == HttpURLConnection.HTTP_MOVED_TEMP
+                    || code == HttpURLConnection.HTTP_MOVED_PERM
+                    || code == HttpURLConnection.HTTP_SEE_OTHER) {
+                doFetchScreenshotUrl(rec, modname, author, connection.getHeaderField("Location"), try_i + 1);
+                return;
+            } else if (code != HttpURLConnection.HTTP_OK) {
+                Bundle b = new Bundle();
+                b.putString(RET_NAME, modname);
+                b.putString(RET_ACTION, ACTION_FETCH_SCREENSHOT);
+                if (code == HttpURLConnection.HTTP_NOT_FOUND) {
+                    b.putString(RET_ERROR, "Failed to download: 404 File not found.");
+                } else {
+                    b.putString(RET_ERROR, "Failed to download: " + code + " Error");
+                }
+                rec.send(0, b);
+                return;
+            }
+
+            // Check content type
+            String contentType = connection.getContentType();
+            if (!contentType.startsWith("image/png")) {
+                connection.disconnect();
+
+                Bundle b = new Bundle();
+                b.putString(RET_NAME, modname);
+                b.putString(RET_ACTION, ACTION_FETCH_SCREENSHOT);
+                b.putString(RET_ERROR, "Failed to download: File is not an image file");
+                rec.send(0, b);
+                return;
+            }
+
+            // download the file
+            File file = Utils.getTmpPath(getCacheDir(), ".png");
+            InputStream input = new BufferedInputStream(connection.getInputStream());
+            OutputStream output = new FileOutputStream(file);
+            byte data[] = new byte[1024];
+            int count;
+            while ((count = input.read(data)) != -1) {
+                output.write(data, 0, count);
+            }
+            output.flush();
+            output.close();
+            input.close();
+
+
+            Bundle b = new Bundle();
+            b.putString(RET_AUTHOR, author);
+            b.putString(RET_NAME, modname);
+            b.putString(RET_ACTION, ACTION_FETCH_SCREENSHOT);
+            b.putString(RET_DEST, file.getAbsolutePath());
+            rec.send(0, b);
+        } catch (IOException e) {
+            Bundle b = new Bundle();
+            b.putString(RET_NAME, modname);
+            b.putString(RET_ACTION, ACTION_FETCH_SCREENSHOT);
+            b.putString(RET_ERROR, "Failed to download: " + e.toString());
+            rec.send(0, b);
+            e.printStackTrace();
+        }
+    }
+
+    @WorkerThread
+    private void handleActionFetchScreenshot(@NonNull ResultReceiver rec, @NonNull String modname,
+                                        @Nullable String author) {
+        final String url_str = "http://app-mtmm.rubenwardy.com/screenshot/" + author + "/" + modname + "/";
+        doFetchScreenshotUrl(rec, modname, author, url_str, 1);
     }
 
 

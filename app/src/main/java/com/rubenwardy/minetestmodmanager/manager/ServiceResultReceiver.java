@@ -209,6 +209,19 @@ public class ServiceResultReceiver extends ResultReceiver {
         case ModInstallService.ACTION_FETCH_MODLIST:
             handleFetchModList(b, modname, dest);
             break;
+        case ModInstallService.ACTION_FETCH_SCREENSHOT:
+            if (ModManager.mev != null) {
+                Bundle b2 = new Bundle();
+                b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_FETCH_SCREENSHOT);
+                b2.putString(ModEventReceiver.PARAM_MODNAME, modname);
+                b2.putString(ModEventReceiver.PARAM_DEST, dest);
+                if (b.containsKey(ModInstallService.RET_ERROR)) {
+                    b2.putString(ModEventReceiver.PARAM_ERROR, b.getString(ModInstallService.RET_ERROR));
+                }
+                //noinspection ConstantConditions
+                ModManager.mev.onModEvent(b2);
+            }
+            break;
         default:
             Log.e("SRR", "Unknown service action");
             break;
