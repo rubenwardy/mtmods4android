@@ -119,9 +119,9 @@ public class ServiceResultReceiver extends ResultReceiver {
                 for (int i = 0; i < j.length(); i++) {
                     try {
                         JSONObject item = j.getJSONObject(i);
-                        String modname = item.getString("name");
+                        String modname = item.getString("basename");
                         String title = item.getString("title");
-                        String link = item.getString("link");
+                        String link = item.getString("download_link");
 
                         if (modname != null && title != null && link != null) {
                             String author = item.getString("author");
@@ -133,9 +133,8 @@ public class ServiceResultReceiver extends ResultReceiver {
                             }
 
                             String forum = null;
-                            if (item.has("topicId")) {
-                                forum = "https://forum.minetest.net/viewtopic.php?t=" +
-                                        item.getString("topicId");
+                            if (item.has("forum_url")) {
+                                forum = item.getString("forum_url");
                             }
 
                             int verified = 0;
@@ -144,8 +143,8 @@ public class ServiceResultReceiver extends ResultReceiver {
                             }
 
                             int size = -1;
-                            if (item.has("size")) {
-                                size = item.getInt("size");
+                            if (item.has("download_size")) {
+                                size = item.getInt("download_size");
                             }
 
                             Mod.ModType type = Mod.ModType.EMT_MOD;

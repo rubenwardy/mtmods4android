@@ -60,7 +60,7 @@ public class ModListActivity
 
     // Modman
     private ModManager modman;
-    private final String mod_list_url = "http://app-mtmm.rubenwardy.com/v1/list/";
+    private final String mod_list_url = "http://app-mtmm.rubenwardy.com/v2/list/";
 
     // Other
     private String search_filter = null;

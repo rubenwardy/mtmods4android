@@ -22,7 +22,6 @@ import java.util.List;
 
 public class ReadmeActivity extends AppCompatActivity {
     public static final String ARG_MOD_PATH = "path";
-    private String listname, author, modname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +34,6 @@ public class ReadmeActivity extends AppCompatActivity {
             Resources res = getResources();
             actionBar.setTitle(res.getString(R.string.title_activity_readme));
         }
-
-        listname = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_LIST);
-        modname = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_NAME);
-        author = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_AUTHOR);
 
         TextView text = (TextView) findViewById(R.id.text);
         assert text != null;

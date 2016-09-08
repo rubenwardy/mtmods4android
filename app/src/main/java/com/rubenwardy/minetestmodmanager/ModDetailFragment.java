@@ -112,15 +112,15 @@ public class ModDetailFragment extends Fragment {
             TextView txt_forum = (TextView) rootView.findViewById(R.id.mod_detail_forum);
             txt_forum.setText(mod.getShortForumLink());
 
-            String ver;
-            if (mod.verified == 1) {
-                ver = res.getString(R.string.mod_verified_yes);
-            } else if (mod.isLocalMod()) {
-                ver = res.getString(R.string.mod_verified_uk);
-            } else {
-                ver = res.getString(R.string.mod_verified_no);
-            }
-            ((TextView) rootView.findViewById(R.id.mod_detail_ver)).setText(ver);
+            //String ver;
+            //if (mod.verified == 1) {
+            //    ver = res.getString(R.string.mod_verified_yes);
+            //} else if (mod.isLocalMod()) {
+            //    ver = res.getString(R.string.mod_verified_uk);
+            //} else {
+            //    ver = res.getString(R.string.mod_verified_no);
+            //}
+            //((TextView) rootView.findViewById(R.id.mod_detail_ver)).setText(ver);
 
             String dlsize = mod.getDownloadSize();
             if (dlsize == null) {

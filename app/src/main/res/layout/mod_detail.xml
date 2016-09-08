@@ -133,7 +133,7 @@
                 android:textColor="#0000ff" />
         </TableRow>
 
-        <TableRow>
+        <!--<TableRow>
             <TextView
                 android:layout_column="1"
                 android:text="@string/details_verified"
@@ -142,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:padding="3dip"
                 android:id="@+id/mod_detail_ver" />
-        </TableRow>
+        </TableRow>-->
     </TableLayout>
 
     <Button
