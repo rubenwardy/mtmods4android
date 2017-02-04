@@ -20,9 +20,9 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
-import com.rubenwardy.minetestmodmanager.manager.MinetestConf;
-import com.rubenwardy.minetestmodmanager.manager.Mod;
-import com.rubenwardy.minetestmodmanager.manager.ModList;
+import com.rubenwardy.minetestmodmanager.models.MinetestConf;
+import com.rubenwardy.minetestmodmanager.models.Mod;
+import com.rubenwardy.minetestmodmanager.models.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 
 import java.io.File;

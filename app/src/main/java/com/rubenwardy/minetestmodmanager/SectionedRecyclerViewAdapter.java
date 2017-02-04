@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.rubenwardy.minetestmodmanager.manager.Mod;
+import com.rubenwardy.minetestmodmanager.models.Mod;
 
 import java.util.Arrays;
 import java.util.Comparator;

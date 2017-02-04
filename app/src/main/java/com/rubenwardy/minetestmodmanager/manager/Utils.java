@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.rubenwardy.minetestmodmanager.models.Mod;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;

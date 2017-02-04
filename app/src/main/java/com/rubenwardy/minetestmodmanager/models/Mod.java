@@ -1,7 +1,9 @@
-package com.rubenwardy.minetestmodmanager.manager;
+package com.rubenwardy.minetestmodmanager.models;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.rubenwardy.minetestmodmanager.manager.ModManager;
 
 /**
  * Represents a mod, installed or not.

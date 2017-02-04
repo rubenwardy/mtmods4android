@@ -10,8 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.rubenwardy.minetestmodmanager.manager.Mod;
-import com.rubenwardy.minetestmodmanager.manager.ModList;
+import com.rubenwardy.minetestmodmanager.models.Mod;
+import com.rubenwardy.minetestmodmanager.models.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 
 public class DisclaimerActivity extends AppCompatActivity {

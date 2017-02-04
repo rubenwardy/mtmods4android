@@ -17,9 +17,9 @@ import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.rubenwardy.minetestmodmanager.manager.Mod;
+import com.rubenwardy.minetestmodmanager.models.Mod;
 import com.rubenwardy.minetestmodmanager.manager.ModEventReceiver;
-import com.rubenwardy.minetestmodmanager.manager.ModList;
+import com.rubenwardy.minetestmodmanager.models.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 
 /**

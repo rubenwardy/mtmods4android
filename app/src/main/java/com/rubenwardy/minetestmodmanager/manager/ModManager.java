@@ -7,6 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.rubenwardy.minetestmodmanager.models.Mod;
+import com.rubenwardy.minetestmodmanager.models.ModList;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
