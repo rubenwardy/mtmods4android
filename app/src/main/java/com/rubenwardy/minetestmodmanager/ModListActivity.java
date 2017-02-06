@@ -55,7 +55,6 @@ public class ModListActivity
 
     // Modman
     private ModManager modman;
-    private final String mod_list_url = "http://app-mtmm.rubenwardy.com/v2/list/";
 
     // Other
     private String search_filter = null;
@@ -101,7 +100,7 @@ public class ModListActivity
                         modman.update(list);
                     }
                 }
-                modman.fetchModListAsync(getApplicationContext(), mod_list_url);
+                modman.fetchModListAsync(getApplicationContext());
             }
         });
 
@@ -224,7 +223,7 @@ public class ModListActivity
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
 
-        modman.fetchModListAsync(getApplicationContext(), mod_list_url);
+        modman.fetchModListAsync(getApplicationContext());
     }
 
     @Override

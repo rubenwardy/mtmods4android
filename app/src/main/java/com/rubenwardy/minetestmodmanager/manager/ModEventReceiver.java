@@ -7,7 +7,7 @@ public interface ModEventReceiver {
     String ACTION_INSTALL = "install";
     String ACTION_UNINSTALL = "uninstall";
     String ACTION_FETCH_MODLIST = "fetch_modlist";
-    String ACTION_FETCH_SCREENSHOT = "fetch_modlist";
+    String ACTION_FETCH_SCREENSHOT = "fetch_screenshot";
     String ACTION_SEARCH = "search";
     String PARAM_ERROR = "error";
     String PARAM_ACTION = "action";

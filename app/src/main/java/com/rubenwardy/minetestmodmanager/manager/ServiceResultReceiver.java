@@ -21,8 +21,8 @@ import java.io.File;
  * Receive a result from the service
  */
 @SuppressLint("ParcelCreator")
-public class ServiceResultReceiver extends ResultReceiver {
-    public ServiceResultReceiver(Handler handler) {
+class ServiceResultReceiver extends ResultReceiver {
+    ServiceResultReceiver(Handler handler) {
         super(handler);
     }
 
@@ -89,108 +89,6 @@ public class ServiceResultReceiver extends ResultReceiver {
         }
     }
 
-    private void handleFetchModList(@NonNull Bundle b, @Nullable String url, @Nullable String dest) {
-        if (url == null) {
-            return;
-        }
-
-        if (dest == null || b.containsKey(ModInstallService.RET_ERROR)) {
-            if (ModManager.mev != null) {
-                Bundle b2 = new Bundle();
-                b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_FETCH_MODLIST);
-                b2.putString(ModEventReceiver.PARAM_DEST_LIST, url);
-                b2.putString(ModEventReceiver.PARAM_ERROR, b.getString(ModInstallService.RET_ERROR));
-                //noinspection ConstantConditions
-                ModManager.mev.onModEvent(b2);
-            }
-        } else {
-            ModManager modman = new ModManager();
-            ModList list = new ModList(ModList.ModListType.EMLT_ONLINE, "Available Mods", null, url);
-            list.valid = false;
-
-            try {
-                File file = new File(dest);
-                if (!file.isFile()) {
-                    return;
-                }
-                JSONArray j = new JSONArray(Utils.readTextFile(file));
-                if (!file.delete()) {
-                    Log.e("SRR", "Failed to delete file!");
-                    return;
-                }
-
-                for (int i = 0; i < j.length(); i++) {
-                    try {
-                        JSONObject item = j.getJSONObject(i);
-                        String modname = item.getString("basename");
-                        String title = item.getString("title");
-                        String link = item.getString("download_link");
-
-                        if (modname != null && title != null && link != null) {
-                            String author = item.getString("author");
-                            String type_s = item.getString("type");
-
-                            String desc = "";
-                            if (item.has("description")) {
-                                desc = item.getString("description");
-                            }
-
-                            String forum = null;
-                            if (item.has("forum_url")) {
-                                forum = item.getString("forum_url");
-                            }
-
-                            int verified = 0;
-                            if (item.has("verified")) {
-                                verified = item.getInt("verified");
-                            }
-
-                            int size = -1;
-                            if (item.has("download_size")) {
-                                size = item.getInt("download_size");
-                            }
-
-                            Mod.ModType type = Mod.ModType.EMT_MOD;
-                            if (type_s != null) {
-                                if (type_s.equals("1")) {
-                                    type = Mod.ModType.EMT_MOD;
-                                } else if (type_s.equals("2")) {
-                                    type = Mod.ModType.EMT_MODPACK;
-                                }
-                            }
-
-                            Mod mod = new Mod(type, url, modname, title, desc);
-                            mod.link = link;
-                            mod.author = author;
-                            mod.verified = verified;
-                            mod.forum_url = forum;
-                            mod.size = size;
-                            list.add(mod);
-                        } else {
-                            Log.e("SRR", "Invalid object in JSON list. " + j.toString());
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        return;
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return;
-            }
-
-            modman.addList(list);
-
-            if (ModManager.mev != null) {
-                Bundle b2 = new Bundle();
-                b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_FETCH_MODLIST);
-                b2.putString(ModEventReceiver.PARAM_DEST_LIST, url);
-                //noinspection ConstantConditions
-                ModManager.mev.onModEvent(b2);
-            }
-        }
-    }
-
     @Override
     protected void onReceiveResult(int resultCode, @NonNull Bundle b) {
         String modname = b.getString(ModInstallService.RET_NAME);
@@ -207,9 +105,6 @@ public class ServiceResultReceiver extends ResultReceiver {
             break;
         case ModInstallService.ACTION_UNINSTALL:
             handleUninstall(b, modname, dest);
-            break;
-        case ModInstallService.ACTION_FETCH_MODLIST:
-            handleFetchModList(b, modname, dest);
             break;
         case ModInstallService.ACTION_FETCH_SCREENSHOT:
             if (ModManager.mev != null) {

@@ -1,6 +1,7 @@
 package com.rubenwardy.minetestmodmanager.manager;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
@@ -9,11 +10,19 @@ import android.util.Log;
 
 import com.rubenwardy.minetestmodmanager.models.Mod;
 import com.rubenwardy.minetestmodmanager.models.ModList;
+import com.rubenwardy.minetestmodmanager.restapi.StoreAPI;
+import com.rubenwardy.minetestmodmanager.restapi.StoreAPIBuilder;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Provides a collection of mods.
@@ -86,8 +95,81 @@ public class ModManager {
     }
 
     @MainThread
-    public void fetchModListAsync(Context context, String url) {
-        ModInstallService.startActionFetchModList(context, srr, url);
+    public void fetchModListAsync(Context context) {
+        StoreAPI api = StoreAPIBuilder.createService();
+        api.getModList().enqueue(new Callback<List<StoreAPI.RestMod>>() {
+            @Override
+            public void onResponse(Call<List<StoreAPI.RestMod>> call, Response<List<StoreAPI.RestMod>> response) {
+                Log.e("ModList", "Received modlist!");
+
+                List<StoreAPI.RestMod> mods = response.body();
+                if (mods != null) {
+                    final String modstore_url = StoreAPIBuilder.API_BASE_URL;
+                    ModList list = new ModList(ModList.ModListType.EMLT_ONLINE, "Available Mods", null, modstore_url);
+
+                    for (StoreAPI.RestMod rmod : mods) {
+                        String modname = rmod.basename;
+                        String title = rmod.title;
+                        String link = rmod.download_link;
+
+                        if (modname != null && title != null && link != null) {
+                            String author = rmod.author;
+                            String type_s = rmod.type;
+
+                            String desc = "";
+                            if (rmod.description != null) {
+                                desc = rmod.description;
+                            }
+
+                            String forum = null;
+                            if (rmod.forum_url != null) {
+                                forum = rmod.forum_url;
+                            }
+
+                            int size = rmod.download_size;
+
+                            Mod.ModType type = Mod.ModType.EMT_MOD;
+                            if (type_s != null) {
+                                if (type_s.equals("1")) {
+                                    type = Mod.ModType.EMT_MOD;
+                                } else if (type_s.equals("2")) {
+                                    type = Mod.ModType.EMT_MODPACK;
+                                }
+                            }
+
+                            Mod mod = new Mod(type, modstore_url, modname, title, desc);
+                            mod.link = link;
+                            mod.author = author;
+                            mod.forum_url = forum;
+                            mod.size = size;
+                            list.add(mod);
+                        } else {
+                            Log.e("ModMan", "Invalid object in list");
+                        }
+                    }
+
+                    ModManager modman = new ModManager();
+                    modman.addList(list);
+
+                    if (ModManager.mev != null) {
+                        Bundle b2 = new Bundle();
+                        b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_FETCH_MODLIST);
+                        b2.putString(ModEventReceiver.PARAM_DEST_LIST, modstore_url);
+                        //noinspection ConstantConditions
+                        ModManager.mev.onModEvent(b2);
+                    }
+                } else {
+                    Log.e("ModMan", "Modlist fetch error!");
+                    Log.e("ModMan", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<StoreAPI.RestMod>> call, Throwable t) {
+                Log.e("ModMan", "Modlist fetch error! 2");
+                Log.e("ModMan", t.toString());
+            }
+        });
     }
 
     @MainThread
@@ -106,7 +188,17 @@ public class ModManager {
     public void reportModAsync(Context context, @NonNull String modname, @Nullable String author,
                                @Nullable String list, @Nullable String link, @NonNull String reason,
                                @NonNull String info) {
-        ModInstallService.startActionReport(context, srr, modname, author, list, link, reason, info);
+        StoreAPIBuilder.createService().sendReport(modname, info, reason, author, list, link).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     @MainThread
