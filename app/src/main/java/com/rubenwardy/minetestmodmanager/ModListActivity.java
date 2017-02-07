@@ -28,10 +28,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.rubenwardy.minetestmodmanager.models.Events;
 import com.rubenwardy.minetestmodmanager.models.Mod;
-import com.rubenwardy.minetestmodmanager.manager.ModEventReceiver;
 import com.rubenwardy.minetestmodmanager.models.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -47,7 +50,11 @@ import java.util.List;
  */
 public class ModListActivity
         extends AppCompatActivity
-        implements ModEventReceiver, SearchView.OnQueryTextListener {
+        implements SearchView.OnQueryTextListener {
+
+    public final static String PARAM_ACTION = "action";
+    public final static String ACTION_SEARCH = "search";
+    public final static String PARAM_QUERY = "query";
 
     // Layout related
     private boolean isTwoPane;
@@ -58,6 +65,12 @@ public class ModListActivity
 
     // Other
     private String search_filter = null;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +85,7 @@ public class ModListActivity
         if (extras != null && extras.containsKey(PARAM_ACTION)) {
             String action = extras.getString(PARAM_ACTION);
             if (action != null && action.equals(ACTION_SEARCH)) {
-                search_filter = extras.getString(PARAM_ADDITIONAL);
+                search_filter = extras.getString(PARAM_QUERY);
             }
         }
 
@@ -211,9 +224,6 @@ public class ModListActivity
             return;
         }
 
-        // Bind event receiver
-        modman.setEventReceiver(this);
-
         // Add lists
         Resources res = getResources();
         modman.getModsFromDir(res.getString(R.string.modlist_minetest), mt_root.getAbsolutePath(), mt_dir.getAbsolutePath());
@@ -229,8 +239,6 @@ public class ModListActivity
     @Override
     protected void onResume() {
         super.onResume();
-
-        modman.setEventReceiver(this);
 
         for (ModList list : ModManager.lists_map.values()) {
             checkChanges(list);
@@ -257,73 +265,70 @@ public class ModListActivity
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        ModManager modman = new ModManager();
-        modman.unsetEventReceiver(this);
-    }
-
-    @Override
     public void onStop() {
         super.onStop();
-        ModManager modman = new ModManager();
-        modman.unsetEventReceiver(this);
+        EventBus.getDefault().unregister(this);
     }
 
-    @Override
-    public void onModEvent(@NonNull Bundle bundle) {
+    @Subscribe
+    public void onModInstall(final Events.ModInstallEvent e) {
         Resources res = getResources();
-        String action = bundle.getString(PARAM_ACTION);
-        if (action == null) {
-            return;
-        } else if (action.equals(ACTION_INSTALL)) {
-            final String modname = bundle.getString(PARAM_MODNAME);
-            if (bundle.containsKey(PARAM_ERROR)) {
-                String error = bundle.getString(PARAM_ERROR);
-                String text = String.format(res.getString(R.string.failed_install), modname, error);
-                Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                return;
-            } else {
-                String text = String.format(res.getString(R.string.installed_mod), modname);
-                Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        } else if (isTwoPane && action.equals(ACTION_UNINSTALL)) {
-            final String modname = bundle.getString(PARAM_MODNAME);
-            if (bundle.containsKey(PARAM_ERROR)) {
-                final String error = bundle.getString(PARAM_ERROR);
-                final String text = String.format(res.getString(R.string.failed_uninstall), modname, error);
-                Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                return;
-            } else {
-                FragmentManager fragman = getSupportFragmentManager();
-                Fragment frag = fragman.findFragmentById(R.id.mod_detail_container);
-                getSupportFragmentManager().beginTransaction()
-                        .remove(frag)
-                        .commit();
-            }
-        } else if (isTwoPane && action.equals(ACTION_SEARCH)) {
-            String query = bundle.getString(PARAM_ADDITIONAL);
+        if (e.didError()) {
+            String text = String.format(res.getString(R.string.failed_install), e.modname, e.error);
+            Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
 
+            return;
+        } else {
+            String text = String.format(res.getString(R.string.installed_mod), e.modname);
+            Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
+
+        checkChanges(e.list);
+    }
+
+    @Subscribe
+    public void onModUninstall(final Events.ModUninstallEvent e) {
+        Resources res = getResources();
+        if (e.didError()) {
+            String text = String.format(res.getString(R.string.failed_uninstall), e.modname, e.error);
+            Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+
+            return;
+        } else if (isTwoPane) {
+            FragmentManager fragman = getSupportFragmentManager();
+            Fragment frag = fragman.findFragmentById(R.id.mod_detail_container);
+            getSupportFragmentManager().beginTransaction()
+                    .remove(frag)
+                    .commit();
+        }
+
+        checkChanges(e.list);
+    }
+
+    @Subscribe
+    public void onSearch(final Events.SearchEvent e) {
+        if (isTwoPane) {
             // Update SearchView
             final MenuItem item = menu.findItem(R.id.action_search);
             final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
             searchView.setIconified(false);
-            searchView.setQuery(query, true);
+            searchView.setQuery(e.query, true);
             searchView.clearFocus();
 
             // Update RecyclerView
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
             assert recyclerView != null;
-            fillRecyclerView(recyclerView, query);
-        } else if (action.equals(ACTION_FETCH_MODLIST)) {
-            SwipeRefreshLayout srl = (SwipeRefreshLayout) findViewById(R.id.refresh);
-            srl.setRefreshing(false);
+            fillRecyclerView(recyclerView, e.query);
         }
+    }
 
-        checkChanges(bundle.getString(ModEventReceiver.PARAM_DEST_LIST));
+    @Subscribe
+    public void onFetchedModlist(final Events.FetchedListEvent e) {
+        SwipeRefreshLayout srl = (SwipeRefreshLayout) findViewById(R.id.refresh);
+        srl.setRefreshing(false);
     }
 
     private void checkChanges(@Nullable String listname) {

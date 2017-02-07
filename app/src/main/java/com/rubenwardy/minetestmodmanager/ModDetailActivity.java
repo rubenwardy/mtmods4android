@@ -17,10 +17,13 @@ import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.rubenwardy.minetestmodmanager.models.Events;
 import com.rubenwardy.minetestmodmanager.models.Mod;
-import com.rubenwardy.minetestmodmanager.manager.ModEventReceiver;
 import com.rubenwardy.minetestmodmanager.models.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * An activity representing a single Mod detail screen. This
@@ -29,10 +32,15 @@ import com.rubenwardy.minetestmodmanager.manager.ModManager;
  * in a {@link ModListActivity}.
  */
 public class ModDetailActivity
-        extends AppCompatActivity
-        implements ModEventReceiver {
+        extends AppCompatActivity {
 
     String listname, modname, author;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,7 +50,6 @@ public class ModDetailActivity
         setSupportActionBar(toolbar);
 
         ModManager modman = new ModManager();
-        modman.setEventReceiver(this);
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
@@ -132,86 +139,68 @@ public class ModDetailActivity
                 .commit();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        ModManager modman = new ModManager();
-        modman.setEventReceiver(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        ModManager modman = new ModManager();
-        modman.unsetEventReceiver(this);
-    }
 
     @Override
     public void onStop() {
         super.onStop();
-        ModManager modman = new ModManager();
-        modman.unsetEventReceiver(this);
+        EventBus.getDefault().unregister(this);
     }
 
-
-    @Override
-    public void onModEvent(@NonNull Bundle bundle) {
-        String action = bundle.getString(PARAM_ACTION);
-        if (action == null) {
-            return;
+    @Subscribe
+    public void onModInstall(final Events.ModInstallEvent e) {
+        Resources res = getResources();
+        if (e.didError()) {
+            String text = String.format(res.getString(R.string.failed_install),
+                    e.modname, e.error);
+            Snackbar.make(findViewById(R.id.mod_detail_container), text, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        } else {
+            String text = String.format(res.getString(R.string.installed_mod),
+                    e.modname);
+            Snackbar.make(findViewById(R.id.mod_detail_container), text, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
         }
+    }
 
-        switch (action) {
-        case ACTION_UNINSTALL:
-            if (bundle.containsKey(PARAM_ERROR)) {
-                Resources res = getResources();
-                String text = String.format(res.getString(R.string.failed_uninstall),
-                        bundle.getString(PARAM_MODNAME), bundle.getString(PARAM_ERROR));
-                Snackbar.make(findViewById(R.id.mod_detail_container), text, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            } else {
-                finish();
-            }
-            break;
-        case ACTION_SEARCH:
-            Intent k = new Intent(this, ModListActivity.class);
-            Bundle extras = new Bundle();
-            extras.putString(ModListActivity.PARAM_ACTION, ModListActivity.ACTION_SEARCH);
-            extras.putString(ModListActivity.PARAM_ADDITIONAL, bundle.getString(PARAM_ADDITIONAL));
-            k.putExtras(extras);
-            startActivity(k);
-            break;
-        case ACTION_INSTALL:
+    @Subscribe
+    public void onModUninstall(final Events.ModUninstallEvent e) {
+        if (e.didError()) {
             Resources res = getResources();
-            if (bundle.containsKey(PARAM_ERROR)) {
-                String text = String.format(res.getString(R.string.failed_install),
-                        bundle.getString(PARAM_MODNAME), bundle.getString(PARAM_ERROR));
-                Snackbar.make(findViewById(R.id.mod_detail_container), text, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            } else {
-                String text = String.format(res.getString(R.string.installed_mod),
-                        bundle.getString(PARAM_MODNAME));
-                Snackbar.make(findViewById(R.id.mod_detail_container), text, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-            break;
-        case ACTION_FETCH_SCREENSHOT:
-            if (bundle.containsKey(PARAM_ERROR)) {
-                Log.e("MDAct", bundle.getString(PARAM_ERROR));
-            } else {
-                String dest = bundle.getString(PARAM_DEST);
-                Drawable d = Drawable.createFromPath(dest);
-                if (d != null) {
-                    CollapsingToolbarLayout ctoolbar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        ctoolbar.setBackground(d);
-                    } else {
-                        //noinspection deprecation
-                        ctoolbar.setBackgroundDrawable(d);
-                    }
+            String text = String.format(res.getString(R.string.failed_uninstall),
+                    e.modname, e.error);
+            Snackbar.make(findViewById(R.id.mod_detail_container), text, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        } else {
+            finish();
+        }
+    }
+
+    @Subscribe
+    public void onSearch(final Events.SearchEvent e) {
+        Intent k = new Intent(this, ModListActivity.class);
+        Bundle extras = new Bundle();
+        extras.putString(ModListActivity.PARAM_ACTION, ModListActivity.ACTION_SEARCH);
+        extras.putString(ModListActivity.PARAM_QUERY, e.query);
+        k.putExtras(extras);
+        startActivity(k);
+    }
+
+    @Subscribe
+    public void onFetchedScreenshot(final Events.FetchedScreenshotEvent e) {
+        if (e.didError()) {
+            Log.e("MDAct", e.error);
+        } else {
+            String dest = e.filepath;
+            Drawable d = Drawable.createFromPath(dest);
+            if (d != null) {
+                CollapsingToolbarLayout ctoolbar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    ctoolbar.setBackground(d);
+                } else {
+                    //noinspection deprecation
+                    ctoolbar.setBackgroundDrawable(d);
                 }
             }
-            break;
         }
     }
 

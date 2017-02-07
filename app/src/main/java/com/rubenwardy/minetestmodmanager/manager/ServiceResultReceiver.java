@@ -8,14 +8,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.os.ResultReceiver;
 import android.util.Log;
 
-import com.rubenwardy.minetestmodmanager.models.Mod;
+import com.rubenwardy.minetestmodmanager.models.Events;
 import com.rubenwardy.minetestmodmanager.models.ModList;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Receive a result from the service
@@ -26,66 +22,35 @@ class ServiceResultReceiver extends ResultReceiver {
         super(handler);
     }
 
-    private void handleInstall(@NonNull Bundle b, @Nullable String modname, @Nullable String dest) {
+    private void handleInstall(@NonNull Bundle b, @Nullable String modname, @Nullable String listname) {
         if (b.containsKey(ModInstallService.RET_ERROR)) {
-
-            if (ModManager.mev != null) {
-                final String error = b.getString(ModInstallService.RET_ERROR);
-
-                Bundle b2 = new Bundle();
-                b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_INSTALL);
-                b2.putString(ModEventReceiver.PARAM_MODNAME, modname);
-                b2.putString(ModEventReceiver.PARAM_DEST_LIST, dest);
-                b2.putString(ModEventReceiver.PARAM_ERROR, error);
-                //noinspection ConstantConditions
-                ModManager.mev.onModEvent(b2);
-            }
+            final String error = b.getString(ModInstallService.RET_ERROR);
+            EventBus.getDefault().post(new Events.ModInstallEvent(modname, null, listname, error));
         } else {
             ModManager modman = new ModManager();
-            ModList list = modman.get(dest);
+            ModList list = modman.get(listname);
             if (list != null) {
                 list.valid = false;
             }
 
-            if (ModManager.mev != null) {
-                Bundle b2 = new Bundle();
-                b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_INSTALL);
-                b2.putString(ModEventReceiver.PARAM_MODNAME, modname);
-                b2.putString(ModEventReceiver.PARAM_DEST_LIST, dest);
-                //noinspection ConstantConditions
-                ModManager.mev.onModEvent(b2);
-            }
+            EventBus.getDefault().post(
+                    new Events.ModInstallEvent(modname, listname + "/" + modname, listname, ""));
         }
     }
 
-    private void handleUninstall(@NonNull Bundle b, @Nullable String modname, @Nullable String dest) {
+    private void handleUninstall(@NonNull Bundle b, @Nullable String modname, @Nullable String listname) {
         if (b.containsKey(ModInstallService.RET_ERROR)) {
-            if (ModManager.mev != null) {
-                final String error = b.getString(ModInstallService.RET_ERROR);
-
-                Bundle b2 = new Bundle();
-                b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_UNINSTALL);
-                b2.putString(ModEventReceiver.PARAM_MODNAME, modname);
-                b2.putString(ModEventReceiver.PARAM_DEST_LIST, dest);
-                b2.putString(ModEventReceiver.PARAM_ERROR, error);
-                //noinspection ConstantConditions
-                ModManager.mev.onModEvent(b2);
-            }
+            final String error = b.getString(ModInstallService.RET_ERROR);
+            EventBus.getDefault().post(new Events.ModUninstallEvent(modname, null, listname, error));
         } else {
             ModManager modman = new ModManager();
-            ModList list = modman.get(dest);
+            ModList list = modman.get(listname);
             if (list != null) {
                 list.valid = false;
             }
 
-            if (ModManager.mev != null) {
-                Bundle b2 = new Bundle();
-                b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_UNINSTALL);
-                b2.putString(ModEventReceiver.PARAM_MODNAME, modname);
-                b2.putString(ModEventReceiver.PARAM_DEST_LIST, dest);
-                //noinspection ConstantConditions
-                ModManager.mev.onModEvent(b2);
-            }
+            EventBus.getDefault().post(
+                    new Events.ModUninstallEvent(modname, listname + "/" + modname, listname, ""));
         }
     }
 
@@ -107,17 +72,12 @@ class ServiceResultReceiver extends ResultReceiver {
             handleUninstall(b, modname, dest);
             break;
         case ModInstallService.ACTION_FETCH_SCREENSHOT:
-            if (ModManager.mev != null) {
-                Bundle b2 = new Bundle();
-                b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_FETCH_SCREENSHOT);
-                b2.putString(ModEventReceiver.PARAM_MODNAME, modname);
-                b2.putString(ModEventReceiver.PARAM_DEST, dest);
-                if (b.containsKey(ModInstallService.RET_ERROR)) {
-                    b2.putString(ModEventReceiver.PARAM_ERROR, b.getString(ModInstallService.RET_ERROR));
-                }
-                //noinspection ConstantConditions
-                ModManager.mev.onModEvent(b2);
+            String error = "";
+            if (b.containsKey(ModInstallService.RET_ERROR)) {
+                error = b.getString(ModInstallService.RET_ERROR);
             }
+            EventBus.getDefault().post(
+                    new Events.FetchedScreenshotEvent(modname, dest, error));
             break;
         default:
             Log.e("SRR", "Unknown service action");

@@ -1,17 +1,19 @@
 package com.rubenwardy.minetestmodmanager.manager;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.rubenwardy.minetestmodmanager.models.Events;
 import com.rubenwardy.minetestmodmanager.models.Mod;
 import com.rubenwardy.minetestmodmanager.models.ModList;
 import com.rubenwardy.minetestmodmanager.restapi.StoreAPI;
 import com.rubenwardy.minetestmodmanager.restapi.StoreAPIBuilder;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.Arrays;
@@ -28,22 +30,11 @@ import retrofit2.Response;
  * Provides a collection of mods.
  */
 public class ModManager {
-    @Nullable
-    public static ModEventReceiver mev;
     @NonNull
     public static Map<String, ModList> lists_map = new HashMap<>();
+
     @NonNull
     private static ServiceResultReceiver srr = new ServiceResultReceiver(new Handler());
-
-    public void setEventReceiver(@NonNull ModEventReceiver mev) {
-        ModManager.mev = mev;
-    }
-
-    public void unsetEventReceiver(@Nullable ModEventReceiver mev) {
-        if (ModManager.mev == mev) {
-            ModManager.mev = null;
-        }
-    }
 
     @Nullable
     public ModList get(String path) {
@@ -151,13 +142,7 @@ public class ModManager {
                     ModManager modman = new ModManager();
                     modman.addList(list);
 
-                    if (ModManager.mev != null) {
-                        Bundle b2 = new Bundle();
-                        b2.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_FETCH_MODLIST);
-                        b2.putString(ModEventReceiver.PARAM_DEST_LIST, modstore_url);
-                        //noinspection ConstantConditions
-                        ModManager.mev.onModEvent(b2);
-                    }
+                    EventBus.getDefault().post(new Events.FetchedListEvent(modstore_url));
                 } else {
                     Log.e("ModMan", "Modlist fetch error!");
                     Log.e("ModMan", response.message());

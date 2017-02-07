@@ -17,11 +17,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.rubenwardy.minetestmodmanager.models.Events;
 import com.rubenwardy.minetestmodmanager.models.Mod;
-import com.rubenwardy.minetestmodmanager.manager.ModEventReceiver;
 import com.rubenwardy.minetestmodmanager.models.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 import com.rubenwardy.minetestmodmanager.manager.Utils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
@@ -133,11 +135,7 @@ public class ModDetailFragment extends Fragment {
             btn_find.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(@NonNull View view) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_SEARCH);
-                    bundle.putString(ModEventReceiver.PARAM_MODNAME, mod.name);
-                    bundle.putString(ModEventReceiver.PARAM_ADDITIONAL, "name:" + mod.name);
-                    ((ModEventReceiver) getActivity()).onModEvent(bundle);
+                    EventBus.getDefault().post(new Events.SearchEvent("name:" + mod.name));
                 }
             });
 
@@ -161,11 +159,7 @@ public class ModDetailFragment extends Fragment {
                 @Override
                 public void onClick(@NonNull View view) {
                     if (!mod.author.equals("")) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString(ModEventReceiver.PARAM_ACTION, ModEventReceiver.ACTION_SEARCH);
-                        bundle.putString(ModEventReceiver.PARAM_MODNAME, mod.name);
-                        bundle.putString(ModEventReceiver.PARAM_ADDITIONAL, "author:" + mod.author);
-                        ((ModEventReceiver) getActivity()).onModEvent(bundle);
+                        EventBus.getDefault().post(new Events.SearchEvent("author:" + mod.author));
                     }
                 }
             });

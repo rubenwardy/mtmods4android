@@ -19,7 +19,6 @@ import com.rubenwardy.minetestmodmanager.R;
 import com.rubenwardy.minetestmodmanager.restapi.StoreAPIBuilder;
 
 import java.io.BufferedInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,9 +27,6 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import okhttp3.ResponseBody;
