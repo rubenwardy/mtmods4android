@@ -217,34 +217,29 @@ public class ModInstallService extends IntentService {
     private void handleActionUrlInstall(@NonNull ResultReceiver rec, @NonNull String modname,
                                         @Nullable String author, @NonNull String url_str,
                                         @NonNull File dest) {
+        final int NOTIFICATION_ID = 1337;
         NotificationManager notiman =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         try {
             // Resource
-            String str_installing = "ERR! Installing $1...";
-            String str_connecting = "ERR! Connecting...";
-            String str_downloading = "ERR! Downloading...";
-            String str_extracting = "ERR! Extracting...";
             Resources res = getApplicationContext().getResources();
-            if (res != null) {
-                str_installing = String.format(res.getString(R.string.installing), modname);
-                str_connecting = res.getString(R.string.connecting);
-                str_downloading = res.getString(R.string.downloading);
-                str_extracting = res.getString(R.string.extracting);
-            }
+            String notif_msg_mod_connecting = res.getString(R.string.connecting);
+            String notif_msg_mod_downloading = res.getString(R.string.downloading);
+            String notif_msg_mod_extracting = res.getString(R.string.extracting);
+            String notif_msg_mod_installing = String.format(res.getString(R.string.installing), modname);
 
             // Notification
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-            mBuilder.setContentTitle(str_installing)
-                    .setContentText(str_connecting)
+            mBuilder.setContentTitle(notif_msg_mod_installing)
+                    .setContentText(notif_msg_mod_connecting)
                     .setSmallIcon(R.drawable.notification_icon);
             mBuilder.setProgress(0, 0, true);
             Intent intent = new Intent(this, BCastReceiver.class);
             intent.setAction(BCastReceiver.ACTION_STOP_SERVICE);
             PendingIntent contentIntent = PendingIntent.getBroadcast(getBaseContext(), 0, intent, 0);
             mBuilder.setContentIntent(contentIntent);
-            notiman.notify(1337, mBuilder.build());
+            notiman.notify(NOTIFICATION_ID, mBuilder.build());
 
             //
             // PROBE
@@ -272,7 +267,7 @@ public class ModInstallService extends IntentService {
                         b.putString(RET_ERROR, "Failed to download: File is not a zip file");
                         rec.send(0, b);
 
-                        notiman.cancel(1337);
+                        notiman.cancel(NOTIFICATION_ID);
                         reportDownloadToServer(modname, author, url_str, 0, code,
                                 "wrong-content-" + testcon.getContentType());
                         return;
@@ -291,7 +286,7 @@ public class ModInstallService extends IntentService {
                     }
                     rec.send(0, b);
 
-                    notiman.cancel(1337);
+                    notiman.cancel(NOTIFICATION_ID);
                     reportDownloadToServer(modname, author, url_str, 0, code, "wrong-status");
                     return;
                 }
@@ -327,7 +322,7 @@ public class ModInstallService extends IntentService {
                     }
                     rec.send(0, b);
 
-                    notiman.cancel(1337);
+                    notiman.cancel(NOTIFICATION_ID);
                     reportDownloadToServer(modname, author, url_str, 0, code, "wrong-status");
                     return;
                 }
@@ -346,15 +341,15 @@ public class ModInstallService extends IntentService {
                     b.putString(RET_ERROR, "Failed to download: File is not a zip file");
                     rec.send(0, b);
 
-                    notiman.cancel(1337);
+                    notiman.cancel(NOTIFICATION_ID);
                     reportDownloadToServer(modname, author, url_str, 0, code,
                             "wrong-content-" + connection.getContentType());
                     return;
                 }
 
                 // Update notification
-                mBuilder.setContentText(str_downloading);
-                notiman.notify(1337, mBuilder.build());
+                mBuilder.setContentText(notif_msg_mod_downloading);
+                notiman.notify(NOTIFICATION_ID, mBuilder.build());
 
                 // download the file
                 File file = Utils.getTmpPath(getCacheDir(), ".zip");
@@ -372,13 +367,13 @@ public class ModInstallService extends IntentService {
 
                     // Update Notification
                     mBuilder.setProgress(100, prog, false);
-                    notiman.notify(1337, mBuilder.build());
+                    notiman.notify(NOTIFICATION_ID, mBuilder.build());
 
                     // Detect cancel
                     if (requestStop.get()) {
                         input.close();
                         output.close();
-                        notiman.cancel(1337);
+                        notiman.cancel(NOTIFICATION_ID);
                         Bundle b = new Bundle();
                         b.putString(RET_NAME, modname);
                         b.putString(RET_ACTION, ACTION_INSTALL);
@@ -394,8 +389,8 @@ public class ModInstallService extends IntentService {
 
                 // Update Notification
                 mBuilder.setProgress(0, 0, true);
-                mBuilder.setContentText(str_extracting);
-                notiman.notify(1337, mBuilder.build());
+                mBuilder.setContentText(notif_msg_mod_extracting);
+                notiman.notify(NOTIFICATION_ID, mBuilder.build());
 
                 handleActionInstall(rec, modname, author, file.getAbsoluteFile(), dest);
 
@@ -408,9 +403,9 @@ public class ModInstallService extends IntentService {
                     e.printStackTrace();
                 }
             }
-            notiman.cancel(1337);
+            notiman.cancel(NOTIFICATION_ID);
         } catch (IOException e) {
-            notiman.cancel(1337);
+            notiman.cancel(NOTIFICATION_ID);
             Bundle b = new Bundle();
             b.putString(RET_NAME, modname);
             b.putString(RET_ACTION, ACTION_INSTALL);
@@ -423,7 +418,7 @@ public class ModInstallService extends IntentService {
 
     private void doFetchScreenshotUrl(@NonNull ResultReceiver rec, @NonNull String modname,
                                       @Nullable String author, @NonNull String url_str, int try_i) {
-        if (try_i > 10) {
+        if (try_i > 4) {
             Bundle b = new Bundle();
             b.putString(RET_NAME, modname);
             b.putString(RET_ACTION, ACTION_FETCH_SCREENSHOT);
@@ -486,7 +481,7 @@ public class ModInstallService extends IntentService {
             output.close();
             input.close();
 
-
+            // return result
             Bundle b = new Bundle();
             b.putString(RET_AUTHOR, author);
             b.putString(RET_NAME, modname);
