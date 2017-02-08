@@ -18,6 +18,7 @@
             android:paddingRight="10dip"
             android:paddingBottom="9dip"
             android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/mod_header_uninstall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
