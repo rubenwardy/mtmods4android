@@ -95,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/submit"
-                android:text="@string/action_report"
+                android:text="@string/mod_action_report_mod"
                 android:layout_marginTop="16dp" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

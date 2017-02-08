@@ -6,4 +6,5 @@
     <color name="hintBackground">@color/colorPrimaryDark</color>
     <color name="hintText">#fff</color>
     <color name="hintAccent">#fff</color>
+    <color name="colorRemove">#f44336</color>
 </resources>

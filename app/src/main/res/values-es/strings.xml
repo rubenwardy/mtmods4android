@@ -46,10 +46,10 @@
     <string name="action_install">Instalar</string>
     <string name="action_uninstall">Desinstalar</string>
     <string name="action_find">Encontrar en otra parte</string>
-    <string name="action_report">Reportar</string>
+    <string name="mod_action_report_mod">Reportar</string>
 
     <string name="title_activity_readme">Read Me</string>
-    <string name="view_readme">View Read Me File</string>
+    <string name="mod_action_view_readme">View Read Me File</string>
 
     <string name="details_name">Nombre del mod</string>
     <string name="details_author">Autor</string>
@@ -57,7 +57,7 @@
     <string name="details_location">Carpeta</string>
     <string name="details_link">URL de descarga</string>
     <string name="details_size">Tamaño de descarga</string>
-    <string name="details_forum">Tema en el foro</string>
+    <string name="mod_action_forum_topic">Tema en el foro</string>
     <string name="details_verified">Confianza</string>
 
     <string name="size_unknown">Desconocido</string>

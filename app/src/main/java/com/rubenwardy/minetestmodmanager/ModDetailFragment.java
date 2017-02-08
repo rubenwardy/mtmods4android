@@ -4,17 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.rubenwardy.minetestmodmanager.models.Events;
@@ -105,56 +106,17 @@ public class ModDetailFragment extends Fragment {
         if (mod != null) {
             Resources res = getResources();
 
-            // Set text
-            ((TextView) rootView.findViewById(R.id.mod_desc)).setText(mod.desc);
-            ((TextView) rootView.findViewById(R.id.mod_detail_name)).setText(mod.name);
-            TextView txt_author = (TextView) rootView.findViewById(R.id.mod_detail_author);
-            txt_author.setText(mod.author);
-            ((TextView) rootView.findViewById(R.id.mod_detail_link)).setText(mod.getShortLink());
-            TextView txt_forum = (TextView) rootView.findViewById(R.id.mod_detail_forum);
-            txt_forum.setText(mod.getShortForumLink());
+            //
+            // HEADER
+            //
 
-            //String ver;
-            //if (mod.verified == 1) {
-            //    ver = res.getString(R.string.mod_verified_yes);
-            //} else if (mod.isLocalMod()) {
-            //    ver = res.getString(R.string.mod_verified_uk);
-            //} else {
-            //    ver = res.getString(R.string.mod_verified_no);
-            //}
-            //((TextView) rootView.findViewById(R.id.mod_detail_ver)).setText(ver);
-
-            String dlsize = mod.getDownloadSize();
-            if (dlsize == null) {
-                dlsize = res.getString(R.string.size_unknown);
-            }
-            ((TextView) rootView.findViewById(R.id.mod_detail_size)).setText(dlsize);
-
-            // Find Elsewhere
-            Button btn_find = (Button) rootView.findViewById(R.id.find);
-            btn_find.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(@NonNull View view) {
-                    EventBus.getDefault().post(new Events.SearchEvent("name:" + mod.name));
-                }
-            });
-
-            // Report
-            ImageButton btn_report = (ImageButton) rootView.findViewById(R.id.action_report);
-            btn_report.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(@NonNull View view) {
-                    Context context = getContext();
-                    Intent intent = new Intent(context, ReportActivity.class);
-                    intent.putExtra(ReportActivity.EXTRA_LIST, mod.listname);
-                    intent.putExtra(ReportActivity.EXTRA_AUTHOR, mod.author);
-                    intent.putExtra(ReportActivity.EXTRA_MOD_NAME, mod.name);
-                    intent.putExtra(ReportActivity.EXTRA_LINK, mod.link);
-                    context.startActivity(intent);
-                }
-            });
+            // Title
+            TextView txt_title = (TextView) rootView.findViewById(R.id.mod_header_title);
+            txt_title.setText(mod.title);
 
             // Author
+            TextView txt_author = (TextView) rootView.findViewById(R.id.mod_header_author);
+            txt_author.setText(mod.author);
             txt_author.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(@NonNull View view) {
@@ -164,47 +126,11 @@ public class ModDetailFragment extends Fragment {
                 }
             });
 
-            txt_forum.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(@NonNull View view) {
-                    if (mod.forum_url != null) {
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mod.forum_url));
-                        startActivity(browserIntent);
-                    }
-                }
-            });
 
-            // Type
-            String type;
-            if (mod.type == Mod.ModType.EMT_MOD) {
-                type = res.getString(R.string.type_mod);
-            } else if (mod.type == Mod.ModType.EMT_MODPACK) {
-                type = res.getString(R.string.type_modpack);
-            } else if (mod.type == Mod.ModType.EMT_SUBGAME) {
-                type = res.getString(R.string.type_subgame);
-            } else {
-                type = "Invalid";
-            }
-            ((TextView) rootView.findViewById(R.id.mod_detail_type)).setText(type);
-
-            Button btn_readme = (Button) rootView.findViewById(R.id.readme);
-            if (mod.isLocalMod() && Utils.getReadmePath(new File(mod.path)) != null) {
-                btn_readme.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(@NonNull View view) {
-                        Context context = view.getContext();
-                        Intent intent = new Intent(context, ReadmeActivity.class);
-                        intent.putExtra(ReadmeActivity.ARG_MOD_PATH, mod.path);
-                        context.startActivity(intent);
-                    }
-                });
-            } else {
-                btn_readme.setVisibility(View.GONE);
-            }
-
-            Button btn_main = (Button) rootView.findViewById(R.id.uninstall);
+            Button btn_main = (Button) rootView.findViewById(R.id.mod_header_uninstall);
             if (mod.isLocalMod()) {
-                ((TextView) rootView.findViewById(R.id.mod_detail_location)).setText(mod.path);
+                btn_main.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorRemove),
+                        PorterDuff.Mode.MULTIPLY);
                 btn_main.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(@NonNull View view) {
@@ -213,7 +139,6 @@ public class ModDetailFragment extends Fragment {
                     }
                 });
             } else {
-                rootView.findViewById(R.id.mod_detail_loc_row).setVisibility(View.GONE);
                 btn_main.setText(res.getString(R.string.action_install));
 
                 btn_main.setOnClickListener(new View.OnClickListener() {
@@ -247,6 +172,104 @@ public class ModDetailFragment extends Fragment {
                         }
                     }
                 });
+            }
+
+
+            //
+            // DETAILS TABLE
+            //
+
+
+            // Mod name
+            ((TextView) rootView.findViewById(R.id.mod_detail_name)).setText(mod.name);
+
+            // Type
+            String type;
+            if (mod.type == Mod.ModType.EMT_MOD) {
+                type = res.getString(R.string.type_mod);
+            } else if (mod.type == Mod.ModType.EMT_MODPACK) {
+                type = res.getString(R.string.type_modpack);
+            } else if (mod.type == Mod.ModType.EMT_SUBGAME) {
+                type = res.getString(R.string.type_subgame);
+            } else {
+                type = "Invalid";
+            }
+            ((TextView) rootView.findViewById(R.id.mod_detail_type)).setText(type);
+
+            // Location
+            if (mod.isLocalMod()) {
+                ((TextView) rootView.findViewById(R.id.mod_detail_location)).setText(mod.path);
+            } else {
+                rootView.findViewById(R.id.mod_detail_loc_row).setVisibility(View.GONE);
+            }
+
+            // Download link and size
+            if (mod.isLocalMod()) {
+                rootView.findViewById(R.id.mod_detail_link_row).setVisibility(View.GONE);
+                rootView.findViewById(R.id.mod_detail_size_row).setVisibility(View.GONE);
+            } else {
+                ((TextView) rootView.findViewById(R.id.mod_detail_link)).setText(mod.getShortLink());
+                String dlsize = mod.getDownloadSize();
+                if (dlsize == null) {
+                    dlsize = res.getString(R.string.size_unknown);
+                }
+                ((TextView) rootView.findViewById(R.id.mod_detail_size)).setText(dlsize);
+            }
+
+
+
+
+            //
+            // Description
+            //
+
+            ((TextView) rootView.findViewById(R.id.mod_desc)).setText(mod.desc);
+
+
+            //
+            // ACTION BUUTTONS
+            //
+
+            // Report
+            Button btn_report = (Button) rootView.findViewById(R.id.action_report);
+            btn_report.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(@NonNull View view) {
+                    Context context = getContext();
+                    Intent intent = new Intent(context, ReportActivity.class);
+                    intent.putExtra(ReportActivity.EXTRA_LIST, mod.listname);
+                    intent.putExtra(ReportActivity.EXTRA_AUTHOR, mod.author);
+                    intent.putExtra(ReportActivity.EXTRA_MOD_NAME, mod.name);
+                    intent.putExtra(ReportActivity.EXTRA_LINK, mod.link);
+                    context.startActivity(intent);
+                }
+            });
+
+            Button btn_forum = (Button) rootView.findViewById(R.id.forum_topic);
+            btn_forum.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(@NonNull View view) {
+                    if (mod.forum_url != null) {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mod.forum_url));
+                        startActivity(browserIntent);
+                    }
+                }
+            });
+
+            // Readme
+            Button btn_readme = (Button) rootView.findViewById(R.id.readme);
+            if (mod.isLocalMod() && Utils.getReadmePath(new File(mod.path)) != null) {
+                btn_readme.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(@NonNull View view) {
+                        Context context = view.getContext();
+                        Intent intent = new Intent(context, ReadmeActivity.class);
+                        intent.putExtra(ReadmeActivity.ARG_MOD_PATH, mod.path);
+                        context.startActivity(intent);
+                    }
+                });
+            } else {
+                btn_readme.setVisibility(View.GONE);
             }
         }
 

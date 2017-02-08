@@ -45,8 +45,6 @@
     <string name="title_mod_detail">Mod Detail</string>
     <string name="action_install">Install</string>
     <string name="action_uninstall">Uninstall</string>
-    <string name="action_find">Find Elsewhere</string>
-    <string name="action_report">Report</string>
 
     <string name="details_name">Mod Name</string>
     <string name="details_author">Author</string>
@@ -54,7 +52,6 @@
     <string name="details_location">Folder</string>
     <string name="details_link">Download URL</string>
     <string name="details_size">Download Size</string>
-    <string name="details_forum">Forum Topic</string>
     <string name="details_verified">Trust</string>
 
     <string name="size_unknown">Unknown</string>
@@ -62,12 +59,16 @@
     <string name="type_modpack">Mod Pack</string>
     <string name="type_subgame">Subgame</string>
 
-    <string name="title_activity_readme">Read Me</string>
-    <string name="view_readme">View Read Me File</string>
+    <string name="mod_action_report_mod">Report Mod</string>
+    <string name="mod_action_forum_topic">View Forum Topic</string>
+    <string name="mod_action_view_readme">View Read Me</string>
 
     <string name="mod_verified_yes">This mod is from a well known author.</string>
     <string name="mod_verified_no">This mod wasn\'t made by a well known author.</string>
     <string name="mod_verified_uk">Unable to determine the source of this mod.</string>
+
+    <!-- Readme -->
+    <string name="title_activity_readme">Read Me</string>
 
     <!-- Report -->
     <string name="x_by_y">%1$s by %2$s</string>

@@ -11,13 +11,13 @@
     <string name="accept_and_install">Accepter et installer</string>
     <string name="action_find">Trouver ailleurs</string>
     <string name="action_install">Installer</string>
-    <string name="action_report">Rapporter</string>
+    <string name="mod_action_report_mod">Rapporter</string>
     <string name="action_search">Chercher</string>
     <string name="action_uninstall">Désinstaller</string>
     <string name="details_name">Nom de mod</string>
     <string name="connecting">Connecte...</string>
     <string name="details_author">Auteur</string>
-    <string name="details_forum">Thème de forum</string>
+    <string name="mod_action_forum_topic">Thème de forum</string>
     <string name="details_link">Télécharger l\'URL</string>
     <string name="details_location">Dossier</string>
     <string name="details_size">Mesure du téléchargement</string>
@@ -47,7 +47,7 @@
     <string name="world_config_saved">Configuration enregistrée</string>
     <string name="invalid_mod">Mod non valide</string>
     <string name="installing_mod">Mod en installation</string>
-    <string name="view_readme">Voir plus d\'information</string>
+    <string name="mod_action_view_readme">Voir plus d\'information</string>
     <string name="rate_txt">Veut-on nous évaluer?</string>
     <string name="disclaimer_4_t">Auteurs bien connus</string>
     <string name="disclaimer_3_t">Que peut-on faire?</string>

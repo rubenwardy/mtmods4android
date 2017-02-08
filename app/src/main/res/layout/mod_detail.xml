@@ -4,53 +4,65 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true">
-    <LinearLayout
-        android:id="@+id/mod_btnbar"
-        android:orientation="horizontal"
-        android:paddingLeft="4.0dip"
-        android:paddingTop="5.0dip"
-        android:paddingRight="4.0dip"
-        android:paddingBottom="1.0dip"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:id="@+id/action_report"
-            android:src="@drawable/ic_report_problem_24dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/action_report" />
-
-        <Button
-            android:id="@+id/find"
-            android:layout_width="0.0dip" android:layout_height="fill_parent"
-            android:text="@string/action_find"
-            android:layout_weight="1.0" />
-
-        <Button
-            android:id="@+id/uninstall"
-            android:theme="@style/ColoredButton"
-            android:layout_width="0.0dip" android:layout_height="fill_parent"
-            android:text="@string/action_uninstall"
-            android:layout_weight="1.0" />
-
-    </LinearLayout>
-
-
-    <TableLayout
-        android:id="@+id/mod_table"
+    <RelativeLayout
+        android:id="@+id/mod_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:paddingLeft="10dip"
+            android:paddingTop="4dip"
+            android:paddingRight="10dip"
+            android:paddingBottom="9dip"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/mod_header_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:text="Food" />
+
+            <TextView
+                android:id="@+id/mod_header_author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="rubenwardy" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/mod_header_uninstall"
+            android:theme="@style/ColoredButton"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="@string/action_uninstall"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="3dp"
+            android:layout_alignParentRight="true"
+            android:layout_weight="1.0" />
+
+    </RelativeLayout>
+
+    <TableLayout
+        android:id="@+id/mod_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cardview_shadow_start_color"
         android:stretchColumns="1"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="5dp"
-        android:paddingBottom="0dp"
+        android:paddingBottom="5dp"
         android:shrinkColumns="2"
-        android:layout_below="@+id/mod_btnbar">
+        android:layout_below="@id/mod_header">
 
         <TableRow>
             <TextView
@@ -58,22 +70,9 @@
                 android:text="@string/details_name"
                 android:padding="3dip" />
             <TextView
+                android:id="@+id/mod_detail_name"
                 android:layout_width="wrap_content"
-                android:padding="3dip"
-                android:id="@+id/mod_detail_name" />
-        </TableRow>
-
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="@string/details_author"
                 android:padding="3dip" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:padding="3dip"
-                android:id="@+id/mod_detail_author"
-                android:clickable="true"
-                android:textColor="#0000ff" />
         </TableRow>
 
         <TableRow>
@@ -98,7 +97,7 @@
                 android:id="@+id/mod_detail_location" />
         </TableRow>
 
-        <TableRow>
+        <TableRow android:id="@+id/mod_detail_link_row">
             <TextView
                 android:layout_column="1"
                 android:text="@string/details_link"
@@ -109,7 +108,7 @@
                 android:id="@+id/mod_detail_link" />
         </TableRow>
 
-        <TableRow>
+        <TableRow android:id="@+id/mod_detail_size_row">
             <TextView
                 android:layout_column="1"
                 android:text="@string/details_size"
@@ -118,19 +117,6 @@
                 android:layout_width="wrap_content"
                 android:padding="3dip"
                 android:id="@+id/mod_detail_size" />
-        </TableRow>
-
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="@string/details_forum"
-                android:padding="3dip" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:padding="3dip"
-                android:id="@+id/mod_detail_forum"
-                android:clickable="true"
-                android:textColor="#0000ff" />
         </TableRow>
 
         <!--<TableRow>
@@ -145,22 +131,63 @@
         </TableRow>-->
     </TableLayout>
 
-    <Button
-        android:id="@+id/readme"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/mod_table"
-        android:text="@string/view_readme" />
-
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/mod_desc"
-        style="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/readme"
+        android:layout_below="@id/mod_details"
         android:padding="16dp"
+        android:text="This is a test"
         android:textIsSelectable="true"
         tools:context="com.rubenwardy.minetestmodmanager.ModDetailFragment" />
+
+    <LinearLayout
+        android:id="@+id/mod_btnbar"
+        android:orientation="vertical"
+        android:paddingTop="0dip"
+        android:paddingBottom="1.0dip"
+        android:background="@color/cardview_shadow_start_color"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mod_desc">
+
+        <Button
+            android:id="@+id/forum_topic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:layout_gravity="start"
+            style="@style/FlatOptionButton"
+            android:drawableStart="@drawable/ic_mod_action_forum_topic_24dp"
+            android:drawableLeft="@drawable/ic_mod_action_forum_topic_24dp"
+            android:drawablePadding="8dp"
+            android:text="@string/mod_action_forum_topic"/>
+
+        <Button
+            android:id="@+id/readme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:layout_gravity="start"
+            style="@style/FlatOptionButton"
+            android:drawableStart="@drawable/ic_mod_action_readme_24dp"
+            android:drawableLeft="@drawable/ic_mod_action_readme_24dp"
+            android:drawablePadding="8dp"
+            android:text="@string/mod_action_view_readme" />
+
+        <Button
+            android:id="@+id/action_report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:layout_gravity="start"
+            style="@style/FlatOptionButton"
+            android:drawableStart="@drawable/ic_mod_action_report_24dp"
+            android:drawableLeft="@drawable/ic_mod_action_report_24dp"
+            android:drawablePadding="8dp"
+            android:text="@string/mod_action_report_mod" />
+
+    </LinearLayout>
 
 </RelativeLayout>
