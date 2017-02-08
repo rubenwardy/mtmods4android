@@ -175,6 +175,28 @@ public class ModDetailFragment extends Fragment {
                 });
             }
 
+
+            //
+            // Mod installed already
+            //
+
+            if (!mod.isLocalMod()) {
+                ModList installedList = (new ModManager()).getModInstalledList(mod.name, mod.author);
+                if (installedList != null) {
+                    rootView.findViewById(R.id.installed_elsewhere).setVisibility(View.VISIBLE);
+                    ((TextView) rootView.findViewById(R.id.installed_elsewhere_txt))
+                            .setText(res.getString(R.string.mod_installed_elsewhere, installedList.getShortname()));
+
+                    rootView.findViewById(R.id.view).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            EventBus.getDefault().post(new Events.SearchEvent("name:" + mod.name + " author:" + mod.author));
+                        }
+                    });
+                }
+            }
+
+
             //
             // Description
             //

@@ -52,6 +52,18 @@ public class ModManager {
     }
 
     @Nullable
+    public ModList getModInstalledList(String name, String author) {
+        for (ModList list : lists_map.values()) {
+            if (list.type == ModList.ModListType.EMLT_PATH) {
+                if (list.get(name, author) != null) {
+                    return list;
+                }
+            }
+        }
+        return null;
+    }
+
+    @Nullable
     public String getInstallDir() {
         for (ModList list : lists_map.values()) {
             if (list.type == ModList.ModListType.EMLT_PATH) {

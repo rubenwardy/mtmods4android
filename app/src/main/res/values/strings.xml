@@ -132,4 +132,6 @@
     <string name="about_credits_images">This app also uses several standard Android icons, which are CC-BY 4.0</string>
     <string name="mod_action_info">View Information</string>
     <string name="dialog_information">Information</string>
+    <string name="mod_view_installed">View</string>
+    <string name="mod_installed_elsewhere">Mod already installed to %1$s</string>
 </resources>

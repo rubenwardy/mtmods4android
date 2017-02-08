@@ -38,6 +38,12 @@ public class ModList {
         this.valid = true;
     }
 
+    @NonNull
+    public String getShortname() {
+        // TODO: make this less hacky
+        return listname.replace("/storage/emulated/0/", "");
+    }
+
     public void add(@NonNull Mod mod) {
         mods.add(mod);
         if (mods_map.containsKey(mod.name)) {
