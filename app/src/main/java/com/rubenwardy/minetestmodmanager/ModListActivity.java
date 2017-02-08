@@ -83,8 +83,9 @@ public class ModListActivity
         // Read opening intent
         //
         Intent intent = getIntent();
-        if (intent.getAction().equals("com.google.android.gms.actions.SEARCH_ACTION") ||
-                intent.getAction().equals(ACTION_SEARCH)) {
+        String action = intent.getAction();
+        if (action != null && (action.equals("com.google.android.gms.actions.SEARCH_ACTION") ||
+                intent.getAction().equals(ACTION_SEARCH))) {
             search_filter = intent.getExtras().getString(PARAM_QUERY);
         } else {
             Log.e("MAct", "Intent was " + intent.getAction());
