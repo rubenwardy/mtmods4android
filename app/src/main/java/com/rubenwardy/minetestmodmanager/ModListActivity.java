@@ -91,7 +91,6 @@ public class ModListActivity
         }
 
 
-
         setupLayout();
         scanFileSystem();
     }
@@ -332,6 +331,10 @@ public class ModListActivity
     public void onFetchedModlist(final Events.FetchedListEvent e) {
         SwipeRefreshLayout srl = (SwipeRefreshLayout) findViewById(R.id.refresh);
         srl.setRefreshing(false);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
+        assert recyclerView != null;
+        fillRecyclerView(recyclerView, null);
     }
 
     private void checkChanges(@Nullable String listname) {
