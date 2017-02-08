@@ -9,9 +9,11 @@
     <string name="about_credits_logo">Le logo d\'appli est basé sur le logo de Minetest, CC-BY-SA 3.0, et créé par erlehmann</string>
     <string name="accept">Accepter</string>
     <string name="accept_and_install">Accepter et installer</string>
-    <string name="action_find">Trouver ailleurs</string>
     <string name="action_install">Installer</string>
     <string name="mod_action_report_mod">Rapporter</string>
+    <string name="mod_view_installed">View</string>
+    <string name="mod_installed_elsewhere">Mod already installed to %1$s</string>
+    <string name="dialog_information">Information</string>
     <string name="action_search">Chercher</string>
     <string name="action_uninstall">Désinstaller</string>
     <string name="details_name">Nom de mod</string>
@@ -52,8 +54,31 @@
     <string name="disclaimer_4_t">Auteurs bien connus</string>
     <string name="disclaimer_3_t">Que peut-on faire?</string>
     <string name="disclaimer_1_t">Aucune garantie</string>
+    <string name="disclaimer_1_m">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+        INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+        IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+        DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+        ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+        DEALINGS IN THE SOFTWARE.</string>
+    <string name="disclaimer_2_m">The mods listed as available are a subset of the mods found
+        on the Minetest forums. When you download a mod, you do not download it from our servers
+        but rather from the original link that the author posted. Because of this,
+        we cannot guarantee mods are safe. No one in particular checks these mods.</string>
+    <string name="disclaimer_3_m">If you\'re unsure about the safety of a mod, check its
+        forum topic. Look at how old the thread is, and what the comments say.</string>
+    <string name="disclaimer_4_m">One of the features of this app is to label well known,
+        popular mod makers as such. The aim of this is for recommendation, rather
+        than for security reasons. Whilst these authors are more trustworthy than most,
+        there is still a possibility of their accounts being
+        hacked and bad downloads being placed there instead.</string>
+
     <string name="dialog_noext_title">Aucun stockage disponible</string>
+    <string name="dialog_nomt_msg">There wasn\'t a folder for mods on your device, so we attempted to create one.
+        However, the attempt failed. The system may be denying this app access to it. Try running Minetest.</string>
+    <string name="invalid_modlist_desc">We couldn\'t find that mod location. Has the folder been deleted, or is the available mod list offline?</string>
     <string name="invalid_modlist">Endroit ou chemin de mod non valide</string>
+    <string name="x_by_y">%1$s by %2$s</string>
     <string name="mod_verified_no">Cet mod n\'était pas produit par un auteur bien connu</string>
     <string name="installed_mod">Installé %1$s...</string>
     <string name="failed_install">Echoué à installer le mod %1$s. Erreur: %2$s.</string>
@@ -70,4 +95,10 @@
     <string name="mod_verified_yes">Cet mod vient d\'un auteur bien connu</string>
     <string name="modlist_minetest">Mods de Minetest installés</string>
     <string name="modlist_multicraft">Mods de Multicraft installés</string>
+    <string name="mod_action_info">View Information</string>
+    <string-array name="report_reasons">
+        <item>Malicious / Virus</item>
+        <item>Install doesn\'t work</item>
+        <item>Other (please enter below)</item>
+    </string-array>
 </resources>

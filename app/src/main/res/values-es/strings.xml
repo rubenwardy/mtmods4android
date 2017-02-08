@@ -45,7 +45,6 @@
     <string name="title_mod_detail">Detalles</string>
     <string name="action_install">Instalar</string>
     <string name="action_uninstall">Desinstalar</string>
-    <string name="action_find">Encontrar en otra parte</string>
     <string name="mod_action_report_mod">Reportar</string>
 
     <string name="title_activity_readme">Read Me</string>
@@ -128,4 +127,8 @@
     <string name="about_credits_logo">El logo de la aplicación esta basado en el logo de Minetest
         licenciado en CC-BY-SA 3.0, y creado por erlehmann</string>
     <string name="about_credits_images">Esta aplicación también usa varios iconos genericos de Android, licenciados en CC-BY 4.0</string>
+    <string name="dialog_information">Information</string>
+    <string name="mod_view_installed">View</string>
+    <string name="mod_installed_elsewhere">Mod already installed to %1$s</string>
+    <string name="mod_action_info">View Information</string>
 </resources>

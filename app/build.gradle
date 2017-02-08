@@ -1,5 +1,3 @@
-//noinspection GradleCompatible
-//noinspection GradleCompatible
 apply plugin: 'com.android.application'
 
 android {
@@ -10,8 +8,8 @@ android {
         applicationId "com.rubenwardy.minetestmodmanager"
         minSdkVersion 9
         targetSdkVersion 21
-        versionCode 10
-        versionName "1.3.0"
+        versionCode 12
+        versionName "1.4.0"
         buildConfigField "boolean", "ENABLE_RATE_ME", "false"
     }
 
