@@ -8,8 +8,8 @@ android {
         applicationId "com.rubenwardy.minetestmodmanager"
         minSdkVersion 9
         targetSdkVersion 21
-        versionCode 12
-        versionName "1.4.0"
+        versionCode 13
+        versionName "1.4.1"
         buildConfigField "boolean", "ENABLE_RATE_ME", "false"
     }
 
