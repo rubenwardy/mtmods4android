@@ -227,7 +227,7 @@ public class ModDetailFragment extends Fragment {
 
 
             //
-            // ACTION BUUTTONS
+            // ACTION BUTTONS
             //
 
             // Report
@@ -246,15 +246,19 @@ public class ModDetailFragment extends Fragment {
             });
 
             Button btn_forum = (Button) rootView.findViewById(R.id.forum_topic);
-            btn_forum.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(@NonNull View view) {
-                    if (mod.forum_url != null) {
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mod.forum_url));
-                        startActivity(browserIntent);
+            if (mod.forum_url == null || mod.forum_url.isEmpty()) {
+                btn_forum.setVisibility(View.GONE);
+            } else {
+                btn_forum.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(@NonNull View view) {
+                        if (mod.forum_url != null) {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mod.forum_url));
+                            startActivity(browserIntent);
+                        }
                     }
-                }
-            });
+                });
+            }
 
             // Readme
             Button btn_readme = (Button) rootView.findViewById(R.id.readme);
