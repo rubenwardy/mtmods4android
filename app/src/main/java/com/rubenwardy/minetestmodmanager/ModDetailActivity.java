@@ -180,10 +180,8 @@ public class ModDetailActivity
     @Subscribe
     public void onSearch(final Events.SearchEvent e) {
         Intent k = new Intent(this, ModListActivity.class);
-        Bundle extras = new Bundle();
-        extras.putString(ModListActivity.PARAM_ACTION, ModListActivity.ACTION_SEARCH);
-        extras.putString(ModListActivity.PARAM_QUERY, e.query);
-        k.putExtras(extras);
+        k.setAction(ModListActivity.ACTION_SEARCH);
+        k.putExtra(ModListActivity.PARAM_QUERY, e.query);
         startActivity(k);
     }
 

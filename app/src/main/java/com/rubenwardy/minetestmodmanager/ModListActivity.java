@@ -21,6 +21,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -81,13 +82,15 @@ public class ModListActivity
         //
         // Read opening intent
         //
-        Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.containsKey(PARAM_ACTION)) {
-            String action = extras.getString(PARAM_ACTION);
-            if (action != null && action.equals(ACTION_SEARCH)) {
-                search_filter = extras.getString(PARAM_QUERY);
-            }
+        Intent intent = getIntent();
+        if (intent.getAction().equals("com.google.android.gms.actions.SEARCH_ACTION") ||
+                intent.getAction().equals(ACTION_SEARCH)) {
+            search_filter = intent.getExtras().getString(PARAM_QUERY);
+        } else {
+            Log.e("MAct", "Intent was " + intent.getAction());
         }
+
+
 
         setupLayout();
         scanFileSystem();
