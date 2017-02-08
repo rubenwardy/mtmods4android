@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -174,51 +175,6 @@ public class ModDetailFragment extends Fragment {
                 });
             }
 
-
-            //
-            // DETAILS TABLE
-            //
-
-
-            // Mod name
-            ((TextView) rootView.findViewById(R.id.mod_detail_name)).setText(mod.name);
-
-            // Type
-            String type;
-            if (mod.type == Mod.ModType.EMT_MOD) {
-                type = res.getString(R.string.type_mod);
-            } else if (mod.type == Mod.ModType.EMT_MODPACK) {
-                type = res.getString(R.string.type_modpack);
-            } else if (mod.type == Mod.ModType.EMT_SUBGAME) {
-                type = res.getString(R.string.type_subgame);
-            } else {
-                type = "Invalid";
-            }
-            ((TextView) rootView.findViewById(R.id.mod_detail_type)).setText(type);
-
-            // Location
-            if (mod.isLocalMod()) {
-                ((TextView) rootView.findViewById(R.id.mod_detail_location)).setText(mod.path);
-            } else {
-                rootView.findViewById(R.id.mod_detail_loc_row).setVisibility(View.GONE);
-            }
-
-            // Download link and size
-            if (mod.isLocalMod()) {
-                rootView.findViewById(R.id.mod_detail_link_row).setVisibility(View.GONE);
-                rootView.findViewById(R.id.mod_detail_size_row).setVisibility(View.GONE);
-            } else {
-                ((TextView) rootView.findViewById(R.id.mod_detail_link)).setText(mod.getShortLink());
-                String dlsize = mod.getDownloadSize();
-                if (dlsize == null) {
-                    dlsize = res.getString(R.string.size_unknown);
-                }
-                ((TextView) rootView.findViewById(R.id.mod_detail_size)).setText(dlsize);
-            }
-
-
-
-
             //
             // Description
             //
@@ -245,6 +201,7 @@ public class ModDetailFragment extends Fragment {
                 }
             });
 
+            // Forum
             Button btn_forum = (Button) rootView.findViewById(R.id.forum_topic);
             if (mod.forum_url == null || mod.forum_url.isEmpty()) {
                 btn_forum.setVisibility(View.GONE);
@@ -275,6 +232,20 @@ public class ModDetailFragment extends Fragment {
             } else {
                 btn_readme.setVisibility(View.GONE);
             }
+
+            // Infomation
+            rootView.findViewById(R.id.action_info).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DialogFragment dialog = new ModInfoDialogFragment();
+                    Bundle args = new Bundle();
+                    args.putString(ARG_MOD_AUTHOR, mod.author);
+                    args.putString(ARG_MOD_LIST, mod.listname);
+                    args.putString(ARG_MOD_NAME, mod.name);
+                    dialog.setArguments(args);
+                    dialog.show(getActivity().getSupportFragmentManager(), "ModInfoDialogFragment");
+                }
+            });
         }
 
         return rootView;

@@ -9,6 +9,7 @@
         android:id="@+id/mod_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/cardview_light_background"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -51,93 +52,14 @@
 
     </RelativeLayout>
 
-    <TableLayout
-        android:id="@+id/mod_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/cardview_shadow_start_color"
-        android:stretchColumns="1"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:shrinkColumns="2"
-        android:layout_below="@id/mod_header">
-
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="@string/details_name"
-                android:padding="3dip" />
-            <TextView
-                android:id="@+id/mod_detail_name"
-                android:layout_width="wrap_content"
-                android:padding="3dip" />
-        </TableRow>
-
-        <TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="@string/details_type"
-                android:padding="3dip" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:padding="3dip"
-                android:id="@+id/mod_detail_type" />
-        </TableRow>
-
-        <TableRow android:id="@+id/mod_detail_loc_row">
-            <TextView
-                android:layout_column="1"
-                android:text="@string/details_location"
-                android:padding="3dip" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:padding="3dip"
-                android:id="@+id/mod_detail_location" />
-        </TableRow>
-
-        <TableRow android:id="@+id/mod_detail_link_row">
-            <TextView
-                android:layout_column="1"
-                android:text="@string/details_link"
-                android:padding="3dip" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:padding="3dip"
-                android:id="@+id/mod_detail_link" />
-        </TableRow>
-
-        <TableRow android:id="@+id/mod_detail_size_row">
-            <TextView
-                android:layout_column="1"
-                android:text="@string/details_size"
-                android:padding="3dip" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:padding="3dip"
-                android:id="@+id/mod_detail_size" />
-        </TableRow>
-
-        <!--<TableRow>
-            <TextView
-                android:layout_column="1"
-                android:text="@string/details_verified"
-                android:padding="3dip" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:padding="3dip"
-                android:id="@+id/mod_detail_ver" />
-        </TableRow>-->
-    </TableLayout>
-
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/mod_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/mod_details"
+        android:layout_below="@id/mod_header"
         android:padding="16dp"
+        android:background="@color/cardview_light_background"
         android:text="This is a test"
         android:textIsSelectable="true"
         tools:context="com.rubenwardy.minetestmodmanager.ModDetailFragment" />
@@ -147,10 +69,21 @@
         android:orientation="vertical"
         android:paddingTop="0dip"
         android:paddingBottom="1.0dip"
-        android:background="@color/cardview_shadow_start_color"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/mod_desc">
+
+        <Button
+            android:id="@+id/action_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:layout_gravity="start"
+            style="@style/FlatOptionButton"
+            android:drawableStart="@drawable/ic_mod_action_info_24dp"
+            android:drawableLeft="@drawable/ic_mod_action_info_24dp"
+            android:drawablePadding="8dp"
+            android:text="@string/mod_action_info"/>
 
         <Button
             android:id="@+id/forum_topic"
