@@ -33,6 +33,8 @@ class ServiceResultReceiver extends ResultReceiver {
                 list.valid = false;
             }
 
+            modman.update(list);
+
             EventBus.getDefault().post(
                     new Events.ModInstallEvent(modname, listname + "/" + modname, listname, ""));
         }
