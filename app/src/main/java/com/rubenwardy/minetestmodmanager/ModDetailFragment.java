@@ -73,8 +73,8 @@ public class ModDetailFragment extends Fragment {
                     Resources res = getResources();
                     mod = new Mod(Mod.ModType.EMT_INVALID,
                             "", "invalid",
-                            res.getString(R.string.invalid_modlist),
-                            listname + ": " + res.getString(R.string.invalid_modlist_desc));
+                            res.getString(R.string.mod_invalid_modlist_title),
+                            listname + ": " + res.getString(R.string.mod_invalid_modlist_desc));
                 } else {
                     mod = list.get(name, author);
                     if (mod == null) {
@@ -82,8 +82,8 @@ public class ModDetailFragment extends Fragment {
                         list.valid = false;
                         mod = new Mod(Mod.ModType.EMT_INVALID,
                                 "", "invalid",
-                                res.getString(R.string.invalid_mod),
-                                author + "/" + name  + ": " + res.getString(R.string.invalid_mod_desc));
+                                res.getString(R.string.mod_invalid_mod_title),
+                                author + "/" + name  + ": " + res.getString(R.string.mod_invalid_mod_desc));
                     }
                 }
             }
@@ -140,7 +140,7 @@ public class ModDetailFragment extends Fragment {
                     }
                 });
             } else {
-                btn_main.setText(res.getString(R.string.action_install));
+                btn_main.setText(res.getString(R.string.mod_action_install));
 
                 btn_main.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -157,7 +157,7 @@ public class ModDetailFragment extends Fragment {
                         } else {
                             ModManager modman = new ModManager();
                             Resources res = getResources();
-                            Snackbar.make(view, res.getString(R.string.installing_mod), Snackbar.LENGTH_LONG)
+                            Snackbar.make(view, res.getString(R.string.event_installing_mod), Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
 
                             if (mod.link != null) {
@@ -185,7 +185,7 @@ public class ModDetailFragment extends Fragment {
                 if (installedList != null) {
                     rootView.findViewById(R.id.installed_elsewhere).setVisibility(View.VISIBLE);
                     ((TextView) rootView.findViewById(R.id.installed_elsewhere_txt))
-                            .setText(res.getString(R.string.mod_installed_elsewhere, installedList.getShortname()));
+                            .setText(res.getString(R.string.mod_tip_installed_elsewhere, installedList.getShortname()));
 
                     rootView.findViewById(R.id.view).setOnClickListener(new View.OnClickListener() {
                         @Override

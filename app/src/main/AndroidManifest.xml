@@ -26,7 +26,7 @@
         </activity>
         <activity
             android:name=".ModDetailActivity"
-            android:label="@string/title_mod_detail"
+            android:label="@string/mod_title"
             android:parentActivityName=".ModListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -52,7 +52,7 @@
         </activity>
         <activity
             android:name=".ReportActivity"
-            android:label="@string/title_activity_report"
+            android:label="@string/report_title"
             android:parentActivityName=".ModListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -61,7 +61,7 @@
         </activity>
         <activity
             android:name=".AboutActivity"
-            android:label="@string/title_activity_about"
+            android:label="@string/about_title"
             android:parentActivityName=".ModListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -69,7 +69,7 @@
         </activity>
         <activity
             android:name=".ReadmeActivity"
-            android:label="@string/title_activity_readme"
+            android:label="@string/readme_title"
             android:parentActivityName=".ModDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

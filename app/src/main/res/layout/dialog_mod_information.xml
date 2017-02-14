@@ -11,7 +11,7 @@
     <TableRow>
         <TextView
             android:layout_column="1"
-            android:text="@string/details_name"
+            android:text="@string/modinfo_details_name"
             android:padding="3dip" />
         <TextView
             android:id="@+id/mod_detail_name"
@@ -22,7 +22,7 @@
     <TableRow>
         <TextView
             android:layout_column="1"
-            android:text="@string/details_type"
+            android:text="@string/modinfo_details_type"
             android:padding="3dip" />
         <TextView
             android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
     <TableRow android:id="@+id/mod_detail_loc_row">
         <TextView
             android:layout_column="1"
-            android:text="@string/details_location"
+            android:text="@string/modinfo_details_location"
             android:padding="3dip" />
         <TextView
             android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
     <TableRow android:id="@+id/mod_detail_link_row">
         <TextView
             android:layout_column="1"
-            android:text="@string/details_link"
+            android:text="@string/modinfo_details_link"
             android:padding="3dip" />
         <TextView
             android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
     <TableRow android:id="@+id/mod_detail_size_row">
         <TextView
             android:layout_column="1"
-            android:text="@string/details_size"
+            android:text="@string/modinfo_details_size"
             android:padding="3dip" />
         <TextView
             android:layout_width="wrap_content"

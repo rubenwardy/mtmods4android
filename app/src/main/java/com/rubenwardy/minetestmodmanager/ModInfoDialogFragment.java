@@ -38,8 +38,8 @@ public class ModInfoDialogFragment extends DialogFragment {
                     Resources res = getResources();
                     mod = new Mod(Mod.ModType.EMT_INVALID,
                             "", "invalid",
-                            res.getString(R.string.invalid_modlist),
-                            listname + ": " + res.getString(R.string.invalid_modlist_desc));
+                            res.getString(R.string.mod_invalid_modlist_title),
+                            listname + ": " + res.getString(R.string.mod_invalid_modlist_desc));
                 } else {
                     mod = list.get(name, author);
                     if (mod == null) {
@@ -47,8 +47,8 @@ public class ModInfoDialogFragment extends DialogFragment {
                         list.valid = false;
                         mod = new Mod(Mod.ModType.EMT_INVALID,
                                 "", "invalid",
-                                res.getString(R.string.invalid_mod),
-                                author + "/" + name  + ": " + res.getString(R.string.invalid_mod_desc));
+                                res.getString(R.string.mod_invalid_mod_title),
+                                author + "/" + name  + ": " + res.getString(R.string.mod_invalid_mod_desc));
                     }
                 }
             }
@@ -62,7 +62,7 @@ public class ModInfoDialogFragment extends DialogFragment {
 
         setupView(rootView);
 
-        builder.setMessage(R.string.dialog_information)
+        builder.setMessage(R.string.modinfo_title)
                 .setPositiveButton(R.string.dialog_close, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) { }
                 })
@@ -81,11 +81,11 @@ public class ModInfoDialogFragment extends DialogFragment {
         // Type
         String type;
         if (mod.type == Mod.ModType.EMT_MOD) {
-            type = res.getString(R.string.type_mod);
+            type = res.getString(R.string.modinfo_details_type_mod);
         } else if (mod.type == Mod.ModType.EMT_MODPACK) {
-            type = res.getString(R.string.type_modpack);
+            type = res.getString(R.string.modinfo_details_type_modpack);
         } else if (mod.type == Mod.ModType.EMT_SUBGAME) {
-            type = res.getString(R.string.type_subgame);
+            type = res.getString(R.string.modinfo_details_type_subgame);
         } else {
             type = "Invalid";
         }
@@ -106,7 +106,7 @@ public class ModInfoDialogFragment extends DialogFragment {
             ((TextView) rootView.findViewById(R.id.mod_detail_link)).setText(mod.getShortLink());
             String dlsize = mod.getDownloadSize();
             if (dlsize == null) {
-                dlsize = res.getString(R.string.size_unknown);
+                dlsize = res.getString(R.string.modinfo_details_size_unknown);
             }
             ((TextView) rootView.findViewById(R.id.mod_detail_size)).setText(dlsize);
         }

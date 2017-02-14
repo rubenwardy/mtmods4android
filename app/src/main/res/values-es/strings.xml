@@ -7,10 +7,10 @@
     <string name="dialog_nomt_msg">No hay una carpeta de mods en su dispositivo, así que intentamos crear una.
         Pero, el intento falló. El sistema puede estar denegando el acceso de esta aplicación. Intenta ejecutar Minetest.</string>
     <string name="dialog_close">Cerrar</string>
-    <string name="invalid_mod">Mod invalido</string>
-    <string name="invalid_mod_desc">No hemos podido encontrar ese mod. ¿Ha sido borrado?</string>
-    <string name="invalid_modlist">Ubicación o camino de mod invalido</string>
-    <string name="invalid_modlist_desc">No hemos podido encontrar la ubicación de este mod. ¿La carpeta ha sido borrada, o la lista de mods disponible esta desconectada?</string>
+    <string name="mod_invalid_mod_title">Mod invalido</string>
+    <string name="mod_invalid_mod_desc">No hemos podido encontrar ese mod. ¿Ha sido borrado?</string>
+    <string name="mod_invalid_modlist_title">Ubicación o camino de mod invalido</string>
+    <string name="mod_invalid_modlist_desc">No hemos podido encontrar la ubicación de este mod. ¿La carpeta ha sido borrada, o la lista de mods disponible esta desconectada?</string>
     <string name="dialog_nowld_title">No se ha podido crear el mundo</string>
     <string name="dialog_nowld_msg">Hemos tratado de crear un mundo para que configures, pero la operación falló.</string>
 
@@ -24,53 +24,53 @@
     <string name="modlist_available_mods">Mods disponibles</string>
 
     <!-- Rating -->
-    <string name="rate_txt">Hey! Fancy giving us some stars?</string>
-    <string name="rate_yes">Rate</string>
-    <string name="rate_no">No</string>
+    <string name="modlist_rate_txt">Hey! Fancy giving us some stars?</string>
+    <string name="modlist_rate_yes">Rate</string>
+    <string name="modlist_rate_no">No</string>
 
     <!-- Help -->
-    <string name="help_config">Enable a mod by clicking the world icon.</string>
+    <string name="modlist_tip_worldconfig">Enable a mod by clicking the world icon.</string>
 
     <!-- Mod Events -->
-    <string name="installing_mod">Instalando mod…</string>
-    <string name="installed_mod">Instalando %1$s.</string>
-    <string name="installing">Instalando %1$s…</string>
-    <string name="connecting">Conectando…</string>
-    <string name="downloading">Descargando…</string>
-    <string name="extracting">Extrayendo…</string>
-    <string name="failed_install">Fallo al instalar el mod %1$s. Error: %2$s.</string>
-    <string name="failed_uninstall">Fallo al desinstalar el mod %1$s. Error: %2$s.</string>
+    <string name="event_installing_mod">Instalando mod…</string>
+    <string name="event_installed_mod">Instalando %1$s.</string>
+    <string name="event_installing">Instalando %1$s…</string>
+    <string name="event_connecting">Conectando…</string>
+    <string name="event_downloading">Descargando…</string>
+    <string name="event_extracting">Extrayendo…</string>
+    <string name="event_failed_install">Fallo al instalar el mod %1$s. Error: %2$s.</string>
+    <string name="event_failed_uninstall">Fallo al desinstalar el mod %1$s. Error: %2$s.</string>
 
     <!-- Mod Details -->
-    <string name="title_mod_detail">Detalles</string>
-    <string name="action_install">Instalar</string>
-    <string name="action_uninstall">Desinstalar</string>
+    <string name="mod_title">Detalles</string>
+    <string name="mod_action_install">Instalar</string>
+    <string name="mod_action_uninstall">Desinstalar</string>
     <string name="mod_action_report_mod">Reportar</string>
 
-    <string name="title_activity_readme">Read Me</string>
+    <string name="readme_title">Read Me</string>
     <string name="mod_action_view_readme">View Read Me File</string>
 
-    <string name="details_name">Nombre del mod</string>
-    <string name="details_author">Autor</string>
-    <string name="details_type">Tipo</string>
-    <string name="details_location">Carpeta</string>
-    <string name="details_link">URL de descarga</string>
-    <string name="details_size">Tamaño de descarga</string>
+    <string name="modinfo_details_name">Nombre del mod</string>
+    <string name="modinfo_details_author">Autor</string>
+    <string name="modinfo_details_type">Tipo</string>
+    <string name="modinfo_details_location">Carpeta</string>
+    <string name="modinfo_details_link">URL de descarga</string>
+    <string name="modinfo_details_size">Tamaño de descarga</string>
     <string name="mod_action_forum_topic">Tema en el foro</string>
     <string name="details_verified">Confianza</string>
 
-    <string name="size_unknown">Desconocido</string>
-    <string name="type_mod">Mod</string>
-    <string name="type_modpack">Pack de mods</string>
-    <string name="type_subgame">Subgame</string>
+    <string name="modinfo_details_size_unknown">Desconocido</string>
+    <string name="modinfo_details_type_mod">Mod</string>
+    <string name="modinfo_details_type_modpack">Pack de mods</string>
+    <string name="modinfo_details_type_subgame">Subgame</string>
 
     <string name="mod_verified_yes">Este mod es de un autor bien conocido.</string>
     <string name="mod_verified_no">Este mod no fue hecho por un autor muy conocido.</string>
     <string name="mod_verified_uk">No se puede determinar la fuente de este mod.</string>
 
     <!-- Report -->
-    <string name="x_by_y">%1$s por %2$s</string>
-    <string name="title_activity_report">Reportar Mod</string>
+    <string name="report_modname_by_authorname">%1$s por %2$s</string>
+    <string name="report_title">Reportar Mod</string>
     <string name="report_instructions">Por favor selecciona la razon por la cual estas reportando este mod.
         Si tienes más información, por favor introducela en el campo de texto.</string>
     <string name="report_reason">Razón</string>
@@ -84,8 +84,8 @@
 
     <!-- World config -->
     <string name="world_config">Configuración del Mundo</string>
-    <string name="accept">Aceptar</string>
-    <string name="accept_and_install">Aceptar e Instalar</string>
+    <string name="world_config_accept">Aceptar</string>
+    <string name="disclaimer_accept_and_install">Aceptar e Instalar</string>
     <string name="world_config_saved">Configuración guardada</string>
 
     <!-- Disclaimer -->
@@ -118,7 +118,7 @@
         y que se reemplazen los links con otros maliciosos.</string>
 
     <!-- About -->
-    <string name="title_activity_about">Sobre esta App</string>
+    <string name="about_title">Sobre esta App</string>
     <string name="about_credits">Creditos</string>
     <string name="about_credits_dev">Desarollado por rubenwardy (rubenwardy.com)</string>
     <string name="about_credits_krock">Agradecimientos a Krock (aka SmallJoker) por crear Krock\'s Mod Search,
@@ -127,9 +127,9 @@
     <string name="about_credits_logo">El logo de la aplicación esta basado en el logo de Minetest
         licenciado en CC-BY-SA 3.0, y creado por erlehmann</string>
     <string name="about_credits_images">Esta aplicación también usa varios iconos genericos de Android, licenciados en CC-BY 4.0</string>
-    <string name="dialog_information">Information</string>
-    <string name="mod_view_installed">View</string>
-    <string name="mod_installed_elsewhere">Mod already installed to %1$s</string>
+    <string name="modinfo_title">Information</string>
+    <string name="mod_tip_view">View</string>
+    <string name="mod_tip_installed_elsewhere">Mod already installed to %1$s</string>
     <string name="mod_action_info">View Information</string>
     <string name="failed_list_download">Error whilst download available mod list:</string>
 </resources>

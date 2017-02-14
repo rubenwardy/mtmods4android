@@ -1,24 +1,15 @@
 package com.rubenwardy.minetestmodmanager;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.rubenwardy.minetestmodmanager.manager.ModManager;
 import com.rubenwardy.minetestmodmanager.manager.Utils;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ReadmeActivity extends AppCompatActivity {
     public static final String ARG_MOD_PATH = "path";
@@ -32,7 +23,7 @@ public class ReadmeActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             Resources res = getResources();
-            actionBar.setTitle(res.getString(R.string.title_activity_readme));
+            actionBar.setTitle(res.getString(R.string.readme_title));
         }
 
         TextView text = (TextView) findViewById(R.id.text);

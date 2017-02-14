@@ -24,7 +24,7 @@
                 android:gravity="center_vertical"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="@string/rate_no"
+                android:text="@string/modlist_rate_no"
                 android:singleLine="true"
                 android:padding="10dp"
                 android:textAllCaps="true"
@@ -38,7 +38,7 @@
                 android:id="@+id/rate_yes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/rate_yes"
+                android:text="@string/modlist_rate_yes"
                 android:padding="10dp"
                 android:singleLine="true"
                 android:gravity="center_vertical"
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@id/rate_yes"
-                android:text="@string/rate_txt" />
+                android:text="@string/modlist_rate_txt" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -92,7 +92,7 @@
                 android:textColor="@color/hintText"
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@id/help_config_close"
-                android:text="@string/help_config" />
+                android:text="@string/modlist_tip_worldconfig" />
         </RelativeLayout>
 
         <android.support.v7.widget.RecyclerView

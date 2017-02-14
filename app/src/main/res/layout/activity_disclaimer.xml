@@ -92,7 +92,7 @@
                 android:id="@+id/accept"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/accept_and_install"
+                android:text="@string/disclaimer_accept_and_install"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp" />
         </LinearLayout>

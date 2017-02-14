@@ -1,6 +1,5 @@
 package com.rubenwardy.minetestmodmanager;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -153,7 +152,7 @@ public class ModDetailActivity
     public void onModInstall(final Events.ModInstallEvent e) {
         Resources res = getResources();
         if (e.didError()) {
-            String text = String.format(res.getString(R.string.failed_install),
+            String text = String.format(res.getString(R.string.event_failed_install),
                     e.modname, e.error);
             Snackbar.make(findViewById(R.id.mod_detail_container), text, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
@@ -165,7 +164,7 @@ public class ModDetailActivity
 
             startActivity(intent);
         } else {
-            String text = String.format(res.getString(R.string.installed_mod),
+            String text = String.format(res.getString(R.string.event_installed_mod),
                     e.modname);
             Snackbar.make(findViewById(R.id.mod_detail_container), text, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
@@ -176,7 +175,7 @@ public class ModDetailActivity
     public void onModUninstall(final Events.ModUninstallEvent e) {
         if (e.didError()) {
             Resources res = getResources();
-            String text = String.format(res.getString(R.string.failed_uninstall),
+            String text = String.format(res.getString(R.string.event_failed_uninstall),
                     e.modname, e.error);
             Snackbar.make(findViewById(R.id.mod_detail_container), text, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();

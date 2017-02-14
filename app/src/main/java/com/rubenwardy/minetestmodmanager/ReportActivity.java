@@ -52,7 +52,7 @@ public class ReportActivity extends AppCompatActivity {
         Resources res = getResources();
 
         TextView tv = (TextView) findViewById(R.id.mod_details);
-        String details = String.format(res.getString(R.string.x_by_y), modname, author);
+        String details = String.format(res.getString(R.string.report_modname_by_authorname), modname, author);
         details += "\n" + link;
         details += "\n" + listname;
         tv.setText(details);

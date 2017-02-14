@@ -277,14 +277,14 @@ public class ModListActivity
     public void onModInstall(final Events.ModInstallEvent e) {
         Resources res = getResources();
         if (e.didError()) {
-            String text = String.format(res.getString(R.string.failed_install), e.modname, e.error);
+            String text = String.format(res.getString(R.string.event_failed_install), e.modname, e.error);
             Log.e("ModListActivity", text);
             Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
 
             return;
         } else {
-            String text = String.format(res.getString(R.string.installed_mod), e.modname);
+            String text = String.format(res.getString(R.string.event_installed_mod), e.modname);
             Log.i("ModListActivity", text);
             Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
@@ -297,7 +297,7 @@ public class ModListActivity
     public void onModUninstall(final Events.ModUninstallEvent e) {
         Resources res = getResources();
         if (e.didError()) {
-            String text = String.format(res.getString(R.string.failed_uninstall), e.modname, e.error);
+            String text = String.format(res.getString(R.string.event_failed_uninstall), e.modname, e.error);
             Log.e("ModListActivity", text);
             Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();

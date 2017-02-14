@@ -224,10 +224,10 @@ public class ModInstallService extends IntentService {
         try {
             // Resource
             Resources res = getApplicationContext().getResources();
-            String notif_msg_mod_connecting = res.getString(R.string.connecting);
-            String notif_msg_mod_downloading = res.getString(R.string.downloading);
-            String notif_msg_mod_extracting = res.getString(R.string.extracting);
-            String notif_msg_mod_installing = String.format(res.getString(R.string.installing), modname);
+            String notif_msg_mod_connecting = res.getString(R.string.event_connecting);
+            String notif_msg_mod_downloading = res.getString(R.string.event_downloading);
+            String notif_msg_mod_extracting = res.getString(R.string.event_extracting);
+            String notif_msg_mod_installing = String.format(res.getString(R.string.event_installing), modname);
 
             // Notification
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
