@@ -48,7 +48,7 @@ public class DisclaimerActivity extends AppCompatActivity {
                 editor.apply();
 
                 if (listname != null && modname != null) {
-                    ModManager modman = new ModManager();
+                    ModManager modman = ModManager.getInstance();
                     ModList list = modman.get(listname);
                     if (list != null) {
                         Mod mod = list.get(modname, author);

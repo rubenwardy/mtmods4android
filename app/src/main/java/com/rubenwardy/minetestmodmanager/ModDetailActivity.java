@@ -50,7 +50,7 @@ public class ModDetailActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
-        ModManager modman = new ModManager();
+        ModManager modman = ModManager.getInstance();
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();

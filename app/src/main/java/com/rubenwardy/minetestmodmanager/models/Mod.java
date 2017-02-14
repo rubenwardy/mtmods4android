@@ -118,7 +118,7 @@ public class Mod {
         } else if (type == ModType.EMT_MODPACK) {
             assert (path != null);
             ModList sublist = new ModList(ModList.ModListType.EMLT_PATH, "", null, path);
-            ModManager modman = new ModManager();
+            ModManager modman = ModManager.getInstance();
             modman.updatePathModList(sublist);
             for (Mod submod : sublist.mods) {
                 if (!submod.isEnabled(conf)) {
@@ -137,7 +137,7 @@ public class Mod {
         } else if (type == ModType.EMT_MODPACK) {
             assert (path != null);
             ModList sublist = new ModList(ModList.ModListType.EMLT_PATH, "", "", path);
-            ModManager modman = new ModManager();
+            ModManager modman = ModManager.getInstance();
             modman.updatePathModList(sublist);
             for (Mod submod : sublist.mods) {
                 submod.setEnabled(conf, enable);

@@ -31,7 +31,7 @@ public class ModInfoDialogFragment extends DialogFragment {
                 String name = getArguments().getString(ARG_MOD_NAME);
                 String author = getArguments().getString(ARG_MOD_AUTHOR);
                 String listname = getArguments().getString(ARG_MOD_LIST);
-                ModManager modman = new ModManager();
+                ModManager modman = ModManager.getInstance();
 
                 ModList list = modman.get(listname);
                 if (list == null) {

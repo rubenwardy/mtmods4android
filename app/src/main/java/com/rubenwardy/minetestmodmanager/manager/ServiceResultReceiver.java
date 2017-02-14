@@ -27,7 +27,7 @@ class ServiceResultReceiver extends ResultReceiver {
             final String error = b.getString(ModInstallService.RET_ERROR);
             EventBus.getDefault().post(new Events.ModInstallEvent(modname, null, listname, error));
         } else {
-            ModManager modman = new ModManager();
+            ModManager modman = ModManager.getInstance();
             ModList list = modman.get(listname);
             if (list != null) {
                 list.valid = false;
@@ -45,7 +45,7 @@ class ServiceResultReceiver extends ResultReceiver {
             final String error = b.getString(ModInstallService.RET_ERROR);
             EventBus.getDefault().post(new Events.ModUninstallEvent(modname, null, listname, error));
         } else {
-            ModManager modman = new ModManager();
+            ModManager modman = ModManager.getInstance();
             ModList list = modman.get(listname);
             if (list != null) {
                 list.valid = false;

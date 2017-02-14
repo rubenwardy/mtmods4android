@@ -14,7 +14,7 @@ public class BCastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         switch (intent.getAction()) {
         case ACTION_STOP_SERVICE:
-            ModManager modman = new ModManager();
+            ModManager modman = ModManager.getInstance();
             modman.cancelAsyncTask();
             break;
         default:

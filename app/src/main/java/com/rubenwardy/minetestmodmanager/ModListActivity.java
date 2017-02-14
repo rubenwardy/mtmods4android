@@ -77,7 +77,7 @@ public class ModListActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        modman = new ModManager();
+        modman = ModManager.getInstance();
 
         //
         // Read opening intent
@@ -111,7 +111,7 @@ public class ModListActivity
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                for (ModList list : ModManager.lists_map.values()) {
+                for (ModList list : ModManager.getInstance().lists_map.values()) {
                     if (list.type == ModList.ModListType.EMLT_PATH) {
                         modman.update(list);
                     }
@@ -243,7 +243,7 @@ public class ModListActivity
     protected void onResume() {
         super.onResume();
 
-        for (ModList list : ModManager.lists_map.values()) {
+        for (ModList list : ModManager.getInstance().lists_map.values()) {
             checkChanges(list);
         }
 
@@ -484,7 +484,7 @@ public class ModListActivity
         List<Mod> mods = new ArrayList<>();
         List<SectionedRecyclerViewAdapter.Section> sections =
                 new ArrayList<>();
-        for (ModList list : ModManager.lists_map.values()) {
+        for (ModList list : ModManager.getInstance().lists_map.values()) {
             if (list.type == ModList.ModListType.EMLT_PATH) {
                 sections.add(new SectionedRecyclerViewAdapter.Section(mods.size(), list.title, list.getWorldsDir()));
                 if (query != null) {

@@ -67,7 +67,7 @@ public class ModDetailFragment extends Fragment {
                 String name = getArguments().getString(ARG_MOD_NAME);
                 String author = getArguments().getString(ARG_MOD_AUTHOR);
                 String listname = getArguments().getString(ARG_MOD_LIST);
-                ModManager modman = new ModManager();
+                ModManager modman = ModManager.getInstance();
                 ModList list = modman.get(listname);
                 if (list == null) {
                     Resources res = getResources();
@@ -135,7 +135,7 @@ public class ModDetailFragment extends Fragment {
                 btn_main.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(@NonNull View view) {
-                        ModManager modman = new ModManager();
+                        ModManager modman = ModManager.getInstance();
                         modman.uninstallModAsync(getContext(), mod);
                     }
                 });
@@ -155,7 +155,7 @@ public class ModDetailFragment extends Fragment {
                             intent.putExtra(ModDetailFragment.ARG_MOD_NAME, mod.name);
                             context.startActivity(intent);
                         } else {
-                            ModManager modman = new ModManager();
+                            ModManager modman = ModManager.getInstance();
                             Resources res = getResources();
                             Snackbar.make(view, res.getString(R.string.event_installing_mod), Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
@@ -181,7 +181,7 @@ public class ModDetailFragment extends Fragment {
             //
 
             if (!mod.isLocalMod()) {
-                ModList installedList = (new ModManager()).getModInstalledList(mod.name, mod.author);
+                ModList installedList = ModManager.getInstance().getModInstalledList(mod.name, mod.author);
                 if (installedList != null) {
                     rootView.findViewById(R.id.installed_elsewhere).setVisibility(View.VISIBLE);
                     ((TextView) rootView.findViewById(R.id.installed_elsewhere_txt))

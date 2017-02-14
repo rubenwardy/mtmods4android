@@ -109,7 +109,7 @@ public class ReportActivity extends AppCompatActivity {
                 EditText textbox = (EditText) findViewById(R.id.editText);
                 String info = str_make_nonnull(textbox.getText().toString());
 
-                ModManager modman = new ModManager();
+                ModManager modman = ModManager.getInstance();
                 modman.reportModAsync(modname, author, listname, link, selected, info);
                 finish();
                 return true;

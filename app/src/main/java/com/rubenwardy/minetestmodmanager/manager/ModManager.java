@@ -30,11 +30,23 @@ import retrofit2.Response;
  * Provides a collection of mods.
  */
 public class ModManager {
-    @NonNull
-    public static Map<String, ModList> lists_map = new HashMap<>();
+    private ModManager() {
+
+    }
+
+    private static ModManager instance = null;
+    public static ModManager getInstance() {
+        if (instance == null) {
+            instance = new ModManager();
+        }
+        return instance;
+    }
 
     @NonNull
-    private static ServiceResultReceiver srr = new ServiceResultReceiver(new Handler());
+    public Map<String, ModList> lists_map = new HashMap<>();
+
+    @NonNull
+    private ServiceResultReceiver srr = new ServiceResultReceiver(new Handler());
 
     @Nullable
     public ModList get(String path) {
