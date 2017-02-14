@@ -183,7 +183,7 @@ public class ModManager {
     }
 
     @MainThread
-    public void reportModAsync(Context context, @NonNull String modname, @Nullable String author,
+    public void reportModAsync(@NonNull String modname, @Nullable String author,
                                @Nullable String list, @Nullable String link, @NonNull String reason,
                                @NonNull String info) {
         StoreAPIBuilder.createService().sendReport(modname, info, reason, author, list, link).enqueue(new Callback<ResponseBody>() {

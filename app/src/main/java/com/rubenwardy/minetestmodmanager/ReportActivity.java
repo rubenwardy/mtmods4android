@@ -4,9 +4,12 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,6 +26,11 @@ public class ReportActivity extends AppCompatActivity {
     public static final String EXTRA_AUTHOR = "author";
     public static final String EXTRA_LINK = "link";
     private String selected = "mal";
+
+    private String listname;
+    private String link;
+    private String author;
+    private String modname;
 
     private @NonNull String str_make_nonnull(@Nullable String str) {
         if (str == null) {
@@ -43,11 +51,10 @@ public class ReportActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-
-        final String listname = str_make_nonnull(getIntent().getStringExtra(EXTRA_LIST));
-        final String link     = str_make_nonnull(getIntent().getStringExtra(EXTRA_LINK));
-        final String author   = str_make_nonnull(getIntent().getStringExtra(EXTRA_AUTHOR));
-        final String modname  = str_make_nonnull(getIntent().getStringExtra(EXTRA_MOD_NAME));
+        listname = str_make_nonnull(getIntent().getStringExtra(EXTRA_LIST));
+        link     = str_make_nonnull(getIntent().getStringExtra(EXTRA_LINK));
+        author   = str_make_nonnull(getIntent().getStringExtra(EXTRA_AUTHOR));
+        modname  = str_make_nonnull(getIntent().getStringExtra(EXTRA_MOD_NAME));
 
         Resources res = getResources();
 
@@ -86,19 +93,29 @@ public class ReportActivity extends AppCompatActivity {
 
             }
         });
+    }
 
-        Button btn_report = (Button) findViewById(R.id.submit);
-        btn_report.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(@NonNull View view) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_report, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.send:
                 EditText textbox = (EditText) findViewById(R.id.editText);
                 String info = str_make_nonnull(textbox.getText().toString());
 
                 ModManager modman = new ModManager();
-                modman.reportModAsync(view.getContext(), modname, author, listname, link, selected, info);
+                modman.reportModAsync(modname, author, listname, link, selected, info);
                 finish();
-            }
-        });
+                return true;
+        }
+
+        return false;
     }
 
 }
