@@ -33,7 +33,7 @@ public class ModInfoDialogFragment extends DialogFragment {
                 String listname = getArguments().getString(ARG_MOD_LIST);
                 ModManager modman = ModManager.getInstance();
 
-                ModList list = modman.get(listname);
+                ModList list = modman.getModList(listname);
                 if (list == null) {
                     Resources res = getResources();
                     mod = new Mod(Mod.ModType.EMT_INVALID,

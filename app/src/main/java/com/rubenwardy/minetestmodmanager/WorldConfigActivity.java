@@ -121,7 +121,7 @@ public class WorldConfigActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         ModManager modman = ModManager.getInstance();
-        ModList list = modman.get(modpath);
+        ModList list = modman.getModList(modpath);
         if (list == null) {
             finish();
             return;

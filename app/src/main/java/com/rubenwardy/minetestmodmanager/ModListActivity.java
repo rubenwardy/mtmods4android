@@ -356,7 +356,7 @@ public class ModListActivity
             return;
         }
 
-        ModList list = modman.get(listname);
+        ModList list = modman.getModList(listname);
         checkChanges(list);
     }
 

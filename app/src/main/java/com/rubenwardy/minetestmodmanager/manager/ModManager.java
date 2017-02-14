@@ -49,7 +49,7 @@ public class ModManager {
     private ServiceResultReceiver srr = new ServiceResultReceiver(new Handler());
 
     @Nullable
-    public ModList get(String path) {
+    public ModList getModList(String path) {
         return lists_map.get(path);
     }
 

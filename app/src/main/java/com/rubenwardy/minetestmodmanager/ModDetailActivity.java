@@ -93,7 +93,7 @@ public class ModDetailActivity
             return;
         }
 
-        ModList list = modman.get(listname);
+        ModList list = modman.getModList(listname);
         if (list == null) {
             return;
         }
