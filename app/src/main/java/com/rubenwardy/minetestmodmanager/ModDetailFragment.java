@@ -255,6 +255,14 @@ public class ModDetailFragment extends Fragment {
                 btn_readme.setVisibility(View.GONE);
             }
 
+            // Search
+            rootView.findViewById(R.id.find_elsewhere).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBus.getDefault().post(new Events.SearchEvent("name:" + mod.name + " author:" + mod.author));
+                }
+            });
+
             // Infomation
             rootView.findViewById(R.id.action_info).setOnClickListener(new View.OnClickListener() {
                 @Override

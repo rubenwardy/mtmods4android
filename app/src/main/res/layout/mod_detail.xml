@@ -139,6 +139,18 @@
             android:text="@string/mod_action_view_readme" />
 
         <Button
+            android:id="@+id/find_elsewhere"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:layout_gravity="start"
+            style="@style/FlatOptionButton"
+            android:drawableStart="@drawable/ic_mod_action_find_elsewhere_24dp"
+            android:drawableLeft="@drawable/ic_mod_action_find_elsewhere_24dp"
+            android:drawablePadding="8dp"
+            android:text="@string/mod_action_find_elsewhere" />
+
+        <Button
             android:id="@+id/action_report"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
