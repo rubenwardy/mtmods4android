@@ -24,7 +24,6 @@
     <string name="modinfo_details_location">Dossier</string>
     <string name="modinfo_details_size">Mesure du téléchargement</string>
     <string name="modinfo_details_type">Type</string>
-    <string name="details_verified">Confiance</string>
     <string name="dialog_close">Fermer</string>
     <string name="dialog_noext_msg">On ne peuvait pas</string>
     <string name="modinfo_details_type_mod">Mod</string>
@@ -51,7 +50,6 @@
     <string name="event_installing_mod">Mod en installation</string>
     <string name="mod_action_view_readme">Voir plus d\'information</string>
     <string name="modlist_rate_txt">Veut-on nous évaluer?</string>
-    <string name="disclaimer_4_t">Auteurs bien connus</string>
     <string name="disclaimer_3_t">Que peut-on faire?</string>
     <string name="disclaimer_1_t">Aucune garantie</string>
     <string name="disclaimer_1_m">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
@@ -67,11 +65,6 @@
         we cannot guarantee mods are safe. No one in particular checks these mods.</string>
     <string name="disclaimer_3_m">If you\'re unsure about the safety of a mod, check its
         forum topic. Look at how old the thread is, and what the comments say.</string>
-    <string name="disclaimer_4_m">One of the features of this app is to label well known,
-        popular mod makers as such. The aim of this is for recommendation, rather
-        than for security reasons. Whilst these authors are more trustworthy than most,
-        there is still a possibility of their accounts being
-        hacked and bad downloads being placed there instead.</string>
 
     <string name="dialog_noext_title">Aucun stockage disponible</string>
     <string name="dialog_nomt_msg">There wasn\'t a folder for mods on your device, so we attempted to create one.
@@ -79,7 +72,6 @@
     <string name="mod_invalid_modlist_desc">We couldn\'t find that mod location. Has the folder been deleted, or is the available mod list offline?</string>
     <string name="mod_invalid_modlist_title">Endroit ou chemin de mod non valide</string>
     <string name="report_modname_by_authorname">%1$s by %2$s</string>
-    <string name="mod_verified_no">Cet mod n\'était pas produit par un auteur bien connu</string>
     <string name="event_installed_mod">Installé %1$s...</string>
     <string name="event_failed_install">Echoué à installer le mod %1$s. Erreur: %2$s.</string>
     <string name="event_failed_uninstall">Echouer à désinstaller le mod %1$s. Erreur: %2$s.</string>
@@ -90,9 +82,7 @@
     <string name="disclaimer_2_t">Pas un Stockage de Mods, mais un Découvreur de Mods</string>
     <string name="dialog_nowld_title">Incapable de créér un monde</string>
     <string name="dialog_nowld_msg">Nous avons essayé de créér un monde pour vous à configurer, mais l\'opération à ėchoué </string>
-    <string name="mod_verified_uk">Incapable de déterminer la source de cet mod</string>
     <string name="disclaimer_agree">En utilisant cet service, on accepte aux termes et conditions suivants</string>
-    <string name="mod_verified_yes">Cet mod vient d\'un auteur bien connu</string>
     <string name="modlist_minetest">Mods de Minetest installés</string>
     <string name="modlist_multicraft">Mods de Multicraft installés</string>
     <string name="mod_action_info">View Information</string>

@@ -57,16 +57,11 @@
     <string name="modinfo_details_link">URL de descarga</string>
     <string name="modinfo_details_size">Tamaño de descarga</string>
     <string name="mod_action_forum_topic">Tema en el foro</string>
-    <string name="details_verified">Confianza</string>
 
     <string name="modinfo_details_size_unknown">Desconocido</string>
     <string name="modinfo_details_type_mod">Mod</string>
     <string name="modinfo_details_type_modpack">Pack de mods</string>
     <string name="modinfo_details_type_subgame">Subgame</string>
-
-    <string name="mod_verified_yes">Este mod es de un autor bien conocido.</string>
-    <string name="mod_verified_no">Este mod no fue hecho por un autor muy conocido.</string>
-    <string name="mod_verified_uk">No se puede determinar la fuente de este mod.</string>
 
     <!-- Report -->
     <string name="report_modname_by_authorname">%1$s por %2$s</string>
@@ -109,13 +104,6 @@
     <string name="disclaimer_3_t">¿Que puedes hacer?</string>
     <string name="disclaimer_3_m">Si estás inseguro sobre la seguridad de un mod, mira su
         tema en el foro. Observa que tan viejo es, y que dicen los comentarios.</string>
-
-    <string name="disclaimer_4_t">Autores Bien Conocidos</string>
-    <string name="disclaimer_4_m">Una de las caracteristicas de esta aplicación es etiquetar creadores de mods,
-        bien conocidos, populares, como tales. El objetivo de esto es recomendar, y no
-        esta relacionado con seguridad. Aunque estos autores son mas confiables que la mayoria,
-        aún está la posibilidad de que sus cuentas sean hackeadas
-        y que se reemplazen los links con otros maliciosos.</string>
 
     <!-- About -->
     <string name="about_title">Sobre esta App</string>

@@ -124,13 +124,6 @@
     <string name="disclaimer_3_m">If you\'re unsure about the safety of a mod, check its
         forum topic. Look at how old the thread is, and what the comments say.</string>
 
-    <string name="disclaimer_4_t">Well Known Authors</string>
-    <string name="disclaimer_4_m">One of the features of this app is to label well known,
-        popular mod makers as such. The aim of this is for recommendation, rather
-        than for security reasons. Whilst these authors are more trustworthy than most,
-        there is still a possibility of their accounts being
-        hacked and bad downloads being placed there instead.</string>
-
     <string name="disclaimer_accept_and_install">Accept and Install</string>
 
 

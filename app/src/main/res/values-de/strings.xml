@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Minetest Mods</string>
+
+    <string name="dialog_noext_title">Kein externer Speicher verfügbar!</string>
+    <string name="dialog_noext_msg">Wir konnten den Minetest Ordner nicht finden!
+        Externer Speicher heißt nicht, das eine SD-Karte nötig ist.
+        Sondern das der Ordner "Minetest" für diese App zugänglich sein muss.</string>
+    <string name="dialog_nomt_title">Erstellen des Minetest-Mods-Ordners gescheitert!</string>
+    <string name="dialog_nomt_msg">Es exsistierte bisher in ihrem Speicher kein Ordner "Minetest",
+        darum hat die App versucht einen zu erstellen. Dies hat nicht funktioniert!
+        Möglicherweise verhindert ihr Gerät den Zugriff auf diesen. Probieren sie bitte ob
+        sie die Minetest App nutzen können.</string>
+    <string name="dialog_close">Schließen</string>
+    <string name="dialog_nowld_title">Welt konnte nicht erstellt werden!</string>
+    <string name="dialog_nowld_msg">Wir haben versucht eine Minetest Welt zu erstellen, aber das hat nicht funktioniert.</string>
+
+    <string name="action_search">Suchen</string>
+
+    <string name="modlist_minetest">Installierte Minetest Mods</string>
+    <string name="modlist_multicraft">Installierte MultiCraft Mods</string>
+    <string name="modlist_available_mods">Verfügbare Mods</string>
+    <string name="modlist_rate_txt">Wir würden uns darüber freuen, wenn sie uns eine Bewertung schreiben würden.</string>
+    <string name="modlist_rate_yes">Ja, Bewerten</string>
+    <string name="modlist_rate_no">Nein</string>
+    <string name="modlist_tip_worldconfig">Mod aktivieren per Klick auf Welt Symbol</string>
+
+    <string name="event_installing_mod">Installiere mod…</string>
+    <string name="event_installed_mod">Habe %1$s installiert.</string>
+    <string name="event_installing">Installiere %1$s…</string>
+    <string name="event_connecting">Verbinde…</string>
+    <string name="event_downloading">Herunterladen…</string>
+    <string name="event_extracting">Auspacken…</string>
+    <string name="event_failed_install">Installation von %1$s mod gescheitert. Fehler: %2$s.</string>
+    <string name="event_failed_uninstall">Deinstallation von %1$s mod gescheitert. Fehler: %2$s.</string>
+
+    <string name="mod_title">Mod Details</string>
+    <string name="mod_action_install">Installieren</string>
+    <string name="mod_action_uninstall">Deinstallieren</string>
+
+    <string name="mod_tip_installed_elsewhere">Mod wurde schon installiert in %1$s</string>
+    <string name="mod_tip_view">Anzeigen</string>
+
+    <string name="mod_action_info">Informationen anzeigen</string>
+    <string name="mod_action_report_mod">Mod melden</string>
+    <string name="mod_action_forum_topic">Forum Thema anzeigen</string>
+    <string name="mod_action_view_readme">Lies-Mich-Datei anzeigen</string>
+
+    <string name="mod_verified_yes">Dieser Mod stammt von einem namhaften Autor.</string>
+    <string name="mod_verified_no">Dieser Mod stammt nicht von einem namhaften Autor.</string>
+    <string name="mod_verified_uk">Die Quelle dieses Mods konnte nicht geklärt werden.</string>
+
+    <string name="mod_invalid_mod_title">Ungültiger Mod</string>
+    <string name="mod_invalid_mod_desc">Wir konnten diesen Mod nicht finden. Wurde er bereits gelöscht?</string>
+    <string name="mod_invalid_modlist_title">Ungültiger Pfad des Mods</string>
+    <string name="mod_invalid_modlist_desc">Wir konnten diesen Pfad nicht finden. Haben sie den Ordner gelöscht, oder haben sie keine aktive Internetverbindung?</string>
+
+    <string name="modinfo_title">Information</string>
+    <string name="modinfo_details_name">Mod Name</string>
+    <string name="modinfo_details_author">Autor</string>
+    <string name="modinfo_details_type">Typ</string>
+    <string name="modinfo_details_location">Ordner</string>
+    <string name="modinfo_details_link">Download URL</string>
+    <string name="modinfo_details_size">Download Größe</string>
+    <string name="modinfo_details_size_unknown">Unbekannt</string>
+    <string name="modinfo_details_type_mod">Mod</string>
+    <string name="modinfo_details_type_modpack">Mod Pack</string>
+    <string name="modinfo_details_type_subgame">Subgame</string>
+
+    <string name="readme_title">Lies Mich</string>
+
+    <string name="report_title">Mod melden</string>
+    <string name="report_modname_by_authorname">%1$s von %2$s</string>
+    <string name="report_instructions">Bitte wählen sie den Grund für das Melden des Mods aus.
+        Wenn sie weitere hilfreiche Information hierzu haben schreiben sie sie bitte in die Box.</string>
+    <string name="report_reason">Grund</string>
+    <string name="report_msg">Optionale Erklärung</string>
+    <string name="report_details">Details</string>
+
+    <string-array name="report_reasons">
+        <item>Schädlich / Virus</item>
+        <item>Installation funktioniert nicht!</item>
+        <item>Anderes (bitte in die Box schreiben)</item>
+    </string-array>
+
+    <string name="world_config">Welt Konfiguration</string>
+    <string name="world_config_accept">Aktzeptieren</string>
+    <string name="world_config_saved">Konfiguration gespeichert</string>
+
+    <string name="disclaimer_title">Disclaimer</string>
+    <string name="disclaimer_agree">Mit dem Nutzen dieses Services stimmen sie den folgenden Bedingungen zu:</string>
+    <string name="disclaimer_1_t">Keine Garantie oder Haftung</string>
+    <string name="disclaimer_1_m">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+        INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+        IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+        DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+        ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+        DEALINGS IN THE SOFTWARE.</string>
+
+    <string name="disclaimer_2_t">Dies ist kein Mod Store, sondern eine Mod Suchmaschine</string>
+    <string name="disclaimer_2_m">Die hier gelisteten Mods sind dem Minetest Forum entnommen.
+        Sie werden vom Link, den der Autor dort hinterlies direkt heruntergeladen.
+        Darum können wir auch für dessen Inhalte in keinster Weise garantieren.
+        Niemand von uns überprüft diese Mods.</string>
+
+    <string name="disclaimer_3_t">Was können sie tun?</string>
+    <string name="disclaimer_3_m">Wenn sie sich bezüglich der Sicherheit eines Mods unsicher sind,
+        überprüfen sie bitte den dazugehörigen Forumseintrag im Minetest-Forum.
+        Prüfen sie wie alt der Beitrag ist und was die bisherige Nutzer in den Kommentaren
+        geschireben haben.</string>
+
+    <string name="disclaimer_accept_and_install">Aktzeptieren und Installieren</string>
+
+
+    <string name="about_title">Über diese App</string>
+    <string name="about_credits">Danksagung</string>
+    <string name="about_credits_dev">Entwickelt von rubenwardy (rubenwardy.com)</string>
+    <string name="about_credits_krock">Danke Krock (aka SmallJoker) für das Erstellen von "Krock\'s Mod Search" die Suchmaschine die wir für diese App nutzen.</string>
+    <string name="about_credits_feedback">Danke DonBatman für das Feedback während der Entwicklung</string>
+    <string name="about_credits_logo">Das App Logo basiert auf dem Minetest Logo von erlehmann das unter CC-BY-SA 3.0 Lizenz steht</string>
+    <string name="about_credits_images">Außerdem nutzt diese App einige standard Android icons, diese stehen unter CC-BY 4.0 Lizenz</string>
+
+</resources>
