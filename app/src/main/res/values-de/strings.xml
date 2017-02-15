@@ -120,5 +120,6 @@
     <string name="about_credits_feedback">Danke DonBatman für das Feedback während der Entwicklung</string>
     <string name="about_credits_logo">Das App Logo basiert auf dem Minetest Logo von erlehmann das unter CC-BY-SA 3.0 Lizenz steht</string>
     <string name="about_credits_images">Außerdem nutzt diese App einige standard Android icons, diese stehen unter CC-BY 4.0 Lizenz</string>
+    <string name="about_credits_translation">Thank you to the following translators: my friend Soph (French), Dragonop (Spanish), and Adrian Dischinger (German).</string>
 
 </resources>

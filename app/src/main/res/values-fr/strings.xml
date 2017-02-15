@@ -3,7 +3,7 @@
     <string name="app_name">Minetest Mods</string>
     <string name="about_credits">Crédits</string>
     <string name="about_credits_dev">Développé par rubenwardy</string>
-    <string name="about_credits_feedback">Gratitude à DonBatman pour le feedback pendant le développement et mon amie Sophie pour avoir fait la traduction</string>
+    <string name="about_credits_feedback">Gratitude à DonBatman pour le feedback pendant le développement.</string>
     <string name="about_credits_images">Cette appli utilise aussi des icônes standardes d\'Android, que sont CC-BY 4.0</string>
     <string name="about_credits_krock">Gratitude à Krock (allas Smalljoker) pour avoir créé Krock\'s Mod Search, le crawler de laquelle la liste de mods disponible est dérivée</string>
     <string name="about_credits_logo">Le logo d\'appli est basé sur le logo de Minetest, CC-BY-SA 3.0, et créé par erlehmann</string>
@@ -88,6 +88,7 @@
     <string name="mod_action_info">View Information</string>
     <string name="failed_list_download">Error whilst download available mod list:</string>
     <string name="mod_action_find_elsewhere">Trouver ailleurs</string>
+    <string name="about_credits_translation">Thank you to the following translators: my friend Soph (French), Dragonop (Spanish), and Adrian Dischinger (German).</string>
     <string-array name="report_reasons">
         <item>Malicious / Virus</item>
         <item>Install doesn\'t work</item>
