@@ -31,14 +31,11 @@ import retrofit2.Response;
  */
 public class ModManager {
     private ModManager() {
-
+        Log.e("ModMan", "Initializing...");
     }
 
-    private static ModManager instance = null;
+    private static final ModManager instance = new ModManager();
     public static ModManager getInstance() {
-        if (instance == null) {
-            instance = new ModManager();
-        }
         return instance;
     }
 
@@ -162,7 +159,7 @@ public class ModManager {
                         }
                     }
 
-                    ModManager modman = new ModManager();
+                    ModManager modman = ModManager.getInstance();
                     modman.addList(list);
 
                     EventBus.getDefault().post(new Events.FetchedListEvent(modstore_url, ""));
