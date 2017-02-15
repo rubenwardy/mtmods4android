@@ -103,10 +103,9 @@ public class ModManager {
         api.getModList().enqueue(new Callback<List<StoreAPI.RestMod>>() {
             @Override
             public void onResponse(Call<List<StoreAPI.RestMod>> call, Response<List<StoreAPI.RestMod>> response) {
-                Log.e("ModList", "Received modlist!");
-
                 List<StoreAPI.RestMod> mods = response.body();
                 if (mods != null) {
+                    Log.e("ModMan", "Received modlist! " + mods.size() + " mods");
                     final String modstore_url = StoreAPIBuilder.API_BASE_URL;
                     ModList list = new ModList(ModList.ModListType.EMLT_ONLINE, "Available Mods", null, modstore_url);
 
@@ -154,10 +153,11 @@ public class ModManager {
                     ModManager modman = new ModManager();
                     modman.addList(list);
 
-                    EventBus.getDefault().post(new Events.FetchedListEvent(modstore_url));
+                    EventBus.getDefault().post(new Events.FetchedListEvent(modstore_url, ""));
                 } else {
-                    Log.e("ModMan", "Modlist fetch error!");
+                    Log.e("ModMan", "Modlist fetch error! 1");
                     Log.e("ModMan", response.message());
+                    EventBus.getDefault().post(new Events.FetchedListEvent(null, response.message()));
                 }
             }
 
@@ -165,6 +165,7 @@ public class ModManager {
             public void onFailure(Call<List<StoreAPI.RestMod>> call, Throwable t) {
                 Log.e("ModMan", "Modlist fetch error! 2");
                 Log.e("ModMan", t.toString());
+                EventBus.getDefault().post(new Events.FetchedListEvent(null, t.toString()));
             }
         });
     }

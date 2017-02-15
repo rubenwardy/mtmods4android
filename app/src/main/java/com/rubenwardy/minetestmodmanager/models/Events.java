@@ -17,8 +17,9 @@ public class Events {
     }
 
     public final static class FetchedListEvent extends ListEvent {
-        public FetchedListEvent(String list) {
+        public FetchedListEvent(String list, String error) {
             this.list = list;
+            this.error = error;
         }
     }
 

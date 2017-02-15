@@ -278,12 +278,14 @@ public class ModListActivity
         Resources res = getResources();
         if (e.didError()) {
             String text = String.format(res.getString(R.string.failed_install), e.modname, e.error);
+            Log.e("ModListActivity", text);
             Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
 
             return;
         } else {
             String text = String.format(res.getString(R.string.installed_mod), e.modname);
+            Log.i("ModListActivity", text);
             Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
@@ -296,6 +298,7 @@ public class ModListActivity
         Resources res = getResources();
         if (e.didError()) {
             String text = String.format(res.getString(R.string.failed_uninstall), e.modname, e.error);
+            Log.e("ModListActivity", text);
             Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
 
@@ -307,6 +310,8 @@ public class ModListActivity
                     .remove(frag)
                     .commit();
         }
+
+        Log.i("ModListActivity", "Uninstalled mod");
 
         checkChanges(e.list);
     }
@@ -333,9 +338,17 @@ public class ModListActivity
         SwipeRefreshLayout srl = (SwipeRefreshLayout) findViewById(R.id.refresh);
         srl.setRefreshing(false);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
-        assert recyclerView != null;
-        fillRecyclerView(recyclerView, null);
+        if (e.didError()) {
+            Resources res = getResources();
+            String text = String.format(res.getString(R.string.failed_list_download), e.error);
+            Log.e("ModListActivity", text);
+            Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        } else {
+            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
+            assert recyclerView != null;
+            fillRecyclerView(recyclerView, null);
+        }
     }
 
     private void checkChanges(@Nullable String listname) {
@@ -406,6 +419,8 @@ public class ModListActivity
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
+        Log.i("ModListActivity", "Setting up recycler view");
+
         //Add your adapter to the sectionAdapter
         ModListRecyclerViewAdapter adapter = new ModListRecyclerViewAdapter();
         SectionedRecyclerViewAdapter sectionedAdapter =
@@ -417,6 +432,8 @@ public class ModListActivity
     }
 
     private void fillRecyclerView(@NonNull RecyclerView recyclerView, @Nullable String query) {
+        Log.i("ModListActivity", "Filling recycler view");
+
         if (query != null) {
             query = query.trim().toLowerCase();
             if (query.isEmpty()) {

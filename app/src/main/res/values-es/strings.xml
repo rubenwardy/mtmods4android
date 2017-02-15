@@ -131,4 +131,5 @@
     <string name="mod_view_installed">View</string>
     <string name="mod_installed_elsewhere">Mod already installed to %1$s</string>
     <string name="mod_action_info">View Information</string>
+    <string name="failed_list_download">Error whilst download available mod list:</string>
 </resources>

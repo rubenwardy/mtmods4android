@@ -96,6 +96,7 @@
     <string name="modlist_minetest">Mods de Minetest installés</string>
     <string name="modlist_multicraft">Mods de Multicraft installés</string>
     <string name="mod_action_info">View Information</string>
+    <string name="failed_list_download">Error whilst download available mod list:</string>
     <string-array name="report_reasons">
         <item>Malicious / Virus</item>
         <item>Install doesn\'t work</item>

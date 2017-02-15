@@ -39,7 +39,8 @@
     <string name="downloading">Downloading…</string>
     <string name="extracting">Extracting…</string>
     <string name="failed_install">Failed to install mod %1$s. Error: %2$s.</string>
-    <string name="failed_uninstall">Failed to uninstall mod %1$s. Error: %2$s.</string>
+    <string name="failed_uninstall">Failed to uninstall mod %1$s. </string>
+    <string name="failed_list_download">Failed to download available mod list. Error: %1$s.</string>
 
     <!-- Mod Details -->
     <string name="title_mod_detail">Mod Detail</string>
