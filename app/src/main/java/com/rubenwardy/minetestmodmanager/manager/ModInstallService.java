@@ -29,6 +29,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -431,7 +433,7 @@ public class ModInstallService extends IntentService {
             URL url = new URL(url_str);
 
             // Start download
-            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
             connection.setInstanceFollowRedirects(true);
             connection.connect();
 
@@ -501,7 +503,7 @@ public class ModInstallService extends IntentService {
     @WorkerThread
     private void handleActionFetchScreenshot(@NonNull ResultReceiver rec, @NonNull String modname,
                                         @Nullable String author) {
-        final String url_str = "http://app-mtmm.rubenwardy.com/screenshot/" + author + "/" + modname + "/";
+        final String url_str = "https://app-mtmm.rubenwardy.com/screenshot/" + author + "/" + modname + "/";
         doFetchScreenshotUrl(rec, modname, author, url_str, 1);
     }
 
