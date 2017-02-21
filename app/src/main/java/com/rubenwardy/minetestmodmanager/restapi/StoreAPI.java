@@ -1,5 +1,11 @@
 package com.rubenwardy.minetestmodmanager.restapi;
 
+import android.support.annotation.Nullable;
+import android.util.Log;
+
+import com.rubenwardy.minetestmodmanager.models.Mod;
+import com.rubenwardy.minetestmodmanager.models.ModList;
+
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -46,5 +52,58 @@ public interface StoreAPI {
         public String repo_author;
         public String repo_name;
         public int    score;
+
+        @Nullable
+        Mod toMod(final String modstore_url) {
+            String modname = this.basename;
+            String title = this.title;
+            String link = this.download_link;
+
+            if (modname == null || title == null || null == link) {
+                return null;
+            }
+
+            String author = this.author;
+            String type_s = this.type;
+
+            String desc = "";
+            if (this.description != null) {
+                desc = this.description;
+            }
+
+            String forum = null;
+            if (this.forum_url != null) {
+                forum = this.forum_url;
+            }
+
+            int size = this.download_size;
+
+            Mod.ModType type = Mod.ModType.EMT_MOD;
+            if (type_s != null) {
+                if (type_s.equals("1")) {
+                    type = Mod.ModType.EMT_MOD;
+                } else if (type_s.equals("2")) {
+                    type = Mod.ModType.EMT_MODPACK;
+                }
+            }
+
+            Mod mod = new Mod(type, modstore_url, modname, title, desc);
+            mod.link = link;
+            mod.author = author;
+            mod.forum_url = forum;
+            mod.size = size;
+            return mod;
+        }
+
+        public static void addAllToList(ModList list, List<RestMod> mods, String modstore_url) {
+            for (StoreAPI.RestMod rmod : mods) {
+                Mod mod = rmod.toMod(modstore_url);
+                if (mod == null) {
+                    Log.e("RestMod", "Invalid object in list");
+                } else {
+                    list.add(mod);
+                }
+            }
+        }
     }
 }

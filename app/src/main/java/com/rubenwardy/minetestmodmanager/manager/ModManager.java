@@ -114,53 +114,13 @@ public class ModManager {
             public void onResponse(Call<List<StoreAPI.RestMod>> call, Response<List<StoreAPI.RestMod>> response) {
                 List<StoreAPI.RestMod> mods = response.body();
                 if (mods != null) {
-                    Log.e("ModMan", "Received modlist! " + mods.size() + " mods");
+                    Log.i("ModMan", "Received modlist! " + mods.size() + " mods");
+
                     final String modstore_url = StoreAPIBuilder.API_BASE_URL;
+
                     ModList list = new ModList(ModList.ModListType.EMLT_ONLINE, "Available Mods", null, modstore_url);
-
-                    for (StoreAPI.RestMod rmod : mods) {
-                        String modname = rmod.basename;
-                        String title = rmod.title;
-                        String link = rmod.download_link;
-
-                        if (modname != null && title != null && link != null) {
-                            String author = rmod.author;
-                            String type_s = rmod.type;
-
-                            String desc = "";
-                            if (rmod.description != null) {
-                                desc = rmod.description;
-                            }
-
-                            String forum = null;
-                            if (rmod.forum_url != null) {
-                                forum = rmod.forum_url;
-                            }
-
-                            int size = rmod.download_size;
-
-                            Mod.ModType type = Mod.ModType.EMT_MOD;
-                            if (type_s != null) {
-                                if (type_s.equals("1")) {
-                                    type = Mod.ModType.EMT_MOD;
-                                } else if (type_s.equals("2")) {
-                                    type = Mod.ModType.EMT_MODPACK;
-                                }
-                            }
-
-                            Mod mod = new Mod(type, modstore_url, modname, title, desc);
-                            mod.link = link;
-                            mod.author = author;
-                            mod.forum_url = forum;
-                            mod.size = size;
-                            list.add(mod);
-                        } else {
-                            Log.e("ModMan", "Invalid object in list");
-                        }
-                    }
-
-                    ModManager modman = ModManager.getInstance();
-                    modman.addList(list);
+                    StoreAPI.RestMod.addAllToList(list, mods, modstore_url);
+                    addList(list);
 
                     EventBus.getDefault().post(new Events.FetchedListEvent(modstore_url, ""));
                 } else {
