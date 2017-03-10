@@ -26,6 +26,8 @@ import com.rubenwardy.minetestmodmanager.manager.ModManager;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.List;
+
 /**
  * An activity representing a single Mod detail screen. This
  * activity is only used narrow width devices. On tablet-size devices,
@@ -156,18 +158,26 @@ public class ModDetailActivity
                     e.modname, e.error);
             Snackbar.make(findViewById(R.id.mod_detail_container), text, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
-        } else if (e.modname.equals(modname)) {
-            Intent intent = new Intent(this, ModDetailActivity.class);
-            intent.putExtra(ModDetailFragment.ARG_MOD_LIST, e.list);
-            intent.putExtra(ModDetailFragment.ARG_MOD_AUTHOR, author);
-            intent.putExtra(ModDetailFragment.ARG_MOD_NAME, modname);
-
-            startActivity(intent);
         } else {
-            String text = String.format(res.getString(R.string.event_installed_mod),
-                    e.modname);
-            Snackbar.make(findViewById(R.id.mod_detail_container), text, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            ModManager modman = ModManager.getInstance();
+            List<String> uninstalled = modman.postInstallCheckDeps(modman.getModList(e.list).get(e.modname, null));
+            for (String a : uninstalled) {
+                Log.e("MDAct", "Mod not installed: " + a);
+            }
+
+            if (e.modname.equals(modname)) {
+                Intent intent = new Intent(this, ModDetailActivity.class);
+                intent.putExtra(ModDetailFragment.ARG_MOD_LIST, e.list);
+                intent.putExtra(ModDetailFragment.ARG_MOD_AUTHOR, author);
+                intent.putExtra(ModDetailFragment.ARG_MOD_NAME, modname);
+
+                startActivity(intent);
+            } else {
+                String text = String.format(res.getString(R.string.event_installed_mod),
+                        e.modname);
+                Snackbar.make(findViewById(R.id.mod_detail_container), text, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
         }
     }
 

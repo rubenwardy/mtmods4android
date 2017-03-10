@@ -3,6 +3,7 @@ package com.rubenwardy.minetestmodmanager.models;
 import android.support.annotation.NonNull;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,6 +61,7 @@ public class Game {
     public List<String> getModPaths() {
         List<String> paths = new ArrayList<>();
         paths.add(new File(file, "mods").getAbsolutePath());
+        paths.add(new File(file, "mods/games/minetest_game/mods").getAbsolutePath());
         return paths;
     }
 
@@ -69,7 +71,7 @@ public class Game {
         return ret;
     }
 
-    public List<Mod> getAllMods() {
+    public Map<String, Mod> getAllMods() {
         Map<String, Mod> map = new HashMap<>();
 
         for (ModList list : lists.values()) {
@@ -78,12 +80,28 @@ public class Game {
             }
         }
 
-        List<Mod> ret = new ArrayList<>();
-        ret.addAll(map.values());
-        return ret;
+        return map;
     }
 
     public void addList(String path, ModList list) {
         lists.put(path, list);
+    }
+
+    public boolean hasPath(String path) {
+        String root;
+        try {
+            root = file.getCanonicalPath();
+        } catch (IOException e) {
+            root = file.getAbsolutePath();
+        }
+
+        File file2 = new File(path);
+        try {
+            path = file2.getCanonicalPath();
+        } catch (IOException e) {
+            path = file2.getAbsolutePath();
+        }
+
+        return path.startsWith(root);
     }
 }

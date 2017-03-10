@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.rubenwardy.minetestmodmanager.models.Events;
 import com.rubenwardy.minetestmodmanager.models.Game;
+import com.rubenwardy.minetestmodmanager.models.MinetestDepends;
 import com.rubenwardy.minetestmodmanager.models.Mod;
 import com.rubenwardy.minetestmodmanager.models.ModList;
 import com.rubenwardy.minetestmodmanager.restapi.StoreAPI;
@@ -17,8 +18,8 @@ import com.rubenwardy.minetestmodmanager.restapi.StoreAPIBuilder;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +48,17 @@ public class ModManager {
 
     @NonNull
     private ServiceResultReceiver srr = new ServiceResultReceiver(new Handler());
+
+    @Nullable
+    public Game getGameFromPath(String path) {
+        for (Game game : games) {
+            if (game.hasPath(path)) {
+                return game;
+            }
+        }
+
+        return null;
+    }
 
     @Nullable
     public ModList getModList(String path) {
@@ -184,6 +196,29 @@ public class ModManager {
     @MainThread
     public void cancelAsyncTask() {
         ModInstallService.cancelCurrentTask();
+    }
+
+    @MainThread
+    public List<String> postInstallCheckDeps(@NonNull Mod mod) {
+        List<String> retval = new ArrayList<>();
+        if (mod.path == null) {
+            return retval;
+        }
+
+        MinetestDepends deps = new MinetestDepends();
+        deps.read(new File(mod.path, "depends.txt"));
+
+        Game game = getGameFromPath(mod.path);
+
+        List<String> not_installed = new ArrayList<>();
+        Map<String, Mod> mods = game.getAllMods();
+        for (String modname : deps.hard) {
+            if (!mods.containsKey(modname)) {
+                not_installed.add(modname);
+            }
+        }
+
+        return not_installed;
     }
 
     public boolean updatePathModList(@NonNull ModList list) {
