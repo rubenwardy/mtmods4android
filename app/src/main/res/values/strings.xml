@@ -71,9 +71,9 @@
     <string name="modinfo_details_link">Download URL</string>
     <string name="modinfo_details_size">Download Size</string>
     <string name="modinfo_details_size_unknown">Unknown</string>
-    <string name="modinfo_details_type_mod">Mod</string>
+    <string name="modinfo_details_type_mod" translatable="false">Mod</string>
     <string name="modinfo_details_type_modpack">Mod Pack</string>
-    <string name="modinfo_details_type_subgame">Subgame</string>
+    <string name="modinfo_details_type_subgame" translatable="false">Subgame</string>
 
 
     <!-- Readme -->
@@ -106,7 +106,7 @@
     <string name="disclaimer_agree">By using this service, you agree to the following
         terms and conditions.</string>
     <string name="disclaimer_1_t">No Warranty</string>
-    <string name="disclaimer_1_m">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+    <string name="disclaimer_1_m" translatable="false">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
         INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
         FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
         IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,

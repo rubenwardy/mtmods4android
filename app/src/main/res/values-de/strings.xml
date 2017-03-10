@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Minetest Mods</string>
 
     <string name="dialog_noext_title">Kein externer Speicher verfügbar!</string>
     <string name="dialog_noext_msg">Wir konnten den Minetest Ordner nicht finden!
@@ -63,9 +62,7 @@
     <string name="modinfo_details_link">Download URL</string>
     <string name="modinfo_details_size">Download Größe</string>
     <string name="modinfo_details_size_unknown">Unbekannt</string>
-    <string name="modinfo_details_type_mod">Mod</string>
     <string name="modinfo_details_type_modpack">Mod Pack</string>
-    <string name="modinfo_details_type_subgame">Subgame</string>
 
     <string name="readme_title">Lies Mich</string>
 
@@ -90,14 +87,6 @@
     <string name="disclaimer_title">Disclaimer</string>
     <string name="disclaimer_agree">Mit dem Nutzen dieses Services stimmen sie den folgenden Bedingungen zu:</string>
     <string name="disclaimer_1_t">Keine Garantie oder Haftung</string>
-    <string name="disclaimer_1_m">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-        INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-        IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-        DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-        ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-        DEALINGS IN THE SOFTWARE.</string>
-
     <string name="disclaimer_2_t">Dies ist kein Mod Store, sondern eine Mod Suchmaschine</string>
     <string name="disclaimer_2_m">Die hier gelisteten Mods sind dem Minetest Forum entnommen.
         Sie werden vom Link, den der Autor dort hinterlies direkt heruntergeladen.
@@ -120,6 +109,5 @@
     <string name="about_credits_feedback">Danke DonBatman für das Feedback während der Entwicklung</string>
     <string name="about_credits_logo">Das App Logo basiert auf dem Minetest Logo von erlehmann das unter CC-BY-SA 3.0 Lizenz steht</string>
     <string name="about_credits_images">Außerdem nutzt diese App einige standard Android icons, diese stehen unter CC-BY 4.0 Lizenz</string>
-    <string name="about_credits_translation">Thank you to the following translators: my friend Soph (French), Dragonop (Spanish), and Adrian Dischinger (German).</string>
 
 </resources>

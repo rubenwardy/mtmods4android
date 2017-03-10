@@ -11,13 +11,10 @@
     <string name="disclaimer_accept_and_install">Accepter et installer</string>
     <string name="mod_action_install">Installer</string>
     <string name="mod_action_report_mod">Rapporter</string>
-    <string name="mod_tip_view">View</string>
-    <string name="mod_tip_installed_elsewhere">Mod already installed to %1$s</string>
-    <string name="modinfo_title">Information</string>
     <string name="action_search">Chercher</string>
     <string name="mod_action_uninstall">Désinstaller</string>
     <string name="modinfo_details_name">Nom de mod</string>
-    <string name="event_connecting">Connecte...</string>
+    <string name="event_connecting">Connecte…</string>
     <string name="modinfo_details_author">Auteur</string>
     <string name="mod_action_forum_topic">Thème de forum</string>
     <string name="modinfo_details_link">Télécharger l\'URL</string>
@@ -26,18 +23,16 @@
     <string name="modinfo_details_type">Type</string>
     <string name="dialog_close">Fermer</string>
     <string name="dialog_noext_msg">On ne peuvait pas</string>
-    <string name="modinfo_details_type_mod">Mod</string>
     <string name="readme_title">Lire</string>
     <string name="mod_title">Détail du mod</string>
-    <string name="modinfo_details_type_subgame">Subgame</string>
     <string name="modinfo_details_size_unknown">Inconnu</string>
     <string name="about_title">Information de l\'appli</string>
     <string name="modlist_rate_no">Non</string>
     <string name="report_details">Détails</string>
     <string name="modlist_available_mods">Mods disponibles</string>
     <string name="modlist_rate_yes">Evaluer</string>
-    <string name="event_extracting">Arrache...</string>
-    <string name="event_downloading">Télécharge...</string>
+    <string name="event_extracting">Arrache…</string>
+    <string name="event_downloading">Télécharge…</string>
     <string name="report_reason">Raison</string>
     <string name="report_msg">Message optionnel</string>
     <string name="report_instructions">S\'il vous plaît selectionner la raison de laquelle on rapporte cet mod. Si on a plus d\'information, l\'écrit dans la zone de texte s\'il vous plaît</string>
@@ -52,27 +47,9 @@
     <string name="modlist_rate_txt">Veut-on nous évaluer?</string>
     <string name="disclaimer_3_t">Que peut-on faire?</string>
     <string name="disclaimer_1_t">Aucune garantie</string>
-    <string name="disclaimer_1_m">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-        INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-        IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-        DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-        ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-        DEALINGS IN THE SOFTWARE.</string>
-    <string name="disclaimer_2_m">The mods listed as available are a subset of the mods found
-        on the Minetest forums. When you download a mod, you do not download it from our servers
-        but rather from the original link that the author posted. Because of this,
-        we cannot guarantee mods are safe. No one in particular checks these mods.</string>
-    <string name="disclaimer_3_m">If you\'re unsure about the safety of a mod, check its
-        forum topic. Look at how old the thread is, and what the comments say.</string>
-
     <string name="dialog_noext_title">Aucun stockage disponible</string>
-    <string name="dialog_nomt_msg">There wasn\'t a folder for mods on your device, so we attempted to create one.
-        However, the attempt failed. The system may be denying this app access to it. Try running Minetest.</string>
-    <string name="mod_invalid_modlist_desc">We couldn\'t find that mod location. Has the folder been deleted, or is the available mod list offline?</string>
     <string name="mod_invalid_modlist_title">Endroit ou chemin de mod non valide</string>
-    <string name="report_modname_by_authorname">%1$s by %2$s</string>
-    <string name="event_installed_mod">Installé %1$s...</string>
+    <string name="event_installed_mod">Installé %1$s…</string>
     <string name="event_failed_install">Echoué à installer le mod %1$s. Erreur: %2$s.</string>
     <string name="event_failed_uninstall">Echouer à désinstaller le mod %1$s. Erreur: %2$s.</string>
     <string name="modlist_tip_worldconfig">Activer un mod en cliquant l\'icône de monde.</string>
@@ -85,13 +62,5 @@
     <string name="disclaimer_agree">En utilisant cet service, on accepte aux termes et conditions suivants</string>
     <string name="modlist_minetest">Mods de Minetest installés</string>
     <string name="modlist_multicraft">Mods de Multicraft installés</string>
-    <string name="mod_action_info">View Information</string>
-    <string name="failed_list_download">Error whilst download available mod list:</string>
     <string name="mod_action_find_elsewhere">Trouver ailleurs</string>
-    <string name="about_credits_translation">Thank you to the following translators: my friend Soph (French), Dragonop (Spanish), and Adrian Dischinger (German).</string>
-    <string-array name="report_reasons">
-        <item>Malicious / Virus</item>
-        <item>Install doesn\'t work</item>
-        <item>Other (please enter below)</item>
-    </string-array>
 </resources>
