@@ -109,5 +109,8 @@
     <string name="about_credits_feedback">Danke DonBatman für das Feedback während der Entwicklung</string>
     <string name="about_credits_logo">Das App Logo basiert auf dem Minetest Logo von erlehmann das unter CC-BY-SA 3.0 Lizenz steht</string>
     <string name="about_credits_images">Außerdem nutzt diese App einige standard Android icons, diese stehen unter CC-BY 4.0 Lizenz</string>
+    <string name="about_credits_translation">Herzlichen Dank an folgende Übersetzer: Soph (Französisch), Dragonpop (Spanisch), und Adrian (Deutsch).</string>
+    <string name="failed_list_download">Das Herunterladen der Liste der verfügbaren Mods ist gescheitert. Fehler %1$s.</string>
+    <string name="mod_action_find_elsewhere">Wo anders suchen</string>
 
 </resources>

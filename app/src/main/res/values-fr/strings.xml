@@ -63,4 +63,15 @@
     <string name="modlist_minetest">Mods de Minetest installés</string>
     <string name="modlist_multicraft">Mods de Multicraft installés</string>
     <string name="mod_action_find_elsewhere">Trouver ailleurs</string>
+    <string name="about_credits_translation">Merci aux traducteurs: Soph (français), Dragonpop (Espangnol), et Adrian (allemand)</string>
+    <string name="dialog_nomt_msg">Il n\'avait pas un dossier Minetest sur cet appareil, donc on essayé à crer un nouveau. Mais ça n\'a pas functionné. Peut-être était l\'access bloque par votre appareil.S\'il vous plaît essayer à ouvrir Minetest.</string>
+    <string name="disclaimer_2_m">"Les mods nommé ici sont disponible sur les forums de Minetest. Ils sont télécharger par l'application directement du lien nommé par l'auteur. Et donc c'est impossible de vérifier touts les mods. Si vous êtes pas sûre de la sécurité d'un mod on vous prie de chercher les forums pour cet mod et liser les commentaires d'autres utilisateurs."</string>
+    <string name="failed_list_download">Téléchargement de la mod list échouché. Erreur: %1$s. Plus d\'Information</string>
+    <string name="mod_invalid_modlist_desc">On n\'a pas reussi à trouver le lieu de cette mod. Était le dossier déjà effacé, ou la liste de mods est hors connexion?</string>
+    <string name="mod_tip_installed_elsewhere">Cette Mod est déjà installé sur: %1$s</string>
+    <string name="mod_tip_view">Afficher</string>
+    <string name="mod_verified_uk">"Cette mod n'était pas cré par un auteur connu. On est incapable de trouver la source."</string>
+    <string name="mod_verified_yes">Cette mod était cré par un auteur connu</string>
+    <string name="modinfo_title">Information</string>
+    <string name="report_modname_by_authorname">%1$s de %2$s</string>
 </resources>
