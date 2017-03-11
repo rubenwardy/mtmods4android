@@ -88,7 +88,7 @@ public class ModListActivity
                 intent.getAction().equals(ACTION_SEARCH))) {
             search_filter = intent.getExtras().getString(PARAM_QUERY);
         } else {
-            Log.e("MAct", "Intent was " + intent.getAction());
+            Log.i("MAct", "Intent was " + intent.getAction());
         }
 
 
@@ -278,7 +278,7 @@ public class ModListActivity
         Resources res = getResources();
         if (e.didError()) {
             String text = String.format(res.getString(R.string.event_failed_install), e.modname, e.error);
-            Log.e("ModListActivity", text);
+            Log.e("MLAct", text);
             Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
 

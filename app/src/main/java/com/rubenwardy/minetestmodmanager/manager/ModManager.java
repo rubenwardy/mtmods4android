@@ -31,7 +31,7 @@ import retrofit2.Response;
  */
 public class ModManager {
     private ModManager() {
-        Log.e("ModMan", "Initializing...");
+        Log.i("ModMan", "Initializing...");
     }
 
     private static final ModManager instance = new ModManager();

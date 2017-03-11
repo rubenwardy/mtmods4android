@@ -52,12 +52,11 @@ public class ModDetailFragment extends Fragment {
      * mFragment (e.g. upon screen orientation changes).
      */
     public ModDetailFragment() {
-        Log.e("mdf", "new");
-
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {Log.e("mdf", "create");
+    public void onCreate(Bundle savedInstanceState) {
+        Log.i("mdf", "create");
 
         super.onCreate(savedInstanceState);
 
@@ -92,7 +91,7 @@ public class ModDetailFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle state) {
-        Log.e("mdf", "save");
+        Log.i("mdf", "save");
         state.putString(ModDetailFragment.ARG_MOD_LIST, mod.listname);
         state.putString(ModDetailFragment.ARG_MOD_NAME, mod.name);
         state.putString(ModDetailFragment.ARG_MOD_AUTHOR, mod.author);

@@ -72,7 +72,7 @@ public class ModDetailActivity
 
     @Override
     public void onSaveInstanceState(Bundle state) {
-        Log.e("mda", "save");
+        Log.i("mda", "save");
         state.putString(ModDetailFragment.ARG_MOD_LIST, listname);
         state.putString(ModDetailFragment.ARG_MOD_NAME, modname);
         state.putString(ModDetailFragment.ARG_MOD_AUTHOR, author);
@@ -80,7 +80,7 @@ public class ModDetailActivity
 
     @Override
     public void onRestoreInstanceState(Bundle state) {
-        Log.e("mda", "restore");
+        Log.i("mda", "restore");
         listname = state.getString(ModDetailFragment.ARG_MOD_LIST);
         modname = state.getString(ModDetailFragment.ARG_MOD_NAME);
         author = state.getString(ModDetailFragment.ARG_MOD_AUTHOR);

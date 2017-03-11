@@ -199,8 +199,6 @@ public class ModInstallService extends IntentService {
     private void reportDownloadToServer(@NonNull String modname, @Nullable String author,
                                         @NonNull String url_str, int size, int statusCode,
                                         @Nullable String error) {
-        Log.e("ModService", "Reporting download!");
-
         StoreAPIBuilder.createService().sendDownloadReport(modname, url_str, size, statusCode,
                     author, error).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -248,7 +246,7 @@ public class ModInstallService extends IntentService {
             //
             URL url = new URL(url_str);
             {
-                Log.e("ModService", "Performing head query");
+                Log.i("ModService", "Performing head query");
 
                 // Open HEAD http connection
                 HttpURLConnection testcon = (HttpURLConnection)url.openConnection();
@@ -304,7 +302,7 @@ public class ModInstallService extends IntentService {
             //
             {
 
-                Log.e("ModService", "start");
+                Log.i("ModService", "start");
 
                 // Start download
                 HttpURLConnection connection = (HttpURLConnection)url.openConnection();
