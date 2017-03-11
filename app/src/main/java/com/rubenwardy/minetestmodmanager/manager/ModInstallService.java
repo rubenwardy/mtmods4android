@@ -351,6 +351,7 @@ public class ModInstallService extends IntentService {
 
                 // Update notification
                 mBuilder.setContentText(notif_msg_mod_downloading);
+                mBuilder.setProgress(100, 0, false);
                 notiman.notify(NOTIFICATION_ID, mBuilder.build());
 
                 // download the file
@@ -361,6 +362,7 @@ public class ModInstallService extends IntentService {
                 byte data[] = new byte[1024];
                 long total = 0;
                 int count;
+                int last_prog = 0;
                 while ((count = input.read(data)) != -1) {
                     output.write(data, 0, count);
 
@@ -368,8 +370,11 @@ public class ModInstallService extends IntentService {
                     total += count;
 
                     // Update Notification
-                    mBuilder.setProgress(100, prog, false);
-                    notiman.notify(NOTIFICATION_ID, mBuilder.build());
+                    if (prog != last_prog) {
+                        mBuilder.setProgress(100, prog, false);
+                        notiman.notify(NOTIFICATION_ID, mBuilder.build());
+                        last_prog = prog;
+                    }
 
                     // Detect cancel
                     if (requestStop.get()) {
