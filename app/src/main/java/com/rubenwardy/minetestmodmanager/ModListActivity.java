@@ -244,7 +244,7 @@ public class ModListActivity
         super.onResume();
 
         for (ModList list : ModManager.getInstance().lists_map.values()) {
-            checkChanges(list);
+            updateModListAndRecyclerView(list);
         }
 
         SharedPreferences settings = getSharedPreferences(DisclaimerActivity.PREFS_NAME, 0);
@@ -283,6 +283,16 @@ public class ModListActivity
                     .setAction("Action", null).show();
 
             return;
+        } else if (isTwoPane) {
+            Bundle arguments = new Bundle();
+            arguments.putString(ModDetailFragment.ARG_MOD_LIST, e.list);
+            // not setting the author probably doesn't matter here, as mod names are unique in installed locations
+            arguments.putString(ModDetailFragment.ARG_MOD_NAME, e.modname);
+            ModDetailFragment fragment = new ModDetailFragment();
+            fragment.setArguments(arguments);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mod_detail_container, fragment)
+                    .commit();
         } else {
             String text = String.format(res.getString(R.string.event_installed_mod), e.modname);
             Log.i("ModListActivity", text);
@@ -290,7 +300,7 @@ public class ModListActivity
                     .setAction("Action", null).show();
         }
 
-        checkChanges(e.list);
+        updateModListAndRecyclerView(e.list);
     }
 
     @Subscribe
@@ -313,7 +323,7 @@ public class ModListActivity
 
         Log.i("ModListActivity", "Uninstalled mod");
 
-        checkChanges(e.list);
+        updateModListAndRecyclerView(e.list);
     }
 
     @Subscribe
@@ -351,18 +361,19 @@ public class ModListActivity
         }
     }
 
-    private void checkChanges(@Nullable String listname) {
+    private void updateModListAndRecyclerView(@Nullable String listname) {
         if (listname == null || listname.equals("")) {
             return;
         }
 
         ModList list = modman.getModList(listname);
-        checkChanges(list);
+        updateModListAndRecyclerView(list);
     }
 
-    private void checkChanges(@Nullable ModList list) {
-        if (list != null && !list.valid &&
-                (list.type == ModList.ModListType.EMLT_ONLINE || modman.update(list))) {
+    private void updateModListAndRecyclerView(@Nullable ModList list) {
+        if (list != null) {
+            modman.update(list);
+
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
             assert recyclerView != null;
             fillRecyclerView(recyclerView, null);
@@ -579,6 +590,7 @@ public class ModListActivity
                     if (isTwoPane) {
                         Bundle arguments = new Bundle();
                         arguments.putString(ModDetailFragment.ARG_MOD_LIST, holder.mod.listname);
+                        arguments.putString(ModDetailFragment.ARG_MOD_AUTHOR, holder.mod.author);
                         arguments.putString(ModDetailFragment.ARG_MOD_NAME, holder.mod.name);
                         ModDetailFragment fragment = new ModDetailFragment();
                         fragment.setArguments(arguments);
