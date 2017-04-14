@@ -22,10 +22,10 @@ public class ModList {
     @Nullable public final String title;
     @NonNull  public final String listname;
     @Nullable public final String engine_root;
-    @NonNull public final ModListType type;
-    public boolean valid;
-    @NonNull
-    public List<Mod> mods = new ArrayList<>();
+    @NonNull  public final ModListType type;
+              public boolean valid;
+    @NonNull  public List<Mod> mods = new ArrayList<>();
+
     @NonNull
     public Map<String, List<Mod>> mods_map = new HashMap<>();
 

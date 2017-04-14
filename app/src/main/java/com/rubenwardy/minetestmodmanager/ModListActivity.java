@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rubenwardy.minetestmodmanager.models.Events;
+import com.rubenwardy.minetestmodmanager.models.Game;
 import com.rubenwardy.minetestmodmanager.models.Mod;
 import com.rubenwardy.minetestmodmanager.models.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
@@ -111,7 +112,7 @@ public class ModListActivity
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                for (ModList list : ModManager.getInstance().lists_map.values()) {
+                for (ModList list : ModManager.getInstance().getAllModLists()) {
                     if (list.type == ModList.ModListType.EMLT_PATH) {
                         modman.update(list);
                     }
@@ -199,20 +200,14 @@ public class ModListActivity
             return;
         }
 
-        // Add Minetest mod location
-        File mt_root = new File(extern, "/Minetest");
-        File mt_dir = new File(mt_root, "/mods");
-        File mul_root = new File(extern, "/MultiCraft");
-        File mul_dir = new File(mul_root, "/mods");
+        Game minetest   = new Game("Minetest", new File (extern, "Minetest"));
+        Game multicraft = new Game("Multicraft", new File (extern, "MultiCraft"));
 
-        // Check there is at least one mod dir
-        if (mt_root.exists() && !mt_dir.exists() && mt_dir.mkdirs()) {
-            mt_dir = new File(mt_root, "/mods");
+        if (!minetest.isValid() && !multicraft.isValid()) {
+            minetest.forceCreate();
         }
-        if (mul_root.exists() && !mul_dir.exists() && mul_dir.mkdirs()) {
-            mul_dir = new File(mul_root, "/mods");
-        }
-        if (!mt_dir.exists() && !mul_dir.exists() && !mt_dir.mkdirs()) {
+
+        if (!minetest.isValid() && !multicraft.isValid()) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setCancelable(false);
             alertDialogBuilder.setTitle(R.string.dialog_nomt_title);
@@ -227,10 +222,7 @@ public class ModListActivity
             return;
         }
 
-        // Add lists
-        Resources res = getResources();
-        modman.getModsFromDir(res.getString(R.string.modlist_minetest), mt_root.getAbsolutePath(), mt_dir.getAbsolutePath());
-        modman.getModsFromDir(res.getString(R.string.modlist_multicraft), mul_root.getAbsolutePath(), mul_dir.getAbsolutePath());
+        modman.registerGame(minetest);
 
         View recyclerView = findViewById(R.id.mod_list);
         assert recyclerView != null;
@@ -243,7 +235,7 @@ public class ModListActivity
     protected void onResume() {
         super.onResume();
 
-        for (ModList list : ModManager.getInstance().lists_map.values()) {
+        for (ModList list : ModManager.getInstance().getAllModLists()) {
             updateModListAndRecyclerView(list);
         }
 
@@ -495,7 +487,7 @@ public class ModListActivity
         List<Mod> mods = new ArrayList<>();
         List<SectionedRecyclerViewAdapter.Section> sections =
                 new ArrayList<>();
-        for (ModList list : ModManager.getInstance().lists_map.values()) {
+        for (ModList list : ModManager.getInstance().getAllModLists()) {
             if (list.type == ModList.ModListType.EMLT_PATH) {
                 sections.add(new SectionedRecyclerViewAdapter.Section(mods.size(), list.title, list.getWorldsDir()));
                 if (query != null) {

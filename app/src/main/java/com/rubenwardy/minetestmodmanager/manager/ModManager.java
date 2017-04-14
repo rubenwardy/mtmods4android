@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.rubenwardy.minetestmodmanager.models.Events;
+import com.rubenwardy.minetestmodmanager.models.Game;
 import com.rubenwardy.minetestmodmanager.models.Mod;
 import com.rubenwardy.minetestmodmanager.models.ModList;
 import com.rubenwardy.minetestmodmanager.restapi.StoreAPI;
@@ -30,6 +31,8 @@ import retrofit2.Response;
  * Provides a collection of mods.
  */
 public class ModManager {
+    private ModList store = null;
+
     private ModManager() {
         Log.i("ModMan", "Initializing...");
     }
@@ -40,29 +43,44 @@ public class ModManager {
     }
 
     @NonNull
-    public Map<String, ModList> lists_map = new HashMap<>();
+    private List<Game> games = new ArrayList<>();
 
     @NonNull
     private ServiceResultReceiver srr = new ServiceResultReceiver(new Handler());
 
     @Nullable
     public ModList getModList(String path) {
-        return lists_map.get(path);
+        if (store != null && store.listname.equals(path)) {
+            return store;
+        }
+
+        for (Game game : games) {
+            ModList list = game.getList(path);
+            if (list != null) {
+                return list;
+            }
+        }
+
+        return null;
+    }
+
+    @NonNull
+    public List<ModList> getAllModLists() {
+        List<ModList> ret = new ArrayList<>();
+        for (Game game : games) {
+            ret.addAll(game.getAllModLists());
+        }
+        return ret;
     }
 
     @Nullable
     public ModList getAvailableMods() {
-        for (ModList list : lists_map.values()) {
-            if (list.type == ModList.ModListType.EMLT_ONLINE) {
-                return list;
-            }
-        }
-        return null;
+        return store;
     }
 
     @Nullable
     public ModList getModInstalledList(String name, String author) {
-        for (ModList list : lists_map.values()) {
+        for (ModList list : getAllModLists()) {
             if (list.type == ModList.ModListType.EMLT_PATH) {
                 if (list.get(name, author) != null) {
                     return list;
@@ -74,7 +92,7 @@ public class ModManager {
 
     @Nullable
     public String getInstallDir() {
-        for (ModList list : lists_map.values()) {
+        for (ModList list : getAllModLists()) {
             if (list.type == ModList.ModListType.EMLT_PATH) {
                 return list.listname;
             }
@@ -84,7 +102,7 @@ public class ModManager {
 
     public int getNumberOfInstalledMods() {
         int count = 0;
-        for (ModList list : lists_map.values()) {
+        for (ModList list : getAllModLists()) {
             if (list.type == ModList.ModListType.EMLT_PATH) {
                 count += list.mods.size();
             }
@@ -99,10 +117,6 @@ public class ModManager {
 
     @MainThread
     public void installUrlModAsync(Context context, @NonNull Mod mod, @NonNull String url, String path) {
-        if (url.equals("")) {
-            Log.e("ModMan", "Failed to install blank url");
-            return;
-        }
         ModInstallService.startActionUrlInstall(context, srr, mod.name, mod.author, url, path);
     }
 
@@ -118,9 +132,8 @@ public class ModManager {
 
                     final String modstore_url = StoreAPIBuilder.API_BASE_URL;
 
-                    ModList list = new ModList(ModList.ModListType.EMLT_ONLINE, "Available Mods", null, modstore_url);
-                    StoreAPI.RestMod.addAllToList(list, mods, modstore_url);
-                    addList(list);
+                    store = new ModList(ModList.ModListType.EMLT_ONLINE, "Available Mods", null, modstore_url);
+                    StoreAPI.RestMod.addAllToList(store, mods, modstore_url);
 
                     EventBus.getDefault().post(new Events.FetchedListEvent(modstore_url, ""));
                 } else {
@@ -241,22 +254,28 @@ public class ModManager {
         }
     }
 
-    public void addList(ModList list) {
-        lists_map.put(list.listname, list);
-    }
-
     @Nullable
-    public ModList getModsFromDir(String title, String engine_root, String path) {
-        if (lists_map.containsKey(path)) {
-            return lists_map.get(path);
+    private ModList scanModDir(Game game, String path) {
+        {
+            ModList list = getModList(path);
+            if (list != null) {
+                return list;
+            }
         }
 
-        ModList list = new ModList(ModList.ModListType.EMLT_PATH, title, engine_root, path);
+        ModList list = new ModList(ModList.ModListType.EMLT_PATH, game.name, game.getPath(), path);
         if (update(list)) {
-            lists_map.put(path, list);
+            game.addList(path, list);
             return list;
         } else {
             return null;
+        }
+    }
+
+    public void registerGame(@NonNull Game game) {
+        games.add(game);
+        for (String path : game.getModPaths()) {
+            scanModDir(game, path);
         }
     }
 }
