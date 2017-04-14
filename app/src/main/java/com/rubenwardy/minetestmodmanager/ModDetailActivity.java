@@ -162,7 +162,7 @@ public class ModDetailActivity
                     .setAction("Action", null).show();
         } else {
             ModManager modman = ModManager.getInstance();
-            List<String> uninstalled = modman.postInstallCheckDeps(modman.getModList(e.list).get(e.modname, null));
+            List<String> uninstalled = modman.getMissingDependsForMod(modman.getModList(e.list).get(e.modname, null));
             for (String a : uninstalled) {
                 Log.e("MDAct", "Mod not installed: " + a);
             }

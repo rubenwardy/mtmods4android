@@ -12,6 +12,8 @@
     <string name="dialog_close">Close</string>
     <string name="dialog_nowld_title">Unable to create world</string>
     <string name="dialog_nowld_msg">We tried to create a world for you to configure, but the operation failed.</string>
+    <string name="dialog_no_missing_mods_title">All good!</string>
+    <string name="dialog_no_missing_mods_msg">All required dependencies are installed.</string>
 
 
     <!-- Menu -->
@@ -51,6 +53,7 @@
     <string name="mod_tip_view">View</string>
 
     <string name="mod_action_info">View Information</string>
+    <string name="mod_action_check_depends">Check for missing dependencies</string>
     <string name="mod_action_report_mod">Report Mod</string>
     <string name="mod_action_forum_topic">View Forum Topic</string>
     <string name="mod_action_view_readme">View Read Me</string>

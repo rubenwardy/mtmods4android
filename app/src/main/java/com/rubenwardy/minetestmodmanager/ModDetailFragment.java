@@ -1,6 +1,7 @@
 package com.rubenwardy.minetestmodmanager;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -12,6 +13,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +30,8 @@ import com.rubenwardy.minetestmodmanager.manager.Utils;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A mFragment representing a single Mod detail screen.
@@ -275,6 +279,42 @@ public class ModDetailFragment extends Fragment {
                     dialog.show(getActivity().getSupportFragmentManager(), "ModInfoDialogFragment");
                 }
             });
+
+            // Check depends
+            Button btn_check_depends = (Button) rootView.findViewById(R.id.check_depends);
+            if (mod.isLocalMod()) {
+                btn_check_depends.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(@NonNull View view) {
+                        ModManager modman = ModManager.getInstance();
+                        List<String> uninstalled = modman.getMissingDependsForMod(mod);
+                        for (String a : uninstalled) {
+                            Log.e("MDAct", "Mod not installed: " + a);
+                        }
+
+                        if (uninstalled.isEmpty()) {
+                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                            alertDialogBuilder.setCancelable(false);
+                            alertDialogBuilder.setTitle(R.string.dialog_no_missing_mods_title);
+                            alertDialogBuilder.setMessage(R.string.dialog_no_missing_mods_msg);
+                            alertDialogBuilder.setPositiveButton(R.string.dialog_close, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                }
+                            });
+                            AlertDialog alertDialog = alertDialogBuilder.create();
+                            alertDialog.show();
+                        } else {
+                            DialogFragment dialog = new InstallDependsDialogFragment();
+                            Bundle b = new Bundle();
+                            b.putStringArrayList("mods", (ArrayList<String>) uninstalled);
+                            dialog.setArguments(b);
+                            dialog.show(getActivity().getSupportFragmentManager(), "InstallDependsDialogFragment");
+                        }
+                    }
+                });
+            } else {
+                btn_check_depends.setVisibility(View.GONE);
+            }
         }
 
         return rootView;

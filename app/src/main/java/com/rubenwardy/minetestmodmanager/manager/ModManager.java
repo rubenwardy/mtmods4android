@@ -199,7 +199,7 @@ public class ModManager {
     }
 
     @MainThread
-    public List<String> postInstallCheckDeps(@NonNull Mod mod) {
+    public List<String> getMissingDependsForMod(@NonNull Mod mod) {
         List<String> retval = new ArrayList<>();
         if (mod.path == null) {
             return retval;
