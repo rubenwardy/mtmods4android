@@ -39,6 +39,9 @@
     <string name="event_failed_uninstall">Failed to uninstall mod %1$s. Error: %2$s.</string>
     <string name="failed_list_download">Failed to download available mod list. Error: %1$s.</string>
 
+    <string name="event_missing_dependencies">Install Required Mods</string>
+    <string name="event_missing_dependencies_msg">Would you like to install these missing dependencies?</string>
+
     <!-- Mod Details -->
     <string name="mod_title">Mod Detail</string>
     <string name="mod_action_install">Install</string>
