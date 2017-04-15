@@ -43,6 +43,8 @@
 
     <string name="event_missing_dependencies">Install Required Mods</string>
     <string name="event_missing_dependencies_msg">Would you like to install these missing dependencies?</string>
+    <string name="event_missing_dependencies_msg_some_missing">Unfortunately, we couldn\'t find all the required mods :(</string>
+    <string name="event_missing_dependencies_msg_all_missing">Unfortunately, we couldn\'t find any of the required mods :(</string>
 
     <!-- Mod Details -->
     <string name="mod_title">Mod Detail</string>

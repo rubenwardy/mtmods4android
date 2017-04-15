@@ -24,7 +24,7 @@ public class Mod {
     @NonNull public final String desc;
 
     @NonNull public String author;
-    @Nullable public String link;
+    @NonNull public String link;
     @Nullable public String path;
     @Nullable public String screenshot_uri;
     @Nullable public String forum_url;
