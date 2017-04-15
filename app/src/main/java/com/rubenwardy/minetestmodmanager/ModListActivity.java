@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
@@ -204,6 +206,47 @@ public class ModListActivity
         Game multicraft = new Game("Multicraft", new File (extern, "MultiCraft"));
 
         if (!minetest.isValid() && !multicraft.isValid()) {
+            PackageInfo pinfo = null;
+            try {
+                pinfo = getPackageManager().getPackageInfo("net.minetest.minetest", 0);
+                int verCode = pinfo.versionCode;
+                String verName = pinfo.versionName;
+                Log.e("MLAct", Integer.toString(verCode));
+                Log.e("MLAct", verName);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setCancelable(false);
+                alertDialogBuilder.setTitle(R.string.dialog_no_minetest);
+                alertDialogBuilder.setMessage(R.string.dialog_no_minetest_msg);
+                alertDialogBuilder.setNegativeButton(R.string.dialog_close, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+                alertDialogBuilder.setPositiveButton(R.string.mod_action_install, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Context context = getApplicationContext();
+                        Uri uri = Uri.parse("market://details?id=net.minetest.minetest");
+                        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                        // To count with Play market backstack, After pressing back button,
+                        // to taken back to our application, we need to add following flags to intent.
+                        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                                Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET |
+                                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+
+                        try {
+                            startActivity(goToMarket);
+                        } catch (ActivityNotFoundException e) {
+                            startActivity(new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse("http://play.google.com/store/apps/details?id=net.minetest.minetest")));
+                        }
+                    }
+                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+
             minetest.forceCreate();
         }
 

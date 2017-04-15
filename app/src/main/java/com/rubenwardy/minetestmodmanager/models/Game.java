@@ -61,7 +61,7 @@ public class Game {
     public List<String> getModPaths() {
         List<String> paths = new ArrayList<>();
         paths.add(new File(file, "mods").getAbsolutePath());
-        paths.add(new File(file, "mods/games/minetest_game/mods").getAbsolutePath());
+        paths.add(new File(file, "games/minetest_game/mods").getAbsolutePath());
         return paths;
     }
 

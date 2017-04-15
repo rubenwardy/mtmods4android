@@ -12,9 +12,10 @@
     <string name="dialog_close">Close</string>
     <string name="dialog_nowld_title">Unable to create world</string>
     <string name="dialog_nowld_msg">We tried to create a world for you to configure, but the operation failed.</string>
+    <string name="dialog_no_minetest">Minetest isn\'t installed</string>
+    <string name="dialog_no_minetest_msg">It\'s recommended that you install Minetest before using this app from your app store!</string>
     <string name="dialog_no_missing_mods_title">All good!</string>
     <string name="dialog_no_missing_mods_msg">All required dependencies are installed.</string>
-
 
     <!-- Menu -->
     <string name="action_search">Search</string>
