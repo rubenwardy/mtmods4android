@@ -115,8 +115,8 @@ public class ModListActivity
             @Override
             public void onRefresh() {
                 for (ModList list : ModManager.getInstance().getAllModLists()) {
-                    if (list.type == ModList.ModListType.EMLT_PATH) {
-                        modman.update(list);
+                    if (list.type.isLocal()) {
+                        modman.updateLocalModList(list);
                     }
                 }
                 modman.fetchModListAsync(getApplicationContext());
@@ -407,7 +407,7 @@ public class ModListActivity
 
     private void updateModListAndRecyclerView(@Nullable ModList list) {
         if (list != null) {
-            modman.update(list);
+            modman.updateLocalModList(list);
 
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
             assert recyclerView != null;
@@ -531,7 +531,7 @@ public class ModListActivity
         List<SectionedRecyclerViewAdapter.Section> sections =
                 new ArrayList<>();
         for (ModList list : ModManager.getInstance().getAllModLists()) {
-            if (list.type == ModList.ModListType.EMLT_PATH) {
+            if (list.type == ModList.ModListType.EMLT_MODS) {
                 sections.add(new SectionedRecyclerViewAdapter.Section(mods.size(), list.title, list.getWorldsDir()));
                 if (query != null) {
                     for (Mod mod : list.mods) {
@@ -574,7 +574,7 @@ public class ModListActivity
         }
 
         adapter.setMods(mods);
-        // Set sections and update.
+        // Set sections and updateLocalModList.
         SectionedRecyclerViewAdapter.Section[] dummy =
                 new SectionedRecyclerViewAdapter.Section[sections.size()];
         adapter.setSections(sections.toArray(dummy));

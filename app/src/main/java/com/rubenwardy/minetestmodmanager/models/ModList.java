@@ -16,7 +16,12 @@ import java.util.Map;
 public class ModList {
     public enum ModListType {
         EMLT_ONLINE,
-        EMLT_PATH
+        EMLT_MODS,
+        EMLT_GAME_MODS;
+
+        public boolean isLocal() {
+            return this == EMLT_MODS || this == EMLT_GAME_MODS;
+        }
     }
 
     @Nullable public final String title;

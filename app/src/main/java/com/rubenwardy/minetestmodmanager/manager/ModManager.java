@@ -93,7 +93,7 @@ public class ModManager {
     @Nullable
     public ModList getModInstalledList(String name, String author) {
         for (ModList list : getAllModLists()) {
-            if (list.type == ModList.ModListType.EMLT_PATH) {
+            if (list.type.isLocal()) {
                 if (list.get(name, author) != null) {
                     return list;
                 }
@@ -105,7 +105,7 @@ public class ModManager {
     @Nullable
     public String getInstallDir() {
         for (ModList list : getAllModLists()) {
-            if (list.type == ModList.ModListType.EMLT_PATH) {
+            if (list.type.isLocal()) {
                 return list.listname;
             }
         }
@@ -115,7 +115,7 @@ public class ModManager {
     public int getNumberOfInstalledMods() {
         int count = 0;
         for (ModList list : getAllModLists()) {
-            if (list.type == ModList.ModListType.EMLT_PATH) {
+            if (list.type == ModList.ModListType.EMLT_MODS) {
                 count += list.mods.size();
             }
         }
@@ -280,27 +280,27 @@ public class ModManager {
         return true;
     }
 
-    public boolean update(@NonNull ModList list) {
-        if (list.type == ModList.ModListType.EMLT_PATH) {
+    public boolean updateLocalModList(@NonNull ModList list) {
+        if (list.type.isLocal()) {
             return updatePathModList(list);
         } else {
-            Log.e("ModLib", "Failed to update invalid ModList.");
+            Log.e("ModLib", "Failed to updateLocalModList invalid ModList.");
             return false;
         }
     }
 
     @Nullable
-    private ModList scanModDir(Game game, String path) {
+    private ModList scanModDir(Game game, Game.ModDir moddir) {
         {
-            ModList list = getModList(path);
+            ModList list = getModList(moddir.path);
             if (list != null) {
                 return list;
             }
         }
 
-        ModList list = new ModList(ModList.ModListType.EMLT_PATH, game.name, game.getPath(), path);
-        if (update(list)) {
-            game.addList(path, list);
+        ModList list = new ModList(moddir.type, game.name, game.getPath(), moddir.path);
+        if (updateLocalModList(list)) {
+            game.addList(moddir.path, list);
             return list;
         } else {
             return null;
@@ -309,8 +309,8 @@ public class ModManager {
 
     public void registerGame(@NonNull Game game) {
         games.add(game);
-        for (String path : game.getModPaths()) {
-            scanModDir(game, path);
+        for (Game.ModDir moddir : game.getModPaths()) {
+            scanModDir(game, moddir);
         }
     }
 }

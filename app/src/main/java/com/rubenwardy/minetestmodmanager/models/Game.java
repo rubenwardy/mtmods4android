@@ -58,10 +58,10 @@ public class Game {
         new File(file, "worlds").mkdirs();
     }
 
-    public List<String> getModPaths() {
-        List<String> paths = new ArrayList<>();
-        paths.add(new File(file, "mods").getAbsolutePath());
-        paths.add(new File(file, "games/minetest_game/mods").getAbsolutePath());
+    public List<ModDir> getModPaths() {
+        List<ModDir> paths = new ArrayList<>();
+        paths.add(new ModDir(new File(file, "mods").getAbsolutePath(), ModList.ModListType.EMLT_MODS));
+        paths.add(new ModDir(new File(file, "games/minetest_game/mods").getAbsolutePath(), ModList.ModListType.EMLT_GAME_MODS));
         return paths;
     }
 
@@ -103,5 +103,15 @@ public class Game {
         }
 
         return path.startsWith(root);
+    }
+
+    public class ModDir {
+        public String path;
+        public ModList.ModListType type;
+
+        ModDir(String absolutePath, ModList.ModListType emltGameMods) {
+            this.path = absolutePath;
+            this.type = emltGameMods;
+        }
     }
 }
