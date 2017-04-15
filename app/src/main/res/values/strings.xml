@@ -22,8 +22,7 @@
 
 
     <!-- Mod List -->
-    <string name="modlist_minetest">Installed Minetest Mods</string>
-    <string name="modlist_multicraft">Installed MultiCraft Mods</string>
+    <string name="modlist_mods">Installed %1$s Mods</string>
     <string name="modlist_available_mods">Available Mods</string>
     <string name="modlist_rate_txt">Hey! Fancy giving us some stars?</string>
     <string name="modlist_rate_yes">Rate</string>

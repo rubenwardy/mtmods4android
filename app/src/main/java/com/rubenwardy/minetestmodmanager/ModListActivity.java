@@ -530,9 +530,10 @@ public class ModListActivity
         List<Mod> mods = new ArrayList<>();
         List<SectionedRecyclerViewAdapter.Section> sections =
                 new ArrayList<>();
+        String title_mods = res.getString(R.string.modlist_mods);
         for (ModList list : ModManager.getInstance().getAllModLists()) {
             if (list.type == ModList.ModListType.EMLT_MODS) {
-                sections.add(new SectionedRecyclerViewAdapter.Section(mods.size(), list.title, list.getWorldsDir()));
+                sections.add(new SectionedRecyclerViewAdapter.Section(mods.size(), String.format(title_mods, list.game_name), list.getWorldsDir()));
                 if (query != null) {
                     for (Mod mod : list.mods) {
                         if (

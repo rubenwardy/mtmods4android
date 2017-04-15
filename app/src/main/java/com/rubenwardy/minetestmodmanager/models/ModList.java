@@ -24,7 +24,7 @@ public class ModList {
         }
     }
 
-    @Nullable public final String title;
+    @Nullable public final String game_name;
     @NonNull  public final String listname;
     @Nullable public final String engine_root;
     @NonNull  public final ModListType type;
@@ -34,10 +34,10 @@ public class ModList {
     @NonNull
     public Map<String, List<Mod>> mods_map = new HashMap<>();
 
-    public ModList(@NonNull ModListType type, @Nullable String title, @Nullable String engine_root,
-            @NonNull String listname) {
+    public ModList(@NonNull ModListType type, @Nullable String game_name, @Nullable String engine_root,
+                   @NonNull String listname) {
         this.type = type;
-        this.title = title;
+        this.game_name = game_name;
         this.engine_root = engine_root;
         this.listname = listname;
         this.valid = true;
