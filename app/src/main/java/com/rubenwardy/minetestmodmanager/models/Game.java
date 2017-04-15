@@ -41,7 +41,7 @@ public class Game {
     }
 
     public boolean isValid() {
-        return file.isDirectory();
+        return file.isDirectory() && new File(file, "mods").isDirectory();
     }
 
     public boolean isLoaded() {
