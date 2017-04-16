@@ -105,6 +105,42 @@ public class Game {
         return path.startsWith(root);
     }
 
+    public static boolean isMTGMod(String mod_name) {
+        String[] mods = {
+                "beds",
+                "boats",
+                "bones",
+                "bucket",
+                "carts",
+                "creative",
+                "default",
+                "doors",
+                "dye",
+                "farming",
+                "fire",
+                "flowers",
+                "give_initial_stuff",
+                "killme",
+                "screwdriver",
+                "sethome",
+                "sfinv",
+                "stairs",
+                "tnt",
+                "vessels",
+                "walls",
+                "wool",
+                "xpanes"
+        };
+
+        for (String mod : mods) {
+            if (mod.equals(mod_name)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public class ModDir {
         public String path;
         public ModList.ModListType type;

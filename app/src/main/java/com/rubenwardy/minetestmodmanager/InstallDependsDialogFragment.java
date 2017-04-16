@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
+import com.rubenwardy.minetestmodmanager.models.Game;
 import com.rubenwardy.minetestmodmanager.models.Mod;
 import com.rubenwardy.minetestmodmanager.models.ModList;
 import com.rubenwardy.minetestmodmanager.restapi.StoreAPI;
@@ -51,6 +52,7 @@ public class InstallDependsDialogFragment extends DialogFragment {
         final List<Mod> mods       = new ArrayList<>();
         final List<String> missing = new ArrayList<>();
         int installable = 0;
+        boolean mtg_mods = false;
         for (String modname : listItems) {
             Mod mod = availableMods.get(modname, null);
 
@@ -61,11 +63,17 @@ public class InstallDependsDialogFragment extends DialogFragment {
                 mods.add(mod);
                 installable++;
             }
+
+            if (!mtg_mods && Game.isMTGMod(modname)) {
+                mtg_mods = true;
+            }
         }
 
         if (missing.size() > 0) {
             reportMissingMods(missing, "<?>");
         }
+
+
 
         list.setAdapter(new DependAdapter(mods));
 
@@ -79,13 +87,19 @@ public class InstallDependsDialogFragment extends DialogFragment {
                     }
                 });
 
+        String msg;
         if (installable == mods.size()) {
-            builder.setMessage(getResources().getString(R.string.event_missing_dependencies_msg));
+            msg = getResources().getString(R.string.event_missing_dependencies_msg);
         } else if (installable > 0) {
-            builder.setMessage(getResources().getString(R.string.event_missing_dependencies_msg_some_missing));
+            msg = getResources().getString(R.string.event_missing_dependencies_msg_some_missing);
         } else {
-            builder.setMessage(getResources().getString(R.string.event_missing_dependencies_msg_all_missing));
+            msg = getResources().getString(R.string.event_missing_dependencies_msg_all_missing);
         }
+
+        if (mtg_mods) {
+            msg += "\n\n" + getResources().getString(R.string.event_missing_dependencies_mtg_mods);
+        }
+        builder.setMessage(msg);
 
         if (installable > 0) {
             builder.setPositiveButton(R.string.mod_action_install, new DialogInterface.OnClickListener() {
@@ -129,7 +143,7 @@ public class InstallDependsDialogFragment extends DialogFragment {
         });
     }
 
-    class DependAdapter extends BaseAdapter {
+    private class DependAdapter extends BaseAdapter {
         private List<Mod> mods;
 
         DependAdapter(List<Mod> mods) {
@@ -183,6 +197,7 @@ public class InstallDependsDialogFragment extends DialogFragment {
                 viewHolder.name.setText(mod.name);
                 if (mod.author.isEmpty()) {
                     viewHolder.name.setTextColor(Color.RED);
+                    viewHolder.author.setText("");
                 } else {
                     viewHolder.name.setTextColor(Color.BLACK);
                     viewHolder.author.setText(mod.author);

@@ -45,6 +45,7 @@
     <string name="event_missing_dependencies_msg">Would you like to install these missing dependencies?</string>
     <string name="event_missing_dependencies_msg_some_missing">Unfortunately, we couldn\'t find all the required mods :(</string>
     <string name="event_missing_dependencies_msg_all_missing">Unfortunately, we couldn\'t find any of the required mods :(</string>
+    <string name="event_missing_dependencies_mtg_mods">WARNING: Make sure you\'ve opened Minetest at least once, some of these mods should come bundled.</string>
 
     <!-- Mod Details -->
     <string name="mod_title">Mod Detail</string>
