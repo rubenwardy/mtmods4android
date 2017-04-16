@@ -19,9 +19,16 @@ import android.widget.TextView;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 import com.rubenwardy.minetestmodmanager.models.Mod;
 import com.rubenwardy.minetestmodmanager.models.ModList;
+import com.rubenwardy.minetestmodmanager.restapi.StoreAPI;
+import com.rubenwardy.minetestmodmanager.restapi.StoreAPIBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class InstallDependsDialogFragment extends DialogFragment {
@@ -41,17 +48,23 @@ public class InstallDependsDialogFragment extends DialogFragment {
         ModList availableMods = modman.getAvailableMods();
         assert availableMods != null;
 
-        final List<Mod> mods = new ArrayList<>();
+        final List<Mod> mods       = new ArrayList<>();
+        final List<String> missing = new ArrayList<>();
         int installable = 0;
         for (String modname : listItems) {
             Mod mod = availableMods.get(modname, null);
 
             if (mod == null) {
+                missing.add(modname);
                 mods.add(new Mod(Mod.ModType.EMT_MOD, null, modname, modname, ""));
             } else {
                 mods.add(mod);
                 installable++;
             }
+        }
+
+        if (missing.size() > 0) {
+            reportMissingMods(missing, "<?>");
         }
 
         list.setAdapter(new DependAdapter(mods));
@@ -100,6 +113,20 @@ public class InstallDependsDialogFragment extends DialogFragment {
 
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    private void reportMissingMods(List<String> missing, String modname) {
+        StoreAPIBuilder.createService().sendMissingDependsReport(new StoreAPI.MissingModReport(missing, modname)).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     class DependAdapter extends BaseAdapter {

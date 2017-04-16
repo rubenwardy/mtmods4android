@@ -10,6 +10,7 @@ import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -36,6 +37,19 @@ public interface StoreAPI {
                                           @Field("status")  int status,
                                           @Field("author")  String author,
                                           @Field("error")   String error);
+
+    class MissingModReport {
+        public List<String> mods;
+        public String required_by;
+
+        public MissingModReport(List<String> mods, String required_by) {
+            this.mods = mods;
+            this.required_by = required_by;
+        }
+    }
+
+    @POST("v2/on-missing-dep")
+    Call<ResponseBody> sendMissingDependsReport(@Body MissingModReport info);
 
     class RestMod {
         public String author;
