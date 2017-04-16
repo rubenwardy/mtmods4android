@@ -294,7 +294,6 @@ public class ModDetailFragment extends Fragment {
 
                         if (uninstalled.isEmpty()) {
                             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-                            alertDialogBuilder.setCancelable(false);
                             alertDialogBuilder.setTitle(R.string.dialog_no_missing_mods_title);
                             alertDialogBuilder.setMessage(R.string.dialog_no_missing_mods_msg);
                             alertDialogBuilder.setPositiveButton(R.string.dialog_close, new DialogInterface.OnClickListener() {
