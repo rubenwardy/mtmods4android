@@ -20,8 +20,7 @@
     <string name="action_search">Buscar</string>
 
     <!-- Mod List -->
-    <string name="modlist_minetest">Mods instalados para Minetest</string>
-    <string name="modlist_multicraft">Mods instalados para MultiCraft</string>
+    <string name="modlist_mods">Mods instalados para %1$s</string>
     <string name="modlist_available_mods">Mods disponibles</string>
 
     <!-- Rating -->

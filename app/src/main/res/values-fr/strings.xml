@@ -60,8 +60,7 @@
     <string name="dialog_nowld_title">Incapable de créér un monde</string>
     <string name="dialog_nowld_msg">Nous avons essayé de créér un monde pour vous à configurer, mais l\'opération à ėchoué </string>
     <string name="disclaimer_agree">En utilisant cet service, on accepte aux termes et conditions suivants</string>
-    <string name="modlist_minetest">Mods de Minetest installés</string>
-    <string name="modlist_multicraft">Mods de Multicraft installés</string>
+    <string name="modlist_mods">Mods de %1$s installés</string>
     <string name="mod_action_find_elsewhere">Trouver ailleurs</string>
     <string name="about_credits_translation">Merci aux traducteurs: Soph (français), Dragonpop (Espangnol), et Adrian (allemand)</string>
     <string name="dialog_nomt_msg">Il n\'avait pas un dossier Minetest sur cet appareil, donc on essayé à crer un nouveau. Mais ça n\'a pas functionné. Peut-être était l\'access bloque par votre appareil.S\'il vous plaît essayer à ouvrir Minetest.</string>

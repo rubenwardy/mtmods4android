@@ -16,8 +16,7 @@
 
     <string name="action_search">Suchen</string>
 
-    <string name="modlist_minetest">Installierte Minetest Mods</string>
-    <string name="modlist_multicraft">Installierte MultiCraft Mods</string>
+    <string name="modlist_mods">Installierte %1$s Mods</string>
     <string name="modlist_available_mods">Verfügbare Mods</string>
     <string name="modlist_rate_txt">Wir würden uns darüber freuen, wenn sie uns eine Bewertung schreiben würden.</string>
     <string name="modlist_rate_yes">Ja, Bewerten</string>
