@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
@@ -318,21 +319,37 @@ public class ModListActivity
                     .setAction("Action", null).show();
 
             return;
-        } else if (isTwoPane) {
-            Bundle arguments = new Bundle();
-            arguments.putString(ModDetailFragment.ARG_MOD_LIST, e.list);
-            // not setting the author probably doesn't matter here, as mod names are unique in installed locations
-            arguments.putString(ModDetailFragment.ARG_MOD_NAME, e.modname);
-            ModDetailFragment fragment = new ModDetailFragment();
-            fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.mod_detail_container, fragment)
-                    .commit();
         } else {
-            String text = String.format(res.getString(R.string.event_installed_mod), e.modname);
-            Log.i("ModListActivity", text);
-            Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            ModManager modman = ModManager.getInstance();
+            List<String> uninstalled = modman.getMissingDependsForMod(modman.getModList(e.list).get(e.modname, null));
+            for (String a : uninstalled) {
+                Log.e("MDAct", "Mod not installed: " + a);
+            }
+
+            if (!uninstalled.isEmpty()) {
+                DialogFragment dialog = new InstallDependsDialogFragment();
+                Bundle b = new Bundle();
+                b.putStringArrayList("mods", (ArrayList<String>) uninstalled);
+                dialog.setArguments(b);
+                dialog.show(getSupportFragmentManager(), "InstallDependsDialogFragment");
+            }
+
+            if (isTwoPane) {
+                Bundle arguments = new Bundle();
+                arguments.putString(ModDetailFragment.ARG_MOD_LIST, e.list);
+                // not setting the author probably doesn't matter here, as mod names are unique in installed locations
+                arguments.putString(ModDetailFragment.ARG_MOD_NAME, e.modname);
+                ModDetailFragment fragment = new ModDetailFragment();
+                fragment.setArguments(arguments);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.mod_detail_container, fragment)
+                        .commit();
+            } else {
+                String text = String.format(res.getString(R.string.event_installed_mod), e.modname);
+                Log.i("ModListActivity", text);
+                Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
         }
 
         updateModListAndRecyclerView(e.list);
