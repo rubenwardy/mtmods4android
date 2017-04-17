@@ -11,7 +11,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/hintBackground">
+        android:background="@color/hintBackground"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/rate_no"
@@ -62,7 +63,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/rate_me"
         android:orientation="horizontal"
-        android:background="@color/hintBackground">
+        android:background="@color/hintBackground"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/help_config_close"
