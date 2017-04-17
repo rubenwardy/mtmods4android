@@ -13,128 +13,130 @@
     android:showDividers="middle"
     tools:context="com.rubenwardy.minetestmodmanager.ModListActivity">
 
-    <!--
-    This layout is a two-pane layout for the Mods
-    master/detail flow.
-    See res/values-large/refs.xml and
-    res/values-w900dp/refs.xml for an example of layout aliases
-    that replace the single-pane version of the layout with
-    this two-pane version.
-
-    For more on layout aliases, see:
-    http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
-    -->
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refresh"
+    <RelativeLayout
         android:layout_width="@dimen/modlist_width"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/rate_me"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:background="@color/hintBackground"
+            android:visibility="gone">
 
-            <RelativeLayout
-                android:id="@+id/rate_me"
-                android:layout_width="fill_parent"
+            <TextView
+                android:id="@+id/rate_no"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@color/hintBackground"
-                android:visibility="gone">
+                android:layout_alignParentRight="true"
+                android:text="@string/modlist_rate_no"
+                android:singleLine="true"
+                android:padding="10dp"
+                android:textAllCaps="true"
+                android:textColor="@color/hintAccent"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true" />
 
-                <TextView
-                    android:id="@+id/rate_no"
-                    android:layout_width="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="@string/modlist_rate_no"
-                    android:singleLine="true"
-                    android:padding="10dp"
-                    android:textAllCaps="true"
-                    android:textColor="@color/hintAccent"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:clickable="true"
-                    android:focusable="true" />
-
-                <TextView
-                    android:id="@+id/rate_yes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/modlist_rate_yes"
-                    android:padding="10dp"
-                    android:singleLine="true"
-                    android:gravity="center_vertical"
-                    android:layout_toLeftOf="@id/rate_no"
-                    android:textAllCaps="true"
-                    android:textColor="@color/hintAccent"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:clickable="true"
-                    android:focusable="true" />
-
-                <TextView
-                    android:id="@+id/rate_txt"
-                    android:padding="10dp"
-                    android:textColor="@color/hintText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_toLeftOf="@id/rate_yes"
-                    android:text="@string/modlist_rate_txt" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/help_config"
-                android:layout_width="fill_parent"
+            <TextView
+                android:id="@+id/rate_yes"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@color/hintBackground"
-                android:visibility="gone">
+                android:text="@string/modlist_rate_yes"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:gravity="center_vertical"
+                android:layout_toLeftOf="@id/rate_no"
+                android:textAllCaps="true"
+                android:textColor="@color/hintAccent"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true" />
 
-                <TextView
-                    android:id="@+id/help_config_close"
-                    android:layout_width="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="@string/dialog_close"
-                    android:singleLine="true"
-                    android:padding="10dp"
-                    android:textAllCaps="true"
-                    android:textColor="@color/hintAccent"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:clickable="true"
-                    android:focusable="true" />
+            <TextView
+                android:id="@+id/rate_txt"
+                android:padding="10dp"
+                android:textColor="@color/hintText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/rate_yes"
+                android:text="@string/modlist_rate_txt" />
+        </RelativeLayout>
 
-                <TextView
-                    android:padding="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/hintText"
-                    android:layout_alignParentLeft="true"
-                    android:layout_toLeftOf="@id/help_config_close"
-                    android:text="@string/modlist_tip_worldconfig" />
-            </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/help_config"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/hintBackground"
+            android:layout_below="@id/rate_me"
+            android:visibility="gone">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/mod_list"
-                android:name="com.rubenwardy.minetestmodmanager.ModListFragment"
+            <TextView
+                android:id="@+id/help_config_close"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@string/dialog_close"
+                android:singleLine="true"
+                android:padding="10dp"
+                android:textAllCaps="true"
+                android:textColor="@color/hintAccent"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/hintText"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/help_config_close"
+                android:text="@string/modlist_tip_worldconfig" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@id/help_config"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/refresh"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/mod_list"
+                    android:name="com.rubenwardy.minetestmodmanager.ModListFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
+                    android:scrollbars="none"
+                    app:layoutManager="LinearLayoutManager"
+                    tools:context="com.rubenwardy.minetestmodmanager.ModListActivity"
+                    tools:listitem="@layout/mod_list_content" />
+
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+            <com.futuremind.recyclerviewfastscroll.FastScroller
+                android:id="@+id/fastscroll"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
-                android:scrollbars="vertical"
-                app:layoutManager="LinearLayoutManager"
-                tools:context="com.rubenwardy.minetestmodmanager.ModListActivity"
-                tools:listitem="@layout/mod_list_content" />
+                android:layout_alignParentRight="true"/>
 
-        </LinearLayout>
-
-    </android.support.v4.widget.SwipeRefreshLayout>
+        </RelativeLayout>
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/mod_detail_container"

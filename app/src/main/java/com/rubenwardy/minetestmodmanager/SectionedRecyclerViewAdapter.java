@@ -13,13 +13,15 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
 import com.rubenwardy.minetestmodmanager.models.Mod;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+        implements SectionTitleProvider {
 
     @NonNull
     private final Context mContext;
@@ -71,6 +73,27 @@ class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 notifyItemRangeRemoved(positionStart, itemCount);
             }
         });
+    }
+
+    @Override
+    public String getSectionTitle(int position) {
+        if (isSectionHeaderPosition(position)) {
+            for (int i = 0; i < 2 && i + position < getItemCount(); i++) {
+                if (!isSectionHeaderPosition(position + i)) {
+                    return ((SectionTitleProvider)mBaseAdapter).getSectionTitle(sectionedPositionToPosition(position + i));
+                }
+            }
+
+            for (int i = 0; i < 2 && position - i - 1 >= 0; i++) {
+                if (!isSectionHeaderPosition(position - i - 1)) {
+                    return ((SectionTitleProvider)mBaseAdapter).getSectionTitle(sectionedPositionToPosition(position - i - 1));
+                }
+            }
+
+            return "?";
+        } else {
+            return ((SectionTitleProvider)mBaseAdapter).getSectionTitle(sectionedPositionToPosition(position));
+        }
     }
 
 

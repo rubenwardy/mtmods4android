@@ -32,6 +32,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.futuremind.recyclerviewfastscroll.FastScroller;
+import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
 import com.rubenwardy.minetestmodmanager.models.Events;
 import com.rubenwardy.minetestmodmanager.models.Game;
 import com.rubenwardy.minetestmodmanager.models.Mod;
@@ -490,6 +492,9 @@ public class ModListActivity
                 new SectionedRecyclerViewAdapter(this, R.layout.section, R.id.section_text, adapter);
         recyclerView.setAdapter(sectionedAdapter);
 
+        FastScroller fastScroller = (FastScroller) findViewById(R.id.fastscroll);
+        fastScroller.setRecyclerView(recyclerView);
+
         // Fill view
         fillRecyclerView(recyclerView, null);
     }
@@ -600,7 +605,8 @@ public class ModListActivity
     }
 
     public class ModListRecyclerViewAdapter
-            extends RecyclerView.Adapter<ModListRecyclerViewAdapter.ViewHolder> {
+            extends RecyclerView.Adapter<ModListRecyclerViewAdapter.ViewHolder>
+            implements SectionTitleProvider {
 
         private List<Mod> mods;
 
@@ -666,6 +672,11 @@ public class ModListActivity
         @Override
         public int getItemCount() {
             return mods.size();
+        }
+
+        @Override
+        public String getSectionTitle(int position) {
+            return mods.get(position).name.substring(0, 1);
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
