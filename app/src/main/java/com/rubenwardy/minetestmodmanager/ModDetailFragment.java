@@ -6,19 +6,24 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rubenwardy.minetestmodmanager.models.Events;
@@ -28,6 +33,7 @@ import com.rubenwardy.minetestmodmanager.manager.ModManager;
 import com.rubenwardy.minetestmodmanager.manager.Utils;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -48,6 +54,7 @@ public class ModDetailFragment extends Fragment {
     public static final String ARG_MOD_NAME = "mod_name";
     public static final String ARG_MOD_AUTHOR = "mod_author";
 
+    private ImageView screenshot_view;
 
     private Mod mod;
 
@@ -86,7 +93,7 @@ public class ModDetailFragment extends Fragment {
                         mod = new Mod(Mod.ModType.EMT_INVALID,
                                 "", "invalid",
                                 res.getString(R.string.mod_invalid_mod_title),
-                                author + "/" + name  + ": " + res.getString(R.string.mod_invalid_mod_desc));
+                                author + "/" + name + ": " + res.getString(R.string.mod_invalid_mod_desc));
                     }
                 }
             }
@@ -99,6 +106,21 @@ public class ModDetailFragment extends Fragment {
         state.putString(ModDetailFragment.ARG_MOD_LIST, mod.listname);
         state.putString(ModDetailFragment.ARG_MOD_NAME, mod.name);
         state.putString(ModDetailFragment.ARG_MOD_AUTHOR, mod.author);
+    }
+
+    // Don't subscribe, as ModListActivity passes this in
+    public void onFetchedScreenshot(final Events.FetchedScreenshotEvent e) {
+        screenshot_view.setVisibility(View.GONE);
+        if (e.didError()) {
+            Log.e("MDAct", e.error);
+        } else {
+            String dest = e.filepath;
+            Drawable d = Drawable.createFromPath(dest);
+            if (d != null) {
+                screenshot_view.setImageDrawable(d);
+                screenshot_view.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
@@ -117,6 +139,19 @@ public class ModDetailFragment extends Fragment {
             // Title
             TextView txt_title = (TextView) rootView.findViewById(R.id.mod_header_title);
             txt_title.setText(mod.title);
+
+            screenshot_view = (ImageView) rootView.findViewById(R.id.screenshot_view);
+            screenshot_view.setVisibility(View.GONE);
+            if (mod.screenshot_uri != null && !mod.screenshot_uri.equals("")) {
+                Drawable d = Drawable.createFromPath(mod.screenshot_uri);
+                if (d != null) {
+                    screenshot_view.setImageDrawable(d);
+                    screenshot_view.setVisibility(View.VISIBLE);
+                }
+            } else if (!mod.isLocalMod()) {
+                ModManager modman = ModManager.getInstance();
+                modman.fetchScreenshot(getContext(), mod.name, mod.author);
+            }
 
             // Author
             TextView txt_author = (TextView) rootView.findViewById(R.id.mod_header_author);

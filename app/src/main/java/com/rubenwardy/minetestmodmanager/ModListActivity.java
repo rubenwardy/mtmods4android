@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -414,6 +415,18 @@ public class ModListActivity
             fillRecyclerView(recyclerView, null);
         }
     }
+
+    @Subscribe
+    public void onFetchedScreenshot(final Events.FetchedScreenshotEvent e) {
+        if (isTwoPane) {
+            FragmentManager frags = getSupportFragmentManager();
+            Fragment frag = frags.findFragmentById(R.id.mod_detail_container);
+            if (frag != null) {
+                ((ModDetailFragment)frag).onFetchedScreenshot(e);
+            }
+        }
+    }
+
 
     private void updateModListAndRecyclerView(@Nullable String listname) {
         if (listname == null || listname.equals("")) {

@@ -94,13 +94,34 @@
         tools:context="com.rubenwardy.minetestmodmanager.ModDetailFragment" />
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/cardview_light_background"
+        android:id="@+id/screenshot_view_frame"
+        android:layout_below="@id/mod_desc">
+
+        <ImageView
+            android:id="@+id/screenshot_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="300dp"
+            android:minHeight="200dp"
+            android:scaleType="fitXY"
+            android:layout_margin="16dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/mod_btnbar"
         android:orientation="vertical"
         android:paddingTop="0dip"
         android:paddingBottom="1.0dip"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/mod_desc">
+        android:layout_below="@id/screenshot_view_frame">
 
         <Button
             android:id="@+id/action_info"
