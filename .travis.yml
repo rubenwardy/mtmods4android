@@ -1,0 +1,17 @@
+language: android
+sudo: false
+android:
+  components:
+    - tools
+    - build-tools-25.0.2
+    - android-25
+    - extra-android-support
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - platform-tools
+script: ./gradlew build test
+jdk: oraclejdk8
+os:
+  - linux
+notifications:
+  email: false
