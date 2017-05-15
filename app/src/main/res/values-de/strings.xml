@@ -1,27 +1,27 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
 
-    <string name="dialog_noext_title">Kein externer Speicher verfügbar!</string>
+    <string name="dialog_noext_title">Kein externer Speicher verfügbar</string>
     <string name="dialog_noext_msg">Wir konnten den Minetest Ordner nicht finden!
         Externer Speicher heißt nicht, das eine SD-Karte nötig ist.
         Sondern das der Ordner "Minetest" für diese App zugänglich sein muss.</string>
-    <string name="dialog_nomt_title">Erstellen des Minetest-Mods-Ordners gescheitert!</string>
+    <string name="dialog_nomt_title">Erstellen des Minetest-Mod-Ordners gescheitert</string>
     <string name="dialog_nomt_msg">Es exsistierte bisher in ihrem Speicher kein Ordner "Minetest",
         darum hat die App versucht einen zu erstellen. Dies hat nicht funktioniert!
         Möglicherweise verhindert ihr Gerät den Zugriff auf diesen. Probieren sie bitte ob
         sie die Minetest App nutzen können.</string>
     <string name="dialog_close">Schließen</string>
-    <string name="dialog_nowld_title">Welt konnte nicht erstellt werden!</string>
+    <string name="dialog_nowld_title">Welt konnte nicht erstellt werden</string>
     <string name="dialog_nowld_msg">Wir haben versucht eine Minetest Welt zu erstellen, aber das hat nicht funktioniert.</string>
 
     <string name="action_search">Suchen</string>
 
     <string name="modlist_mods">Installierte %1$s Mods</string>
     <string name="modlist_available_mods">Verfügbare Mods</string>
-    <string name="modlist_rate_txt">Wir würden uns darüber freuen, wenn sie uns eine Bewertung schreiben würden.</string>
+    <string name="modlist_rate_txt">Hey! Lust uns ein paar Sterne zu geben?</string>
     <string name="modlist_rate_yes">Ja, Bewerten</string>
     <string name="modlist_rate_no">Nein</string>
-    <string name="modlist_tip_worldconfig">Mod aktivieren per Klick auf Welt Symbol</string>
+    <string name="modlist_tip_worldconfig">Aktiviere einen Mod per Klick auf das Welt Symbol.</string>
 
     <string name="event_installing_mod">Installiere mod…</string>
     <string name="event_installed_mod">Habe %1$s installiert.</string>
@@ -83,8 +83,8 @@
     <string name="world_config_accept">Aktzeptieren</string>
     <string name="world_config_saved">Konfiguration gespeichert</string>
 
-    <string name="disclaimer_title">Disclaimer</string>
-    <string name="disclaimer_agree">Mit dem Nutzen dieses Services stimmen sie den folgenden Bedingungen zu:</string>
+    <string name="disclaimer_title"/>
+    <string name="disclaimer_agree">Bei der Benutzung dieses Services stimmen sie den folgenden Bedingungen zu.</string>
     <string name="disclaimer_1_t">Keine Garantie oder Haftung</string>
     <string name="disclaimer_2_t">Dies ist kein Mod Store, sondern eine Mod Suchmaschine</string>
     <string name="disclaimer_2_m">Die hier gelisteten Mods sind dem Minetest Forum entnommen.
