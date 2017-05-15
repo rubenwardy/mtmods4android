@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
 
     <string name="dialog_noext_title">Kein externer Speicher verfügbar!</string>
@@ -112,4 +112,19 @@
     <string name="failed_list_download">Das Herunterladen der Liste der verfügbaren Mods ist gescheitert. Fehler %1$s.</string>
     <string name="mod_action_find_elsewhere">Wo anders suchen</string>
 
-</resources>
+<string name="app_name">Minetest Mods</string>
+
+
+    <string name="dialog_no_minetest">Minetest ist nicht installiert</string>
+    <string name="dialog_no_minetest_msg">Es ist empfohlen erst Minetest zu installieren, bevor du diese App benutzt!</string>
+    <string name="dialog_no_missing_mods_title">Alles gut!</string>
+    <string name="dialog_no_missing_mods_msg">Alle benötigten Abhängigkeiten sind installiert.</string>
+
+    <string name="event_missing_dependencies">Installiere Benötigte Mods</string>
+    <string name="event_missing_dependencies_msg">Möchtest du diese Abhängigkeiten installieren?</string>
+    <string name="event_missing_dependencies_msg_some_missing">Leider konnten wir nicht alle benötigten Mods finden :(</string>
+    <string name="event_missing_dependencies_msg_all_missing">Leider konnten wir keine der benötigten Mods finden :(</string>
+    <string name="event_missing_dependencies_mtg_mods">WARNUNG: Stelle sicher, dass du Minetest mindestens einmal geöffnent hast, einige dieser Mods sollten gebündelt kommen.</string>
+
+    <string name="mod_action_check_depends">Suche nach fehlenden Abhängigkeiten</string>
+    </resources>
