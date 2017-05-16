@@ -1,2 +1,94 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="app_name">Minetest Modları</string>
+
+
+    <string name="dialog_noext_title">Mevcut harici depolama yok</string>
+    <string name="dialog_nomt_title">Minetest mod klasörü oluşturulamadı</string>
+    <string name="dialog_close">Kapat</string>
+    <string name="dialog_nowld_title">Dünya oluşturulamıyor</string>
+    <string name="dialog_nowld_msg">Yapılandırmanız için bir dünya yaratmaya çalıştık ama işlem başarısız oldu.</string>
+    <string name="dialog_no_minetest">Minetest kurulu değil</string>
+    <string name="dialog_no_missing_mods_title">Her şey yolunda!</string>
+    <string name="dialog_no_missing_mods_msg">Tüm gerekli bağımlılıkları kurulu.</string>
+
+    <string name="action_search">Ara</string>
+
+
+    <string name="modlist_mods">%1$s Mod Kuruldu</string>
+    <string name="modlist_available_mods">Mevcut Modlar</string>
+    <string name="modlist_rate_txt">Hey! Bize biraz yıldız vermek ister misiniz?</string>
+    <string name="modlist_rate_yes">Değerlendir</string>
+    <string name="modlist_rate_no">Hayır</string>
+    <string name="modlist_tip_worldconfig">Dünya simgesine tıklayarak bir mod etkinleştir.</string>
+
+
+    <string name="event_installing_mod">Mod kuruluyor…</string>
+    <string name="event_installed_mod">%1$s Kuruldu.</string>
+    <string name="event_installing">%1$s Kuruluyor…</string>
+    <string name="event_connecting">Bağlanılıyor…</string>
+    <string name="event_downloading">İndiriliyor…</string>
+    <string name="event_extracting">Ayıklanıyor…</string>
+    <string name="event_failed_install">%1$s modu kurulamadı. Hata: %2$s.</string>
+    <string name="event_failed_uninstall">%1$s modu kaldırılamadı. Hata: %2$s.</string>
+    <string name="failed_list_download">Mevcut mod listesi indirilemedi. Hata: %1$s.</string>
+
+    <string name="event_missing_dependencies">Gerekli Modları Kur</string>
+    <string name="disclaimer_3_m">Eğer bir modun güvenilirliği konusunda emin değilseniz, onun forum konusunu kontrol edin. Yorumlar ne dediğine ve konunun ne kadar eski olduğuna bakın.</string>
+
+    <string name="disclaimer_accept_and_install">Kabul Et ve Yükle</string>
+
+
+    <string name="about_title">Bu Uygulama Hakkında</string>
+    <string name="about_credits">Katkılar</string>
+    <string name="about_credits_dev">Rubenwardy (rubenwardy.com) tarafından geliştirildi</string>
+    <string name="about_credits_feedback">Geliştirme sırasında geribildirim için DonBatman\'a teşekkürler</string>
+    <string name="mod_action_find_elsewhere">Başka Yerde Ara</string>
+    <string name="event_missing_dependencies_msg">Bu eksik bağımlılıkları kurmak ister misiniz?</string>
+    <string name="event_missing_dependencies_msg_some_missing">Ne yazık ki, gerekli modların tamamını bulamadık :(</string>
+    <string name="event_missing_dependencies_msg_all_missing">Ne yazık ki, gerekli modların hiçbirini bulamadık :(</string>
+    <string name="mod_title">Mod Ayrıntısı</string>
+    <string name="mod_action_install">Kur</string>
+    <string name="mod_action_uninstall">Kaldır</string>
+
+    <string name="mod_tip_installed_elsewhere">Mod zaten kurulu %1$s</string>
+    <string name="mod_tip_view">Göster</string>
+
+    <string name="mod_action_info">Bilgileri Göster</string>
+    <string name="mod_action_check_depends">Eksik bağımlılıklar için kontrol et</string>
+    <string name="mod_action_report_mod">Modu Bildir</string>
+    <string name="mod_action_forum_topic">Forum Konusunu Göster</string>
+    <string name="mod_action_view_readme">Read Me Göster</string>
+
+    <string name="mod_verified_yes">Bu mod tanınmış bir yazardan.</string>
+    <string name="mod_verified_no">Bu mod tanınmış bir yazar tarafından yapılmamış.</string>
+    <string name="mod_verified_uk">Bu modun kaynağı belirlenemiyor.</string>
+
+    <string name="mod_invalid_mod_title">Geçersiz Mod</string>
+    <string name="mod_invalid_mod_desc">O modu bulamadık. Silinmiş mi?</string>
+    <string name="mod_invalid_modlist_title">Geçersiz Mod Yeri veya Konumu</string>
+    <string name="modinfo_title">Bilgi</string>
+    <string name="modinfo_details_name">Mod Adı</string>
+    <string name="modinfo_details_author">Yazar</string>
+    <string name="modinfo_details_type">Tür</string>
+    <string name="modinfo_details_location">Klasör</string>
+    <string name="modinfo_details_link">İndirme URL\'si</string>
+    <string name="modinfo_details_size">İndirme Boyutu</string>
+    <string name="modinfo_details_size_unknown">Bilinmiyor</string>
+    <string name="modinfo_details_type_modpack">Mod Paketi</string>
+    <string name="readme_title">Read Me</string>
+
+
+    <string name="report_title">Modu Bildir</string>
+    <string name="report_modname_by_authorname">%1$s - %2$s</string>
+    <string name="report_reason">Neden</string>
+    <string name="report_msg">İsteğe Bağlı Mesaj</string>
+    <string name="report_details">Ayrıntılar</string>
+    <string name="world_config">Dünya Yapılandırması</string>
+    <string name="world_config_accept">Kabul Et</string>
+    <string name="world_config_saved">Kaydedilmiş yapılandırma</string>
+
+
+    <string name="disclaimer_title">Yasal Uyarı</string>
+    <string name="disclaimer_1_t">Garantisiz</string>
+    <string name="disclaimer_3_t">Ne yapabilirsiniz?</string>
+    </resources>
