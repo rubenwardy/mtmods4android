@@ -91,4 +91,21 @@
     <string name="disclaimer_title">Yasal Uyarı</string>
     <string name="disclaimer_1_t">Garantisiz</string>
     <string name="disclaimer_3_t">Ne yapabilirsiniz?</string>
-    </resources>
+    <string name="dialog_noext_msg">Mevcut harici depolama olmadığından Minetest dizinini bulamadık. Harici depolama aygıtınızdaki paylaşılan bir dosya konumudur, ve bir SD kart anlamına gelmez.</string>
+    <string name="dialog_nomt_msg">Aygıtınızda modlar için bir dizin yoktu, bu yüzden bir tane oluşturmaya çalıştık. Ancak, oluşturulamadı. Sistem bu uygulamanın ona erişimini reddediyor olabilir. Minetest\'i çalıştırmayı deneyin.</string>
+    <string name="dialog_no_minetest_msg">Uygulama mağazasından bu uygulamayı kullanmadan önce Minetest\'i kurmanız önerilir!</string>
+    <string name="event_missing_dependencies_mtg_mods">UYARI: Minetest\'i en az bir kere açtığınızdan emin olun, bu modların bazıları paketli gelmeli.</string>
+
+    <string name="mod_invalid_modlist_desc">Mod konumunu bulamadık. Dizin silindi mi veya geçerli mod listesi çevrim dışı mı?</string>
+
+
+    <string name="report_instructions">Lütfen bu modu bildirme nedeninizi seçin. Başka bir bilginiz varsa, lütfen onu metin olarak girin.</string>
+    <string name="disclaimer_agree">Bu hizmeti kullanarak, aşağıdaki şartları ve koşulları kabul edersiniz.</string>
+    <string name="disclaimer_2_t">Bir Mod Mağazası değil, sadece bir Mod Bulucu</string>
+    <string name="disclaimer_2_m">"Mevcut olarak listelenen modlar Minetest forumlarında bulunan modların bir kısmıdır. Bir modu indirdiğinizde onu bizim sunucularımızdan indirmezsiniz bunun yerine yazarın  belirttiği özgün bağlantıdan indirirsiniz. Bu yüzden, modların güvenilirliğini garanti edemeyiz. Bu modları kontrol eden belirli bir kişi yok."</string>
+
+    <string name="about_credits_krock">"Mevcut modlar listesinin temel aldığı tarayıcı  olan Krock\'un Mod Aramasını yarattığı için Krock\'a (Smalljoker) teşekkürler."</string>
+    <string name="about_credits_logo">Uygulama logosu, erlehmann tarafından yaratılmış ve CC-BY-SA 3.0 olan Minetest logosunu temel alır</string>
+    <string name="about_credits_images">Bu uygulama CC-BY 4.0 olan birkaç standart Android simgesi de kullanır</string>
+    <string name="about_credits_translation">Aşağıdaki çevirmenlere teşekkürler: arkadaşım Soph (Fransızca), Dragonop (İspanyolca), ve Adrian (Almanca).</string>
+</resources>
