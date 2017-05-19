@@ -3,7 +3,7 @@
 
 
     <string name="dialog_noext_title">Mevcut harici depolama yok</string>
-    <string name="dialog_nomt_title">Minetest mod klasörü oluşturulamadı</string>
+    <string name="dialog_nomt_title">Minetest mod dizini oluşturulamadı</string>
     <string name="dialog_close">Kapat</string>
     <string name="dialog_nowld_title">Dünya oluşturulamıyor</string>
     <string name="dialog_nowld_msg">Yapılandırmanız için bir dünya yaratmaya çalıştık ama işlem başarısız oldu.</string>
@@ -50,14 +50,14 @@
     <string name="mod_action_install">Kur</string>
     <string name="mod_action_uninstall">Kaldır</string>
 
-    <string name="mod_tip_installed_elsewhere">Mod zaten kurulu %1$s</string>
+    <string name="mod_tip_installed_elsewhere">Mod zaten %1$s \'de kurulu</string>
     <string name="mod_tip_view">Göster</string>
 
     <string name="mod_action_info">Bilgileri Göster</string>
     <string name="mod_action_check_depends">Eksik bağımlılıklar için kontrol et</string>
     <string name="mod_action_report_mod">Modu Bildir</string>
     <string name="mod_action_forum_topic">Forum Konusunu Göster</string>
-    <string name="mod_action_view_readme">Read Me Göster</string>
+    <string name="mod_action_view_readme">Beni Oku\'yu Göster</string>
 
     <string name="mod_verified_yes">Bu mod tanınmış bir yazardan.</string>
     <string name="mod_verified_no">Bu mod tanınmış bir yazar tarafından yapılmamış.</string>
@@ -70,12 +70,12 @@
     <string name="modinfo_details_name">Mod Adı</string>
     <string name="modinfo_details_author">Yazar</string>
     <string name="modinfo_details_type">Tür</string>
-    <string name="modinfo_details_location">Klasör</string>
+    <string name="modinfo_details_location">Dizin</string>
     <string name="modinfo_details_link">İndirme URL\'si</string>
     <string name="modinfo_details_size">İndirme Boyutu</string>
     <string name="modinfo_details_size_unknown">Bilinmiyor</string>
     <string name="modinfo_details_type_modpack">Mod Paketi</string>
-    <string name="readme_title">Read Me</string>
+    <string name="readme_title">Beni Oku</string>
 
 
     <string name="report_title">Modu Bildir</string>
