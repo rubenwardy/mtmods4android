@@ -54,14 +54,14 @@
     <string name="mod_invalid_modlist_desc">Wir konnten diesen Pfad nicht finden. Haben sie den Ordner gelöscht, oder haben sie keine aktive Internetverbindung?</string>
 
     <string name="modinfo_title">Information</string>
-    <string name="modinfo_details_name">Mod Name</string>
+    <string name="modinfo_details_name">Modname</string>
     <string name="modinfo_details_author">Autor</string>
     <string name="modinfo_details_type">Typ</string>
     <string name="modinfo_details_location">Ordner</string>
     <string name="modinfo_details_link">Download URL</string>
     <string name="modinfo_details_size">Download Größe</string>
     <string name="modinfo_details_size_unknown">Unbekannt</string>
-    <string name="modinfo_details_type_modpack">Mod Pack</string>
+    <string name="modinfo_details_type_modpack">Modpack</string>
 
     <string name="readme_title">Lies Mich</string>
 
@@ -83,7 +83,7 @@
     <string name="world_config_accept">Aktzeptieren</string>
     <string name="world_config_saved">Konfiguration gespeichert</string>
 
-    <string name="disclaimer_title"/>
+    <string name="disclaimer_title">Disclaimer</string>
     <string name="disclaimer_agree">Bei der Benutzung dieses Services stimmen sie den folgenden Bedingungen zu.</string>
     <string name="disclaimer_1_t">Keine Garantie oder Haftung</string>
     <string name="disclaimer_2_t">Dies ist kein Mod Store, sondern eine Mod Suchmaschine</string>
@@ -112,7 +112,7 @@
     <string name="failed_list_download">Das Herunterladen der Liste der verfügbaren Mods ist gescheitert. Fehler %1$s.</string>
     <string name="mod_action_find_elsewhere">Wo anders suchen</string>
 
-<string name="app_name">Minetest Mods</string>
+<string name="app_name">Minetest-Mods</string>
 
 
     <string name="dialog_no_minetest">Minetest ist nicht installiert</string>
