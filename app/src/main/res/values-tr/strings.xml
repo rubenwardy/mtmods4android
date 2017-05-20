@@ -107,5 +107,5 @@
     <string name="about_credits_krock">"Mevcut modlar listesinin temel aldığı tarayıcı  olan Krock\'un Mod Aramasını yarattığı için Krock\'a (Smalljoker) teşekkürler."</string>
     <string name="about_credits_logo">Uygulama logosu, erlehmann tarafından yaratılmış ve CC-BY-SA 3.0 olan Minetest logosunu temel alır</string>
     <string name="about_credits_images">Bu uygulama CC-BY 4.0 olan birkaç standart Android simgesi de kullanır</string>
-    <string name="about_credits_translation">Aşağıdaki çevirmenlere teşekkürler: arkadaşım Soph (Fransızca), Dragonop (İspanyolca), ve Adrian (Almanca).</string>
+    <string name="about_credits_translation">Aşağıdaki çevirmenlere teşekkürler: arkadaşım Soph (Fransızca), Dragonop (İspanyolca), Adrian (Almanca), monolifed (Türkçe), ve muhdnurhidayat (Malaya).</string>
 </resources>
