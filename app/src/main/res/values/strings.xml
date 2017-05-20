@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <string name="app_name">Minetest Mods</string>
 
@@ -147,5 +148,5 @@
         and created by erlehmann</string>
     <string name="about_credits_images">This app also uses several standard Android icons, which are CC-BY 4.0</string>
     <string name="mod_action_find_elsewhere">Find Elsewhere</string>
-    <string name="about_credits_translation">Thank you to the following translators: my friend Soph (French), Dragonop (Spanish), and Adrian (German).</string>
+    <string name="about_credits_translation">Thank you to the following translators: my friend Soph (French), Dragonop (Spanish), Adrian (German), monolifed (Turkish), and muhdnurhidayat (Malay).</string>
 </resources>
