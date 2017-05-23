@@ -3,7 +3,7 @@
 
 
     <string name="dialog_noext_title">Mevcut harici depolama yok</string>
-    <string name="dialog_nomt_title">Minetest mod dizini oluşturulamadı</string>
+    <string name="dialog_nomt_title">Minetest mod klasörü oluşturulamadı</string>
     <string name="dialog_close">Kapat</string>
     <string name="dialog_nowld_title">Dünya oluşturulamıyor</string>
     <string name="dialog_nowld_msg">Yapılandırmanız için bir dünya yaratmaya çalıştık ama işlem başarısız oldu.</string>
@@ -70,7 +70,7 @@
     <string name="modinfo_details_name">Mod Adı</string>
     <string name="modinfo_details_author">Yazar</string>
     <string name="modinfo_details_type">Tür</string>
-    <string name="modinfo_details_location">Dizin</string>
+    <string name="modinfo_details_location">Klasör</string>
     <string name="modinfo_details_link">İndirme URL\'si</string>
     <string name="modinfo_details_size">İndirme Boyutu</string>
     <string name="modinfo_details_size_unknown">Bilinmiyor</string>
@@ -91,12 +91,12 @@
     <string name="disclaimer_title">Yasal Uyarı</string>
     <string name="disclaimer_1_t">Garantisiz</string>
     <string name="disclaimer_3_t">Ne yapabilirsiniz?</string>
-    <string name="dialog_noext_msg">Mevcut harici depolama olmadığından Minetest dizinini bulamadık. Harici depolama aygıtınızdaki paylaşılan bir dosya konumudur, ve bir SD kart anlamına gelmez.</string>
-    <string name="dialog_nomt_msg">Aygıtınızda modlar için bir dizin yoktu, bu yüzden bir tane oluşturmaya çalıştık. Ancak, oluşturulamadı. Sistem bu uygulamanın ona erişimini reddediyor olabilir. Minetest\'i çalıştırmayı deneyin.</string>
+    <string name="dialog_noext_msg">Mevcut harici depolama olmadığından Minetest klasörünü bulamadık. Harici depolama aygıtınızdaki paylaşılan bir dosya konumudur, ve bir SD kart anlamına gelmez.</string>
+    <string name="dialog_nomt_msg">Aygıtınızda modlar için bir klasör yoktu, bu yüzden bir tane oluşturmaya çalıştık. Ancak, oluşturulamadı. Sistem bu uygulamanın ona erişimini reddediyor olabilir. Minetest\'i çalıştırmayı deneyin.</string>
     <string name="dialog_no_minetest_msg">Uygulama mağazasından bu uygulamayı kullanmadan önce Minetest\'i kurmanız önerilir!</string>
     <string name="event_missing_dependencies_mtg_mods">UYARI: Minetest\'i en az bir kere açtığınızdan emin olun, bu modların bazıları paketli gelmeli.</string>
 
-    <string name="mod_invalid_modlist_desc">Mod konumunu bulamadık. Dizin silindi mi veya geçerli mod listesi çevrim dışı mı?</string>
+    <string name="mod_invalid_modlist_desc">Mod konumunu bulamadık. Klasör silindi mi veya geçerli mod listesi çevrim dışı mı?</string>
 
 
     <string name="report_instructions">Lütfen bu modu bildirme nedeninizi seçin. Başka bir bilginiz varsa, lütfen onu metin olarak girin.</string>
