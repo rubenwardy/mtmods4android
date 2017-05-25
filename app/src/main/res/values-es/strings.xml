@@ -101,8 +101,7 @@
     <string name="about_credits_logo">El logo de la aplicación esta basado en el logo de Minetest
         licenciado en CC-BY-SA 3.0, y creado por erlehmann</string>
     <string name="about_credits_images">Esta aplicación también usa varios iconos genericos de Android, licenciados en CC-BY 4.0</string>
-<string name="dialog_no_minetest">Minetest no esta instalado
-\n</string>
+<string name="dialog_no_minetest">Minetest no esta instalado</string>
     <string name="dialog_no_minetest_msg">Es recomendado que instales Minetest antes de usar esta App de tu App Store!</string>
     <string name="dialog_no_missing_mods_title">Todo Bien!</string>
     <string name="dialog_no_missing_mods_msg">Todas las dependencias requeridas estan instaladas.</string>
