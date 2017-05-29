@@ -1,4 +1,4 @@
-package com.rubenwardy.minetestmodmanager;
+package com.rubenwardy.minetestmodmanager.views;
 
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.rubenwardy.minetestmodmanager.R;
 import com.rubenwardy.minetestmodmanager.models.Mod;
 import com.rubenwardy.minetestmodmanager.models.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;

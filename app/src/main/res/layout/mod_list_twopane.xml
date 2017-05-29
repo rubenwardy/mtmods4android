@@ -11,7 +11,7 @@
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
     android:showDividers="middle"
-    tools:context="com.rubenwardy.minetestmodmanager.ModListActivity">
+    tools:context="com.rubenwardy.minetestmodmanager.views.ModListActivity">
 
     <RelativeLayout
         android:layout_width="@dimen/modlist_width"
@@ -123,7 +123,7 @@
                     android:layout_marginRight="0dp"
                     android:scrollbars="none"
                     app:layoutManager="LinearLayoutManager"
-                    tools:context="com.rubenwardy.minetestmodmanager.ModListActivity"
+                    tools:context="com.rubenwardy.minetestmodmanager.views.ModListActivity"
                     tools:listitem="@layout/mod_list_content" />
 
             </android.support.v4.widget.SwipeRefreshLayout>

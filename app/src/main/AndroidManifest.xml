@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ModListActivity"
+            android:name=".views.ModListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -27,55 +27,55 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ModDetailActivity"
+            android:name=".views.ModDetailActivity"
             android:label="@string/mod_title"
-            android:parentActivityName=".ModListActivity"
+            android:parentActivityName=".views.ModListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.rubenwardy.minetestmodmanager.ModListActivity" />
+                android:value="com.rubenwardy.minetestmodmanager.views.ModListActivity" />
         </activity>
         <activity
-            android:name=".WorldConfigActivity"
+            android:name=".views.WorldConfigActivity"
             android:label="@string/world_config"
-            android:parentActivityName=".ModListActivity"
+            android:parentActivityName=".views.ModListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.rubenwardy.minetestmodmanager.ModListActivity" />
+                android:value="com.rubenwardy.minetestmodmanager.views.ModListActivity" />
         </activity>
         <activity
-            android:name=".DisclaimerActivity"
+            android:name=".views.DisclaimerActivity"
             android:label="@string/disclaimer_title"
-            android:parentActivityName=".ModListActivity">
+            android:parentActivityName=".views.ModListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.rubenwardy.minetestmodmanager.ModListActivity" />
+                android:value="com.rubenwardy.minetestmodmanager.views.ModListActivity" />
         </activity>
         <activity
-            android:name=".ReportActivity"
+            android:name=".views.ReportActivity"
             android:label="@string/report_title"
-            android:parentActivityName=".ModListActivity"
+            android:parentActivityName=".views.ModListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.rubenwardy.minetestmodmanager.ModListActivity" />
+                android:value="com.rubenwardy.minetestmodmanager.views.ModListActivity" />
         </activity>
         <activity
-            android:name=".AboutActivity"
+            android:name=".views.AboutActivity"
             android:label="@string/about_title"
-            android:parentActivityName=".ModListActivity">
+            android:parentActivityName=".views.ModListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.rubenwardy.minetestmodmanager.ModListActivity" />
+                android:value="com.rubenwardy.minetestmodmanager.views.ModListActivity" />
         </activity>
         <activity
-            android:name=".ReadmeActivity"
+            android:name=".views.ReadmeActivity"
             android:label="@string/readme_title"
-            android:parentActivityName=".ModDetailActivity">
+            android:parentActivityName=".views.ModDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.rubenwardy.minetestmodmanager.ModListActivity" />
+                android:value="com.rubenwardy.minetestmodmanager.views.ModListActivity" />
         </activity>
 
         <service

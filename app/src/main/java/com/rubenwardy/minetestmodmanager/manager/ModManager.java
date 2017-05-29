@@ -133,7 +133,7 @@ public class ModManager {
     }
 
     @MainThread
-    public void fetchModListAsync(Context context) {
+    public void fetchModListAsync() {
         StoreAPI api = StoreAPIBuilder.createService();
         api.getModList().enqueue(new Callback<List<StoreAPI.RestMod>>() {
             @Override

@@ -1,4 +1,4 @@
-package com.rubenwardy.minetestmodmanager;
+package com.rubenwardy.minetestmodmanager.views;
 
 import android.content.res.Resources;
 import android.support.v7.app.ActionBar;
@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.rubenwardy.minetestmodmanager.R;
 import com.rubenwardy.minetestmodmanager.manager.Utils;
 
 import java.io.File;

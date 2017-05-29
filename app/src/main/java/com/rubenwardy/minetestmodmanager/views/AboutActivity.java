@@ -1,7 +1,9 @@
-package com.rubenwardy.minetestmodmanager;
+package com.rubenwardy.minetestmodmanager.views;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.rubenwardy.minetestmodmanager.R;
 
 public class AboutActivity extends AppCompatActivity {
 

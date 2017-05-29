@@ -1,4 +1,4 @@
-package com.rubenwardy.minetestmodmanager;
+package com.rubenwardy.minetestmodmanager.views;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -11,13 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.rubenwardy.minetestmodmanager.R;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 import com.rubenwardy.minetestmodmanager.models.Mod;
 import com.rubenwardy.minetestmodmanager.models.ModList;
-
-import static com.rubenwardy.minetestmodmanager.ModDetailFragment.ARG_MOD_AUTHOR;
-import static com.rubenwardy.minetestmodmanager.ModDetailFragment.ARG_MOD_LIST;
-import static com.rubenwardy.minetestmodmanager.ModDetailFragment.ARG_MOD_NAME;
 
 public class ModInfoDialogFragment extends DialogFragment {
     private Mod mod;
@@ -26,11 +23,11 @@ public class ModInfoDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
-            if (getArguments().containsKey(ARG_MOD_NAME) &&
-                    getArguments().containsKey(ARG_MOD_LIST)) {
-                String name = getArguments().getString(ARG_MOD_NAME);
-                String author = getArguments().getString(ARG_MOD_AUTHOR);
-                String listname = getArguments().getString(ARG_MOD_LIST);
+            if (getArguments().containsKey(ModDetailFragment.ARG_MOD_NAME) &&
+                    getArguments().containsKey(ModDetailFragment.ARG_MOD_LIST)) {
+                String name = getArguments().getString(ModDetailFragment.ARG_MOD_NAME);
+                String author = getArguments().getString(ModDetailFragment.ARG_MOD_AUTHOR);
+                String listname = getArguments().getString(ModDetailFragment.ARG_MOD_LIST);
                 ModManager modman = ModManager.getInstance();
 
                 ModList list = modman.getModList(listname);

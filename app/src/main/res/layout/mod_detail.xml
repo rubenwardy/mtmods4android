@@ -91,7 +91,7 @@
         android:background="@color/cardview_light_background"
         android:text="This is a test"
         android:textIsSelectable="true"
-        tools:context="com.rubenwardy.minetestmodmanager.ModDetailFragment" />
+        tools:context="com.rubenwardy.minetestmodmanager.views.ModDetailFragment" />
 
     <LinearLayout
         android:layout_width="match_parent"

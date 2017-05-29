@@ -1,20 +1,16 @@
-package com.rubenwardy.minetestmodmanager;
+package com.rubenwardy.minetestmodmanager.views;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
@@ -35,16 +31,18 @@ import android.widget.TextView;
 
 import com.futuremind.recyclerviewfastscroll.FastScroller;
 import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
+import com.rubenwardy.minetestmodmanager.BuildConfig;
+import com.rubenwardy.minetestmodmanager.R;
 import com.rubenwardy.minetestmodmanager.models.Events;
-import com.rubenwardy.minetestmodmanager.models.Game;
 import com.rubenwardy.minetestmodmanager.models.Mod;
 import com.rubenwardy.minetestmodmanager.models.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
+import com.rubenwardy.minetestmodmanager.presenters.ModListPresenter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +56,9 @@ import java.util.List;
  */
 public class ModListActivity
         extends AppCompatActivity
-        implements SearchView.OnQueryTextListener {
+        implements SearchView.OnQueryTextListener, ModListPresenter.View {
+
+    ModListPresenter presenter = new ModListPresenter(this);
 
     public final static String PARAM_ACTION = "action";
     public final static String ACTION_SEARCH = "search";
@@ -78,6 +78,14 @@ public class ModListActivity
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+        EventBus.getDefault().register(presenter);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(presenter);
     }
 
     @Override
@@ -100,7 +108,9 @@ public class ModListActivity
 
 
         setupLayout();
-        scanFileSystem();
+        setupRecyclerView((RecyclerView) findViewById(R.id.mod_list));
+
+        presenter.scanFileSystem();
     }
 
     private void setupLayout() {
@@ -118,12 +128,7 @@ public class ModListActivity
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                for (ModList list : ModManager.getInstance().getAllModLists()) {
-                    if (list.type.isLocal()) {
-                        modman.updateLocalModList(list);
-                    }
-                }
-                modman.fetchModListAsync(getApplicationContext());
+                presenter.forceModListRefresh();
             }
         });
 
@@ -189,95 +194,6 @@ public class ModListActivity
         }
     }
 
-    private void scanFileSystem() {
-        File extern = Environment.getExternalStorageDirectory();
-        if (!extern.exists()) {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle(R.string.dialog_noext_title);
-            alertDialogBuilder.setCancelable(false);
-            alertDialogBuilder.setMessage(R.string.dialog_noext_msg);
-            alertDialogBuilder.setNegativeButton(R.string.dialog_close, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    ModListActivity.this.finish();
-                }
-            });
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
-            return;
-        }
-
-        Game minetest   = new Game("Minetest", new File (extern, "Minetest"));
-        Game multicraft = new Game("Multicraft", new File (extern, "MultiCraft"));
-
-        if (!minetest.isValid() && !multicraft.isValid()) {
-            PackageInfo pinfo = null;
-            try {
-                pinfo = getPackageManager().getPackageInfo("net.minetest.minetest", 0);
-                int verCode = pinfo.versionCode;
-                String verName = pinfo.versionName;
-                Log.e("MLAct", Integer.toString(verCode));
-                Log.e("MLAct", verName);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setCancelable(false);
-                alertDialogBuilder.setTitle(R.string.dialog_no_minetest);
-                alertDialogBuilder.setMessage(R.string.dialog_no_minetest_msg);
-                alertDialogBuilder.setNegativeButton(R.string.dialog_close, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
-                });
-                alertDialogBuilder.setPositiveButton(R.string.mod_action_install, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Context context = getApplicationContext();
-                        Uri uri = Uri.parse("market://details?id=net.minetest.minetest");
-                        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-                        // To count with Play market backstack, After pressing back button,
-                        // to taken back to our application, we need to add following flags to intent.
-                        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
-                                Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET |
-                                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-
-                        try {
-                            startActivity(goToMarket);
-                        } catch (ActivityNotFoundException e) {
-                            startActivity(new Intent(Intent.ACTION_VIEW,
-                                    Uri.parse("http://play.google.com/store/apps/details?id=net.minetest.minetest")));
-                        }
-                    }
-                });
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-            }
-
-            minetest.forceCreate();
-        }
-
-        if (!minetest.isValid() && !multicraft.isValid()) {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setCancelable(false);
-            alertDialogBuilder.setTitle(R.string.dialog_nomt_title);
-            alertDialogBuilder.setMessage(R.string.dialog_nomt_msg);
-            alertDialogBuilder.setNegativeButton(R.string.dialog_close, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    ModListActivity.this.finish();
-                }
-            });
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
-            return;
-        }
-
-        modman.registerGame(minetest);
-
-        View recyclerView = findViewById(R.id.mod_list);
-        assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
-
-        modman.fetchModListAsync(getApplicationContext());
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -306,57 +222,153 @@ public class ModListActivity
         }
     }
 
+
+
+    //
+    // VIEW METHODS
+    //
+
     @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
+    public void showNoExternalFSDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle(R.string.dialog_noext_title);
+        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setMessage(R.string.dialog_noext_msg);
+        alertDialogBuilder.setNegativeButton(R.string.dialog_close, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                ModListActivity.this.finish();
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
-    @Subscribe
-    public void onModInstall(final Events.ModInstallEvent e) {
-        Resources res = getResources();
-        if (e.didError()) {
-            String text = String.format(res.getString(R.string.event_failed_install), e.modname, e.error);
-            Log.e("MLAct", text);
-            Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+    @Override
+    public void showMinetestNotInstalledDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setTitle(R.string.dialog_no_minetest);
+        alertDialogBuilder.setMessage(R.string.dialog_no_minetest_msg);
+        alertDialogBuilder.setNegativeButton(R.string.dialog_close, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+        alertDialogBuilder.setPositiveButton(R.string.mod_action_install, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Context context = getApplicationContext();
+                Uri uri = Uri.parse("market://details?id=net.minetest.minetest");
+                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                // To count with Play market backstack, After pressing back button,
+                // to taken back to our application, we need to add following flags to intent.
+                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                        Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET |
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
+                try {
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://play.google.com/store/apps/details?id=net.minetest.minetest")));
+                }
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    @Override
+    public void showNoGameAvailable() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setTitle(R.string.dialog_nomt_title);
+        alertDialogBuilder.setMessage(R.string.dialog_nomt_msg);
+        alertDialogBuilder.setNegativeButton(R.string.dialog_close, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                ModListActivity.this.finish();
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    @Override
+    public boolean getIsMinetestInstalled() {
+        try {
+            getPackageManager().getPackageInfo("net.minetest.minetest", 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public void updateModListAndRecyclerView(@Nullable String listname) {
+        if (listname == null || listname.equals("")) {
             return;
-        } else {
-            ModManager modman = ModManager.getInstance();
-            List<String> uninstalled = modman.getMissingDependsForMod(modman.getModList(e.list).get(e.modname, null));
-            for (String a : uninstalled) {
-                Log.e("MDAct", "Mod not installed: " + a);
-            }
-
-            if (!uninstalled.isEmpty()) {
-                DialogFragment dialog = new InstallDependsDialogFragment();
-                Bundle b = new Bundle();
-                b.putStringArrayList("mods", (ArrayList<String>) uninstalled);
-                dialog.setArguments(b);
-                dialog.show(getSupportFragmentManager(), "InstallDependsDialogFragment");
-            }
-
-            if (isTwoPane) {
-                Bundle arguments = new Bundle();
-                arguments.putString(ModDetailFragment.ARG_MOD_LIST, e.list);
-                // not setting the author probably doesn't matter here, as mod names are unique in installed locations
-                arguments.putString(ModDetailFragment.ARG_MOD_NAME, e.modname);
-                ModDetailFragment fragment = new ModDetailFragment();
-                fragment.setArguments(arguments);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.mod_detail_container, fragment)
-                        .commit();
-            } else {
-                String text = String.format(res.getString(R.string.event_installed_mod), e.modname);
-                Log.i("ModListActivity", text);
-                Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
         }
 
-        updateModListAndRecyclerView(e.list);
+        ModList list = modman.getModList(listname);
+        updateModListAndRecyclerView(list);
     }
+
+    private void updateModListAndRecyclerView(@Nullable ModList list) {
+        if (list != null) {
+            modman.updateLocalModList(list);
+
+            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
+            assert recyclerView != null;
+            fillRecyclerView(recyclerView, null);
+        }
+    }
+
+    @Override
+    public void showModInstallErrorDialog(@NotNull String modname, @NotNull String error) {
+        Resources res = getResources();
+        String text = String.format(res.getString(R.string.event_failed_install), modname, error);
+        Log.e("MLAct", text);
+        Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
+    @Override
+    public void showInstallsDependsDialog(@NotNull List<String> uninstalled) {
+        InstallDependsDialogFragment dialog = new InstallDependsDialogFragment();
+        Bundle b = new Bundle();
+        b.putStringArrayList("mods", new ArrayList<>(uninstalled));
+        dialog.setArguments(b);
+        dialog.show(getSupportFragmentManager(), "InstallDependsDialogFragment");
+    }
+
+    @Override
+    public void showInstallMessage(@NotNull String modname) {
+        String text = String.format(getResources().getString(R.string.event_installed_mod), modname);
+        Log.i("ModListActivity", text);
+        Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
+
+    @Override
+    public void showModOnlyIfTwoPane(@NotNull String list, @NotNull String modname) {
+        if (isTwoPane) {
+            Bundle arguments = new Bundle();
+            arguments.putString(ModDetailFragment.ARG_MOD_LIST, list);
+            // not setting the author probably doesn't matter here, as mod names are unique in installed locations
+            arguments.putString(ModDetailFragment.ARG_MOD_NAME, modname);
+            ModDetailFragment fragment = new ModDetailFragment();
+            fragment.setArguments(arguments);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mod_detail_container, fragment)
+                    .commit();
+        }
+    }
+
+
+
+
+    //
+    // MISC CALLBACKS
+    //
 
     @Subscribe
     public void onModUninstall(final Events.ModUninstallEvent e) {
@@ -424,26 +436,6 @@ public class ModListActivity
             if (frag != null) {
                 ((ModDetailFragment)frag).onFetchedScreenshot(e);
             }
-        }
-    }
-
-
-    private void updateModListAndRecyclerView(@Nullable String listname) {
-        if (listname == null || listname.equals("")) {
-            return;
-        }
-
-        ModList list = modman.getModList(listname);
-        updateModListAndRecyclerView(list);
-    }
-
-    private void updateModListAndRecyclerView(@Nullable ModList list) {
-        if (list != null) {
-            modman.updateLocalModList(list);
-
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.mod_list);
-            assert recyclerView != null;
-            fillRecyclerView(recyclerView, null);
         }
     }
 
@@ -617,13 +609,13 @@ public class ModListActivity
         adapter.notifyDataSetChanged();
     }
 
-    public class ModListRecyclerViewAdapter
+    class ModListRecyclerViewAdapter
             extends RecyclerView.Adapter<ModListRecyclerViewAdapter.ViewHolder>
             implements SectionTitleProvider {
 
         private List<Mod> mods;
 
-        public ModListRecyclerViewAdapter() {
+        ModListRecyclerViewAdapter() {
             mods = new ArrayList<>();
         }
 
@@ -692,14 +684,14 @@ public class ModListActivity
             return mods.get(position).name.substring(0, 1);
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        class ViewHolder extends RecyclerView.ViewHolder {
             @NonNull public final View view;
             @NonNull public final TextView view_modname;
             @NonNull public final TextView view_author;
             @NonNull public final TextView view_description;
             @Nullable public Mod mod;
 
-            public ViewHolder(@NonNull View view) {
+            ViewHolder(@NonNull View view) {
                 super(view);
                 this.view = view;
                 view_modname = (TextView) view.findViewById(R.id.modname);

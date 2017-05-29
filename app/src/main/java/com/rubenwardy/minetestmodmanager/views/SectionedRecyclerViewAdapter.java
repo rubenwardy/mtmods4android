@@ -1,4 +1,4 @@
-package com.rubenwardy.minetestmodmanager;
+package com.rubenwardy.minetestmodmanager.views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
+import com.rubenwardy.minetestmodmanager.R;
 import com.rubenwardy.minetestmodmanager.models.Mod;
 
 import java.util.Arrays;

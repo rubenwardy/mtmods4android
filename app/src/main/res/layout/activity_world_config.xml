@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".WorldConfigActivity">
+    tools:context=".views.WorldConfigActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -38,7 +38,7 @@
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
             app:layoutManager="LinearLayoutManager"
-            tools:context="com.rubenwardy.minetestmodmanager.ModListActivity"
+            tools:context="com.rubenwardy.minetestmodmanager.views.ModListActivity"
             tools:listitem="@layout/mod_checklist_content" />
     </FrameLayout>
 

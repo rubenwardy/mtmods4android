@@ -1,4 +1,4 @@
-package com.rubenwardy.minetestmodmanager;
+package com.rubenwardy.minetestmodmanager.views;
 
 
 import android.app.Dialog;
@@ -16,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.rubenwardy.minetestmodmanager.R;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 import com.rubenwardy.minetestmodmanager.models.Game;
 import com.rubenwardy.minetestmodmanager.models.Mod;

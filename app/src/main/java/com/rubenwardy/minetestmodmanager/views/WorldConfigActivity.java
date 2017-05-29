@@ -1,4 +1,4 @@
-package com.rubenwardy.minetestmodmanager;
+package com.rubenwardy.minetestmodmanager.views;
 
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.rubenwardy.minetestmodmanager.R;
 import com.rubenwardy.minetestmodmanager.models.MinetestConf;
 import com.rubenwardy.minetestmodmanager.models.Mod;
 import com.rubenwardy.minetestmodmanager.models.ModList;

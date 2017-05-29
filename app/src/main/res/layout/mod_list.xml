@@ -111,7 +111,7 @@
                 android:layout_marginRight="15dp"
                 android:scrollbars="none"
                 app:layoutManager="LinearLayoutManager"
-                tools:context="com.rubenwardy.minetestmodmanager.ModListActivity"
+                tools:context="com.rubenwardy.minetestmodmanager.views.ModListActivity"
                 tools:listitem="@layout/mod_list_content" />
 
         </android.support.v4.widget.SwipeRefreshLayout>
