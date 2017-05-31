@@ -1,2 +1,111 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="app_name">Mody minetest\'a</string>
+
+
+    <string name="dialog_noext_title">Nie dostępna pamięć zewnętrzna</string>
+    <string name="dialog_noext_msg">Nie można znaleźć folderu Minetest, ponieważ zewnętrzna pamięć nie jest dostępna. Zewnętrzna pamięć jest współdzieloną przestrzenią na twoim urządzeniu, i nie koniecznie oznacza kartę SD.</string>
+    <string name="dialog_nomt_title">Nie udało się utworzyć folderu modów Minetest</string>
+    <string name="dialog_nomt_msg">Nie znaleziono folderu modów na twoim urządzeniu, więc podjęto próbę jego utworzenia. Jednakże, próba ta nie powiodła się. System może odmawiać dostępu tej aplikacji do niego. Spróbuj uruchomić Minetesta.</string>
+    <string name="dialog_close">Zamknij</string>
+    <string name="dialog_nowld_title">Nie udało się utworzyć świata</string>
+    <string name="dialog_nowld_msg">Podjęto próbę utworzenia świata do skonfigurowania, ale operacja nie powiodła się.</string>
+    <string name="dialog_no_minetest">Minetest nie jest zainstalowany</string>
+    <string name="dialog_no_minetest_msg">Zaleca się, aby zainstalować Minetest przed użyciem tej aplikacji z app store!</string>
+    <string name="dialog_no_missing_mods_title">Wszystko dobrze!</string>
+    <string name="dialog_no_missing_mods_msg">Wszystkie wymagane zależności są zainstalowane.</string>
+
+    <string name="action_search">Szukaj</string>
+
+
+    <string name="modlist_available_mods">Dostępne mody</string>
+    <string name="modlist_mods">Zainstalowano %1$s modów</string>
+    <string name="modlist_rate_txt">Hej! Chciałbyś dać nam trochę gwiazdek?</string>
+    <string name="modlist_rate_yes">Oceń</string>
+    <string name="modlist_rate_no">Nie</string>
+    <string name="modlist_tip_worldconfig">Włącz mod przez kliknięcie w ikonę.</string>
+
+
+    <string name="event_installing_mod">Instalowanie modyfikacji…</string>
+    <string name="event_installed_mod">Zainstalowano %1$s.</string>
+    <string name="event_installing">Instalowanie %1$s…</string>
+    <string name="event_downloading">Pobieranie…</string>
+    <string name="event_extracting">Wypakowywanie…</string>
+    <string name="event_connecting">Łączenie…</string>
+    <string name="event_failed_install">Nie udało się zainstalować moda %1$s. Błąd: %2$s.</string>
+    <string name="failed_list_download">Nie udało się pobrać listy dostępnych modów. Błąd: %1$s.</string>
+
+    <string name="event_missing_dependencies">Instalowanie wymaganych modów</string>
+    <string name="event_missing_dependencies_msg">Czy chciałbyś zainstalować brakujące zależności?</string>
+    <string name="event_missing_dependencies_msg_some_missing">Niestety, nie udało się znaleźć wszystkich wymaganych modów :(</string>
+    <string name="event_missing_dependencies_msg_all_missing">Niestety, nie mogliśmy znaleźć jakiegokolwiek z wymaganych modów :(</string>
+    <string name="event_missing_dependencies_mtg_mods">UWAGA: Upewnij się że uruchomiłeś Minetesta przynajmniej raz, niektóre z tych modów mogą przyjść w paczkach.</string>
+
+    <string name="mod_title">Szczegóły modu</string>
+    <string name="mod_action_uninstall">Odinstaluj</string>
+
+    <string name="mod_verified_yes">Ten mod jest od dobrze znanego autora.</string>
+    <string name="mod_verified_no">Ten mod nie został zrobiony przez dobrze znanego autora.</string>
+    <string name="mod_verified_uk">Nie można ustalić źródła tego moda.</string>
+
+    <string name="mod_invalid_mod_title">Nieprawidłowy mod</string>
+    <string name="mod_invalid_mod_desc">Nie mogliśmy znaleźć tego moda. Czy został usunięty?</string>
+    <string name="mod_invalid_modlist_title">Nieprawidłowa lokalizacja ścieżki modu</string>
+    <string name="mod_invalid_modlist_desc">Nie mogliśmy znaleźć lokalizacji moda. Czy folder został usunięty, lub jest dostępny na liście modów offline?</string>
+
+
+    <string name="event_failed_uninstall">Nie udało się odinstalować moda %1$s. Błąd: %2$s.</string>
+    <string name="mod_action_install">Instaluj</string>
+    <string name="mod_tip_installed_elsewhere">Mod już zainstalowany w %1$s</string>
+    <string name="mod_tip_view">Podgląd</string>
+
+    <string name="mod_action_info">Zobacz informacje</string>
+    <string name="mod_action_check_depends">Sprawdź brakujące zależności</string>
+    <string name="mod_action_report_mod">Zgłoś mod</string>
+    <string name="mod_action_forum_topic">Zobacz temat na forum</string>
+    <string name="mod_action_view_readme">Zobacz Read Me</string>
+
+    <string name="modinfo_title">Informacje</string>
+    <string name="modinfo_details_name">Nazwa moda</string>
+    <string name="modinfo_details_author">Autor</string>
+    <string name="modinfo_details_type">Typ</string>
+    <string name="modinfo_details_location">Katalog</string>
+    <string name="modinfo_details_link">Pobierany URL</string>
+    <string name="modinfo_details_size">Rozmiar do pobrania</string>
+    <string name="modinfo_details_size_unknown">Nieznany</string>
+    <string name="modinfo_details_type_modpack">Paczka Modów</string>
+    <string name="readme_title">Read Me</string>
+
+
+    <string name="report_title">Zgłoś mod</string>
+    <string name="report_modname_by_authorname">%1$s przez %2$s</string>
+    <string name="report_instructions">Proszę wybierz powód dlaczego zgłaszasz tą modyfikację. Jeżeli masz jakieś inne informacje, proszę wpisz je w polu tekstowym.</string>
+    <string name="report_reason">Powód</string>
+    <string name="report_msg">Opcjonalna wiadomość</string>
+    <string name="report_details">Szczegóły</string>
+    <string name="world_config">Konfiguracja świata</string>
+    <string name="world_config_accept">Akceptuj</string>
+    <string name="world_config_saved">Konfiguracja zapisana</string>
+
+
+    <string name="disclaimer_agree">Po przez używanie tego serwisu, zgadzasz się na następujące warunki.</string>
+    <string name="disclaimer_1_t">Brak gwarancji</string>
+    <string name="disclaimer_2_t">Nie sklep z modami, ale wyszukiwarka modów</string>
+    <string name="disclaimer_2_m">Dostępna lista modyfikacji, jest podzbiorem modyfikacje znalezionych na forach Minetest. Kiedy pobierasz mod, nie pobierasz go z naszych serwerów ale z oryginalnego linku podanego przez autora. Z uwagi na to, nie możemy gwarantować że modyfikacje są bezpieczne. Nikt w szczególności nie sprawdza tych modów.</string>
+
+    <string name="disclaimer_3_t">Co chcesz zrobić?</string>
+    <string name="disclaimer_3_m">Jeżeli nie jesteś pewny co do bezpieczeństwa modyfikacji, sprawdź temat na forum. Sprawdź jaki jest stary, i co mówią w komentarzach.</string>
+
+    <string name="disclaimer_accept_and_install">Zaakceptuj i instaluj</string>
+
+
+    <string name="about_title">O tej aplikacji</string>
+    <string name="about_credits_dev">Rozwijane przez rubenwardy (rubenwardy.com)</string>
+    <string name="about_credits_krock">Dziękuje ci Krock (aka SmallJoker) za stworzenie Krock\'s Mod Search, bota indeksującego na którym bazuje dostępna lista modów.</string>
+    <string name="about_credits_feedback">Dziękuje ci DonBatman za wsparcie podczas rozwoju</string>
+    <string name="about_credits_logo">Logo aplikacji bazuje na logo Minetest które jest na licencji CC-BY-SA 3.0, utworzone przez erlehmann</string>
+    <string name="about_credits_images">Ta aplikacja używa także wiele standardowych ikon Androida, które są na licencji CC-BY 4.0</string>
+    <string name="mod_action_find_elsewhere">Wyszukaj gdziekolwiek</string>
+    <string name="about_credits_translation">Dziękuje następującym tłumaczom: mojemu przyjacielowi Soph (Francja), Dragonop (Hiszpania), Adrian (Niemcy), monolifed (Turcja), i muhdnurhidayat (Malezja).</string>
+<string name="disclaimer_title">Disclaimer</string>
+    <string name="about_credits">Napisy końcowe</string>
+    </resources>
