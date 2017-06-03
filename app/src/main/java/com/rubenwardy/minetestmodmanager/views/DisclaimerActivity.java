@@ -6,30 +6,24 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.rubenwardy.minetestmodmanager.R;
-import com.rubenwardy.minetestmodmanager.models.Mod;
-import com.rubenwardy.minetestmodmanager.models.ModList;
-import com.rubenwardy.minetestmodmanager.manager.ModManager;
+import com.rubenwardy.minetestmodmanager.models.ModSpec;
+import com.rubenwardy.minetestmodmanager.presenters.DisclaimerPresenter;
 
-public class DisclaimerActivity extends AppCompatActivity {
+import org.jetbrains.annotations.NotNull;
+
+public class DisclaimerActivity extends AppCompatActivity implements DisclaimerPresenter.View {
     public static final String PREFS_NAME = "com.rubenwardy.minetestmodmanager.PREFS";
+
+    DisclaimerPresenter presenter = new DisclaimerPresenter(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disclaimer);
-
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        //toolbar.setTitle(getTitle());
-
-        final String listname = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_LIST);
-        final String modname = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_NAME);
-        final String author = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_AUTHOR);
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
@@ -43,29 +37,30 @@ public class DisclaimerActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(@NonNull View v) {
-                SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putBoolean("agreed_to_disclaimer", true);
-                editor.apply();
-
-                if (listname != null && modname != null) {
-                    ModManager modman = ModManager.getInstance();
-                    ModList list = modman.getModList(listname);
-                    if (list != null) {
-                        Mod mod = list.get(modname, author);
-                        if (mod != null && mod.link != null) {
-                            modman.installUrlModAsync(getApplicationContext(), mod,
-                                    mod.link,
-                                    modman.getInstallDir());
-                        } else {
-                            Log.e("DAct", "Unable to find an installable mod of that name! " + modname);
-                        }
-                    } else {
-                        Log.e("DAct", "Unable to find a ModList of that id! " + listname);
-                    }
-                }
-                finish();
+                presenter.onAcceptClicked(getApplicationContext());
             }
         });
+    }
+
+    @Override
+    public void setAgreedToDisclaimer() {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("agreed_to_disclaimer", true);
+        editor.apply();
+    }
+
+    @Override
+    public void finishActivity() {
+        finish();
+    }
+
+    @NotNull
+    @Override
+    public ModSpec getModInfo() {
+        final String listname = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_LIST);
+        final String modname = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_NAME);
+        final String author = getIntent().getStringExtra(ModDetailFragment.ARG_MOD_AUTHOR);
+        return new ModSpec(modname, author, listname);
     }
 }

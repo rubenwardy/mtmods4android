@@ -8,7 +8,7 @@ import com.rubenwardy.minetestmodmanager.manager.ModManager;
 /**
  * Represents a mod, installed or not.
  */
-public class Mod {
+public class Mod extends ModSpec {
     public enum ModType {
         EMT_INVALID,
         EMT_MOD,
@@ -17,13 +17,10 @@ public class Mod {
     }
 
     @NonNull  public final ModType type;
-    @Nullable public final String listname;
 
-    @NonNull  public final String name;
     @Nullable public final String title;
     @NonNull public final String desc;
 
-    @NonNull public String author;
     @NonNull public String link;
     @Nullable public String path;
     @Nullable public String screenshot_uri;
@@ -33,12 +30,11 @@ public class Mod {
 
     public Mod(@NonNull ModType type, @Nullable String listname, @NonNull String name,
                @Nullable String title, @NonNull String desc) {
+        super(name, "", listname);
+
         this.type = type;
-        this.listname = listname;
-        this.name = name;
         this.title = title;
         this.desc = desc;
-        this.author = "";
         this.link = "";
         this.path = "";
         this.screenshot_uri = "";
@@ -109,7 +105,7 @@ public class Mod {
     @Override
     @NonNull
     public String toString() {
-        return name;
+        return this.name;
     }
 
     public boolean isEnabled(@NonNull MinetestConf conf) {
