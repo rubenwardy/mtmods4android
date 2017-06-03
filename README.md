@@ -1,6 +1,7 @@
 # Minetest Mods for Android
 
 [![Build Status](https://travis-ci.org/rubenwardy/mtmods4android.svg?branch=master)](https://travis-ci.org/rubenwardy/mtmods4android)
+[![Translated](https://img.shields.io/badge/translated-weblate-blue.svg)](https://hosted.weblate.org/projects/minetest/mtmods4android/) 
 ![MinSdk](https://img.shields.io/badge/MinSdk-14-blue.svg)
 [![Release](https://img.shields.io/github/release/rubenwardy/mtmods4android.svg)](https://github.com/rubenwardy/mtmods4android/releases)
 ![License](https://img.shields.io/badge/license-GPLv3-blue.svg)
