@@ -2,7 +2,7 @@
 <resources><string name="app_name">Minetest Modları</string>
 
 
-    <string name="dialog_noext_title">Mevcut harici depolama yok</string>
+    <string name="dialog_noext_title">Kullanılabilir harici depolama yok</string>
     <string name="dialog_nomt_title">Minetest mod klasörü oluşturulamadı</string>
     <string name="dialog_close">Kapat</string>
     <string name="dialog_nowld_title">Dünya oluşturulamıyor</string>
@@ -15,7 +15,7 @@
 
 
     <string name="modlist_mods">%1$s Mod Kuruldu</string>
-    <string name="modlist_available_mods">Mevcut Modlar</string>
+    <string name="modlist_available_mods">Kullanılabilir Modlar</string>
     <string name="modlist_rate_txt">Hey! Bize biraz yıldız vermek ister misiniz?</string>
     <string name="modlist_rate_yes">Değerlendir</string>
     <string name="modlist_rate_no">Hayır</string>
@@ -30,10 +30,10 @@
     <string name="event_extracting">Ayıklanıyor…</string>
     <string name="event_failed_install">%1$s modu kurulamadı. Hata: %2$s.</string>
     <string name="event_failed_uninstall">%1$s modu kaldırılamadı. Hata: %2$s.</string>
-    <string name="failed_list_download">Mevcut mod listesi indirilemedi. Hata: %1$s.</string>
+    <string name="failed_list_download">Kullanılabilir mod listesi indirilemedi. Hata: %1$s.</string>
 
     <string name="event_missing_dependencies">Gerekli Modları Kur</string>
-    <string name="disclaimer_3_m">Eğer bir modun güvenilirliği konusunda emin değilseniz, onun forum konusunu kontrol edin. Yorumlar ne dediğine ve konunun ne kadar eski olduğuna bakın.</string>
+    <string name="disclaimer_3_m">Eğer bir modun güvenliliği konusunda emin değilseniz, onun forum konusuna bakın. Yorumların ne dediğine ve konunun ne kadar eski olduğuna bakın.</string>
 
     <string name="disclaimer_accept_and_install">Kabul Et ve Yükle</string>
 
@@ -54,7 +54,7 @@
     <string name="mod_tip_view">Göster</string>
 
     <string name="mod_action_info">Bilgileri Göster</string>
-    <string name="mod_action_check_depends">Eksik bağımlılıklar için kontrol et</string>
+    <string name="mod_action_check_depends">Eksik bağımlılıkları doğrulayın</string>
     <string name="mod_action_report_mod">Modu Bildir</string>
     <string name="mod_action_forum_topic">Forum Konusunu Göster</string>
     <string name="mod_action_view_readme">Beni Oku\'yu Göster</string>
@@ -91,20 +91,20 @@
     <string name="disclaimer_title">Yasal Uyarı</string>
     <string name="disclaimer_1_t">Garantisiz</string>
     <string name="disclaimer_3_t">Ne yapabilirsiniz?</string>
-    <string name="dialog_noext_msg">Mevcut harici depolama olmadığından Minetest klasörünü bulamadık. Harici depolama aygıtınızdaki paylaşılan bir dosya konumudur, ve bir SD kart anlamına gelmez.</string>
+    <string name="dialog_noext_msg">Kullanılabilir harici depolama olmadığından Minetest klasörünü bulamadık. Harici depolama aygıtınızdaki paylaşılan bir dosya konumudur, ve bir SD kart anlamına gelmez.</string>
     <string name="dialog_nomt_msg">Aygıtınızda modlar için bir klasör yoktu, bu yüzden bir tane oluşturmaya çalıştık. Ancak, oluşturulamadı. Sistem bu uygulamanın ona erişimini reddediyor olabilir. Minetest\'i çalıştırmayı deneyin.</string>
     <string name="dialog_no_minetest_msg">Uygulama mağazasından bu uygulamayı kullanmadan önce Minetest\'i kurmanız önerilir!</string>
     <string name="event_missing_dependencies_mtg_mods">UYARI: Minetest\'i en az bir kere açtığınızdan emin olun, bu modların bazıları paketli gelmeli.</string>
 
-    <string name="mod_invalid_modlist_desc">Mod konumunu bulamadık. Klasör silindi mi veya geçerli mod listesi çevrim dışı mı?</string>
+    <string name="mod_invalid_modlist_desc">Mod konumunu bulamadık. Klasör silindi mi veya kullanılabilir mod listesi çevrim dışı mı?</string>
 
 
     <string name="report_instructions">Lütfen bu modu bildirme nedeninizi seçin. Başka bir bilginiz varsa, lütfen onu metin olarak girin.</string>
     <string name="disclaimer_agree">Bu hizmeti kullanarak, aşağıdaki şartları ve koşulları kabul edersiniz.</string>
     <string name="disclaimer_2_t">Bir Mod Mağazası değil, sadece bir Mod Bulucu</string>
-    <string name="disclaimer_2_m">"Mevcut olarak listelenen modlar Minetest forumlarında bulunan modların bir kısmıdır. Bir modu indirdiğinizde onu bizim sunucularımızdan indirmezsiniz bunun yerine yazarın  belirttiği özgün bağlantıdan indirirsiniz. Bu yüzden, modların güvenilirliğini garanti edemeyiz. Bu modları kontrol eden belirli bir kişi yok."</string>
+    <string name="disclaimer_2_m">"Kullanılabilir olarak listelenen modlar Minetest forumlarında bulunan modların bir kısmıdır. Bir modu indirdiğinizde onu bizim sunucularımızdan indirmezsiniz bunun yerine yazarın  belirttiği özgün bağlantıdan indirirsiniz. Bu yüzden, modların güvenliliğine güvence veremeyiz. Belirli hiç kimse bu modları denetlemez."</string>
 
-    <string name="about_credits_krock">"Mevcut modlar listesinin temel aldığı tarayıcı  olan Krock\'un Mod Aramasını yarattığı için Krock\'a (Smalljoker) teşekkürler."</string>
+    <string name="about_credits_krock">Kullanılabilir modlar listesinin temel aldığı tarayıcı olan Krock\'un Mod Aramasını yarattığı için Krock\'a (Smalljoker) teşekkürler.</string>
     <string name="about_credits_logo">Uygulama logosu, erlehmann tarafından yaratılmış ve CC-BY-SA 3.0 olan Minetest logosunu temel alır</string>
     <string name="about_credits_images">Bu uygulama CC-BY 4.0 olan birkaç standart Android simgesi de kullanır</string>
     <string name="about_credits_translation">Aşağıdaki çevirmenlere teşekkürler: arkadaşım Soph (Fransızca), Dragonop (İspanyolca), Adrian (Almanca), monolifed (Türkçe), ve muhdnurhidayat (Malaya).</string>
