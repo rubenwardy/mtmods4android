@@ -3,9 +3,9 @@
 
 
     <string name="dialog_noext_title">Kullanılabilir harici depolama yok</string>
-    <string name="dialog_nomt_title">Minetest mod klasörü oluşturulamadı</string>
+    <string name="dialog_nomt_title">Minetest mod klasörü yaratılamadı</string>
     <string name="dialog_close">Kapat</string>
-    <string name="dialog_nowld_title">Dünya oluşturulamıyor</string>
+    <string name="dialog_nowld_title">Dünya yaratılamıyor</string>
     <string name="dialog_nowld_msg">Yapılandırmanız için bir dünya yaratmaya çalıştık ama işlem başarısız oldu.</string>
     <string name="dialog_no_minetest">Minetest kurulu değil</string>
     <string name="dialog_no_missing_mods_title">Her şey yolunda!</string>
@@ -92,7 +92,7 @@
     <string name="disclaimer_1_t">Garantisiz</string>
     <string name="disclaimer_3_t">Ne yapabilirsiniz?</string>
     <string name="dialog_noext_msg">Kullanılabilir harici depolama olmadığından Minetest klasörünü bulamadık. Harici depolama aygıtınızdaki paylaşılan bir dosya konumudur, ve bir SD kart anlamına gelmez.</string>
-    <string name="dialog_nomt_msg">Aygıtınızda modlar için bir klasör yoktu, bu yüzden bir tane oluşturmaya çalıştık. Ancak, oluşturulamadı. Sistem bu uygulamanın ona erişimini reddediyor olabilir. Minetest\'i çalıştırmayı deneyin.</string>
+    <string name="dialog_nomt_msg">Aygıtınızda modlar için bir klasör yoktu, bu yüzden bir tane yaratmaya çalıştık. Ancak, başarısız oldu. Sistem bu uygulamanın ona erişimini reddediyor olabilir. Minetest\'i çalıştırmayı deneyin.</string>
     <string name="dialog_no_minetest_msg">Uygulama mağazasından bu uygulamayı kullanmadan önce Minetest\'i kurmanız önerilir!</string>
     <string name="event_missing_dependencies_mtg_mods">UYARI: Minetest\'i en az bir kere açtığınızdan emin olun, bu modların bazıları paketli gelmeli.</string>
 
