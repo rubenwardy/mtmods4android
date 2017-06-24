@@ -1,2 +1,111 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="app_name">Minetest Mody</string>
+
+
+    <string name="dialog_noext_title">Externí úložiště není dostupné</string>
+    <string name="dialog_noext_msg">Nemohu nalézt adresář Minetestu! Je potřeba externí úložiště (ne nutně SD karta), kam bude mít aplikace přístup.</string>
+    <string name="dialog_nomt_title">Selhalo vytvoření složky s mody Minetestu</string>
+    <string name="dialog_nomt_msg">Předtím na tomto zařízení neexistoval adresář s mody a jeho vytvoření selhalo. Možná systém blokuje přístup aplikace ke složce Minetestu. Zkuste jej spustit.</string>
+    <string name="dialog_close">Zavřít</string>
+    <string name="dialog_nowld_title">Nemohu vytvořit svět</string>
+    <string name="dialog_no_minetest">Minetest není nainstalovaný</string>
+    <string name="event_installing">Instaluji %1$s…</string>
+    <string name="about_title">O této aplikaci</string>
+    <string name="about_credits">Tvůrci</string>
+    <string name="about_credits_dev">Vyvinuto uživatelem rubenwardy (rubenwardy.com)</string>
+    <string name="mod_action_find_elsewhere">Najít jinde</string>
+    <string name="disclaimer_accept_and_install">Přijmout a nainstalovat</string>
+
+
+    <string name="disclaimer_3_t">Co můžete dělat?</string>
+    <string name="disclaimer_2_t">Není to obchod s mody, pouze jejich vyhledávač</string>
+    <string name="disclaimer_1_t">Bez záruky</string>
+    <string name="disclaimer_title">Zřeknutí se odpovědnosti</string>
+    <string name="world_config_saved">Uložené nastavení</string>
+
+
+    <string name="world_config_accept">Přijmout</string>
+    <string name="world_config">Nastavení světa</string>
+    <string name="report_details">Detaily</string>
+    <string name="report_reason">Důvod</string>
+    <string name="report_msg">Volitelné vysvětlení</string>
+    <string name="report_modname_by_authorname">%1$s od %2$s</string>
+    <string name="report_title">Nahlásit mod</string>
+    <string name="readme_title">Readme</string>
+
+
+    <string name="modinfo_details_type_modpack">Balíček modů</string>
+    <string name="modinfo_details_size_unknown">Neznámý</string>
+    <string name="modinfo_details_size">Velikost ke stažení</string>
+    <string name="modinfo_details_link">Stahovací URL</string>
+    <string name="modinfo_details_location">Složka</string>
+    <string name="modinfo_details_type">Typ</string>
+    <string name="modinfo_details_author">Autor</string>
+    <string name="modinfo_details_name">Název modu</string>
+    <string name="modinfo_title">Informace</string>
+    <string name="mod_action_view_readme">Zobrazit Readme</string>
+
+    <string name="mod_action_forum_topic">Zobrazit stránku na fóru</string>
+    <string name="mod_action_report_mod">Nahlásit mod</string>
+    <string name="mod_action_info">Zobrazit informace</string>
+    <string name="mod_tip_view">Zobrazit</string>
+
+    <string name="mod_action_uninstall">Odinstalovat</string>
+
+    <string name="mod_action_install">Instalovat</string>
+    <string name="mod_title">Podrobnosti o modu</string>
+    <string name="event_missing_dependencies">Nainstalovat potřebné mody</string>
+    <string name="event_extracting">Rozbaluji…</string>
+    <string name="event_downloading">Stahuji…</string>
+    <string name="event_connecting">Připojuji…</string>
+    <string name="event_installed_mod">%1$s nainstalován.</string>
+    <string name="event_installing_mod">Instaluji mod…</string>
+    <string name="modlist_rate_no">Ne</string>
+    <string name="modlist_rate_yes">Ano, ohodnotit</string>
+    <string name="modlist_available_mods">Dostupné mody</string>
+    <string name="modlist_mods">Nainstalováno %1$s modů</string>
+    <string name="action_search">Hledat</string>
+
+
+    <string name="dialog_no_missing_mods_title">Vše v pořádku!</string>
+    <string name="dialog_nowld_msg">Pokus o vytvoření světa ke konfiguraci selhal.</string>
+    <string name="dialog_no_minetest_msg">Před používáním této aplikace doporučujeme nejprve nainstalovat Minetest!</string>
+    <string name="dialog_no_missing_mods_msg">Všechny závislosti byly nainstalovány.</string>
+
+    <string name="modlist_tip_worldconfig">Mod zapnete kliknutím na ikonu světa.</string>
+
+
+    <string name="event_failed_install">Instalace modu %1$s selhala. Chyba: %2$s.</string>
+    <string name="event_failed_uninstall">Odinstalace modu %1$s selhala. Chyba: %2$s.</string>
+    <string name="modlist_rate_txt">Ahoj! Nedali byste nám pár hvězdiček?</string>
+    <string name="mod_verified_uk">Nemohu zjistit původ tohoto modu.</string>
+
+    <string name="mod_verified_no">Tento mod nepochází od známého autora.</string>
+    <string name="mod_verified_yes">Tento mod pochází od známého autora.</string>
+    <string name="mod_action_check_depends">Zkontrolovat chybějící závislosti</string>
+    <string name="mod_tip_installed_elsewhere">Mod už byl nainstalován do %1$s</string>
+    <string name="about_credits_krock">Děkujeme uživateli Krock (alias SmallJoker) za napsání vyhledávače Krock\'s Mod Search, na němž je založeno vyhledávání v této aplikaci.</string>
+    <string name="about_credits_feedback">Děkujeme uživateli DonBatman za zpětnou vazbu při vývoji</string>
+    <string name="about_credits_logo">Logo aplikace je založeno na logu Minetestu, které bylo vytvořeno uživatelem erlehmann pod licencí CC-BY-SA 3.0</string>
+    <string name="about_credits_images">Aplikace též využívá mnoho standardních ikon Androidu pod licencí CC-BY 4.0</string>
+    <string name="about_credits_translation">Děkujeme následujícím překladatelům: Soph (francouzština), Dragonop (španělština), Adrian (němčina), monolifed (turečtina), a muhdnurhidayat (malajština).</string>
+<string name="failed_list_download">Stažení seznamu dostupných modů selhalo. Chyba: %1$s.</string>
+
+    <string name="event_missing_dependencies_msg">Chtěli byste nainstalovat chybějící závislosti?</string>
+    <string name="event_missing_dependencies_msg_some_missing">Bohužel se nepodařilo najít všechny potřebné mody :(</string>
+    <string name="event_missing_dependencies_msg_all_missing">Bohužel se nepodařilo najít žádné potřebné mody :(</string>
+    <string name="mod_invalid_mod_title">Neplatný mod</string>
+    <string name="mod_invalid_mod_desc">Nelze tento mod nalézt. Nebyl smazán?</string>
+    <string name="mod_invalid_modlist_title">Neplatná umístění/cesta k modu</string>
+    <string name="mod_invalid_modlist_desc">Nelze nalézt takové umístění. Nebyla příslušná složka smazána nebo není seznam dostupných modů offline?</string>
+
+
+    <string name="event_missing_dependencies_mtg_mods">VAROVÁNÍ: Ujistěte se, že jste alespoň jednou spustili Minetest, některé mody by měly být součástí výchozí instalace.</string>
+
+    <string name="report_instructions">Vyberte prosím důvod nahlášení modu. Pokud máte jakékoli další informace, vyplňte je prosím do textového pole.</string>
+    <string name="disclaimer_agree">Používáním této služby souhlasíte s následujícími pravidly a podmínkami.</string>
+    <string name="disclaimer_3_m">Pokud si nejste jistí bezpečností modu, podívejte se do diskuzního vlákna modu. Zkontrolujte stáří modu a co na něj říkají další uživatelé.</string>
+
+    <string name="disclaimer_2_m">Zde uvedené mody jsou vybrány z Minetest Fóra. Soubory se stahují z odkazu, který uvedl autor modu ve svém příspěvku, a proto nemůžeme zaručit bezpečnost modů. Autoři aplikace mody ani nijak nekontrolují.</string>
+
+    </resources>
