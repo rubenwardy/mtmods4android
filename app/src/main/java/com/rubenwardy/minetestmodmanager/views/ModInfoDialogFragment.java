@@ -77,11 +77,11 @@ public class ModInfoDialogFragment extends DialogFragment {
 
         // Type
         String type;
-        if (mod.type == Mod.ModType.EMT_MOD) {
+        if (mod.getType() == Mod.ModType.EMT_MOD) {
             type = res.getString(R.string.modinfo_details_type_mod);
-        } else if (mod.type == Mod.ModType.EMT_MODPACK) {
+        } else if (mod.getType() == Mod.ModType.EMT_MODPACK) {
             type = res.getString(R.string.modinfo_details_type_modpack);
-        } else if (mod.type == Mod.ModType.EMT_SUBGAME) {
+        } else if (mod.getType() == Mod.ModType.EMT_SUBGAME) {
             type = res.getString(R.string.modinfo_details_type_subgame);
         } else {
             type = "Invalid";
@@ -90,7 +90,7 @@ public class ModInfoDialogFragment extends DialogFragment {
 
         // Location
         if (mod.isLocalMod()) {
-            ((TextView) rootView.findViewById(R.id.mod_detail_location)).setText(mod.path);
+            ((TextView) rootView.findViewById(R.id.mod_detail_location)).setText(mod.getPath());
         } else {
             rootView.findViewById(R.id.mod_detail_loc_row).setVisibility(View.GONE);
         }

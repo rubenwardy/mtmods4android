@@ -150,12 +150,12 @@ public class ModDetailFragment extends Fragment {
 
             // Title
             TextView txt_title = (TextView) rootView.findViewById(R.id.mod_header_title);
-            txt_title.setText(mod.title);
+            txt_title.setText(mod.getTitle());
 
             screenshot_view = (ImageView) rootView.findViewById(R.id.screenshot_view);
             screenshot_view.setVisibility(View.GONE);
-            if (mod.screenshot_uri != null && !mod.screenshot_uri.equals("")) {
-                Drawable d = Drawable.createFromPath(mod.screenshot_uri);
+            if (mod.getScreenshot_uri() != null && !mod.getScreenshot_uri().equals("")) {
+                Drawable d = Drawable.createFromPath(mod.getScreenshot_uri());
                 if (d != null) {
                     screenshot_view.setImageDrawable(d);
                     screenshot_view.setVisibility(View.VISIBLE);
@@ -210,9 +210,9 @@ public class ModDetailFragment extends Fragment {
                             Snackbar.make(view, res.getString(R.string.event_installing_mod), Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
 
-                            if (mod.link != null) {
+                            if (mod.getLink() != null) {
                                 modman.installUrlModAsync(getActivity().getApplicationContext(), mod,
-                                        mod.link,
+                                        mod.getLink(),
                                         modman.getInstallDir());
                             }
 
@@ -251,7 +251,7 @@ public class ModDetailFragment extends Fragment {
             // Description
             //
 
-            ((TextView) rootView.findViewById(R.id.mod_desc)).setText(mod.desc);
+            ((TextView) rootView.findViewById(R.id.mod_desc)).setText(mod.getDesc());
 
 
             //
@@ -268,21 +268,21 @@ public class ModDetailFragment extends Fragment {
                     intent.putExtra(ReportActivity.EXTRA_LIST, mod.listname);
                     intent.putExtra(ReportActivity.EXTRA_AUTHOR, mod.author);
                     intent.putExtra(ReportActivity.EXTRA_MOD_NAME, mod.name);
-                    intent.putExtra(ReportActivity.EXTRA_LINK, mod.link);
+                    intent.putExtra(ReportActivity.EXTRA_LINK, mod.getLink());
                     context.startActivity(intent);
                 }
             });
 
             // Forum
             Button btn_forum = (Button) rootView.findViewById(R.id.forum_topic);
-            if (mod.forum_url == null || mod.forum_url.isEmpty()) {
+            if (mod.getForum_url() == null || mod.getForum_url().isEmpty()) {
                 btn_forum.setVisibility(View.GONE);
             } else {
                 btn_forum.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(@NonNull View view) {
-                        if (mod.forum_url != null) {
-                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mod.forum_url));
+                        if (mod.getForum_url() != null) {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mod.getForum_url()));
                             startActivity(browserIntent);
                         }
                     }
@@ -291,13 +291,13 @@ public class ModDetailFragment extends Fragment {
 
             // Readme
             Button btn_readme = (Button) rootView.findViewById(R.id.readme);
-            if (mod.isLocalMod() && Utils.getReadmePath(new File(mod.path)) != null) {
+            if (mod.isLocalMod() && Utils.getReadmePath(new File(mod.getPath())) != null) {
                 btn_readme.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(@NonNull View view) {
                         Context context = view.getContext();
                         Intent intent = new Intent(context, ReadmeActivity.class);
-                        intent.putExtra(ReadmeActivity.ARG_MOD_PATH, mod.path);
+                        intent.putExtra(ReadmeActivity.ARG_MOD_PATH, mod.getPath());
                         context.startActivity(intent);
                     }
                 });

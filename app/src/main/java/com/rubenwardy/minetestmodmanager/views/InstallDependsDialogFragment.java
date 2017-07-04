@@ -65,7 +65,7 @@ public class InstallDependsDialogFragment extends DialogFragment {
                 installable++;
             }
 
-            if (!mtg_mods && Game.isMTGMod(modname)) {
+            if (!mtg_mods && Game.Companion.isMTGMod(modname)) {
                 mtg_mods = true;
             }
         }
@@ -106,13 +106,13 @@ public class InstallDependsDialogFragment extends DialogFragment {
             builder.setPositiveButton(R.string.mod_action_install, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     for (Mod mod : mods) {
-                        if (mod != null && !mod.link.isEmpty()) {
+                        if (mod != null && !mod.getLink().isEmpty()) {
 //                                Resources res = getResources();
 //                                Snackbar.make(root, res.getString(R.string.event_installing_mod), Snackbar.LENGTH_LONG)
 //                                        .setAction("Action", null).show();
 
                             modman.installUrlModAsync(getActivity().getApplicationContext(), mod,
-                                    mod.link,
+                                    mod.getLink(),
                                     modman.getInstallDir());
 
                             SharedPreferences settings = getActivity().getSharedPreferences(DisclaimerActivity.PREFS_NAME, 0);

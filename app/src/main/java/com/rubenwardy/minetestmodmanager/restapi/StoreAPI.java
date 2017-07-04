@@ -102,10 +102,10 @@ public interface StoreAPI {
             }
 
             Mod mod = new Mod(type, modstore_url, modname, title, desc);
-            mod.link = link;
+            mod.setLink(link);
             mod.author = author;
-            mod.forum_url = forum;
-            mod.size = size;
+            mod.setForum_url(forum);
+            mod.setSize(size);
             return mod;
         }
 

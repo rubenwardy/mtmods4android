@@ -109,11 +109,11 @@ public class ModDetailActivity
         }
 
         // Set title
-        ctoolbar.setTitle(mod.title);
+        ctoolbar.setTitle(mod.getTitle());
         ctoolbar.setExpandedTitleColor(Color.TRANSPARENT);
 
-        if (mod.screenshot_uri != null && !mod.screenshot_uri.equals("")) {
-            Drawable d = Drawable.createFromPath(mod.screenshot_uri);
+        if (mod.getScreenshot_uri() != null && !mod.getScreenshot_uri().equals("")) {
+            Drawable d = Drawable.createFromPath(mod.getScreenshot_uri());
             if (d != null) {
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     ctoolbar.setBackground(d);

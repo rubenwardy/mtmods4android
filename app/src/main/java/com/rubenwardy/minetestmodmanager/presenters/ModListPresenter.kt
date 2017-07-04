@@ -19,7 +19,7 @@ class ModListPresenter(val view: View) {
         val minetest   = Game("Minetest", File(extern, "Minetest"))
         val multicraft = Game("Multicraft", File(extern, "MultiCraft"))
 
-        if (!minetest.isValid && !multicraft.isValid) {
+        if (!minetest.doesModDirExist && !multicraft.doesModDirExist) {
             view.getIsMinetestInstalled()
 
             view.showMinetestNotInstalledDialog()
@@ -27,7 +27,7 @@ class ModListPresenter(val view: View) {
             minetest.forceCreate()
         }
 
-        if (!minetest.isValid && !multicraft.isValid) {
+        if (!minetest.doesModDirExist && !multicraft.doesModDirExist) {
             view.showNoGameAvailable()
             return
         }

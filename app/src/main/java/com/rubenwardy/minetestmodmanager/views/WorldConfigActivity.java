@@ -168,8 +168,8 @@ public class WorldConfigActivity extends AppCompatActivity {
             // Register callback
             //
             assert conf != null;
-            boolean enabled = holder.mod.isEnabled(conf);
-            if (holder.mod.type == Mod.ModType.EMT_MODPACK) {
+            boolean enabled = holder.mod.isEnabledInConfig(conf);
+            if (holder.mod.getType() == Mod.ModType.EMT_MODPACK) {
                 holder.view_modname.setText(holder.mod.name + " (Modpack)");
             }
             holder.view_modname.setChecked(enabled);

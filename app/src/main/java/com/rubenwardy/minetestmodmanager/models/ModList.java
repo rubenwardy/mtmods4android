@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * A list of mods. May represent a folder in the file system or
  */
-public class ModList {
+public class ModList  {
     public enum ModListType {
         EMLT_ONLINE,
         EMLT_MODS,

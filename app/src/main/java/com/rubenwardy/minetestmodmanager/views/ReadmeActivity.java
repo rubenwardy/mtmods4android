@@ -39,7 +39,7 @@ public class ReadmeActivity extends AppCompatActivity {
 
         File readme = Utils.getReadmePath(folder);
         if (readme == null) {
-            text.setText("Unable to find any valid readme files");
+            text.setText("Unable to find any doesModDirExist readme files");
         } else {
             text.setText(Utils.readTextFile(readme));
         }

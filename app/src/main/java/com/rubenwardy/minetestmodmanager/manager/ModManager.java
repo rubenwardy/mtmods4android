@@ -67,7 +67,7 @@ public class ModManager {
         }
 
         for (Game game : games) {
-            ModList list = game.getList(path);
+            ModList list = game.getListFromPath(path);
             if (list != null) {
                 return list;
             }
@@ -171,7 +171,7 @@ public class ModManager {
 
     @MainThread
     public void uninstallModAsync(Context context, @NonNull Mod mod) {
-        if (mod.path != null && !mod.path.equals("")) {
+        if (mod.getPath() != null && !mod.getPath().equals("")) {
             ModInstallService.startActionUninstall(context, srr, mod.name, mod.listname);
         }
     }
@@ -201,14 +201,14 @@ public class ModManager {
     @MainThread
     public List<String> getMissingDependsForMod(@NonNull Mod mod) {
         List<String> retval = new ArrayList<>();
-        if (mod.path == null) {
+        if (mod.getPath() == null) {
             return retval;
         }
 
         MinetestDepends deps = new MinetestDepends();
-        deps.read(new File(mod.path, "depends.txt"));
+        deps.read(new File(mod.getPath(), "depends.txt"));
 
-        Game game = getGameFromPath(mod.path);
+        Game game = getGameFromPath(mod.getPath());
 
         List<String> not_installed = new ArrayList<>();
         Map<String, Mod> mods = game.getAllMods();
@@ -252,7 +252,7 @@ public class ModManager {
 
                     // Create mod
                     Mod mod = new Mod(type, list.listname, file.getName(), title, desc);
-                    mod.path = file.getAbsolutePath();
+                    mod.setPath(file.getAbsolutePath());
 
                     // Get author
                     File authF = new File(file.getAbsolutePath(), "author.txt");
@@ -269,7 +269,7 @@ public class ModManager {
                     // Get Screenshot
                     File scsF = new File(file.getAbsolutePath(), "screenshot.png");
                     if (scsF.exists()) {
-                        mod.screenshot_uri = scsF.getAbsolutePath();
+                        mod.setScreenshot_uri(scsF.getAbsolutePath());
                     }
 
                     list.add(mod);
@@ -292,15 +292,15 @@ public class ModManager {
     @Nullable
     private ModList scanModDir(Game game, Game.ModDir moddir) {
         {
-            ModList list = getModList(moddir.path);
+            ModList list = getModList(moddir.getPath());
             if (list != null) {
                 return list;
             }
         }
 
-        ModList list = new ModList(moddir.type, game.name, game.getPath(), moddir.path);
+        ModList list = new ModList(moddir.getType(), game.getName(), game.getPath(), moddir.getPath());
         if (updateLocalModList(list)) {
-            game.addList(moddir.path, list);
+            game.addList(moddir.getPath(), list);
             return list;
         } else {
             return null;

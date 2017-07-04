@@ -258,7 +258,7 @@ ways:
     customarily used for software interchange.
 -   b) Convey the object code in, or embodied in, a physical product
     (including a physical distribution medium), accompanied by a
-    written offer, valid for at least three years and valid for as
+    written offer, doesModDirExist for at least three years and doesModDirExist for as
     long as you offer spare parts or customer support for that product
     model, to give anyone who possesses the object code either (1) a
     copy of the Corresponding Source for all the software in the
@@ -347,7 +347,7 @@ unpacking, reading or copying.
 License by making exceptions from one or more of its conditions.
 Additional permissions that are applicable to the entire Program shall
 be treated as though they were included in this License, to the extent
-that they are valid under applicable law. If additional permissions
+that they are doesModDirExist under applicable law. If additional permissions
 apply only to part of the Program, that part may be used separately
 under those permissions, but the entire Program remains governed by
 this License without regard to the additional permissions.
@@ -504,7 +504,7 @@ license to downstream recipients. "Knowingly relying" means you have
 actual knowledge that, but for the patent license, your conveying the
 covered work in a country, or your recipient's use of the covered work
 in a country, would infringe one or more identifiable patents in that
-country that you have reason to believe are valid.
+country that you have reason to believe are doesModDirExist.
 
 If, pursuant to or in connection with a single transaction or
 arrangement, you convey, or propagate by procuring conveyance of, a
