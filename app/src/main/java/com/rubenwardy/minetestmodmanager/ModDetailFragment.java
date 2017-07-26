@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
@@ -56,7 +57,7 @@ public class ModDetailFragment extends Fragment {
 
     private ImageView screenshot_view;
 
-    private Mod mod;
+    private @Nullable Mod mod = null;
 
     /**
      * Mandatory empty constructor for the mFragment manager to instantiate the
@@ -72,30 +73,39 @@ public class ModDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState == null) {
-            if (getArguments().containsKey(ARG_MOD_NAME) &&
-                    getArguments().containsKey(ARG_MOD_LIST)) {
-                String name = getArguments().getString(ARG_MOD_NAME);
-                String author = getArguments().getString(ARG_MOD_AUTHOR);
-                String listname = getArguments().getString(ARG_MOD_LIST);
-                ModManager modman = ModManager.getInstance();
-                ModList list = modman.getModList(listname);
-                if (list == null) {
-                    Resources res = getResources();
-                    mod = new Mod(Mod.ModType.EMT_INVALID,
-                            "", "invalid",
-                            res.getString(R.string.mod_invalid_modlist_title),
-                            listname + ": " + res.getString(R.string.mod_invalid_modlist_desc));
-                } else {
-                    mod = list.get(name, author);
-                    if (mod == null) {
-                        Resources res = getResources();
-                        list.valid = false;
-                        mod = new Mod(Mod.ModType.EMT_INVALID,
-                                "", "invalid",
-                                res.getString(R.string.mod_invalid_mod_title),
-                                author + "/" + name + ": " + res.getString(R.string.mod_invalid_mod_desc));
-                    }
-                }
+            fromBundle(getArguments());
+        } else {
+            fromBundle(savedInstanceState);
+        }
+    }
+
+    private void fromBundle(@NonNull Bundle b) {
+        String name     = b.getString(ARG_MOD_NAME);
+        String author   = b.getString(ARG_MOD_AUTHOR);
+        String listname = b.getString(ARG_MOD_LIST);
+        if (name != null && listname != null) {
+            fromNameAuthorList(name, author, listname);
+        }
+    }
+
+    private void fromNameAuthorList(@NonNull String name, @Nullable String author, @NonNull String listname) {
+        ModManager modman = ModManager.getInstance();
+        ModList list = modman.getModList(listname);
+        if (list == null) {
+            Resources res = getResources();
+            mod = new Mod(Mod.ModType.EMT_INVALID,
+                    "", "invalid",
+                    res.getString(R.string.mod_invalid_modlist_title),
+                    listname + ": " + res.getString(R.string.mod_invalid_modlist_desc));
+        } else {
+            mod = list.get(name, author);
+            if (mod == null) {
+                Resources res = getResources();
+                list.valid = false;
+                mod = new Mod(Mod.ModType.EMT_INVALID,
+                        "", "invalid",
+                        res.getString(R.string.mod_invalid_mod_title),
+                        author + "/" + name + ": " + res.getString(R.string.mod_invalid_mod_desc));
             }
         }
     }
@@ -103,9 +113,14 @@ public class ModDetailFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle state) {
         Log.i("mdf", "save");
-        state.putString(ModDetailFragment.ARG_MOD_LIST, mod.listname);
-        state.putString(ModDetailFragment.ARG_MOD_NAME, mod.name);
-        state.putString(ModDetailFragment.ARG_MOD_AUTHOR, mod.author);
+        if (mod != null) {
+            state.putString(ModDetailFragment.ARG_MOD_LIST, mod.listname);
+            state.putString(ModDetailFragment.ARG_MOD_NAME, mod.name);
+
+            if (!mod.author.isEmpty()) {
+                state.putString(ModDetailFragment.ARG_MOD_AUTHOR, mod.author);
+            }
+        }
     }
 
     // Don't subscribe, as ModListActivity passes this in
