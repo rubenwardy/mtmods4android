@@ -31,7 +31,20 @@
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:text="character_creator" />
+
+            <TextView
+                android:id="@+id/mod_installed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/modlist_installed"
+                android:textAllCaps="true"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@id/modname"
+                android:layout_toLeftOf="@+id/author"
+                android:layout_alignBaseline="@id/modname"
+                />
 
             <TextView
                 android:id="@+id/author"
@@ -41,7 +54,8 @@
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:text="programmingchicken"/>
         </RelativeLayout>
 
         <TextView

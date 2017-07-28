@@ -647,6 +647,10 @@ public class ModListActivity
             holder.view_author.setText(holder.mod.author);
             holder.view_description.setText(holder.mod.getShortDesc());
 
+            ModManager mm = ModManager.getInstance();
+
+            holder.view_installed.setVisibility((mm.getModInstalledList(holder.mod.name, holder.mod.author) != null) ? View.VISIBLE : View.GONE);
+
             //
             // Register callback
             //
@@ -689,9 +693,10 @@ public class ModListActivity
 
         class ViewHolder extends RecyclerView.ViewHolder {
             @NonNull public final View view;
-            @NonNull public final TextView view_modname;
-            @NonNull public final TextView view_author;
-            @NonNull public final TextView view_description;
+            @NonNull final TextView view_modname;
+            @NonNull final TextView view_author;
+            @NonNull final TextView view_description;
+            @NonNull final View view_installed;
             @Nullable public Mod mod;
 
             ViewHolder(@NonNull View view) {
@@ -700,6 +705,7 @@ public class ModListActivity
                 view_modname = (TextView) view.findViewById(R.id.modname);
                 view_author = (TextView) view.findViewById(R.id.author);
                 view_description = (TextView) view.findViewById(R.id.description);
+                view_installed   = (View) view.findViewById(R.id.mod_installed);
             }
 
             @NonNull
