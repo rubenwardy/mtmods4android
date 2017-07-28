@@ -154,7 +154,8 @@ public class ModDetailFragment extends Fragment {
 
             screenshot_view = (ImageView) rootView.findViewById(R.id.screenshot_view);
             screenshot_view.setVisibility(View.GONE);
-            if (mod.screenshot_uri != null && !mod.screenshot_uri.equals("")) {
+            if (getActivity() instanceof ModListActivity && mod.screenshot_uri != null &&
+                        !mod.screenshot_uri.equals("")) {
                 Drawable d = Drawable.createFromPath(mod.screenshot_uri);
                 if (d != null) {
                     screenshot_view.setImageDrawable(d);
