@@ -3,6 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
     android:orientation="horizontal">
 
     <TextView
@@ -14,10 +15,10 @@
         android:paddingEnd="16dp"
         android:singleLine="true"
         android:textAllCaps="true"
+        android:background="@android:color/transparent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:textColor="@color/modSectionText"
-        android:background="@android:color/transparent"
         android:textSize="16sp"
         android:id="@+id/section_text"
         android:textStyle="bold" />
@@ -28,11 +29,11 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:src="@drawable/ic_public_24dp"
-        android:id="@+id/world"
         android:background="@android:color/transparent"
-        android:tint="?attr/colorControlNormal"
+        android:id="@+id/world"
+        android:tint="@color/colorAccent"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingRight="30dp"
         android:layout_centerVertical="true"
         android:contentDescription="@string/world_config" />
 

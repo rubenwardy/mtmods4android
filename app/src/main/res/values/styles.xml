@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/backgroundColor</item>
     </style>
 
     <style name="ColoredButton" parent="Widget.AppCompat.Button">
@@ -26,7 +27,7 @@
         <item name="android:layout_centerVertical">true</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

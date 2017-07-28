@@ -10,7 +10,6 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
@@ -101,12 +100,12 @@ class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public static class SectionViewHolder extends RecyclerView.ViewHolder {
 
         public final TextView title;
-        public final ImageButton world;
+        public final View configModsBtn;
 
         public SectionViewHolder(@NonNull View view, int mTextResourceid) {
             super(view);
             title = (TextView) view.findViewById(mTextResourceid);
-            world = (ImageButton) view.findViewById(R.id.world);
+            configModsBtn = view.findViewById(R.id.world);
         }
     }
 
@@ -128,9 +127,9 @@ class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             holder.title.setText(sec.title);
             final CharSequence worlds = sec.worlds;
             if (worlds == null || worlds.equals("")) {
-                holder.world.setVisibility(View.GONE);
+                holder.configModsBtn.setVisibility(View.GONE);
             } else {
-                holder.world.setOnClickListener(new View.OnClickListener() {
+                holder.configModsBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(@NonNull View v) {
                         Context context = v.getContext();

@@ -10,5 +10,7 @@
     <color name="alertDialogButtonText">@color/colorAccent</color>
     <color name="installButton">@color/colorAccent</color>
     <color name="uninstallButton">#f44336</color>
-    <color name="backgroundColorForeground">@color/cardview_light_background</color>
+    <color name="backgroundColorForeground">#fbfbfb</color>
+    <color name="backgroundColor">#e5e5e5</color>
+    <color name="cardview_shadow_start_color">#37000000</color>
 </resources>

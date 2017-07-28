@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/cardview_dark_background</color>
+    <color name="colorPrimary">#424242</color>
     <color name="colorPrimaryDark">#2d2d2d</color>
     <color name="colorAccent">@color/hintText</color>
-    <color name="hintBackground">@color/cardview_dark_background</color>
-    <color name="installButton">@color/cardview_dark_background</color>
-    <color name="backgroundColorForeground">@color/cardview_dark_background</color>
+    <color name="backgroundColor">#212121</color>
+    <color name="backgroundColorForeground">#323232</color>
+    <color name="hintBackground">@color/colorPrimary</color>
+    <color name="installButton">@color/colorPrimary</color>
 </resources>
