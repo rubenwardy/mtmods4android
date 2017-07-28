@@ -8,6 +8,9 @@ import com.rubenwardy.minetestmodmanager.models.ModSpec
 class DisclaimerPresenter(val view: View) {
 
     fun onAcceptClicked(context: Context) {
+        view.setAgreedToDisclaimer()
+
+
         val modspec = view.getModInfo()
         if (modspec.listname != null && !modspec.name.isEmpty()) {
             val modman = ModManager.getInstance()
@@ -25,6 +28,8 @@ class DisclaimerPresenter(val view: View) {
                 Log.e("DAct", "Unable to find a ModList of that id! " + modspec.listname)
             }
         }
+
+        view.finishActivity()
     }
 
     interface View {
