@@ -137,7 +137,7 @@
 
 
     <!-- About -->
-    <string name="about_title">About this App</string>
+    <string name="about_title">Settings and About</string>
     <string name="about_credits">Credits</string>
     <string name="about_credits_dev">Developed by rubenwardy (rubenwardy.com)</string>
     <string name="about_credits_krock">Thank you to Krock (aka SmallJoker) for creating Krock\'s Mod Search,
@@ -149,4 +149,14 @@
     <string name="mod_action_find_elsewhere">Find Elsewhere</string>
     <string name="about_credits_translation">Thank you to the following translators: my friend Soph (French), Dragonop (Spanish), and Adrian (German).</string>
     <string name="mod_action_mods_by_author">All mods by this author</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_restart_hint">A restart is required for theme changes to take effect across the app. Make sure to swipe this app from recents.</string>
+    <string-array name="settings_theme_options">
+        <item>System Default</item>
+        <item>Light Theme</item>
+        <item>Dark Theme</item>
+        <item>Dark at Night, Light at Day</item>
+    </string-array>
 </resources>

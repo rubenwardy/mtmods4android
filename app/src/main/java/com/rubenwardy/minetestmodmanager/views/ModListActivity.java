@@ -467,7 +467,7 @@ public class ModListActivity
             return true;
         }
         case R.id.action_about: {
-            Intent k = new Intent(this, AboutActivity.class);
+            Intent k = new Intent(this, SettingsAndAboutActivity.class);
             startActivity(k);
             return true;
         } }

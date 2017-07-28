@@ -63,7 +63,7 @@
                 android:value="com.rubenwardy.minetestmodmanager.views.ModListActivity" />
         </activity>
         <activity
-            android:name=".views.AboutActivity"
+            android:name=".views.SettingsAndAboutActivity"
             android:label="@string/about_title"
             android:parentActivityName=".views.ModListActivity">
             <meta-data
