@@ -73,14 +73,6 @@ class ServiceResultReceiver extends ResultReceiver {
         case ModInstallService.ACTION_UNINSTALL:
             handleUninstall(b, modname, dest);
             break;
-        case ModInstallService.ACTION_FETCH_SCREENSHOT:
-            String error = "";
-            if (b.containsKey(ModInstallService.RET_ERROR)) {
-                error = b.getString(ModInstallService.RET_ERROR);
-            }
-            EventBus.getDefault().post(
-                    new Events.FetchedScreenshotEvent(modname, dest, error));
-            break;
         default:
             Log.e("SRR", "Unknown service action");
             break;

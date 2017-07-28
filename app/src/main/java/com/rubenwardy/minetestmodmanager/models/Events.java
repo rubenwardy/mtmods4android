@@ -1,5 +1,7 @@
 package com.rubenwardy.minetestmodmanager.models;
 
+import android.graphics.drawable.Drawable;
+
 public class Events {
     private static abstract class Event {
         public String error = "";
@@ -55,18 +57,6 @@ public class Events {
         public String query;
         public SearchEvent(String query) {
             this.query = query;
-        }
-    }
-
-
-    public final static class FetchedScreenshotEvent extends Event {
-        public String filepath;
-        public String modname;
-
-        public FetchedScreenshotEvent(String modname, String filepath, String error) {
-            this.modname = modname;
-            this.filepath = filepath;
-            this.error = error;
         }
     }
 }

@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -30,6 +31,9 @@ import com.rubenwardy.minetestmodmanager.models.Mod;
 import com.rubenwardy.minetestmodmanager.models.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 import com.rubenwardy.minetestmodmanager.manager.Utils;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -120,21 +124,6 @@ public class ModDetailFragment extends Fragment {
         }
     }
 
-    // Don't subscribe, as ModListActivity passes this in
-    public void onFetchedScreenshot(final Events.FetchedScreenshotEvent e) {
-        screenshot_view.setVisibility(View.GONE);
-        if (e.didError()) {
-            Log.e("MDAct", e.error);
-        } else {
-            String dest = e.filepath;
-            Drawable d = Drawable.createFromPath(dest);
-            if (d != null) {
-                screenshot_view.setImageDrawable(d);
-                screenshot_view.setVisibility(View.VISIBLE);
-            }
-        }
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -154,16 +143,20 @@ public class ModDetailFragment extends Fragment {
 
             screenshot_view = (ImageView) rootView.findViewById(R.id.screenshot_view);
             screenshot_view.setVisibility(View.GONE);
-            if (getActivity() instanceof ModListActivity && mod.screenshot_uri != null &&
-                        !mod.screenshot_uri.equals("")) {
-                Drawable d = Drawable.createFromPath(mod.screenshot_uri);
-                if (d != null) {
-                    screenshot_view.setImageDrawable(d);
+            if (getActivity() instanceof ModListActivity) {
+                if (mod.screenshot_uri != null && !mod.screenshot_uri.equals("")) {
+                    Picasso.with(getContext())
+                            .load(new File(mod.screenshot_uri))
+                            .into(screenshot_view);
+
+                    screenshot_view.setVisibility(View.VISIBLE);
+                } else if (!mod.isLocalMod()) {
+                    Picasso.with(getContext())
+                            .load("https://minetest-mods.rubenwardy.com/screenshot/" + mod.author + "/" + mod.name + "/")
+                            .into(screenshot_view);
+
                     screenshot_view.setVisibility(View.VISIBLE);
                 }
-            } else if (!mod.isLocalMod()) {
-                ModManager modman = ModManager.getInstance();
-                modman.fetchScreenshot(getContext(), mod.name, mod.author);
             }
 
             // Author

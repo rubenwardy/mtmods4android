@@ -429,17 +429,6 @@ public class ModListActivity
         }
     }
 
-    @Subscribe
-    public void onFetchedScreenshot(final Events.FetchedScreenshotEvent e) {
-        if (isTwoPane) {
-            FragmentManager frags = getSupportFragmentManager();
-            Fragment frag = frags.findFragmentById(R.id.mod_detail_container);
-            if (frag != null) {
-                ((ModDetailFragment)frag).onFetchedScreenshot(e);
-            }
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;

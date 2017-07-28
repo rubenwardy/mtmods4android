@@ -2,7 +2,9 @@ package com.rubenwardy.minetestmodmanager.views;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,16 +20,20 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.rubenwardy.minetestmodmanager.R;
 import com.rubenwardy.minetestmodmanager.models.Events;
 import com.rubenwardy.minetestmodmanager.models.Mod;
 import com.rubenwardy.minetestmodmanager.models.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,7 +99,7 @@ public class ModDetailActivity
     }
 
     private void setupToolBar(ModManager modman, String listname, String modname, String author) {
-        CollapsingToolbarLayout ctoolbar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        final CollapsingToolbarLayout ctoolbar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         if (ctoolbar == null) {
             return;
         }
@@ -112,9 +118,14 @@ public class ModDetailActivity
         ctoolbar.setTitle(mod.title);
         ctoolbar.setExpandedTitleColor(Color.TRANSPARENT);
 
-        if (mod.screenshot_uri != null && !mod.screenshot_uri.equals("")) {
-            Drawable d = Drawable.createFromPath(mod.screenshot_uri);
-            if (d != null) {
+
+        Target target = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                ctoolbar.setTag(null);
+
+                Drawable d = new BitmapDrawable(getResources(), bitmap);
+
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     ctoolbar.setBackground(d);
                 } else {
@@ -126,11 +137,29 @@ public class ModDetailActivity
                         (NestedScrollView) findViewById(R.id.mod_detail_container);
                 scroll.requestFocus();
             }
-        } else if (list.type == ModList.ModListType.EMLT_ONLINE) {
-            modman.fetchScreenshot(getApplicationContext(), mod.name, mod.author);
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {}
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {}
+        };
+
+        if (mod.screenshot_uri != null && !mod.screenshot_uri.equals("")) {
+            ctoolbar.setTag(target);
+            Picasso.with(this)
+                    .load(new File(mod.screenshot_uri))
+                    .into(target);
+        } else if (!mod.isLocalMod()) {
+            ctoolbar.setTag(target);
+            Picasso.with(this)
+                    .load("https://minetest-mods.rubenwardy.com/screenshot/" + mod.author + "/" + mod.name + "/")
+                    .into(target);
         }
 
     }
+
+
 
     private void setupFragment(String listname, String modname, String author) {
         // Create the detail fragment and add it to the activity
@@ -209,25 +238,6 @@ public class ModDetailActivity
         k.setAction(ModListActivity.ACTION_SEARCH);
         k.putExtra(ModListActivity.PARAM_QUERY, e.query);
         startActivity(k);
-    }
-
-    @Subscribe
-    public void onFetchedScreenshot(final Events.FetchedScreenshotEvent e) {
-        if (e.didError()) {
-            Log.e("MDAct", e.error);
-        } else {
-            String dest = e.filepath;
-            Drawable d = Drawable.createFromPath(dest);
-            if (d != null) {
-                CollapsingToolbarLayout ctoolbar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    ctoolbar.setBackground(d);
-                } else {
-                    //noinspection deprecation
-                    ctoolbar.setBackgroundDrawable(d);
-                }
-            }
-        }
     }
 
     @Override

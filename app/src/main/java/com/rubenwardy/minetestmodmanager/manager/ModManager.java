@@ -165,11 +165,6 @@ public class ModManager {
     }
 
     @MainThread
-    public void fetchScreenshot(Context context, String author, String name) {
-        ModInstallService.startActionFetchScreenshot(context, srr, author, name);
-    }
-
-    @MainThread
     public void uninstallModAsync(Context context, @NonNull Mod mod) {
         if (mod.path != null && !mod.path.equals("")) {
             ModInstallService.startActionUninstall(context, srr, mod.name, mod.listname);
