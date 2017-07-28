@@ -133,6 +133,7 @@
             android:drawableStart="@drawable/ic_mod_action_info_24dp"
             android:drawableLeft="@drawable/ic_mod_action_info_24dp"
             android:drawablePadding="8dp"
+            android:drawableTint="@color/modActionIconColor"
             android:text="@string/mod_action_info"/>
 
         <Button
@@ -145,6 +146,7 @@
             android:drawableStart="@drawable/ic_mod_action_check_depends_24dp"
             android:drawableLeft="@drawable/ic_mod_action_check_depends_24dp"
             android:drawablePadding="8dp"
+            android:drawableTint="@color/modActionIconColor"
             android:text="@string/mod_action_check_depends"/>
 
         <Button
@@ -157,6 +159,7 @@
             android:drawableStart="@drawable/ic_mod_action_forum_topic_24dp"
             android:drawableLeft="@drawable/ic_mod_action_forum_topic_24dp"
             android:drawablePadding="8dp"
+            android:drawableTint="@color/modActionIconColor"
             android:text="@string/mod_action_forum_topic"/>
 
         <Button
@@ -169,7 +172,20 @@
             android:drawableStart="@drawable/ic_mod_action_readme_24dp"
             android:drawableLeft="@drawable/ic_mod_action_readme_24dp"
             android:drawablePadding="8dp"
+            android:drawableTint="@color/modActionIconColor"
             android:text="@string/mod_action_view_readme" />
+        <Button
+            android:id="@+id/mods_by_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:layout_gravity="start"
+            style="@style/FlatOptionButton"
+            android:drawableStart="@drawable/ic_mod_action_mods_by_author"
+            android:drawableLeft="@drawable/ic_mod_action_find_elsewhere_24dp"
+            android:drawablePadding="8dp"
+            android:drawableTint="@color/modActionIconColor"
+            android:text="@string/mod_action_mods_by_author" />
 
         <Button
             android:id="@+id/find_elsewhere"
@@ -181,6 +197,7 @@
             android:drawableStart="@drawable/ic_mod_action_find_elsewhere_24dp"
             android:drawableLeft="@drawable/ic_mod_action_find_elsewhere_24dp"
             android:drawablePadding="8dp"
+            android:drawableTint="@color/modActionIconColor"
             android:text="@string/mod_action_find_elsewhere" />
 
         <Button
@@ -193,6 +210,7 @@
             android:drawableStart="@drawable/ic_mod_action_report_24dp"
             android:drawableLeft="@drawable/ic_mod_action_report_24dp"
             android:drawablePadding="8dp"
+            android:drawableTint="@color/modActionIconColor"
             android:text="@string/mod_action_report_mod" />
 
     </LinearLayout>

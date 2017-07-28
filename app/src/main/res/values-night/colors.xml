@@ -7,4 +7,5 @@
     <color name="backgroundColorForeground">#323232</color>
     <color name="hintBackground">@color/colorPrimary</color>
     <color name="installButton">@color/colorPrimary</color>
+    <color name="modActionIconColor">#ccc</color>
 </resources>

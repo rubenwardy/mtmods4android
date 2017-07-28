@@ -314,6 +314,13 @@ public class ModDetailFragment extends Fragment {
                 }
             });
 
+            rootView.findViewById(R.id.mods_by_author).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBus.getDefault().post(new Events.SearchEvent("author:" + mod.author));
+                }
+            });
+
             // Infomation
             rootView.findViewById(R.id.action_info).setOnClickListener(new View.OnClickListener() {
                 @Override
