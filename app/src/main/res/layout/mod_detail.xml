@@ -9,7 +9,7 @@
         android:id="@+id/mod_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cardview_light_background"
+        android:background="@color/backgroundColorForeground"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -88,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/installed_elsewhere"
         android:padding="16dp"
-        android:background="@color/cardview_light_background"
+        android:background="@color/backgroundColorForeground"
         android:text="This is a test"
         android:textIsSelectable="true"
         tools:context="com.rubenwardy.minetestmodmanager.views.ModDetailFragment" />
@@ -97,7 +97,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/cardview_light_background"
+        android:background="@color/backgroundColorForeground"
         android:id="@+id/screenshot_view_frame"
         android:layout_below="@id/mod_desc">
 

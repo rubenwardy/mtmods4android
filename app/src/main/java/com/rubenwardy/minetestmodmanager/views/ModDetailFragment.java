@@ -180,7 +180,7 @@ public class ModDetailFragment extends Fragment {
 
             Button btn_main = (Button) rootView.findViewById(R.id.mod_header_uninstall);
             if (mod.isLocalMod()) {
-                btn_main.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.colorRemove),
+                btn_main.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.uninstallButton),
                         PorterDuff.Mode.MULTIPLY);
                 btn_main.setOnClickListener(new View.OnClickListener() {
                     @Override

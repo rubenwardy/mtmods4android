@@ -4,7 +4,11 @@
     <color name="colorPrimaryDark">#067316</color>
     <color name="colorAccent">#21a334</color>
     <color name="hintBackground">@color/colorPrimaryDark</color>
+    <color name="modSectionText">@color/colorAccent</color>
     <color name="hintText">#fff</color>
     <color name="hintAccent">#fff</color>
-    <color name="colorRemove">#f44336</color>
+    <color name="alertDialogButtonText">@color/colorAccent</color>
+    <color name="installButton">@color/colorAccent</color>
+    <color name="uninstallButton">#f44336</color>
+    <color name="backgroundColorForeground">@color/cardview_light_background</color>
 </resources>
