@@ -7,12 +7,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -28,6 +32,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.futuremind.recyclerviewfastscroll.FastScroller;
@@ -39,11 +44,14 @@ import com.rubenwardy.minetestmodmanager.models.Mod;
 import com.rubenwardy.minetestmodmanager.models.ModList;
 import com.rubenwardy.minetestmodmanager.manager.ModManager;
 import com.rubenwardy.minetestmodmanager.presenters.ModListPresenter;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -627,18 +635,50 @@ public class ModListActivity
         public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
             // Get Mod
             holder.mod = mods.get(position);
+            Mod mod = holder.mod;
 
             //
             // Fill out TextViews
             //
 
-            holder.view_modname.setText(holder.mod.name);
-            holder.view_author.setText(holder.mod.author);
-            holder.view_description.setText(holder.mod.getShortDesc());
+            holder.view_modname.setText(mod.name);
+            holder.view_author.setText(mod.author);
+            holder.view_description.setText(mod.getShortDesc());
 
             ModManager mm = ModManager.getInstance();
 
-            holder.view_installed.setVisibility((mm.getModInstalledList(holder.mod.name, holder.mod.author) != null) ? View.VISIBLE : View.GONE);
+            holder.view_installed.setVisibility((mm.getModInstalledList(mod.name, mod.author) != null) ? View.VISIBLE : View.GONE);
+
+            Callback callback = new Callback() {
+                @Override
+                public void onSuccess() {
+                    Bitmap imageBitmap = ((BitmapDrawable) holder.view_preview.getDrawable()).getBitmap();
+                    RoundedBitmapDrawable imageDrawable = RoundedBitmapDrawableFactory.create(getResources(), imageBitmap);
+                    imageDrawable.setCircular(true);
+                    imageDrawable.setCornerRadius(Math.max(imageBitmap.getWidth(), imageBitmap.getHeight()) / 2.0f);
+                    holder.view_preview.setImageDrawable(imageDrawable);
+                }
+                @Override
+                public void onError() {
+                }
+            };
+
+
+            if (mod.screenshot_uri != null && !mod.screenshot_uri.equals("")) {
+                Picasso.with(getApplicationContext())
+                        .load(new File(mod.screenshot_uri))
+                        .fit()
+                        .error(R.drawable.mod_preview_circle)
+                        .placeholder(R.drawable.mod_preview_circle)
+                        .into(holder.view_preview, callback);
+            } else if (!mod.isLocalMod()) {
+                Picasso.with(getApplicationContext())
+                        .load("https://minetest-mods.rubenwardy.com/screenshot/" + mod.author + "/" + mod.name + "/")
+                        .fit()
+                        .error(R.drawable.mod_preview_circle)
+                        .placeholder(R.drawable.mod_preview_circle)
+                        .into(holder.view_preview, callback);
+            }
 
             //
             // Register callback
@@ -686,6 +726,7 @@ public class ModListActivity
             @NonNull final TextView view_author;
             @NonNull final TextView view_description;
             @NonNull final View view_installed;
+            @NonNull final ImageView view_preview;
             @Nullable public Mod mod;
 
             ViewHolder(@NonNull View view) {
@@ -695,6 +736,7 @@ public class ModListActivity
                 view_author = (TextView) view.findViewById(R.id.author);
                 view_description = (TextView) view.findViewById(R.id.description);
                 view_installed   = (View) view.findViewById(R.id.mod_installed);
+                view_preview = (ImageView) view.findViewById(R.id.mod_preview);
             }
 
             @NonNull
