@@ -152,7 +152,8 @@
 
     <string name="settings_title">Settings</string>
     <string name="settings_theme">Theme</string>
-    <string name="settings_theme_restart_hint">A restart is required for theme changes to take effect across the app. Make sure to swipe this app from recents.</string>
+    <string name="settings_theme_restart_hint">A restart is required for theme changes to take effect outside of the settings screen.</string>
+    <string name="settings_theme_restart">Restart</string>
     <string-array name="settings_theme_options">
         <item>System Default</item>
         <item>Light Theme</item>

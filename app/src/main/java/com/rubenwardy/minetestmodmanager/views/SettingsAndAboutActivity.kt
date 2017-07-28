@@ -10,6 +10,17 @@ import android.widget.Spinner
 
 import com.rubenwardy.minetestmodmanager.R
 import com.rubenwardy.minetestmodmanager.themeToDayNightMode
+import android.content.Intent
+import android.os.Build
+import com.rubenwardy.minetestmodmanager.models.ModList
+import android.app.AlarmManager
+import android.content.Context.ALARM_SERVICE
+import android.app.PendingIntent
+import android.content.Context
+import android.util.Log
+
+
+
 
 class SettingsAndAboutActivity : AppCompatActivity() {
 
@@ -36,6 +47,20 @@ class SettingsAndAboutActivity : AppCompatActivity() {
 
                 delegate.setLocalNightMode(themeToDayNightMode(position))
             }
+        }
+
+        findViewById(R.id.settings_restart).setOnClickListener {
+            // This is quite hacky, however it seems to be the only way to reliably do this
+
+            Log.e("SettingsAndAbout", "Restarting app")
+
+            val mStartActivity = Intent(this, SettingsAndAboutActivity::class.java)
+            val mPendingIntentId = 123456
+            val mPendingIntent = PendingIntent.getActivity(this, mPendingIntentId, mStartActivity,
+                    PendingIntent.FLAG_CANCEL_CURRENT)
+            val mgr = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent)
+            System.exit(0)
         }
     }
 
