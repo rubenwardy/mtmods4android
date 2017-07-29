@@ -2,7 +2,6 @@ package com.rubenwardy.minetestmodmanager.views
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.app.AppCompatDelegate
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -11,15 +10,11 @@ import android.widget.Spinner
 import com.rubenwardy.minetestmodmanager.R
 import com.rubenwardy.minetestmodmanager.themeToDayNightMode
 import android.content.Intent
-import android.os.Build
-import com.rubenwardy.minetestmodmanager.models.ModList
 import android.app.AlarmManager
-import android.content.Context.ALARM_SERVICE
 import android.app.PendingIntent
 import android.content.Context
 import android.util.Log
-
-
+import android.widget.Switch
 
 
 class SettingsAndAboutActivity : AppCompatActivity() {
@@ -32,11 +27,21 @@ class SettingsAndAboutActivity : AppCompatActivity() {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         }
 
+        val settings = getSharedPreferences(DisclaimerActivity.PREFS_NAME, 0)
+
+        val previewScreens = findViewById(R.id.settings_screenshot_previews) as Switch
+        previewScreens.isChecked = settings.getBoolean("showScreenshotPreviews", true)
+        previewScreens.setOnCheckedChangeListener { _, isChecked ->
+            val editor = getSharedPreferences(DisclaimerActivity.PREFS_NAME, 0).edit()
+            editor.putBoolean("showScreenshotPreviews", isChecked)
+            editor.apply()
+        }
+
         val spinner = findViewById(R.id.settings_theme) as Spinner
         val adapter = ArrayAdapter.createFromResource(this, R.array.settings_theme_options, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
-        spinner.setSelection(getSharedPreferences(DisclaimerActivity.PREFS_NAME, 0).getInt("theme", 0))
+        spinner.setSelection(settings.getInt("theme", 0))
         spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 

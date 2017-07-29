@@ -649,35 +649,41 @@ public class ModListActivity
 
             holder.view_installed.setVisibility((mm.getModInstalledList(mod.name, mod.author) != null) ? View.VISIBLE : View.GONE);
 
-            Callback callback = new Callback() {
-                @Override
-                public void onSuccess() {
-                    Bitmap imageBitmap = ((BitmapDrawable) holder.view_preview.getDrawable()).getBitmap();
-                    RoundedBitmapDrawable imageDrawable = RoundedBitmapDrawableFactory.create(getResources(), imageBitmap);
-                    imageDrawable.setCircular(true);
-                    imageDrawable.setCornerRadius(Math.max(imageBitmap.getWidth(), imageBitmap.getHeight()) / 2.0f);
-                    holder.view_preview.setImageDrawable(imageDrawable);
-                }
-                @Override
-                public void onError() {
-                }
-            };
+            if (getSharedPreferences(DisclaimerActivity.PREFS_NAME, 0).getBoolean("showScreenshotPreviews", true)) {
+                holder.view_preview.setVisibility(View.VISIBLE);
+                Callback callback = new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Bitmap imageBitmap = ((BitmapDrawable) holder.view_preview.getDrawable()).getBitmap();
+                        RoundedBitmapDrawable imageDrawable = RoundedBitmapDrawableFactory.create(getResources(), imageBitmap);
+                        imageDrawable.setCircular(true);
+                        imageDrawable.setCornerRadius(Math.max(imageBitmap.getWidth(), imageBitmap.getHeight()) / 2.0f);
+                        holder.view_preview.setImageDrawable(imageDrawable);
+                    }
+
+                    @Override
+                    public void onError() {
+                    }
+                };
 
 
-            if (mod.screenshot_uri != null && !mod.screenshot_uri.equals("")) {
-                Picasso.with(getApplicationContext())
-                        .load(new File(mod.screenshot_uri))
-                        .fit()
-                        .error(R.drawable.mod_preview_circle)
-                        .placeholder(R.drawable.mod_preview_circle)
-                        .into(holder.view_preview, callback);
-            } else if (!mod.isLocalMod()) {
-                Picasso.with(getApplicationContext())
-                        .load("https://minetest-mods.rubenwardy.com/screenshot/" + mod.author + "/" + mod.name + "/")
-                        .fit()
-                        .error(R.drawable.mod_preview_circle)
-                        .placeholder(R.drawable.mod_preview_circle)
-                        .into(holder.view_preview, callback);
+                if (mod.screenshot_uri != null && !mod.screenshot_uri.equals("")) {
+                    Picasso.with(getApplicationContext())
+                            .load(new File(mod.screenshot_uri))
+                            .fit()
+                            .error(R.drawable.mod_preview_circle)
+                            .placeholder(R.drawable.mod_preview_circle)
+                            .into(holder.view_preview, callback);
+                } else if (!mod.isLocalMod()) {
+                    Picasso.with(getApplicationContext())
+                            .load("https://minetest-mods.rubenwardy.com/screenshot/" + mod.author + "/" + mod.name + "/")
+                            .fit()
+                            .error(R.drawable.mod_preview_circle)
+                            .placeholder(R.drawable.mod_preview_circle)
+                            .into(holder.view_preview, callback);
+                }
+            } else {
+                holder.view_preview.setVisibility(View.GONE);
             }
 
             //

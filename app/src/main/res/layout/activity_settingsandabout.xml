@@ -36,9 +36,16 @@
                 android:textStyle="bold"
                 android:text="@string/settings_title" />
 
+            <Switch
+                android:id="@+id/settings_screenshot_previews"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Display preview screenshots in mod list" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal">
 
                 <TextView
