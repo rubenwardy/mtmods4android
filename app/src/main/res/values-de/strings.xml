@@ -1,27 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
 
-    <string name="dialog_noext_title">Kein externer Speicher verfügbar!</string>
+    <string name="dialog_noext_title">Kein externer Speicher verfügbar</string>
     <string name="dialog_noext_msg">Wir konnten den Minetest Ordner nicht finden!
         Externer Speicher heißt nicht, das eine SD-Karte nötig ist.
         Sondern das der Ordner "Minetest" für diese App zugänglich sein muss.</string>
-    <string name="dialog_nomt_title">Erstellen des Minetest-Mods-Ordners gescheitert!</string>
+    <string name="dialog_nomt_title">Erstellen des Minetest-Mod-Ordners gescheitert</string>
     <string name="dialog_nomt_msg">Es exsistierte bisher in ihrem Speicher kein Ordner "Minetest",
         darum hat die App versucht einen zu erstellen. Dies hat nicht funktioniert!
         Möglicherweise verhindert ihr Gerät den Zugriff auf diesen. Probieren sie bitte ob
         sie die Minetest App nutzen können.</string>
     <string name="dialog_close">Schließen</string>
-    <string name="dialog_nowld_title">Welt konnte nicht erstellt werden!</string>
+    <string name="dialog_nowld_title">Welt konnte nicht erstellt werden</string>
     <string name="dialog_nowld_msg">Wir haben versucht eine Minetest Welt zu erstellen, aber das hat nicht funktioniert.</string>
 
     <string name="action_search">Suchen</string>
 
     <string name="modlist_mods">Installierte %1$s Mods</string>
     <string name="modlist_available_mods">Verfügbare Mods</string>
-    <string name="modlist_rate_txt">Wir würden uns darüber freuen, wenn sie uns eine Bewertung schreiben würden.</string>
+    <string name="modlist_rate_txt">Hey! Lust uns ein paar Sterne zu geben?</string>
     <string name="modlist_rate_yes">Ja, Bewerten</string>
     <string name="modlist_rate_no">Nein</string>
-    <string name="modlist_tip_worldconfig">Mod aktivieren per Klick auf Welt Symbol</string>
+    <string name="modlist_tip_worldconfig">Aktiviere einen Mod per Klick auf das Welt Symbol.</string>
 
     <string name="event_installing_mod">Installiere mod…</string>
     <string name="event_installed_mod">Habe %1$s installiert.</string>
@@ -54,14 +54,14 @@
     <string name="mod_invalid_modlist_desc">Wir konnten diesen Pfad nicht finden. Haben sie den Ordner gelöscht, oder haben sie keine aktive Internetverbindung?</string>
 
     <string name="modinfo_title">Information</string>
-    <string name="modinfo_details_name">Mod Name</string>
+    <string name="modinfo_details_name">Modname</string>
     <string name="modinfo_details_author">Autor</string>
     <string name="modinfo_details_type">Typ</string>
     <string name="modinfo_details_location">Ordner</string>
     <string name="modinfo_details_link">Download URL</string>
     <string name="modinfo_details_size">Download Größe</string>
     <string name="modinfo_details_size_unknown">Unbekannt</string>
-    <string name="modinfo_details_type_modpack">Mod Pack</string>
+    <string name="modinfo_details_type_modpack">Modpack</string>
 
     <string name="readme_title">Lies Mich</string>
 
@@ -84,7 +84,7 @@
     <string name="world_config_saved">Konfiguration gespeichert</string>
 
     <string name="disclaimer_title">Disclaimer</string>
-    <string name="disclaimer_agree">Mit dem Nutzen dieses Services stimmen sie den folgenden Bedingungen zu:</string>
+    <string name="disclaimer_agree">Bei der Benutzung dieses Services stimmen sie den folgenden Bedingungen zu.</string>
     <string name="disclaimer_1_t">Keine Garantie oder Haftung</string>
     <string name="disclaimer_2_t">Dies ist kein Mod Store, sondern eine Mod Suchmaschine</string>
     <string name="disclaimer_2_m">Die hier gelisteten Mods sind dem Minetest Forum entnommen.
@@ -107,8 +107,23 @@
     <string name="about_credits_feedback">Danke DonBatman für das Feedback während der Entwicklung</string>
     <string name="about_credits_logo">Das App Logo basiert auf dem Minetest Logo von erlehmann das unter CC-BY-SA 3.0 Lizenz steht</string>
     <string name="about_credits_images">Außerdem nutzt diese App einige standard Android icons, diese stehen unter CC-BY 4.0 Lizenz</string>
-    <string name="about_credits_translation">Herzlichen Dank an folgende Übersetzer: Soph (Französisch), Dragonpop (Spanisch), und Adrian (Deutsch).</string>
+    <string name="about_credits_translation">Herzlichen Dank an folgende Übersetzer: Soph (Französisch), Dragonpop (Spanisch), Adrian (Deutsch), monolifed (Türkisch), und muhdnurhidayat (Malaiisch).</string>
     <string name="failed_list_download">Das Herunterladen der Liste der verfügbaren Mods ist gescheitert. Fehler %1$s.</string>
     <string name="mod_action_find_elsewhere">Wo anders suchen</string>
 
-</resources>
+<string name="app_name">Minetest-Mods</string>
+
+
+    <string name="dialog_no_minetest">Minetest ist nicht installiert</string>
+    <string name="dialog_no_minetest_msg">Es ist empfohlen erst Minetest zu installieren, bevor du diese App benutzt!</string>
+    <string name="dialog_no_missing_mods_title">Alles gut!</string>
+    <string name="dialog_no_missing_mods_msg">Alle benötigten Abhängigkeiten sind installiert.</string>
+
+    <string name="event_missing_dependencies">Installiere Benötigte Mods</string>
+    <string name="event_missing_dependencies_msg">Möchtest du diese Abhängigkeiten installieren?</string>
+    <string name="event_missing_dependencies_msg_some_missing">Leider konnten wir nicht alle benötigten Mods finden :(</string>
+    <string name="event_missing_dependencies_msg_all_missing">Leider konnten wir keine der benötigten Mods finden :(</string>
+    <string name="event_missing_dependencies_mtg_mods">WARNUNG: Stelle sicher, dass du Minetest mindestens einmal geöffnent hast, einige dieser Mods sollten gebündelt kommen.</string>
+
+    <string name="mod_action_check_depends">Suche nach fehlenden Abhängigkeiten</string>
+    </resources>

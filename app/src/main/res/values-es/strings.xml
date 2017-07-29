@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <string name="app_name">Mods de Minetest</string>
 
@@ -99,4 +100,40 @@
     <string name="about_credits_logo">El logo de la aplicación esta basado en el logo de Minetest
         licenciado en CC-BY-SA 3.0, y creado por erlehmann</string>
     <string name="about_credits_images">Esta aplicación también usa varios iconos genericos de Android, licenciados en CC-BY 4.0</string>
+<string name="dialog_no_minetest">Minetest no esta instalado</string>
+    <string name="dialog_no_minetest_msg">Es recomendado que instales Minetest antes de usar esta App de tu App Store!</string>
+    <string name="dialog_no_missing_mods_title">Todo Bien!</string>
+    <string name="dialog_no_missing_mods_msg">Todas las dependencias requeridas estan instaladas.</string>
+
+    <string name="modlist_rate_txt">Hey! Quisieras darnos algunas estrellas?</string>
+    <string name="modlist_rate_yes">Evaluar</string>
+    <string name="modlist_rate_no">No</string>
+    <string name="modlist_tip_worldconfig">Activa un mod clickeando en el icono del mundo.</string>
+
+
+    <string name="failed_list_download">Fallo al decargar lista de mods disponibles. Error: %1$s.</string>
+
+    <string name="event_missing_dependencies">Instalar Mods requeridos</string>
+    <string name="event_missing_dependencies_msg">Te gustaria instalar estas dependencias faltantes?</string>
+    <string name="event_missing_dependencies_msg_some_missing">Desafortunadamente, no podimos encontrar todos los mods requeridos :(</string>
+    <string name="event_missing_dependencies_msg_all_missing">Desafortunadamente, no pudimos encontrar ninguno de los mods requeridos :(</string>
+    <string name="event_missing_dependencies_mtg_mods">ALERTA: Asegurate que has abierto Minetest al menos una vez, algunos de estos mods deben venir juntos.</string>
+
+    <string name="mod_tip_installed_elsewhere">Mod ya instalado en %1$s</string>
+    <string name="mod_tip_view">Ver</string>
+
+    <string name="mod_action_info">Ver informacion</string>
+    <string name="mod_action_check_depends">Revisar por dependencias faltantes</string>
+    <string name="mod_action_view_readme">Ver Leeme</string>
+
+    <string name="mod_verified_yes">Este mod es de un autor muy conocido.</string>
+    <string name="mod_verified_no">Este mod no fue hecho por un autor muy conocido.</string>
+    <string name="mod_verified_uk">No se puede determinar el origen de este mod.</string>
+
+    <string name="modinfo_title">Informacion</string>
+    <string name="readme_title">Leeme</string>
+
+
+    <string name="mod_action_find_elsewhere">Encontrar en otra parte</string>
+    <string name="about_credits_translation">Gracias a los siguientes traductores: mi amiga Soph (Frances), Dragonop (Español), Adrian (Aleman), monolifed (Turco), y muhdnurhidayat (Malayo).</string>
 </resources>

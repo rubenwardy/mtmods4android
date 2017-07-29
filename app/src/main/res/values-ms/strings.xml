@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="app_name">Mods Minetest</string>
+
+
+    <string name="dialog_noext_title">Tiada simpanan luaran</string>
+    <string name="dialog_noext_msg">Kami tidak jumpa folder Minetest kerana tiada simpanan luaran. Simpanan luaran adalah lokasi fail berkongsi pada peranti anda, dan tidak semestinya bermaksud kad SD.</string>
+    <string name="dialog_nomt_title">Gagal mencipta folder mods Minetest</string>
+    <string name="dialog_nomt_msg">Tidak ada folder untuk mods pada peranti anda, jadi kami cuba untuk menciptanya. Namun begitu, percubaan tersebut gagal. Mungkin sistem tidak membenarkan app ini mengaksesnya. Cuba jalankan Minetest.</string>
+    <string name="dialog_close">Tutup</string>
+    <string name="dialog_nowld_title">Gagal mencipta dunia</string>
+    <string name="dialog_nowld_msg">Kami cuba untuk mencipta dunia agar anda boleh menata rajah namun operasi tersebut gagal.</string>
+    <string name="dialog_no_minetest">Minetest belum dipasang</string>
+    <string name="dialog_no_minetest_msg">Adalah disarankan agar anda pasang Minetest sebelum menggunakan app ini daripada kedai app anda!</string>
+    <string name="dialog_no_missing_mods_title">Semuanya OK!</string>
+    <string name="dialog_no_missing_mods_msg">Kesemua kebergantungan yang diperlukan telah dipasang.</string>
+
+    <string name="action_search">Cari</string>
+
+
+    <string name="modlist_available_mods">Mods yang tersedia</string>
+    <string name="modlist_rate_txt">Hai! Nak bagi bintang dekat kami tak?</string>
+    <string name="modlist_rate_yes">Berikan nilai</string>
+    <string name="modlist_rate_no">Tidak mahu</string>
+    <string name="modlist_tip_worldconfig">Bolehkan sebuah mods dengan menekan ikon dunia.</string>
+
+
+    <string name="event_installing_mod">Memasang mods…</string>
+    <string name="event_installed_mod">Selesai pasang %1$s.</string>
+    <string name="event_installing">Memasang %1$s…</string>
+    <string name="event_connecting">Menyambung…</string>
+    <string name="event_downloading">Memuat turun…</string>
+    <string name="event_extracting">Mengekstrak…</string>
+    <string name="event_failed_install">Gagal memasang mods %1$s. Ralat: %2$s.</string>
+    <string name="event_failed_uninstall">Gagal menyahpasang mods %1$s. Ralat: %2$s.</string>
+    <string name="failed_list_download">Gagal memuat turun senarai mods sedia ada. Ralat: %1$s.</string>
+
+    <string name="event_missing_dependencies">Pasang mods yang diperlukan</string>
+    <string name="event_missing_dependencies_msg">Adakah anda ingin memasang kebergantungan yang hilang ini?</string>
+    <string name="event_missing_dependencies_msg_some_missing">Harap maaf, kami tidak dapat mencari kesemua mods yang diperlukan :(</string>
+    <string name="event_missing_dependencies_msg_all_missing">Harap maaf, ada sesetengah mods yang diperlukan tidak dapat dicari :(</string>
+    <string name="event_missing_dependencies_mtg_mods">AMARAN: Pastikan anda pernah membuka Minetest sekurang-kurangnya sekali kerana sesetengah daripada mods ini patut datang bersama-sama Minetest.</string>
+
+    <string name="mod_title">Maklumat mods</string>
+    <string name="mod_action_install">Pasang</string>
+    <string name="mod_action_uninstall">Nyahpasang</string>
+
+    <string name="mod_tip_installed_elsewhere">Mods telah dipasangkan dekat %1$s</string>
+    <string name="mod_tip_view">Lihat</string>
+
+    <string name="mod_action_info">Lihat Maklumat</string>
+    <string name="mod_action_check_depends">Periksa kebergantungan yang hilang</string>
+    <string name="mod_action_report_mod">Laporkan mods</string>
+    <string name="mod_action_forum_topic">Lihat topik forum</string>
+    <string name="mod_action_view_readme">Lihat fail Read Me</string>
+
+    <string name="mod_verified_yes">Mods ini datang daripada pencipta terkenal.</string>
+    <string name="mod_verified_no">Mods ini bukannya dibuat oleh pencipta terkenal.</string>
+    <string name="mod_verified_uk">Tidak dapat menentukan sumber mods ini.</string>
+
+    <string name="mod_invalid_mod_title">Mods tidak sah</string>
+    <string name="mod_invalid_mod_desc">Kami tidak jumpa mods tersebut. Adakah ianya telah dibuang?</string>
+    <string name="mod_invalid_modlist_title">Lokasi atau laluan mods tidak sah</string>
+    <string name="mod_invalid_modlist_desc">Kami tidak jumpa lokasi mods tersebut. Adakah foldernya telah dibuang, atau senarai mods tersedia tidak dikemaskini?</string>
+
+
+    <string name="modinfo_title">Maklumat lanjut</string>
+    <string name="modinfo_details_name">Nama mods</string>
+    <string name="modinfo_details_author">Pencipta</string>
+    <string name="modinfo_details_type">Jenis</string>
+    <string name="modinfo_details_location">Folder</string>
+    <string name="modinfo_details_link">URL muat turun</string>
+    <string name="modinfo_details_size">Saiz muat turun</string>
+    <string name="modinfo_details_size_unknown">Tidak diketahui</string>
+    <string name="modinfo_details_type_modpack">Pek mods</string>
+    <string name="readme_title">Baca saya</string>
+
+
+    <string name="report_title">Laporkan mods</string>
+    <string name="report_modname_by_authorname">%1$s dicipta oleh %2$s</string>
+    <string name="report_instructions">Sila pilih alasan berkaitan tujuan anda melaporkan mods ini. Jika anda mempunyai maklumat lain, sila masukkan ke dalam kotak tulisan yang disediakan.</string>
+    <string name="report_reason">Alasan</string>
+    <string name="report_msg">Mesej (jika ingin disertakan)</string>
+    <string name="report_details">Maklumat laporan</string>
+    <string name="world_config">Konfigurasi dunia</string>
+    <string name="world_config_accept">Terima</string>
+    <string name="world_config_saved">Konfigurasi telah disimpan</string>
+
+
+    <string name="disclaimer_title">Penafian</string>
+    <string name="disclaimer_agree">Dengan menggunakan perkhidmatan ini, anda bersetuju dengan terma dan syarat berikut.</string>
+    <string name="disclaimer_1_t">Tiada jaminan</string>
+    <string name="disclaimer_2_t">Bukannya kedai mods, tetapi pencari mods</string>
+    <string name="disclaimer_2_m">Mods yang disenaraikan adalah sebahagian daripada mods yang dijumpai dekat forum Minetest. Apabila anda memuat turun mods tersebut, anda bukannya memuat turun daripada pelayan kami tetapi ianya dimuat turun daripada pautan yang pencipta asal telah tulis dalam topik forum mereka. Oleh itu, kami tidak menjamin semua mods ini selamat. Tiada manusia yang memeriksa mods yang tersenarai.</string>
+
+    <string name="disclaimer_3_t">Apa anda boleh lakukan?</string>
+    <string name="disclaimer_3_m">Jika anda tidak yakin dengan keselematan sesebuah mods, periksa topik forumnya. Lihat pada usia aliran topik, dan apa yang pengguna balas dalam topik tersebut.</string>
+
+    <string name="disclaimer_accept_and_install">Terima dan pasang</string>
+
+
+    <string name="about_title">Tentang app ini</string>
+    <string name="about_credits">Penghargaan</string>
+    <string name="about_credits_dev">Dibangunkan oleh rubenwardy (rubenwardy.com)</string>
+    <string name="about_credits_krock">Terima kasih Krock (juga dikenali sebagai SmallJoker) kerana mencipta Pencarian Mods Krock (Krock\'s Mod Search), iaitu pengampu yang app ini gunakan untuk menyenaraikan senarai mods tersedia.</string>
+    <string name="about_credits_feedback">Terima kasih kepada DonBatman untuk maklum balas sewaktu pembangunan app</string>
+    <string name="about_credits_logo">Logo app ini dicipta oleh erlehmann, dan ianya dicipta berdasarkan logo Minetest yang dilesenkan di bawah CC-BY-SA 3.0</string>
+    <string name="about_credits_images">App ini juga menggunakan beberapa ikon Android piawai, dilesenkan di bawah CC-BY 4.0</string>
+    <string name="mod_action_find_elsewhere">Cari di tempat lain</string>
+    <string name="modlist_mods">Telah pasang %1$s mods</string>
+    <string name="about_credits_translation">Terima kasih kepada penterjemah berikut: rakan saya Soph (Bahasa Perancis), Dragonop (Bahasa Sepanyol), Adrian (Bahasa Jerman), monolifed (Bahasa Turki), dan muhdnurhidayat (Bahasa Melayu).</string>
+</resources>

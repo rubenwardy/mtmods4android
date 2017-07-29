@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <string name="app_name">Minetest Mods</string>
     <string name="about_credits">Crédits</string>
     <string name="about_credits_dev">Développé par rubenwardy</string>
     <string name="about_credits_feedback">Gratitude à DonBatman pour le feedback pendant le développement.</string>
     <string name="about_credits_images">Cette appli utilise aussi des icônes standardes d\'Android, que sont CC-BY 4.0</string>
-    <string name="about_credits_krock">Gratitude à Krock (allas Smalljoker) pour avoir créé Krock\'s Mod Search, le crawler de laquelle la liste de mods disponible est dérivée</string>
+    <string name="about_credits_krock">Gratitude à Krock (allas Smalljoker) pour avoir créé Krock\'s Mod Search, le crawler de laquelle la liste de mods disponible est dérivée.</string>
     <string name="about_credits_logo">Le logo d\'appli est basé sur le logo de Minetest, CC-BY-SA 3.0, et créé par erlehmann</string>
     <string name="world_config_accept">Accepter</string>
     <string name="disclaimer_accept_and_install">Accepter et installer</string>
@@ -22,7 +22,7 @@
     <string name="modinfo_details_size">Mesure du téléchargement</string>
     <string name="modinfo_details_type">Type</string>
     <string name="dialog_close">Fermer</string>
-    <string name="dialog_noext_msg">On ne peuvait pas</string>
+    <string name="dialog_noext_msg">On ne peuvait pas.</string>
     <string name="readme_title">Lire</string>
     <string name="mod_title">Détail du mod</string>
     <string name="modinfo_details_size_unknown">Inconnu</string>
@@ -34,7 +34,7 @@
     <string name="event_downloading">Télécharge…</string>
     <string name="report_reason">Raison</string>
     <string name="report_msg">Message optionnel</string>
-    <string name="report_instructions">S\'il vous plaît selectionner la raison de laquelle on rapporte cet mod. Si on a plus d\'information, l\'écrit dans la zone de texte s\'il vous plaît</string>
+    <string name="report_instructions">S\'il vous plaît selectionner la raison de laquelle on rapporte cet mod. Si on a plus d\'information, l\'écrit dans la zone de texte s\'il vous plaît.</string>
     <string name="report_title">Rapporter un mod</string>
     <string name="disclaimer_title">Limitation de responsabilité</string>
     <string name="modinfo_details_type_modpack">Pack de mods</string>
@@ -43,33 +43,33 @@
     <string name="mod_invalid_mod_title">Mod non valide</string>
     <string name="event_installing_mod">Mod en installation</string>
     <string name="mod_action_view_readme">Voir plus d\'information</string>
-    <string name="modlist_rate_txt">Veut-on nous évaluer?</string>
-    <string name="disclaimer_3_t">Que peut-on faire?</string>
+    <string name="modlist_rate_txt">Veut-on nous évaluer ?</string>
+    <string name="disclaimer_3_t">Que peut-on faire ?</string>
     <string name="disclaimer_1_t">Aucune garantie</string>
     <string name="dialog_noext_title">Aucun stockage disponible</string>
     <string name="mod_invalid_modlist_title">Endroit ou chemin de mod non valide</string>
-    <string name="event_installed_mod">Installé %1$s…</string>
+    <string name="event_installed_mod">Installé %1$s.</string>
     <string name="event_failed_install">Echoué à installer le mod %1$s. Erreur: %2$s.</string>
     <string name="event_failed_uninstall">Echouer à désinstaller le mod %1$s. Erreur: %2$s.</string>
     <string name="modlist_tip_worldconfig">Activer un mod en cliquant l\'icône de monde.</string>
     <string name="event_installing">%1$s en installation</string>
-    <string name="mod_invalid_mod_desc">On n\'a pas pu trouver cet mod. Il a été supprimé?</string>
+    <string name="mod_invalid_mod_desc">On n\'a pas pu trouver cet mod. Il a été supprimé ?</string>
     <string name="dialog_nomt_title">Echoué à créér un dossier de mods</string>
     <string name="disclaimer_2_t">Pas un Stockage de Mods, mais un Découvreur de Mods</string>
     <string name="dialog_nowld_title">Incapable de créér un monde</string>
-    <string name="dialog_nowld_msg">Nous avons essayé de créér un monde pour vous à configurer, mais l\'opération à ėchoué </string>
-    <string name="disclaimer_agree">En utilisant cet service, on accepte aux termes et conditions suivants</string>
+    <string name="dialog_nowld_msg">Nous avons essayé de créér un monde pour vous à configurer, mais l\'opération à ėchoué.</string>
+    <string name="disclaimer_agree">En utilisant cet service, on accepte aux termes et conditions suivants.</string>
     <string name="modlist_mods">Mods de %1$s installés</string>
     <string name="mod_action_find_elsewhere">Trouver ailleurs</string>
-    <string name="about_credits_translation">Merci aux traducteurs: Soph (français), Dragonpop (Espangnol), et Adrian (allemand)</string>
+    <string name="about_credits_translation">Merci aux traducteurs: Soph (français), Dragonpop (Espangnol), Adrian (allemand), monolifed (turc), et muhdnurhidayat (malais).</string>
     <string name="dialog_nomt_msg">Il n\'avait pas un dossier Minetest sur cet appareil, donc on essayé à crer un nouveau. Mais ça n\'a pas functionné. Peut-être était l\'access bloque par votre appareil.S\'il vous plaît essayer à ouvrir Minetest.</string>
     <string name="disclaimer_2_m">"Les mods nommé ici sont disponible sur les forums de Minetest. Ils sont télécharger par l'application directement du lien nommé par l'auteur. Et donc c'est impossible de vérifier touts les mods. Si vous êtes pas sûre de la sécurité d'un mod on vous prie de chercher les forums pour cet mod et liser les commentaires d'autres utilisateurs."</string>
-    <string name="failed_list_download">Téléchargement de la mod list échouché. Erreur: %1$s. Plus d\'Information</string>
-    <string name="mod_invalid_modlist_desc">On n\'a pas reussi à trouver le lieu de cette mod. Était le dossier déjà effacé, ou la liste de mods est hors connexion?</string>
+    <string name="failed_list_download">Téléchargement de la mod list échouché. Erreur: %1$s. Plus d\'Information.</string>
+    <string name="mod_invalid_modlist_desc">On n\'a pas reussi à trouver le lieu de cette mod. Était le dossier déjà effacé, ou la liste de mods est hors connexion ?</string>
     <string name="mod_tip_installed_elsewhere">Cette Mod est déjà installé sur: %1$s</string>
     <string name="mod_tip_view">Afficher</string>
     <string name="mod_verified_uk">"Cette mod n'était pas cré par un auteur connu. On est incapable de trouver la source."</string>
-    <string name="mod_verified_yes">Cette mod était cré par un auteur connu</string>
+    <string name="mod_verified_yes">Cette mod était cré par un auteur connu.</string>
     <string name="modinfo_title">Information</string>
     <string name="report_modname_by_authorname">%1$s de %2$s</string>
 </resources>

@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="app_name">Minetest Mods</string>
+
+
+    <string name="dialog_close">Chiudi</string>
+    <string name="dialog_nowld_title">Impossibile creare il mondo</string>
+    <string name="dialog_no_minetest">Minetest non è installato</string>
+    <string name="dialog_no_minetest_msg">È raccomandato che installi Minetest prima di utilizzare questa applicazione dal tuo app store!</string>
+    <string name="dialog_no_missing_mods_title">Tutto bene!</string>
+    <string name="dialog_no_missing_mods_msg">Tutte le dipendenze richieste sono installate.</string>
+
+    <string name="action_search">Cerca</string>
+
+
+    <string name="modlist_available_mods">Mod disponibili</string>
+    <string name="modlist_rate_yes">Valutare</string>
+    <string name="modlist_rate_no">No</string>
+    <string name="modlist_tip_worldconfig">Abilita una mod cliccando sull\'icona del mondo.</string>
+
+
+    <string name="event_installing_mod">Installazione della mod…</string>
+    <string name="event_installed_mod">Installata %1$s.</string>
+    <string name="event_connecting">In connessione…</string>
+    <string name="event_downloading">In download…</string>
+    <string name="event_failed_uninstall">Fallita la disinstallazione della mod %1$s. Errore: %2$s.</string>
+    <string name="event_missing_dependencies_msg">Vuoi installare queste dipendenze mancanti?</string>
+    <string name="event_missing_dependencies_msg_some_missing">Purtroppo non siamo riusciti a trovare tutte le mod richieste :(</string>
+    <string name="event_missing_dependencies_msg_all_missing">Purtroppo non siamo riusciti a trovare nessuna delle mod richieste :(</string>
+    <string name="mod_title">Dettagli della mod</string>
+    <string name="mod_action_install">Installa</string>
+    <string name="mod_action_uninstall">Disinstalla</string>
+
+    <string name="mod_tip_installed_elsewhere">Mod già installata su %1$s</string>
+    <string name="mod_action_info">Vedi informazioni</string>
+    <string name="mod_action_check_depends">Controlla le dipendenze mancanti</string>
+    <string name="mod_verified_yes">Questa mod è stata creata da un autore conosciuto.</string>
+    <string name="mod_verified_no">Questa mod non è stata creata da un autore conosciuto.</string>
+    <string name="mod_verified_uk">Impossibile determinare la fonte di questa mod.</string>
+
+    <string name="mod_invalid_mod_title">Mod non valida</string>
+    <string name="mod_invalid_mod_desc">Non siamo riusciti a trovare questa mod. È stata cancellata?</string>
+    <string name="modinfo_title">Informazioni</string>
+    <string name="modinfo_details_name">Nome della mod</string>
+    <string name="modinfo_details_author">Autore</string>
+    <string name="modinfo_details_type">Tipo</string>
+    <string name="modinfo_details_location">Cartella</string>
+    <string name="modinfo_details_size_unknown">Sconosciuto</string>
+    <string name="report_instructions">Per favore seleziona la ragione per cui stai riportando questa mod. Se hai altre informazioni, per favore scrivile nella casella di testo.</string>
+    <string name="report_reason">Ragione</string>
+    <string name="report_msg">Messaggio opzionale</string>
+    <string name="report_details">Dettagli</string>
+    <string name="world_config_accept">Accetta</string>
+    <string name="world_config_saved">Configurazione salvata</string>
+
+
+    <string name="disclaimer_agree">Usando questo servizio accetti i seguenti termini e condizioni.</string>
+    <string name="disclaimer_1_t">Nessuna garanzia</string>
+    <string name="disclaimer_3_t">Cosa puoi fare?</string>
+    <string name="disclaimer_3_m">Se non sei sicuro riguardo la sicurezza di una mod guarda il suo topic sul forum. Controlla quanto è vecchio il post e cosa i commenti dicono.</string>
+
+    <string name="disclaimer_accept_and_install">Accetta e installa</string>
+
+
+    <string name="about_title">Riguardo questa applicazione</string>
+    <string name="about_credits">Crediti</string>
+    <string name="about_credits_dev">Sviluppato da rubenwardy (rubenwardy.com)</string>
+    <string name="mod_action_find_elsewhere">Trova altrove</string>
+    <string name="about_credits_translation">Grazie ai seguenti traduttori: il mio amico Soph (Francese), Dragonop (Spagnolo), Adrian (Tedesco), monolifed (Turco) e muhdnurhidayat (Malese).</string>
+<string name="dialog_nowld_msg">Abbiamo cercato di creare un mondo per te da configurare, ma l\'operazione ha fallito.</string>
+    <string name="event_installing">Installando %1$s…</string>
+    <string name="event_extracting">Estraendo…</string>
+    <string name="event_missing_dependencies">Installa le mod richieste</string>
+    <string name="mod_action_report_mod">Riporta mod</string>
+    <string name="modinfo_details_size">Dimensione del download</string>
+    <string name="readme_title">Leggimi</string>
+
+
+    <string name="report_title">Riporta Mod</string>
+    <string name="report_modname_by_authorname">%1$s di %2$s</string>
+    <string name="world_config">Configurazione del mondo</string>
+    </resources>
