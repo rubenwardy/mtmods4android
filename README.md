@@ -10,6 +10,11 @@ A mod manager for Android. Used as a project to learn the Android SDK.
 
 Created by [rubenwardy](http://rubenwardy.com). [Backend](http://app-mtmm.rubenwardy.com)
 
+<a href="https://f-droid.org/packages/com.rubenwardy.minetestmodmanager/" target="_blank">
+<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="90"/></a>
+<a href="https://play.google.com/store/apps/details?id=com.rubenwardy.minetestmodmanager" target="_blank">
+<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="90"/></a>
+
 # License
 
 Minetest Mods for Android
