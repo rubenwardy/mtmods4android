@@ -37,7 +37,7 @@ class SettingsAndAboutActivity : AppCompatActivity() {
             editor.apply()
         }
 
-        val spinner = findViewById(R.id.settings_theme) as Spinner
+        val spinner = findViewById<Spinner>(R.id.settings_theme)
         val adapter = ArrayAdapter.createFromResource(this, R.array.settings_theme_options, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
@@ -54,7 +54,7 @@ class SettingsAndAboutActivity : AppCompatActivity() {
             }
         }
 
-        findViewById(R.id.settings_restart).setOnClickListener {
+        findViewById<View>(R.id.settings_restart).setOnClickListener {
             // This is quite hacky, however it seems to be the only way to reliably do this
 
             Log.e("SettingsAndAbout", "Restarting app")

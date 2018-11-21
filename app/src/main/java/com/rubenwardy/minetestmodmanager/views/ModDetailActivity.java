@@ -139,7 +139,7 @@ public class ModDetailActivity
             }
 
             @Override
-            public void onBitmapFailed(Drawable errorDrawable) {}
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {}
 
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {}
@@ -147,12 +147,12 @@ public class ModDetailActivity
 
         if (mod.screenshot_uri != null && !mod.screenshot_uri.equals("")) {
             ctoolbar.setTag(target);
-            Picasso.with(this)
+            Picasso.get()
                     .load(new File(mod.screenshot_uri))
                     .into(target);
         } else if (!mod.isLocalMod()) {
             ctoolbar.setTag(target);
-            Picasso.with(this)
+            Picasso.get()
                     .load("https://minetest-mods.rubenwardy.com/screenshot/" + mod.author + "/" + mod.name + "/")
                     .into(target);
         }

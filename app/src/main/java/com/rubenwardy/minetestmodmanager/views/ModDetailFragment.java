@@ -56,8 +56,6 @@ public class ModDetailFragment extends Fragment {
     public static final String ARG_MOD_NAME = "mod_name";
     public static final String ARG_MOD_AUTHOR = "mod_author";
 
-    private ImageView screenshot_view;
-
     private @Nullable Mod mod = null;
 
     /**
@@ -74,6 +72,7 @@ public class ModDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState == null) {
+            assert getArguments() != null;
             fromBundle(getArguments());
         } else {
             fromBundle(savedInstanceState);
@@ -138,20 +137,20 @@ public class ModDetailFragment extends Fragment {
             //
 
             // Title
-            TextView txt_title = (TextView) rootView.findViewById(R.id.mod_header_title);
+            TextView txt_title = rootView.findViewById(R.id.mod_header_title);
             txt_title.setText(mod.title);
 
-            screenshot_view = (ImageView) rootView.findViewById(R.id.screenshot_view);
+            ImageView screenshot_view = rootView.findViewById(R.id.screenshot_view);
             screenshot_view.setVisibility(View.GONE);
             if (getActivity() instanceof ModListActivity) {
                 if (mod.screenshot_uri != null && !mod.screenshot_uri.equals("")) {
-                    Picasso.with(getContext())
+                    Picasso.get()
                             .load(new File(mod.screenshot_uri))
                             .into(screenshot_view);
 
                     screenshot_view.setVisibility(View.VISIBLE);
                 } else if (!mod.isLocalMod()) {
-                    Picasso.with(getContext())
+                    Picasso.get()
                             .load("https://minetest-mods.rubenwardy.com/screenshot/" + mod.author + "/" + mod.name + "/")
                             .into(screenshot_view);
 
@@ -160,7 +159,7 @@ public class ModDetailFragment extends Fragment {
             }
 
             // Author
-            TextView txt_author = (TextView) rootView.findViewById(R.id.mod_header_author);
+            TextView txt_author = rootView.findViewById(R.id.mod_header_author);
             txt_author.setText(mod.author);
             txt_author.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -172,7 +171,7 @@ public class ModDetailFragment extends Fragment {
             });
 
 
-            Button btn_main = (Button) rootView.findViewById(R.id.mod_header_uninstall);
+            Button btn_main = rootView.findViewById(R.id.mod_header_uninstall);
             if (mod.isLocalMod()) {
                 btn_main.getBackground().setColorFilter(ContextCompat.getColor(getContext(), R.color.uninstallButton),
                         PorterDuff.Mode.MULTIPLY);
@@ -204,11 +203,9 @@ public class ModDetailFragment extends Fragment {
                             Snackbar.make(view, res.getString(R.string.event_installing_mod), Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
 
-                            if (mod.link != null) {
-                                modman.installUrlModAsync(getActivity().getApplicationContext(), mod,
-                                        mod.link,
-                                        modman.getInstallDir());
-                            }
+                            modman.installUrlModAsync(getActivity().getApplicationContext(), mod,
+                                    mod.link,
+                                    modman.getInstallDir());
 
                             int installs = settings.getInt("installs_so_far", 0);
                             SharedPreferences.Editor editor = settings.edit();
@@ -253,7 +250,7 @@ public class ModDetailFragment extends Fragment {
             //
 
             // Report
-            Button btn_report = (Button) rootView.findViewById(R.id.action_report);
+            Button btn_report = rootView.findViewById(R.id.action_report);
             btn_report.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(@NonNull View view) {
@@ -268,7 +265,7 @@ public class ModDetailFragment extends Fragment {
             });
 
             // Forum
-            Button btn_forum = (Button) rootView.findViewById(R.id.forum_topic);
+            Button btn_forum = rootView.findViewById(R.id.forum_topic);
             if (mod.forum_url == null || mod.forum_url.isEmpty()) {
                 btn_forum.setVisibility(View.GONE);
             } else {
@@ -284,7 +281,7 @@ public class ModDetailFragment extends Fragment {
             }
 
             // Readme
-            Button btn_readme = (Button) rootView.findViewById(R.id.readme);
+            Button btn_readme = rootView.findViewById(R.id.readme);
             if (mod.isLocalMod() && Utils.getReadmePath(new File(mod.path)) != null) {
                 btn_readme.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -329,7 +326,7 @@ public class ModDetailFragment extends Fragment {
             });
 
             // Check depends
-            Button btn_check_depends = (Button) rootView.findViewById(R.id.check_depends);
+            Button btn_check_depends = rootView.findViewById(R.id.check_depends);
             if (mod.isLocalMod()) {
                 btn_check_depends.setOnClickListener(new View.OnClickListener() {
                     @Override

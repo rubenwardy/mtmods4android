@@ -662,20 +662,20 @@ public class ModListActivity
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                     }
                 };
 
 
                 if (mod.screenshot_uri != null && !mod.screenshot_uri.equals("")) {
-                    Picasso.with(getApplicationContext())
+                    Picasso.get()
                             .load(new File(mod.screenshot_uri))
                             .fit()
                             .error(R.drawable.mod_preview_circle)
                             .placeholder(R.drawable.mod_preview_circle)
                             .into(holder.view_preview, callback);
                 } else if (!mod.isLocalMod()) {
-                    Picasso.with(getApplicationContext())
+                    Picasso.get()
                             .load("https://minetest-mods.rubenwardy.com/screenshot/" + mod.author + "/" + mod.name + "/")
                             .fit()
                             .error(R.drawable.mod_preview_circle)
