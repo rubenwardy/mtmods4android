@@ -59,13 +59,6 @@ public interface StoreAPI {
         public String description;
         public String forum_url;
         public String download_link;
-        public int    download_size;
-        public String repo_host;
-        public String repo;
-        public String commit_hash;
-        public String repo_author;
-        public String repo_name;
-        public int    score;
 
         @Nullable
         Mod toMod(final String modstore_url) {
@@ -90,8 +83,6 @@ public interface StoreAPI {
                 forum = this.forum_url;
             }
 
-            int size = this.download_size;
-
             Mod.ModType type = Mod.ModType.EMT_MOD;
             if (type_s != null) {
                 if (type_s.equals("1")) {
@@ -105,7 +96,7 @@ public interface StoreAPI {
             mod.link = link;
             mod.author = author;
             mod.forum_url = forum;
-            mod.size = size;
+            mod.size = 0;
             return mod;
         }
 
