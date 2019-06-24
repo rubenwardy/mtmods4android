@@ -9,9 +9,9 @@ android {
         applicationId "com.rubenwardy.minetestmodmanager"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 19
-        versionName "1.8.0"
-        buildConfigField "boolean", "ENABLE_RATE_ME", "false"
+        versionCode 22
+        versionName "1.9.0"
+        buildConfigField "boolean", "ENABLE_RATE_ME", "true"
     }
     buildTypes {
         release {
