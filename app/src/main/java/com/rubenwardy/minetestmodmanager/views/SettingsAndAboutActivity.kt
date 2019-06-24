@@ -13,6 +13,7 @@ import android.content.Intent
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
+import android.net.Uri
 import android.util.Log
 import android.widget.Switch
 
@@ -66,6 +67,21 @@ class SettingsAndAboutActivity : AppCompatActivity() {
             val mgr = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent)
             System.exit(0)
+        }
+
+        findViewById<View>(R.id.donate).setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://rubenwardy.com/donate/"))
+            startActivity(browserIntent)
+        }
+
+        findViewById<View>(R.id.source).setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/rubenwardy/mtmods4android/"))
+            startActivity(browserIntent)
+        }
+
+        findViewById<View>(R.id.translate).setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://hosted.weblate.org/projects/minetest/mtmods4android/"))
+            startActivity(browserIntent)
         }
     }
 

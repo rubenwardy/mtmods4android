@@ -119,6 +119,32 @@
                 android:layout_height="wrap_content"
                 android:text="@string/about_credits_images"
                 android:layout_marginTop="10dp" />
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/donate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/donate" />
+
+                <Button
+                    android:id="@+id/source"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/source_code" />
+
+                <Button
+                    android:id="@+id/translate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/translate" />
+
+            </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
