@@ -37,7 +37,7 @@
             android:name=".views.ModDetailActivity"
             android:label="@string/mod_title"
             android:parentActivityName=".views.ModListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoStatusBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.rubenwardy.minetestmodmanager.views.ModListActivity" />

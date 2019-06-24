@@ -150,10 +150,10 @@ public class ModDetailActivity
             Picasso.get()
                     .load(new File(mod.screenshot_uri))
                     .into(target);
-        } else if (!mod.isLocalMod()) {
+        } else if (!mod.isLocalMod() && mod.thumbnail_url != null) {
             ctoolbar.setTag(target);
             Picasso.get()
-                    .load("https://minetest-mods.rubenwardy.com/screenshot/" + mod.author + "/" + mod.name + "/")
+                    .load(mod.thumbnail_url.replace("https://content.minetest.net/thumbnails/1/", "https://content.minetest.net/thumbnails/3/"))
                     .into(target);
         }
 
