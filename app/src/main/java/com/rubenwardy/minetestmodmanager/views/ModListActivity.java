@@ -674,9 +674,9 @@ public class ModListActivity
                             .error(R.drawable.mod_preview_circle)
                             .placeholder(R.drawable.mod_preview_circle)
                             .into(holder.view_preview, callback);
-                } else if (!mod.isLocalMod()) {
+                } else if (mod.thumbnail_url != null) {
                     Picasso.get()
-                            .load("https://minetest-mods.rubenwardy.com/screenshot/" + mod.author + "/" + mod.name + "/")
+                            .load(mod.thumbnail_url)
                             .fit()
                             .error(R.drawable.mod_preview_circle)
                             .placeholder(R.drawable.mod_preview_circle)

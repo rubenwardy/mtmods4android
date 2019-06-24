@@ -172,9 +172,7 @@ class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         Arrays.sort(sections, new Comparator<Section>() {
             @Override
             public int compare(@NonNull Section o, @NonNull Section o1) {
-                return (o.firstPosition == o1.firstPosition)
-                        ? 0
-                        : ((o.firstPosition < o1.firstPosition) ? -1 : 1);
+                return Integer.compare(o.firstPosition, o1.firstPosition);
             }
         });
 

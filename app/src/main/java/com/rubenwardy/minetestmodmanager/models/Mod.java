@@ -23,6 +23,7 @@ public class Mod extends ModSpec {
 
     @NonNull public String link;
     @Nullable public String path;
+    @Nullable public String thumbnail_url;
     @Nullable public String screenshot_uri;
     @Nullable public String forum_url;
     public int verified;
@@ -38,6 +39,7 @@ public class Mod extends ModSpec {
         this.link = "";
         this.path = "";
         this.screenshot_uri = "";
+        this.thumbnail_url = null;
         this.verified = 0;
         this.size = -1;
     }

@@ -59,6 +59,7 @@ public interface StoreAPI {
         public String description;
         public String forum_url;
         public String download_link;
+        public String thumbnail;
 
         @Nullable
         Mod toMod(final String modstore_url) {
@@ -97,6 +98,7 @@ public interface StoreAPI {
             mod.author = author;
             mod.forum_url = forum;
             mod.size = 0;
+            mod.thumbnail_url = thumbnail;
             return mod;
         }
 
