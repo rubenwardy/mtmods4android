@@ -69,11 +69,6 @@ class SettingsAndAboutActivity : AppCompatActivity() {
             System.exit(0)
         }
 
-        findViewById<View>(R.id.donate).setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://rubenwardy.com/donate/"))
-            startActivity(browserIntent)
-        }
-
         findViewById<View>(R.id.source).setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/rubenwardy/mtmods4android/"))
             startActivity(browserIntent)
